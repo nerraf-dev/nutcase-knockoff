@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5giku58qyr3j"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tfq63"]
+font_size = 20
+font_color = Color(0.89847755, 0.8130562, 0.03957195, 1)
+
+[sub_resource type="Gradient" id="Gradient_tfq63"]
+colors = PackedColorArray(0.6117647, 0.4, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lfa00"]
+gradient = SubResource("Gradient_tfq63")
+
+[node name="Slider" type="PanelContainer"]
+offset_right = 200.0
+offset_bottom = 32.0
+
+[node name="WordLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Word"
+label_settings = SubResource("LabelSettings_tfq63")
+horizontal_alignment = 1
+
+[node name="Cover" type="TextureRect" parent="."]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_lfa00")
+expand_mode = 2
