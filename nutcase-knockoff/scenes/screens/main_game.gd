@@ -1,7 +1,8 @@
 extends Node2D
 
 const SliderScene = preload("res://scenes/components/Slider.tscn")
-const QuestionResource = preload("res://scripts/resources/Question.gd")
+const QuestionLoader = preload("res://scripts/logic/QuestionLoader.gd")
+
 @onready var grid = $GridContainer
 @onready var pot_label = $HUD/PotLabel
 
@@ -14,17 +15,19 @@ const DIFFICULTY_MULTIPLIERS = {
 
 var current_pot = 100.0
 var pot_per_word = 0.0
+var all_questions: Array[Question] = []
 
 func _ready() -> void:
-	# Test call - create a test question
-	var test_question = QuestionResource.new()
-	test_question.question_text = "How many hours are in a day?"
-	test_question.answer = "24"
-	test_question.difficulty = "medium"
-	test_question.category = "General Knowledge"
+	# Load questions from JSON
+	all_questions = QuestionLoader.load_questions_from_file("res://data/questions.json")
 	
-	spawn_question(test_question)
-	update_pot_display()
+	# Get a random question and spawn it
+	var random_question = QuestionLoader.get_random_question(all_questions)
+	if random_question:
+		spawn_question(random_question)
+		update_pot_display()
+	else:
+		push_error("No questions loaded!")
 
 func spawn_question(question: Question) -> void:
 	print("Spawning question: %s" % question.question_text)

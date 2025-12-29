@@ -1,0 +1,37 @@
+[
+  {
+    "question": "How many hours are in a day?",
+    "answer": "24",
+    "difficulty": "easy",
+    "category": "General Knowledge",
+    "tags": ["time", "basic"]
+  },
+  {
+    "question": "The capital city of France",
+    "answer": "Paris",
+    "difficulty": "easy",
+    "category": "Geography",
+    "tags": ["europe", "capitals"]
+  },
+  {
+    "question": "The chemical symbol for gold",
+    "answer": "Au",
+    "difficulty": "medium",
+    "category": "Science",
+    "tags": ["chemistry", "elements"]
+  },
+  {
+    "question": "The year World War II ended",
+    "answer": "1945",
+    "difficulty": "medium",
+    "category": "History",
+    "tags": ["war", "dates"]
+  },
+  {
+    "question": "The smallest prime number greater than 100",
+    "answer": "101",
+    "difficulty": "hard",
+    "category": "Mathematics",
+    "tags": ["math", "primes"]
+  }
+]
