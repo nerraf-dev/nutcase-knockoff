@@ -1,0 +1,8 @@
+{
+	"nodes":[
+		{"id":"2edb407540e9c16c","x":-540,"y":-400,"width":290,"height":280,"type":"text","text":"**Visuals:**\n- game container\n- slider anims\n- Scores\n- Jackpot\n- Player counters\n"},
+		{"id":"f818f561ac9a1094","x":-205,"y":-400,"width":290,"height":280,"type":"text","text":"**Logic:**\n- Build the \"Word Scraper\" \n\t- split sentence into words\n"},
+		{"id":"44f84d351f2ac6ad","x":140,"y":-400,"width":290,"height":280,"type":"text","text":"**Connectivity:** \nResearch:\n- \"Godot HTML5 Gamepad\"\n- \"Godot WebSocket Server\" to handle the phone-to-TV communication."}
+	],
+	"edges":[]
+}

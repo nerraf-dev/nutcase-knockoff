@@ -1,0 +1,2 @@
+
+MVP Roadmap for In a Nutshell. Phase 1 focuses on the local prototype (UI, animations, splitting strings). Phase 2 focuses on game logic (JSON, validation, state machine). Phase 3 focuses on networking (WebSockets, room codes, mobile UI).

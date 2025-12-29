@@ -1,0 +1,56 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Editor/IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Temporary and swap files
+*~
+*.swp
+*.swo
+
+# Logs and databases
+*.log
+*.sqlite
+*.db
+
+# Node / Python / envs
+node_modules/
+venv/
+env/
+.env
+.env.local
+*.pyc
+
+# --- Game Source (Godot) ---
+# Godot editor and import metadata/cache
+.godot/
+.import/
+.imported/
+export_presets.cfg
+.mono/
+shader_cache/
+
+# Godot build/output folders
+bin/
+build/
+
+# --- Documentation (Obsidian) ---
+# Ignore all Obsidian app state and plugins
+**/.obsidian/
+**/.obsidian/**
+
+# Obsidian Canvas files (optional)
+# *.canvas
+
+# If you want to ignore the entire docs vault, uncomment:
+# /nutshell-knockoff-docs/
+
+# Misc
+Thumbs.db

@@ -1,0 +1,14 @@
+{
+	"nodes":[
+		{"id":"fb38abe06f12dff3","x":-480,"y":-320,"width":220,"height":160,"color":"5","type":"text","text":"Host\n"},
+		{"id":"c73ad14460c8659a","x":-20,"y":-360,"width":160,"height":80,"color":"6","type":"text","text":"Mobile client"},
+		{"id":"34a94d72ebce9074","x":0,"y":-160,"width":165,"height":90,"color":"6","type":"text","text":"Mobile client"},
+		{"id":"fc1a89cf6d3c04a4","x":-220,"y":-165,"width":150,"height":50,"type":"text","text":"Request reveal"},
+		{"id":"899019db258cf0c3","x":-210,"y":-370,"width":130,"height":50,"type":"text","text":"Update UI"}
+	],
+	"edges":[
+		{"id":"929f65b1910b00df","fromNode":"fb38abe06f12dff3","fromSide":"right","toNode":"c73ad14460c8659a","toSide":"left"},
+		{"id":"796fbd5fd9f1f623","fromNode":"fb38abe06f12dff3","fromSide":"right","toNode":"34a94d72ebce9074","toSide":"left"},
+		{"id":"e2547b9830370860","fromNode":"34a94d72ebce9074","fromSide":"left","toNode":"fb38abe06f12dff3","toSide":"right"}
+	]
+}

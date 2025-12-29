@@ -1,0 +1,2 @@
+
+Project: In a Nutshell Digital. Core concepts involve a game loop where players uncover words to guess the answer, with a pot that reduces as words are revealed. Modes include 'Around' and 'Hide'. The technical stack uses Godot 4.x with a Jackbox-style architecture over WebSockets.

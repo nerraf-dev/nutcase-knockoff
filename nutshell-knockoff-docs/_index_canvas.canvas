@@ -1,0 +1,8 @@
+{
+	"nodes":[
+		{"id":"f1fad8b65f31e477","type":"file","file":"Projects/Nutshell-clone/01-design/Project Overview.md","x":-478,"y":-358,"width":400,"height":400},
+		{"id":"ef07c5d5964d4272","type":"file","file":"Projects/Nutshell-clone/01-design/Roadmap.md","x":-40,"y":-358,"width":400,"height":400},
+		{"id":"73ad616d12799276","x":-478,"y":120,"width":400,"height":400,"type":"file","file":"Projects/Nutshell-clone/01-design/Data Structure.md"}
+	],
+	"edges":[]
+}
