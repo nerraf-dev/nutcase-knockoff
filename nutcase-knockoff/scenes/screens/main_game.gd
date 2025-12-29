@@ -41,15 +41,23 @@ func spawn_question(question: Question) -> void:
 	pot_per_word = current_pot / words.size()
 	print("Difficulty: %s | Starting pot: %d" % [question.difficulty, int(current_pot)])
 
-	for word in words:
+	# Spawns a slider for each word in the `words` array, adds it to the grid, and connects its click signal.
+	# Each slider is given a minimum size and is numbered (1-indexed) when set up.
+	# After all sliders are added, prints the first word for debugging purposes.
+	for i in range(words.size()):
 		var s = SliderScene.instantiate()
 		s.custom_minimum_size = Vector2(250, 80)  # Match the size from the scene
 		grid.columns = 5
 		grid.add_child(s)
-		s.set_word(word)
+		s.set_word(words[i], i + 1)  # Pass word and number (1-indexed)
 		s.clicked.connect(_on_slider_clicked)
 	print("Finished spawning question. First word is %s" % words[0])
 
+
+# Handles the event when the slider is clicked.
+# Decreases the current pot by the value of pot_per_word.
+# Ensures the current pot does not go below zero.
+# Updates the pot display and prints the new pot value to the output.
 func _on_slider_clicked():
 	current_pot -= pot_per_word
 	if current_pot < 0:
@@ -57,5 +65,6 @@ func _on_slider_clicked():
 	update_pot_display()
 	print("Word revealed! Pot now: %d" % current_pot)
 
+# Update teh score on the screen
 func update_pot_display():
 	pot_label.text = str(int(current_pot))
