@@ -1,10 +1,11 @@
 {
 	"nodes":[
-		{"id":"fb38abe06f12dff3","x":-480,"y":-320,"width":220,"height":160,"color":"5","type":"text","text":"Host\n"},
-		{"id":"c73ad14460c8659a","x":-20,"y":-360,"width":160,"height":80,"color":"6","type":"text","text":"Mobile client"},
-		{"id":"34a94d72ebce9074","x":0,"y":-160,"width":165,"height":90,"color":"6","type":"text","text":"Mobile client"},
-		{"id":"fc1a89cf6d3c04a4","x":-220,"y":-165,"width":150,"height":50,"type":"text","text":"Request reveal"},
-		{"id":"899019db258cf0c3","x":-210,"y":-370,"width":130,"height":50,"type":"text","text":"Update UI"}
+		{"id":"fb38abe06f12dff3","type":"text","text":"Host\n","x":-480,"y":-320,"width":220,"height":160,"color":"5"},
+		{"id":"c73ad14460c8659a","type":"text","text":"Mobile client","x":-20,"y":-360,"width":160,"height":80,"color":"6"},
+		{"id":"34a94d72ebce9074","type":"text","text":"Mobile client","x":0,"y":-160,"width":165,"height":90,"color":"6"},
+		{"id":"fc1a89cf6d3c04a4","type":"text","text":"Request reveal","x":-220,"y":-165,"width":150,"height":50},
+		{"id":"899019db258cf0c3","type":"text","text":"Update UI","x":-210,"y":-370,"width":130,"height":50},
+		{"id":"883001c5741250cd","x":-470,"y":40,"width":250,"height":240,"type":"text","text":"MainGame screen\n\nBackground\nHUD\nGrid\nPot Label\nGuess Button\nReveal Button\n"}
 	],
 	"edges":[
 		{"id":"929f65b1910b00df","fromNode":"fb38abe06f12dff3","fromSide":"right","toNode":"c73ad14460c8659a","toSide":"left"},

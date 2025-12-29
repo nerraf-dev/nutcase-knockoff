@@ -1,26 +1,21 @@
+#technical #components
+
+## Slider
+
+
+```
 extends PanelContainer
 
-signal clicked
-
-@onready var cover = $Cover
+@onready var cover = $cover
 @onready var word_label = $WordLabel
-var is_revealed = false
 
 func set_word(text: String):
     word_label.text = text
 
-func _gui_input(event: InputEvent):
-    if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-        if not is_revealed:
-            clicked.emit()
-            reveal()
-
 func reveal():
-    is_revealed = true
     var tween = create_tween()
     #  slide to the right
     tween.tween_property(cover, "position:x", size.x, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
     # fade out
     tween.parallel().tween_property(cover, "modulate:a", 0, 0.3)
-
-    
+```

@@ -1,0 +1,17 @@
+[gd_resource type="StyleBoxFlat" format=3 uid="uid://b7buinrypiv1p"]
+
+[resource]
+bg_color = Color(0.972549, 0.78431374, 0.28627452, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0.3034676, 0.032242626, 0.009445407, 1)
+border_blend = true
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+shadow_color = Color(0.43597525, 0.00028336377, 0.00015510134, 0.69803923)
+shadow_size = 4
+shadow_offset = Vector2(6, 4)

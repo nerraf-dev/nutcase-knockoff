@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://dl00hth5lbomp"]
+
+[ext_resource type="Script" uid="uid://bvmfv62q8ittl" path="res://scenes/screens/main_game.gd" id="1_8dokk"]
+[ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="2_i3a2a"]
+
+[node name="MainGame" type="Node2D"]
+script = ExtResource("1_8dokk")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PotLabel" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 50.0
+offset_bottom = 25.0
+text = "99999"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_top = 32.0
+offset_right = 94.0
+offset_bottom = 82.0
+
+[node name="RevealBtn" type="Button" parent="."]
+offset_left = 7.0
+offset_top = 290.0
+offset_right = 167.0
+offset_bottom = 362.0
+text = "Reveal"
+
+[node name="GuessBtn" type="Button" parent="."]
+offset_left = 210.0
+offset_top = 290.0
+offset_right = 373.0
+offset_bottom = 367.0
+theme = ExtResource("2_i3a2a")
+text = "Guess"
