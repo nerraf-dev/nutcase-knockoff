@@ -45,7 +45,6 @@ static func load_questions_from_file(file_path: String) -> Array[Question]:
 			for tag in item["tags"]:
 				tags_array.append(str(tag))
 			question.tags = tags_array
-		
 		questions.append(question)
 	
 	print("Loaded %d questions from %s" % [questions.size(), file_path])

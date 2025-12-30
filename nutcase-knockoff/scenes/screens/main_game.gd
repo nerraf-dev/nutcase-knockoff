@@ -1,7 +1,7 @@
 extends Node2D
 
 const SliderScene = preload("res://scenes/components/Slider.tscn")
-const QuestionLoader = preload("res://scripts/logic/QuestionLoader.gd")
+const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 
 @onready var grid = $GridContainer
 @onready var pot_label = $HUD/PotLabel
@@ -19,10 +19,10 @@ var all_questions: Array[Question] = []
 
 func _ready() -> void:
 	# Load questions from JSON
-	all_questions = QuestionLoader.load_questions_from_file("res://data/questions.json")
+	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
 	
 	# Get a random question and spawn it
-	var random_question = QuestionLoader.get_random_question(all_questions)
+	var random_question = QuestionLoaderResource.get_random_question(all_questions)
 	if random_question:
 		spawn_question(random_question)
 		update_pot_display()
