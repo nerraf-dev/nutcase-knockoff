@@ -31,10 +31,6 @@ func _ready() -> void:
 	else:
 		push_error("No questions loaded!")
 
-func _process(delta: float) -> void:
-	pass  # Replace with function body.
-		
-
 func spawn_question(question: Question) -> void:
 	print("Spawning question: %s" % question.question_text)
 	var words = question.question_text.split(" ")
@@ -57,7 +53,7 @@ func spawn_question(question: Question) -> void:
 	for i in range(words.size()):
 		var s = SliderScene.instantiate()
 		s.custom_minimum_size = Vector2(250, 80)  # Match the size from the scene
-		grid.columns = 5
+		grid.columns = 4
 		grid.add_child(s)
 		s.set_word(words[i], i + 1)  # Pass word and number (1-indexed)
 		s.clicked.connect(_on_slider_clicked)
