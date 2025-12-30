@@ -4,6 +4,7 @@
 [ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="2_i3a2a"]
 
 [node name="MainGame" type="Node2D"]
+position = Vector2(2, 3)
 script = ExtResource("1_8dokk")
 
 [node name="Background" type="TextureRect" parent="."]
@@ -30,11 +31,18 @@ offset_right = 94.0
 offset_bottom = 82.0
 
 [node name="RevealBtn" type="Button" parent="."]
-offset_left = 7.0
-offset_top = 290.0
-offset_right = 167.0
-offset_bottom = 362.0
+offset_left = 9.0
+offset_top = 289.0
+offset_right = 169.0
+offset_bottom = 361.0
 text = "Reveal"
+
+[node name="PassBtn" type="Button" parent="."]
+offset_left = 484.0
+offset_top = 286.0
+offset_right = 644.0
+offset_bottom = 358.0
+text = "Pass"
 
 [node name="GuessBtn" type="Button" parent="."]
 offset_left = 210.0

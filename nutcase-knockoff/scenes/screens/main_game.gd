@@ -7,6 +7,7 @@ const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 @onready var pot_label = $HUD/PotLabel
 
 const BASE_POT = 100.0
+const MINIMUM_POT_PERCENT = 0.1  # Always reserve 10% as minimum pot
 const DIFFICULTY_MULTIPLIERS = {
 	"easy": 1.0,
 	"medium": 1.5,
@@ -14,6 +15,7 @@ const DIFFICULTY_MULTIPLIERS = {
 }
 
 var current_pot = 100.0
+var minimum_pot = 10.0
 var pot_per_word = 0.0
 var all_questions: Array[Question] = []
 
@@ -37,9 +39,13 @@ func spawn_question(question: Question) -> void:
 	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(question.difficulty, 1.0)
 	current_pot = BASE_POT * difficulty_mult
 	
-	# Calculate pot reduction per word
-	pot_per_word = current_pot / words.size()
-	print("Difficulty: %s | Starting pot: %d" % [question.difficulty, int(current_pot)])
+	# Reserve minimum pot (e.g., 10% of starting pot)
+	minimum_pot = current_pot * MINIMUM_POT_PERCENT
+	
+	# Divide only the reducible portion among words
+	var reducible_pot = current_pot - minimum_pot
+	pot_per_word = reducible_pot / words.size()
+	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_pot), int(minimum_pot)])
 
 	# Spawns a slider for each word in the `words` array, adds it to the grid, and connects its click signal.
 	# Each slider is given a minimum size and is numbered (1-indexed) when set up.
@@ -60,10 +66,10 @@ func spawn_question(question: Question) -> void:
 # Updates the pot display and prints the new pot value to the output.
 func _on_slider_clicked():
 	current_pot -= pot_per_word
-	if current_pot < 0:
-		current_pot = 0
+	if current_pot < minimum_pot:
+		current_pot = minimum_pot
 	update_pot_display()
-	print("Word revealed! Pot now: %d" % current_pot)
+	print("Word revealed! Pot now: %d (min: %d)" % [int(current_pot), int(minimum_pot)])
 
 # Update teh score on the screen
 func update_pot_display():
