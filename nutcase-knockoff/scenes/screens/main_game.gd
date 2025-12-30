@@ -31,6 +31,10 @@ func _ready() -> void:
 	else:
 		push_error("No questions loaded!")
 
+func _process(delta: float) -> void:
+	pass  # Replace with function body.
+		
+
 func spawn_question(question: Question) -> void:
 	print("Spawning question: %s" % question.question_text)
 	var words = question.question_text.split(" ")
