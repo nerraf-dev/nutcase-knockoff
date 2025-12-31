@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://na5chflueynm"]
+
+[ext_resource type="Script" uid="uid://06u82wquogrt" path="res://scenes/components/answer_modal.gd" id="1_vp3qt"]
+
+[sub_resource type="Theme" id="Theme_116xu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_vp3qt"]
+font_size = 64
+font_color = Color(0.0980392, 0.0235294, 0, 1)
+
+[sub_resource type="FontFile" id="FontFile_u0fgr"]
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/64/0/ascent = 0.0
+cache/0/64/0/descent = 0.0
+cache/0/64/0/underline_position = 0.0
+cache/0/64/0/underline_thickness = 0.0
+cache/0/64/0/scale = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lcgq1"]
+bg_color = Color(0.876098, 1, 0.862913, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_alwoq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfn3q"]
+bg_color = Color(1, 0.906102, 0.890042, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 0, 0, 1)
+
+[node name="AnswerModal" type="Node2D"]
+script = ExtResource("1_vp3qt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 364.0
+offset_top = 270.0
+offset_right = 1564.0
+offset_bottom = 868.0
+
+[node name="AnswerInput" type="TextEdit" parent="."]
+offset_left = 509.0
+offset_top = 489.0
+offset_right = 1413.0
+offset_bottom = 654.0
+theme = SubResource("Theme_116xu")
+theme_override_font_sizes/font_size = 64
+placeholder_text = "Type your answer"
+
+[node name="Label" type="Label" parent="."]
+offset_left = 611.0
+offset_top = 305.0
+offset_right = 1300.0
+offset_bottom = 393.0
+text = "What's your guess?"
+label_settings = SubResource("LabelSettings_vp3qt")
+
+[node name="Accept" type="Button" parent="."]
+offset_left = 1081.0
+offset_top = 692.0
+offset_right = 1209.0
+offset_bottom = 820.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(5.14999e-06, 0.715508, 0, 1)
+theme_override_fonts/font = SubResource("FontFile_u0fgr")
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_lcgq1")
+text = "✔"
+
+[node name="Cancel" type="Button" parent="."]
+offset_left = 691.0
+offset_top = 689.0
+offset_right = 819.0
+offset_bottom = 817.0
+theme = SubResource("Theme_alwoq")
+theme_override_colors/font_color = Color(0.853071, 0, 0, 1)
+theme_override_font_sizes/font_size = 64
+theme_override_styles/normal = SubResource("StyleBoxFlat_mfn3q")
+text = "✘"

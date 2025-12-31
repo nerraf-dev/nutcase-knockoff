@@ -4,10 +4,10 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_tfq63"]
 font_size = 36
-font_color = Color(0.89847755, 0.8130562, 0.03957195, 1)
+font_color = Color(0.898478, 0.813056, 0.0395719, 1)
 
 [sub_resource type="Gradient" id="Gradient_tfq63"]
-colors = PackedColorArray(0.6117647, 0.4, 0, 1, 1, 1, 1, 1)
+colors = PackedColorArray(0.611765, 0.4, 0, 1, 1, 1, 1, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_lfa00"]
 gradient = SubResource("Gradient_tfq63")

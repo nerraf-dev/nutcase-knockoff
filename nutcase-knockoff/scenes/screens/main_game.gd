@@ -71,6 +71,6 @@ func _on_slider_clicked():
 	update_pot_display()
 	print("Word revealed! Pot now: %d (min: %d)" % [int(current_pot), int(minimum_pot)])
 
-# Update teh score on the screen
+# Update the score on the screen
 func update_pot_display():
 	pot_label.text = str(int(current_pot))
