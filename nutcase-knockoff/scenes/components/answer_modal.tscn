@@ -64,7 +64,7 @@ offset_bottom = 393.0
 text = "What's your guess?"
 label_settings = SubResource("LabelSettings_vp3qt")
 
-[node name="Accept" type="Button" parent="."]
+[node name="Submit" type="Button" parent="."]
 offset_left = 1081.0
 offset_top = 692.0
 offset_right = 1209.0

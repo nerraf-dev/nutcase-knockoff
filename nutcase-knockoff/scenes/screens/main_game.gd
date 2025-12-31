@@ -5,6 +5,7 @@ const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 
 @onready var grid = $GridContainer
 @onready var pot_label = $HUD/PotLabel
+@onready var guess_btn = $HUD/GuessBtn
 
 const BASE_POT = 100.0
 const MINIMUM_POT_PERCENT = 0.1  # Always reserve 10% as minimum pot
@@ -22,6 +23,7 @@ var all_questions: Array[Question] = []
 func _ready() -> void:
 	# Load questions from JSON
 	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
+	guess_btn.pressed.connect(_on_guess_btn_pressed)
 	
 	# Get a random question and spawn it
 	var random_question = QuestionLoaderResource.get_random_question(all_questions)
@@ -74,3 +76,18 @@ func _on_slider_clicked():
 # Update the score on the screen
 func update_pot_display():
 	pot_label.text = str(int(current_pot))
+
+func _on_guess_btn_pressed() -> void:
+	print("Guess button pressed. Current pot: %d" % int(current_pot))
+	# Here you would typically open the answer modal to allow the player to submit their guess
+	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
+	add_child(answer_modal)
+	answer_modal.answer_submitted.connect(_on_answer_submitted)
+	answer_modal.cancelled.connect(_on_answer_cancelled)
+
+func _on_answer_submitted(answer_text: String) -> void:
+	print("Player submitted answer: %s" % answer_text)
+	# Here you would check the answer and award points if correct
+
+func _on_answer_cancelled() -> void:
+	print("Player cancelled the answer submission.")
