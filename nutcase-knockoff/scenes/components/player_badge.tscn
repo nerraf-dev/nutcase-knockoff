@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfn3vsea2v03b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1252w"]
+font_size = 54
+font_color = Color(0, 0.0313726, 1, 1)
+
+[node name="PlayerBadge" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 256.0
+offset_bottom = 96.0
+
+[node name="P1" type="Label" parent="."]
+offset_left = 9.0
+offset_top = 12.0
+offset_right = 249.0
+offset_bottom = 86.0
+text = "Player"
+label_settings = SubResource("LabelSettings_1252w")
+horizontal_alignment = 1

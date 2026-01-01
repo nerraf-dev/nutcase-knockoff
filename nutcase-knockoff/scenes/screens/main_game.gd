@@ -15,12 +15,24 @@ const DIFFICULTY_MULTIPLIERS = {
 	"hard": 2.0
 }
 
+
 var current_pot = 100.0
 var minimum_pot = 10.0
 var pot_per_word = 0.0
 var all_questions: Array[Question] = []
+var current_question: Question = null
 
 func _ready() -> void:
+	print("MainGame scene ready")
+	# Add some test players
+	PlayerManager.add_player("Alice")
+	PlayerManager.add_player("Bob")
+	PlayerManager.add_player("Charlie")
+	PlayerManager.add_player("Diana")
+	# Print current players
+	for p in PlayerManager.players:
+		print("Player: %s (ID: %s)" % [p.name, p.id])
+	print("Starting player turn: %s" % PlayerManager.get_current_player().name)
 	# Load questions from JSON
 	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
 	guess_btn.pressed.connect(_on_guess_btn_pressed)
@@ -28,6 +40,7 @@ func _ready() -> void:
 	# Get a random question and spawn it
 	var random_question = QuestionLoaderResource.get_random_question(all_questions)
 	if random_question:
+		current_question = random_question
 		spawn_question(random_question)
 		update_pot_display()
 	else:
@@ -72,6 +85,10 @@ func _on_slider_clicked():
 		current_pot = minimum_pot
 	update_pot_display()
 	print("Word revealed! Pot now: %d (min: %d)" % [int(current_pot), int(minimum_pot)])
+	# Next player
+	PlayerManager.next_turn()
+	print("Next turn: %s" % PlayerManager.get_current_player().name)
+	
 
 # Update the score on the screen
 func update_pot_display():
@@ -88,6 +105,16 @@ func _on_guess_btn_pressed() -> void:
 func _on_answer_submitted(answer_text: String) -> void:
 	print("Player submitted answer: %s" % answer_text)
 	# Here you would check the answer and award points if correct
+	if answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower():
+		print("CORRECT ANSWER!")
+		# Award points to current player
+		var current_player = PlayerManager.get_current_player()
+		if current_player:
+			PlayerManager.award_points(current_player, int(current_pot))
+		else:
+			print("No current player to award points to.")
+	else:
+		print("WRONG ANSWER. The correct answer was: %s" % current_question.answer)
 
 func _on_answer_cancelled() -> void:
 	print("Player cancelled the answer submission.")

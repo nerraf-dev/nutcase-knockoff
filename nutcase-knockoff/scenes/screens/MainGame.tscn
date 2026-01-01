@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dl00hth5lbomp"]
+[gd_scene load_steps=8 format=3 uid="uid://dl00hth5lbomp"]
 
 [ext_resource type="Script" uid="uid://bvmfv62q8ittl" path="res://scenes/screens/main_game.gd" id="1_8dokk"]
 [ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="2_i3a2a"]
+[ext_resource type="PackedScene" uid="uid://cfn3vsea2v03b" path="res://scenes/components/player_badge.tscn" id="3_ms0ej"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
 colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
@@ -35,6 +36,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="GuessBtn" type="Button" parent="HUD"]
+layout_mode = 0
 offset_left = 776.0
 offset_top = 888.0
 offset_right = 1147.0
@@ -44,6 +46,7 @@ theme_override_font_sizes/font_size = 64
 text = "Guess"
 
 [node name="RevealBtn" type="Button" parent="HUD"]
+layout_mode = 0
 offset_left = 224.0
 offset_top = 896.0
 offset_right = 432.0
@@ -51,6 +54,7 @@ offset_bottom = 1000.0
 text = "Reveal"
 
 [node name="PassBtn" type="Button" parent="HUD"]
+layout_mode = 0
 offset_left = 1440.0
 offset_top = 912.0
 offset_right = 1664.0
@@ -66,21 +70,25 @@ offset_bottom = 118.0
 text = "99999"
 label_settings = SubResource("LabelSettings_42wtb")
 
-[node name="Node" type="Node" parent="HUD"]
+[node name="PlayerGrid" type="GridContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 40.0
+offset_right = 32.0
+offset_bottom = 40.0
 
-[node name="P1" type="Label" parent="HUD/Node"]
-offset_left = 28.0
-offset_top = 79.0
-offset_right = 214.0
-offset_bottom = 153.0
+[node name="PlayerBadge" parent="HUD/PlayerGrid" instance=ExtResource("3_ms0ej")]
+position = Vector2(8, 8)
+
+[node name="P1" type="Label" parent="HUD/PlayerGrid"]
+visible = false
+layout_mode = 2
 text = "* P1: 999"
 label_settings = SubResource("LabelSettings_i3a2a")
 
-[node name="P2" type="Label" parent="HUD/Node"]
-offset_left = 24.0
-offset_top = 164.0
-offset_right = 210.0
-offset_bottom = 238.0
+[node name="P2" type="Label" parent="HUD/PlayerGrid"]
+visible = false
+layout_mode = 2
 text = "P2: 999"
 label_settings = SubResource("LabelSettings_i3a2a")
 

@@ -8,20 +8,24 @@ signal answer_submitted(answer_text: String)
 signal cancelled
 
 func _ready() -> void:
-    submit_button.pressed.connect(_on_submit_pressed)
-    cancel.pressed.connect(_on_cancel_pressed)
+	submit_button.pressed.connect(_on_submit_pressed)
+	cancel.pressed.connect(_on_cancel_pressed)
+	answer_text.grab_focus()
 
 func _on_submit_pressed() -> void:
-    var answer = answer_text.text.strip_edges()
-    if answer != "":
-        print("Answer submitted: %s" % answer)
-        answer_submitted.emit(answer)
+	var answer = answer_text.text.strip_edges()
+	if answer != "":
+		print("Answer submitted: %s" % answer)
+		answer_submitted.emit(answer)
+		queue_free()
+		return
+	print("No answer entered; submission ignored.")
 
 func _on_cancel_pressed() -> void:
-    print("Answer submission canceled.")
-    cancelled.emit()
-    queue_free()
+	print("Answer submission canceled.")
+	cancelled.emit()
+	queue_free()
 
 func _input(event):
-    if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
-        _on_cancel_pressed()
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		_on_cancel_pressed()
