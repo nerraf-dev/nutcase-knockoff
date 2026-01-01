@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dl00hth5lbomp"]
+[gd_scene load_steps=7 format=3 uid="uid://dl00hth5lbomp"]
 
 [ext_resource type="Script" uid="uid://bvmfv62q8ittl" path="res://scenes/screens/main_game.gd" id="1_8dokk"]
 [ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="2_i3a2a"]
-[ext_resource type="PackedScene" uid="uid://cfn3vsea2v03b" path="res://scenes/components/player_badge.tscn" id="3_ms0ej"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
 colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
@@ -70,30 +69,30 @@ offset_bottom = 118.0
 text = "99999"
 label_settings = SubResource("LabelSettings_42wtb")
 
-[node name="PlayerGrid" type="GridContainer" parent="HUD"]
+[node name="PlayerList" type="GridContainer" parent="HUD"]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 40.0
-offset_right = 32.0
-offset_bottom = 40.0
+offset_right = 278.0
+offset_bottom = 270.0
 
-[node name="PlayerBadge" parent="HUD/PlayerGrid" instance=ExtResource("3_ms0ej")]
-position = Vector2(8, 8)
+[node name="Current" type="Label" parent="HUD/PlayerList"]
+layout_mode = 2
+text = "--CURRENT--"
+label_settings = SubResource("LabelSettings_i3a2a")
 
-[node name="P1" type="Label" parent="HUD/PlayerGrid"]
-visible = false
+[node name="P1" type="Label" parent="HUD/PlayerList"]
 layout_mode = 2
 text = "* P1: 999"
 label_settings = SubResource("LabelSettings_i3a2a")
 
-[node name="P2" type="Label" parent="HUD/PlayerGrid"]
-visible = false
+[node name="P2" type="Label" parent="HUD/PlayerList"]
 layout_mode = 2
 text = "P2: 999"
 label_settings = SubResource("LabelSettings_i3a2a")
 
 [node name="GridContainer" type="GridContainer" parent="."]
-offset_left = 297.0
-offset_top = 129.0
-offset_right = 1819.0
-offset_bottom = 853.0
+offset_left = 392.0
+offset_top = 176.0
+offset_right = 1744.0
+offset_bottom = 816.0

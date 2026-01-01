@@ -6,6 +6,8 @@ const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 @onready var grid = $GridContainer
 @onready var pot_label = $HUD/PotLabel
 @onready var guess_btn = $HUD/GuessBtn
+@onready var player_list = $HUD/PlayerList
+@onready var current_player_label = $HUD/PlayerList/Current
 
 const BASE_POT = 100.0
 const MINIMUM_POT_PERCENT = 0.1  # Always reserve 10% as minimum pot
@@ -36,6 +38,8 @@ func _ready() -> void:
 	# Load questions from JSON
 	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
 	guess_btn.pressed.connect(_on_guess_btn_pressed)
+	current_player_label.text = PlayerManager.get_current_player().name
+	print("First child of player_list: %s" % current_player_label.text)
 	
 	# Get a random question and spawn it
 	var random_question = QuestionLoaderResource.get_random_question(all_questions)
@@ -68,7 +72,7 @@ func spawn_question(question: Question) -> void:
 	for i in range(words.size()):
 		var s = SliderScene.instantiate()
 		s.custom_minimum_size = Vector2(250, 80)  # Match the size from the scene
-		grid.columns = 4
+		grid.columns = 3
 		grid.add_child(s)
 		s.set_word(words[i], i + 1)  # Pass word and number (1-indexed)
 		s.clicked.connect(_on_slider_clicked)
@@ -88,7 +92,9 @@ func _on_slider_clicked():
 	# Next player
 	PlayerManager.next_turn()
 	print("Next turn: %s" % PlayerManager.get_current_player().name)
-	
+	# print("First child of player_list: %s" % current_player_label.text)
+	current_player_label.text = PlayerManager.get_current_player().name
+
 
 # Update the score on the screen
 func update_pot_display():
