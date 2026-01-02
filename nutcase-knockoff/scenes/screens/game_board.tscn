@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dl00hth5lbomp"]
 
-[ext_resource type="Script" uid="uid://bvmfv62q8ittl" path="res://scenes/screens/main_game.gd" id="1_8dokk"]
-[ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="2_i3a2a"]
+[ext_resource type="Script" uid="uid://bvmfv62q8ittl" path="res://scenes/screens/game_board.gd" id="1_rwufl"]
+[ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="2_6xqkr"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
 colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
@@ -18,8 +18,8 @@ font_color = Color(1, 0, 0.0196078, 1)
 font_size = 54
 font_color = Color(0, 0.0313726, 1, 1)
 
-[node name="MainGame" type="Node2D"]
-script = ExtResource("1_8dokk")
+[node name="GameBoard" type="Node2D"]
+script = ExtResource("1_rwufl")
 metadata/_edit_vertical_guides_ = [960.0]
 metadata/_edit_horizontal_guides_ = [540.0]
 
@@ -40,7 +40,7 @@ offset_left = 776.0
 offset_top = 888.0
 offset_right = 1147.0
 offset_bottom = 1044.0
-theme = ExtResource("2_i3a2a")
+theme = ExtResource("2_6xqkr")
 theme_override_font_sizes/font_size = 64
 text = "Guess"
 

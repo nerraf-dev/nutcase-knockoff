@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="nutcase-knockoff"
-config/features=PackedStringArray("4.4", "Forward Plus")
+run/main_scene="uid://cos2mdk3ikq0t"
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]

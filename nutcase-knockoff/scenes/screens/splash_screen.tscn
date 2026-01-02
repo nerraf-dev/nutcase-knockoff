@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://basgb8qmd7tuh"]
+
+[ext_resource type="Script" uid="uid://diseisyc2bdd5" path="res://scenes/screens/splash_screen.gd" id="1_jg1i1"]
+
+[sub_resource type="Gradient" id="Gradient_5vyjk"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8hwfj"]
+gradient = SubResource("Gradient_5vyjk")
+
+[node name="Splash" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jg1i1")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_8hwfj")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 368.0
+offset_top = 112.0
+offset_right = 1568.0
+offset_bottom = 912.0
+color = Color(0.705887, 0.705887, 0.705887, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 416.0
+offset_right = 1408.0
+offset_bottom = 515.0
+theme_override_font_sizes/font_size = 72
+text = "This is a splash screen"
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0

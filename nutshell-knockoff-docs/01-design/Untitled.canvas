@@ -1,0 +1,9 @@
+{
+	"nodes":[
+		{"id":"4db13f0c2b6e2964","type":"text","text":"**Main.tscn**\n\nmain.gd\n\nMain scene of the game. \n\nholds instances of the game scenes:\n- splash\n- home","x":-360,"y":-320,"width":760,"height":560},
+		{"id":"1cb6b978369ce99b","type":"text","text":"**Splash.tscn**\n\nStandard splash.","x":20,"y":-300,"width":250,"height":170},
+		{"id":"07a27a90b9432678","type":"text","text":"**Home.tscn**\n\n\nPlayer can:\n- start\n- exit\n- options\n- credits\n- and anything else that might come","x":20,"y":-100,"width":340,"height":260},
+		{"id":"16e8a77a6cf8564f","type":"text","text":"**Home.tscn**\n\n\n- exitBtn - modal confirm exit to desktop\n- ","x":-70,"y":320,"width":340,"height":260}
+	],
+	"edges":[]
+}

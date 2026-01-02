@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3 uid="uid://ccc4i4pmcqie4"]
+
+[ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
+
+[sub_resource type="Gradient" id="Gradient_i3a2a"]
+colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0jira"]
+gradient = SubResource("Gradient_i3a2a")
+width = 65
+
+[sub_resource type="LabelSettings" id="LabelSettings_nhm8p"]
+font_size = 54
+font_color = Color(0, 0.0313726, 1, 1)
+
+[node name="GameInit" type="Node2D"]
+script = ExtResource("1_nhm8p")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_0jira")
+
+[node name="Title" type="Label" parent="."]
+offset_left = 760.0
+offset_top = 72.0
+offset_right = 1076.0
+offset_bottom = 146.0
+text = "GAME TITLE"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="Container" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Players" type="Label" parent="Container"]
+layout_mode = 2
+offset_left = 88.0
+offset_top = 368.0
+offset_right = 404.0
+offset_bottom = 442.0
+text = "Players"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="GridContainer" type="GridContainer" parent="Container"]
+layout_mode = 2
+offset_left = 88.0
+offset_top = 480.0
+offset_right = 277.0
+offset_bottom = 554.0
+
+[node name="PlayerRow" type="Label" parent="Container/GridContainer"]
+layout_mode = 2
+text = "Player 1 [Controller 1]"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="PlayerRow2" type="Label" parent="Container/GridContainer"]
+layout_mode = 2
+text = "Player 2 [Controller 2]"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameSettings" type="Label" parent="Control"]
+layout_mode = 2
+offset_left = 1088.0
+offset_top = 368.0
+offset_right = 1404.0
+offset_bottom = 442.0
+text = "Players"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="GameType" type="Label" parent="Control"]
+layout_mode = 2
+offset_left = 1088.0
+offset_top = 480.0
+offset_right = 1404.0
+offset_bottom = 554.0
+text = "Game Type: QnA"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="GameLength" type="Label" parent="Control"]
+layout_mode = 2
+offset_left = 1088.0
+offset_top = 576.0
+offset_right = 1725.0
+offset_bottom = 650.0
+text = "Game Length: 10 rounds"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 816.0
+offset_top = 848.0
+offset_right = 953.0
+offset_bottom = 944.0
+theme_override_font_sizes/font_size = 64
+text = "Play"
+
+[node name="Home" type="Button" parent="."]
+offset_left = 136.0
+offset_top = 896.0
+offset_right = 329.0
+offset_bottom = 992.0
+theme_override_font_sizes/font_size = 64
+text = "Home"
