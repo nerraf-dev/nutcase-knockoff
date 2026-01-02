@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cj1sp0u6xorms"]
+
+[sub_resource type="GDScript" id="GDScript_0kp3l"]
+script/source = "extends Node2D
+
+"
+
+[node name="QnA" type="Node2D"]
+script = SubResource("GDScript_0kp3l")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+offset_right = 1352.0
+offset_bottom = 640.0
