@@ -35,9 +35,10 @@ func load_splash_screen() -> void:
 
 func _on_splash_complete() -> void:
 	print("Splash screen complete, loading GameHome")
-	scene_container.get_child(0).queue_free()
+	cleanup_current_scene()
 	load_game_home()
 
+# LOAD GAME HOME
 func load_game_home() -> void:
 	var home_scene = preload("res://scenes/screens/game_home.tscn")
 	var home_instance = home_scene.instantiate()
@@ -46,3 +47,17 @@ func load_game_home() -> void:
 
 func _on_new_game() -> void:
 	print("New game started, loading Game Init (setup)")
+	cleanup_current_scene()
+	load_game_init()
+
+# LOAD GAME INIT
+func load_game_init() -> void:
+	var init_scene = preload("res://scenes/screens/game_init.tscn")
+	var init_instance = init_scene.instantiate()
+	scene_container.add_child(init_instance)
+
+
+# Cleanup current scene
+func cleanup_current_scene() -> void:
+	if scene_container.get_child_count() > 0:
+		scene_container.get_child(0).queue_free()
