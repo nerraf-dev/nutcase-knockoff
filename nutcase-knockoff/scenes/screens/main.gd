@@ -42,3 +42,7 @@ func load_game_home() -> void:
 	var home_scene = preload("res://scenes/screens/game_home.tscn")
 	var home_instance = home_scene.instantiate()
 	scene_container.add_child(home_instance)
+	home_instance.new_game.connect(_on_new_game)
+
+func _on_new_game() -> void:
+	print("New game started, loading Game Init (setup)")

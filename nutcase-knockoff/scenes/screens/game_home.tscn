@@ -37,13 +37,14 @@ offset_bottom = 386.0
 text = "Some other text and whatnot "
 label_settings = SubResource("LabelSettings_sk4ik")
 
-[node name="Start" type="Button" parent="."]
+[node name="NewGame" type="Button" parent="."]
 offset_left = 840.0
 offset_top = 680.0
 offset_right = 1160.0
 offset_bottom = 816.0
 theme_override_font_sizes/font_size = 64
-text = "START!!"
+text = "New Game
+"
 
 [node name="Exit" type="Button" parent="."]
 offset_left = 880.0
