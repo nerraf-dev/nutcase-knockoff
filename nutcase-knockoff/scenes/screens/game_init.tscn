@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ccc4i4pmcqie4"]
+[gd_scene load_steps=7 format=3 uid="uid://ccc4i4pmcqie4"]
 
 [ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
+[ext_resource type="PackedScene" uid="uid://ddmycnm3j4tyh" path="res://scenes/components/player_badge_small.tscn" id="3_o5v4k"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
 colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
@@ -13,6 +14,8 @@ width = 65
 font_size = 54
 font_color = Color(0, 0.0313726, 1, 1)
 
+[sub_resource type="Theme" id="Theme_k42ct"]
+
 [node name="GameInit" type="Node2D"]
 script = ExtResource("1_nhm8p")
 
@@ -21,109 +24,170 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_0jira")
 
-[node name="ItemList" type="ItemList" parent="."]
-offset_left = 696.0
-offset_top = 312.0
+[node name="PlayersContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 888.0
+offset_bottom = 888.0
+
+[node name="PlayersLabel" type="Label" parent="PlayersContainer"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 128.0
+offset_right = 412.0
+offset_bottom = 202.0
+text = "Players"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="PlayersGrid" type="GridContainer" parent="PlayersContainer"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 270.0
+offset_right = 768.0
+offset_bottom = 902.0
+
+[node name="IconGrid" type="GridContainer" parent="PlayersContainer"]
+visible = false
+layout_mode = 0
+offset_left = 64.0
+offset_top = 320.0
 offset_right = 960.0
-offset_bottom = 640.0
-theme_override_font_sizes/font_size = 64
+offset_bottom = 824.0
+columns = 4
+
+[node name="PlayerBadge" parent="PlayersContainer/IconGrid" instance=ExtResource("3_o5v4k")]
+layout_mode = 2
+
+[node name="AddPlayerButton" type="Button" parent="PlayersContainer"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 64.0
+offset_right = 248.0
+offset_bottom = 127.0
+text = "Add Player"
+
+[node name="PlayerSlider" type="Control" parent="PlayersContainer"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PlayerCount" type="Label" parent="PlayersContainer/PlayerSlider"]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 112.0
+offset_right = 480.0
+offset_bottom = 224.0
+theme_override_font_sizes/font_size = 54
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slider" type="HSlider" parent="PlayersContainer/PlayerSlider"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 200.0
+offset_right = 416.0
+offset_bottom = 248.0
+scale = Vector2(2, 2)
+theme = SubResource("Theme_k42ct")
+min_value = 2.0
+max_value = 6.0
+value = 2.0
+exp_edit = true
+rounded = true
+tick_count = 6
+ticks_on_borders = true
+ticks_position = 3
+
+[node name="GameSettingsContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -184.0
+offset_right = 40.0
+offset_bottom = -144.0
+
+[node name="GameSettings" type="Label" parent="GameSettingsContainer"]
+layout_mode = 0
+offset_left = 1088.0
+offset_top = 368.0
+offset_right = 1404.0
+offset_bottom = 442.0
+text = "Game"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="GameMode" type="Label" parent="GameSettingsContainer"]
+layout_mode = 0
+offset_left = 1088.0
+offset_top = 442.0
+offset_right = 1404.0
+offset_bottom = 516.0
+text = "Mode:"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="GameModes" type="ItemList" parent="GameSettingsContainer"]
+layout_mode = 0
+offset_left = 1088.0
+offset_top = 558.0
+offset_right = 1352.0
+offset_bottom = 886.0
+theme_override_font_sizes/font_size = 52
 allow_reselect = true
 auto_width = true
 auto_height = true
 item_count = 2
-item_0/text = "one"
-item_1/text = "two"
+item_0/text = "QnA"
+item_1/text = "Nothing"
 
-[node name="Title" type="Label" parent="."]
-offset_left = 760.0
-offset_top = 72.0
-offset_right = 1076.0
-offset_bottom = 146.0
-text = "GAME TITLE"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="Container" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Players" type="Label" parent="Container"]
+[node name="GameLength" type="Label" parent="GameSettingsContainer"]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 368.0
-offset_right = 404.0
-offset_bottom = 442.0
-text = "Players"
+offset_left = 1432.0
+offset_top = 442.0
+offset_right = 1656.0
+offset_bottom = 528.0
+text = "Length"
 label_settings = SubResource("LabelSettings_nhm8p")
 
-[node name="GridContainer" type="GridContainer" parent="Container"]
+[node name="GameLengths" type="ItemList" parent="GameSettingsContainer"]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 480.0
-offset_right = 277.0
-offset_bottom = 554.0
-
-[node name="PlayerRow" type="Label" parent="Container/GridContainer"]
-layout_mode = 2
-text = "Player 1 [Controller 1]"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="PlayerRow2" type="Label" parent="Container/GridContainer"]
-layout_mode = 2
-text = "Player 2 [Controller 2]"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="PlayerRow3" type="Label" parent="Container/GridContainer"]
-layout_mode = 2
-text = "Player 3 [Controller 3]"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="GameSettings" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 1088.0
-offset_top = 368.0
-offset_right = 1404.0
-offset_bottom = 442.0
-text = "Players"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="GameType" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 1088.0
-offset_top = 480.0
-offset_right = 1404.0
-offset_bottom = 554.0
-text = "Game Type: QnA"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="GameLength" type="Label" parent="Control"]
-layout_mode = 0
-offset_left = 1088.0
-offset_top = 576.0
-offset_right = 1725.0
-offset_bottom = 650.0
-text = "Game Length: 10 rounds"
-label_settings = SubResource("LabelSettings_nhm8p")
+offset_left = 1432.0
+offset_top = 554.0
+offset_right = 1696.0
+offset_bottom = 1022.0
+theme_override_font_sizes/font_size = 52
+allow_reselect = true
+auto_width = true
+auto_height = true
+item_count = 5
+same_column_width = true
+item_0/text = "3"
+item_1/text = "5"
+item_2/text = "10"
+item_3/text = "15"
+item_4/text = "25"
 
 [node name="Play" type="Button" parent="."]
-offset_left = 816.0
-offset_top = 848.0
-offset_right = 953.0
-offset_bottom = 944.0
+offset_left = 872.0
+offset_top = 936.0
+offset_right = 1009.0
+offset_bottom = 1032.0
 theme_override_font_sizes/font_size = 64
 text = "Play"
 
 [node name="Home" type="Button" parent="."]
-offset_left = 136.0
-offset_top = 896.0
-offset_right = 329.0
-offset_bottom = 992.0
+offset_left = 24.0
+offset_top = 968.0
+offset_right = 217.0
+offset_bottom = 1064.0
 theme_override_font_sizes/font_size = 64
 text = "Home"
+
+[node name="Title" type="Label" parent="."]
+offset_left = 768.0
+offset_top = 16.0
+offset_right = 1176.0
+offset_bottom = 148.0
+theme_override_font_sizes/font_size = 96
+text = "Settings"
+horizontal_alignment = 1
+vertical_alignment = 1

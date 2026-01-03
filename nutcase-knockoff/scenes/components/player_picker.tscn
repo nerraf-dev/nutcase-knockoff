@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfn3vsea2v03b"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1252w"]
+font_size = 54
+font_color = Color(0, 0.0313726, 1, 1)
+
+[node name="PlayerPicker" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 96.0
+
+[node name="P1" type="Label" parent="."]
+layout_mode = 0
+offset_top = 11.0
+offset_right = 400.0
+offset_bottom = 85.0
+text = "123456789012"
+label_settings = SubResource("LabelSettings_1252w")
+vertical_alignment = 1
+clip_text = true
+max_lines_visible = 1
+
+[node name="HBoxContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 416.0
+offset_top = 8.0
+offset_right = 640.0
+offset_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 3
+
+[node name="KB" type="Button" parent="HBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "KB"
+
+[node name="Controller" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "🎮"
+
+[node name="Remote" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "IP"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cn3r5wugsumvx"]
+[gd_scene load_steps=2 format=3 uid="uid://ddmycnm3j4tyh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1252w"]
 font_size = 54
@@ -8,17 +8,18 @@ font_color = Color(0, 0.0313726, 1, 1)
 layout_mode = 3
 anchors_preset = 0
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 0
-offset_right = 440.0
-offset_bottom = 96.0
+offset_right = 192.0
+offset_bottom = 192.0
 
-[node name="P1" type="Label" parent="."]
+[node name="Label" type="Label" parent="."]
 layout_mode = 0
+offset_left = 8.0
 offset_top = 11.0
-offset_right = 432.0
-offset_bottom = 85.0
-text = "123456789012"
+offset_right = 184.0
+offset_bottom = 176.0
+text = "P1"
 label_settings = SubResource("LabelSettings_1252w")
 horizontal_alignment = 1
 vertical_alignment = 1

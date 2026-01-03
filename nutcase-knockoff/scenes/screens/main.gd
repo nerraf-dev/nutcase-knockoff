@@ -59,5 +59,6 @@ func load_game_init() -> void:
 
 # Cleanup current scene
 func cleanup_current_scene() -> void:
-	if scene_container.get_child_count() > 0:
-		scene_container.get_child(0).queue_free()
+	for child in scene_container.get_children():
+		child.queue_free()
+
