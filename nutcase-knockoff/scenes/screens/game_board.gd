@@ -26,18 +26,11 @@ var current_question: Question = null
 
 func _ready() -> void:
 	print("MainGame scene ready")
-	# Add some test players
-	PlayerManager.add_player("Alice")
-	PlayerManager.add_player("Bob")
-	PlayerManager.add_player("Charlie")
-	PlayerManager.add_player("Diana")
-	# Print current players
-	for p in PlayerManager.players:
-		print("Player: %s (ID: %s)" % [p.name, p.id])
-	print("Starting player turn: %s" % PlayerManager.get_current_player().name)
+	guess_btn.pressed.connect(_on_guess_btn_pressed)
+	
 	# Load questions from JSON
 	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
-	guess_btn.pressed.connect(_on_guess_btn_pressed)
+	
 	current_player_label.text = PlayerManager.get_current_player().name
 	print("First child of player_list: %s" % current_player_label.text)
 	
@@ -57,10 +50,8 @@ func spawn_question(question: Question) -> void:
 	# Calculate pot based on difficulty
 	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(question.difficulty, 1.0)
 	current_pot = BASE_POT * difficulty_mult
-	
 	# Reserve minimum pot (e.g., 10% of starting pot)
 	minimum_pot = current_pot * MINIMUM_POT_PERCENT
-	
 	# Divide only the reducible portion among words
 	var reducible_pot = current_pot - minimum_pot
 	pot_per_word = reducible_pot / words.size()
@@ -68,7 +59,6 @@ func spawn_question(question: Question) -> void:
 
 	# Spawns a slider for each word in the `words` array, adds it to the grid, and connects its click signal.
 	# Each slider is given a minimum size and is numbered (1-indexed) when set up.
-	# After all sliders are added, prints the first word for debugging purposes.
 	for i in range(words.size()):
 		var s = SliderScene.instantiate()
 		s.custom_minimum_size = Vector2(250, 80)  # Match the size from the scene
@@ -76,7 +66,6 @@ func spawn_question(question: Question) -> void:
 		grid.add_child(s)
 		s.set_word(words[i], i + 1)  # Pass word and number (1-indexed)
 		s.clicked.connect(_on_slider_clicked)
-	print("Finished spawning question. First word is %s" % words[0])
 
 
 # Handles the event when the slider is clicked.

@@ -1,6 +1,6 @@
 extends Node2D
 
-signal game_init_complete
+signal game_init_complete(settings: Dictionary)
 
 @onready var players_container = $PlayersContainer
 @onready var players_grid = $PlayersContainer/PlayersGrid
@@ -12,9 +12,12 @@ signal game_init_complete
 @onready var game_length_list = $GameSettingsContainer/GameLengths
 @onready var start_button = $StartBtn
 @onready var confirm_modal = $ConfirmModal
+@onready var confirm_button = $ConfirmModal/ConfirmBtn
+@onready var back_button = $ConfirmModal/BackBtn
 @onready var confirm_players = $ConfirmModal/Players/PlayersValue
 @onready var confirm_mode = $ConfirmModal/Mode/ModeValue
 @onready var confirm_length = $ConfirmModal/Length/LengthValue
+
 
 @onready var player_picker = preload("res://scenes/components/player_picker.tscn")
 
@@ -31,21 +34,19 @@ const GAME_LENGTHS = [5, 10, 15, 20, 25]  # number of rounds
 
 # Main Functions
 func _ready() -> void:
-	print("GameInit scene ready")
 	confirm_modal.visible = false
 	_make_connections()
 	_init_lists()
 	_initialize_players()
-	# game_init_complete.emit()
-
 
 # helper functions
 func _make_connections() -> void:
 	add_player_button.pressed.connect(Callable(self, "_on_add_player_button_pressed"))
-	# player_slider.connect("value_changed", Callable(self, "_on_h_slider_value_changed"))
 	game_mode_list.item_selected.connect(Callable(self, "_on_game_mode_selected"))
 	game_length_list.item_selected.connect(Callable(self, "_on_game_length_selected"))
 	start_button.pressed.connect(Callable(self, "_on_start_button_pressed"))
+	confirm_button.pressed.connect(Callable(self, "_on_confirm_button_pressed"))
+	back_button.pressed.connect(Callable(self, "_on_back_button_pressed"))
 
 func _init_lists() -> void:
 	game_mode_list.clear()
@@ -85,6 +86,7 @@ func _on_add_player_button_pressed() -> void:
 	picker_instance.set_player_name(player_name)
 	players_grid.add_child(picker_instance)
 	print("Added new player: %s" % player_name)
+	settings["players"] = PlayerManager.players
 
 	if PlayerManager.players.size() >= 8:
 		print("Maximum number of players reached.")
@@ -93,7 +95,17 @@ func _on_add_player_button_pressed() -> void:
 
 func _on_start_button_pressed() -> void:
 	confirm_modal.visible = true
-	print("Start button pressed, game settings: %s" % settings)
+	# print("Start button pressed, game settings: %s" % settings)
 	confirm_players.text = str(PlayerManager.players.size())
 	confirm_mode.text = settings["game_type"]
 	confirm_length.text = str(settings["round_count"])
+
+func _on_back_button_pressed() -> void:
+	confirm_modal.visible = false
+	print("Back button pressed, returning to game init setup")
+
+func _on_confirm_button_pressed() -> void:
+	game_init_complete.emit(settings)
+	# print("Confirm button pressed, starting game with settings: %s" % settings)
+	# close modal, proceed to game board, return settings (Players are always available, but no game manager yet)
+	confirm_modal.visible = false
