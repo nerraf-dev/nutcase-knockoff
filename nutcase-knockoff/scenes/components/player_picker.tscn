@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfn3vsea2v03b"]
+[gd_scene load_steps=3 format=3 uid="uid://cfn3vsea2v03b"]
+
+[ext_resource type="Script" uid="uid://cjb41jvv1wvj" path="res://scenes/components/player_picker.gd" id="1_xvn5u"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1252w"]
 font_size = 54
@@ -11,13 +13,14 @@ offset_right = 640.0
 offset_bottom = 96.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+script = ExtResource("1_xvn5u")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 layout_mode = 0
 offset_right = 640.0
 offset_bottom = 96.0
 
-[node name="P1" type="Label" parent="."]
+[node name="NameLabel" type="Label" parent="."]
 layout_mode = 0
 offset_top = 11.0
 offset_right = 400.0

@@ -166,15 +166,15 @@ item_2/text = "10"
 item_3/text = "15"
 item_4/text = "25"
 
-[node name="Play" type="Button" parent="."]
+[node name="StartBtn" type="Button" parent="."]
 offset_left = 872.0
 offset_top = 936.0
 offset_right = 1009.0
 offset_bottom = 1032.0
 theme_override_font_sizes/font_size = 64
-text = "Play"
+text = "Start"
 
-[node name="Home" type="Button" parent="."]
+[node name="HomeBtn" type="Button" parent="."]
 offset_left = 24.0
 offset_top = 968.0
 offset_right = 217.0
@@ -191,3 +191,112 @@ theme_override_font_sizes/font_size = 96
 text = "Settings"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ConfirmModal" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 312.0
+offset_top = 256.0
+offset_right = 1728.0
+offset_bottom = 776.0
+
+[node name="ColorRect" type="ColorRect" parent="ConfirmModal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.16394848, 0.21695486, 0.38877624, 1)
+
+[node name="Players" type="HBoxContainer" parent="ConfirmModal"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 144.0
+offset_right = 845.0
+offset_bottom = 213.0
+theme_override_constants/separation = 32
+alignment = 1
+
+[node name="PlayersLabel" type="Label" parent="ConfirmModal/Players"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Number of players:"
+vertical_alignment = 1
+
+[node name="PlayersValue" type="Label" parent="ConfirmModal/Players"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "99"
+vertical_alignment = 1
+
+[node name="Mode" type="HBoxContainer" parent="ConfirmModal"]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 240.0
+offset_right = 699.0
+offset_bottom = 309.0
+
+[node name="ModeLabel" type="Label" parent="ConfirmModal/Mode"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Game Mode: "
+vertical_alignment = 1
+
+[node name="ModeValue" type="Label" parent="ConfirmModal/Mode"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "99"
+vertical_alignment = 1
+
+[node name="Length" type="HBoxContainer" parent="ConfirmModal"]
+layout_mode = 0
+offset_left = 328.0
+offset_top = 328.0
+offset_right = 725.0
+offset_bottom = 397.0
+
+[node name="LengthLabel" type="Label" parent="ConfirmModal/Length"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "Game Length:"
+vertical_alignment = 1
+
+[node name="LengthValue" type="Label" parent="ConfirmModal/Length"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 50
+text = "99"
+vertical_alignment = 1
+
+[node name="ConfirmLabel" type="Label" parent="ConfirmModal"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -168.0
+offset_right = 168.0
+offset_bottom = 88.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 64
+text = "Confirm?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmBtn" type="Button" parent="ConfirmModal"]
+layout_mode = 0
+offset_left = 1144.0
+offset_top = 408.0
+offset_right = 1379.0
+offset_bottom = 495.0
+theme_override_font_sizes/font_size = 50
+text = "Confirm"
+
+[node name="BackBtn" type="Button" parent="ConfirmModal"]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 416.0
+offset_right = 171.0
+offset_bottom = 493.0
+theme_override_font_sizes/font_size = 50
+text = "Back"
