@@ -4,9 +4,12 @@
 script/source = "extends Node2D
 "
 
-[node name="QnA" type="Node2D"]
+[node name="QnA" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = SubResource("GDScript_0kp3l")
 
 [node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
 offset_right = 1352.0
 offset_bottom = 640.0

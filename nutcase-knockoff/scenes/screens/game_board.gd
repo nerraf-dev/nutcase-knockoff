@@ -7,7 +7,7 @@ const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 @onready var pot_label = $HUD/PotLabel
 @onready var guess_btn = $HUD/GuessBtn
 @onready var player_list = $HUD/PlayerList
-@onready var current_player_label = $HUD/PlayerList/Current
+@onready var current_player_label = $HUD/CurrentPlayer
 
 const BASE_POT = 100.0
 const MINIMUM_POT_PERCENT = 0.1  # Always reserve 10% as minimum pot
@@ -31,8 +31,10 @@ func _ready() -> void:
 	# Load questions from JSON
 	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
 	
-	current_player_label.text = PlayerManager.get_current_player().name
-	print("First child of player_list: %s" % current_player_label.text)
+	#  Get first player
+	var up_next = PlayerManager.get_current_player().name
+	print("First player up: %s" % up_next)
+	current_player_label.text = up_next
 	
 	# Get a random question and spawn it
 	var random_question = QuestionLoaderResource.get_random_question(all_questions)

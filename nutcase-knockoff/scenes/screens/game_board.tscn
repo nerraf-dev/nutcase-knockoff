@@ -69,17 +69,21 @@ offset_bottom = 118.0
 text = "99999"
 label_settings = SubResource("LabelSettings_42wtb")
 
-[node name="PlayerList" type="GridContainer" parent="HUD"]
+[node name="CurrentPlayer" type="Label" parent="HUD"]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 40.0
-offset_right = 278.0
-offset_bottom = 270.0
-
-[node name="Current" type="Label" parent="HUD/PlayerList"]
-layout_mode = 2
+offset_right = 348.0
+offset_bottom = 114.0
 text = "--CURRENT--"
 label_settings = SubResource("LabelSettings_i3a2a")
+
+[node name="PlayerList" type="GridContainer" parent="HUD"]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 160.0
+offset_right = 278.0
+offset_bottom = 390.0
 
 [node name="P1" type="Label" parent="HUD/PlayerList"]
 layout_mode = 2
@@ -102,6 +106,7 @@ visible = false
 position = Vector2(344, 160)
 
 [node name="ColorRect" type="ColorRect" parent="RoundArea"]
-offset_top = -24.0
-offset_right = 1360.0
-offset_bottom = 676.0
+offset_left = -40.0
+offset_top = 8.0
+offset_right = 1536.0
+offset_bottom = 664.0
