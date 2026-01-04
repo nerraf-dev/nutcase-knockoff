@@ -1,4 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cj1sp0u6xorms"]
+[gd_scene load_steps=3 format=3 uid="uid://cj1sp0u6xorms"]
+
+[ext_resource type="PackedScene" uid="uid://b5giku58qyr3j" path="res://scenes/components/Slider.tscn" id="1_ll357"]
 
 [sub_resource type="GDScript" id="GDScript_0kp3l"]
 script/source = "extends Node2D
@@ -9,7 +11,58 @@ layout_mode = 3
 anchors_preset = 0
 script = SubResource("GDScript_0kp3l")
 
+[node name="Backgorund" type="Container" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1360.0
+offset_bottom = 760.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Backgorund"]
+layout_mode = 2
+color = Color(0.051970966, 0.05197096, 0.05197095, 0.15686275)
+
 [node name="GridContainer" type="GridContainer" parent="."]
-layout_mode = 0
-offset_right = 1352.0
-offset_bottom = 640.0
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 1312.0
+offset_bottom = 624.0
+grow_vertical = 2
+columns = 3
+
+[node name="Slider" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider2" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider3" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider4" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider5" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider6" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider7" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider8" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider9" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2
+
+[node name="Slider10" parent="GridContainer" instance=ExtResource("1_ll357")]
+layout_mode = 2

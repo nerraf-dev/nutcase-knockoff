@@ -1,0 +1,152 @@
+[gd_scene load_steps=6 format=3 uid="uid://blgvh2822ek74"]
+
+[ext_resource type="Script" uid="uid://bvmfv62q8ittl" path="res://scenes/screens/game_board.gd" id="1_0h872"]
+[ext_resource type="PackedScene" uid="uid://cn3r5wugsumvx" path="res://scenes/components/player_badge.tscn" id="2_46uwq"]
+[ext_resource type="PackedScene" uid="uid://cj1sp0u6xorms" path="res://scenes/components/rounds/qna.tscn" id="3_jtv66"]
+
+[sub_resource type="Gradient" id="Gradient_i3a2a"]
+colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ms0ej"]
+gradient = SubResource("Gradient_i3a2a")
+width = 65
+
+[node name="GameBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_0h872")
+metadata/_edit_vertical_guides_ = [960.0, 520.0, 384.0]
+metadata/_edit_horizontal_guides_ = [540.0, 288.0, 256.0]
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_ms0ej")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TopBar" type="HBoxContainer" parent="HUD"]
+offset_left = 440.0
+offset_right = 1856.0
+offset_bottom = 256.0
+
+[node name="Controls" type="HBoxContainer" parent="HUD"]
+offset_left = 24.0
+offset_top = 8.0
+offset_right = 280.0
+offset_bottom = 136.0
+alignment = 1
+
+[node name="OptionsBtn" type="Button" parent="HUD/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Options"
+
+[node name="ExitBtn" type="Button" parent="HUD/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Exit"
+
+[node name="PlayerBar" type="VBoxContainer" parent="HUD"]
+offset_left = 17.0
+offset_top = 314.0
+offset_right = 361.0
+offset_bottom = 832.0
+theme_override_constants/separation = 64
+
+[node name="PlayerBadge" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="PlayerBadge2" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="PlayerBadge3" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="PlayerBadge4" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="PlayerBadge5" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="PlayerBadge6" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="PlayerBadge7" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="PlayerBadge8" parent="HUD/PlayerBar" instance=ExtResource("2_46uwq")]
+layout_mode = 2
+
+[node name="RoundArea" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 288.0
+offset_right = 1880.0
+offset_bottom = 1048.0
+
+[node name="MarginContainer" type="MarginContainer" parent="RoundArea"]
+layout_mode = 2
+
+[node name="QnA" parent="RoundArea/MarginContainer" instance=ExtResource("3_jtv66")]
+layout_mode = 2
+
+[node name="OptionsPopup" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 424.0
+offset_top = 224.0
+offset_right = 1456.0
+offset_bottom = 824.0
+
+[node name="ColorRect" type="ColorRect" parent="OptionsPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.6327254, 0.8119644, 0.99583656, 1)
+
+[node name="OptionsTitle" type="Label" parent="OptionsPopup"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -394.5
+offset_right = 394.5
+offset_bottom = 99.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.08400612, 0.2749919, 0.48058325, 1)
+theme_override_font_sizes/font_size = 72
+text = "Options: Game Paused"
+
+[node name="Controls" type="HBoxContainer" parent="OptionsPopup"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="CloseBtn" type="Button" parent="OptionsPopup/Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Options"
+
+[node name="SoundOptions" type="Control" parent="OptionsPopup"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GameOptions" type="Control" parent="OptionsPopup"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
