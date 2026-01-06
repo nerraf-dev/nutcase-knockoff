@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cx4m11454gbrd"]
+
+[ext_resource type="FontFile" uid="uid://b5cbkoqd11q8l" path="res://assets/fonts/Bloopoly.otf" id="1_jxikl"]
+
+[resource]
+default_font = ExtResource("1_jxikl")
+default_font_size = 32

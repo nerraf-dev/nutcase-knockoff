@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://ciqemufqkbmrl"]
+
+[ext_resource type="FontFile" uid="uid://dsjw1g8q8n42w" path="res://assets/fonts/Cute Dino.otf" id="1_244tq"]
+
+[resource]
+font = ExtResource("1_244tq")
+font_size = 118
+font_color = Color(0, 0, 0.654902, 1)

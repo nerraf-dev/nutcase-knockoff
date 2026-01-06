@@ -1,0 +1,26 @@
+{
+  "adjectives": [
+    "Tiny", "Mega", "Gigantic", "Floppy", "Chunky", "Round", "Flat", "Tall",
+    "Infinite", "Micro", "Hollow", "Pointy",
+    "Soggy", "Crusty", "Jiggly", "Velvet", "Slippery", "Sticky", "Polished",
+    "Rusty", "Broken", "Glazed", "Fuzzy", "Rough",
+    "Neon", "Invisible", "Glowing", "Dark", "Shiny", "Pixel", "Golden",
+    "Transparent", "Blurry", "Vibrant", "Pastel",
+    "Angry", "Happy", "Sleepy", "Hyper", "Lazy", "Grumpy", "Heroic", "Evil",
+    "Confused", "Lucky", "Savage", "Nervous", "Polite",
+    "Laggy", "Glitched", "Turbo", "Cosmic", "Radioactive", "Digital", "Magic",
+    "Cursed", "Blessed", "Ancient", "Cyber"
+  ],
+  "nouns": [
+    "Badger", "Hamster", "Axolotl", "Penguin", "Octopus", "Gecko", "Bear",
+    "Chicken", "Raccoon", "Shrimp", "Walrus", "Panda", "Lobster",
+    "Wizard", "Goblin", "Dragon", "Orc", "Ghost", "Slime", "Skeleton",
+    "Paladin", "Druid", "Vampire", "Zombie", "Witch",
+    "Burrito", "Muffin", "Toast", "Pizza", "Nugget", "Pickle", "Banana",
+    "Taco", "Cheese", "Waffle", "Potato", "Onion", "Melon",
+    "Toaster", "Sock", "Bucket", "Fridge", "Spoon", "Brick", "Lamp",
+    "Keyboard", "Rocket", "Anchor", "Cactus", "Anvil",
+    "Planet", "Tornado", "Cloud", "Void", "Glitch", "Pixel", "Laser",
+    "Dungeon", "Castle", "Swamp", "Village"
+  ]
+}

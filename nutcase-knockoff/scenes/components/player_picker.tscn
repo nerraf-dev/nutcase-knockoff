@@ -16,8 +16,14 @@ size_flags_vertical = 3
 script = ExtResource("1_xvn5u")
 
 [node name="Background" type="ColorRect" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 640.0
+offset_bottom = 96.0
+
+[node name="Background2" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 384.0
 offset_bottom = 96.0
 
 [node name="NameLabel" type="Label" parent="."]
@@ -32,6 +38,7 @@ clip_text = true
 max_lines_visible = 1
 
 [node name="HBoxContainer" type="GridContainer" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 416.0
 offset_top = 8.0

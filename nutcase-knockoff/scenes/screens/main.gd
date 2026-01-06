@@ -5,6 +5,8 @@ extends Node2D
 # LOAD SPLASH SCREEN
 func _ready() -> void:
 	print("Main scene ready, loading SplashScreen")
+	var a = GameIdGenerator.get_random_id()
+	print("Generated Game ID: %s" % a)
 	load_splash_screen()
 
 func load_splash_screen() -> void:
@@ -40,13 +42,14 @@ func load_game_init() -> void:
 
 func _on_game_init_complete(settings: Dictionary) -> void:
 	print("Game Init complete with settings: %s, loading Game Board" % settings)
-	print("Player settings: %s" % str(PlayerManager.players))
+	print("Player settings: %s" % str(settings["player_count"]))
 	print("Game type: %s" % settings["game_type"])
 	print("Round count: %d" % settings["round_count"])
 	# remove node, return to main to then load game board
 	cleanup_current_scene()
 
 	# setup new game in game manger
+	GameManager.start_game(settings)
 	
 
 	load_game_board(settings)

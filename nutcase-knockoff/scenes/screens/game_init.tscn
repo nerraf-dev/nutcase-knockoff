@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://ccc4i4pmcqie4"]
+[gd_scene load_steps=12 format=3 uid="uid://ccc4i4pmcqie4"]
 
 [ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
-[ext_resource type="Theme" uid="uid://bhf44i8dnueqc" path="res://resources/game_init-list-iems.tres" id="3_g7jhl"]
+[ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="3_g7jhl"]
 [ext_resource type="PackedScene" uid="uid://ddmycnm3j4tyh" path="res://scenes/components/player_badge_small.tscn" id="3_o5v4k"]
+[ext_resource type="FontFile" uid="uid://ohhyu6a83aoa" path="res://assets/fonts/Coffee Fills.otf" id="4_g7jhl"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
 colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
@@ -17,11 +18,29 @@ font_color = Color(0, 0.0313726, 1, 1)
 
 [sub_resource type="Theme" id="Theme_k42ct"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjbsa"]
-bg_color = Color(0.48766226, 0.48766214, 0.48766208, 0.42745098)
+[sub_resource type="DPITexture" id="DPITexture_g7jhl"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"8\"><path fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" d=\"m12 2-4 3.5L4 2\"/></svg>
+"
+base_scale = 4.0
+
+[sub_resource type="DPITexture" id="DPITexture_xjbsa"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"8\"><path fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" d=\"m4 6 4-3.5L12 6\"/></svg>
+"
+base_scale = 4.0
+
+[sub_resource type="Theme" id="Theme_xjbsa"]
+default_font = ExtResource("4_g7jhl")
+default_font_size = 54
+SpinBox/colors/down_icon_modulate = Color(0.2627451, 0.5921569, 0.40784314, 1)
+SpinBox/colors/up_icon_modulate = Color(0.19314298, 0.564931, 0.32613516, 1)
+SpinBox/constants/buttons_width = 64
+SpinBox/icons/down = SubResource("DPITexture_g7jhl")
+SpinBox/icons/up = SubResource("DPITexture_xjbsa")
 
 [node name="GameInit" type="Node2D"]
 script = ExtResource("1_nhm8p")
+metadata/_edit_vertical_guides_ = [960.0]
+metadata/_edit_horizontal_guides_ = [536.0]
 
 [node name="Background" type="TextureRect" parent="."]
 offset_right = 1920.0
@@ -36,19 +55,19 @@ offset_bottom = 888.0
 
 [node name="PlayersLabel" type="Label" parent="PlayersContainer"]
 layout_mode = 0
-offset_left = 96.0
-offset_top = 128.0
-offset_right = 412.0
-offset_bottom = 202.0
+offset_left = 88.0
+offset_top = 216.0
+offset_right = 288.0
+offset_bottom = 290.0
 text = "Players"
 label_settings = SubResource("LabelSettings_nhm8p")
 
 [node name="PlayersGrid" type="GridContainer" parent="PlayersContainer"]
 layout_mode = 0
-offset_left = 88.0
-offset_top = 270.0
-offset_right = 768.0
-offset_bottom = 902.0
+offset_left = 96.0
+offset_top = 314.0
+offset_right = 776.0
+offset_bottom = 946.0
 
 [node name="IconGrid" type="GridContainer" parent="PlayersContainer"]
 visible = false
@@ -136,8 +155,6 @@ offset_left = 1088.0
 offset_top = 558.0
 offset_right = 1352.0
 offset_bottom = 886.0
-theme = ExtResource("3_g7jhl")
-theme_override_font_sizes/font_size = 52
 allow_reselect = true
 auto_width = true
 auto_height = true
@@ -145,25 +162,22 @@ item_count = 2
 item_0/text = "QnA"
 item_1/text = "Nothing"
 
-[node name="GameLength" type="Label" parent="GameSettingsContainer"]
+[node name="GameTarget" type="Label" parent="GameSettingsContainer"]
 layout_mode = 0
-offset_left = 1432.0
-offset_top = 442.0
-offset_right = 1656.0
-offset_bottom = 528.0
-text = "Length"
+offset_left = 1440.0
+offset_top = 376.0
+offset_right = 1664.0
+offset_bottom = 527.0
+text = "Target (Points)"
 label_settings = SubResource("LabelSettings_nhm8p")
+autowrap_mode = 2
 
-[node name="GameLengths" type="ItemList" parent="GameSettingsContainer"]
+[node name="GameTargets" type="ItemList" parent="GameSettingsContainer"]
 layout_mode = 0
 offset_left = 1432.0
 offset_top = 554.0
 offset_right = 1696.0
 offset_bottom = 1022.0
-theme = ExtResource("3_g7jhl")
-theme_override_colors/font_color = Color(0.39215687, 0, 0.84705883, 1)
-theme_override_font_sizes/font_size = 52
-theme_override_styles/panel = SubResource("StyleBoxFlat_xjbsa")
 allow_reselect = true
 auto_width = true
 auto_height = true
@@ -190,12 +204,13 @@ theme_override_font_sizes/font_size = 64
 text = "Home"
 
 [node name="Title" type="Label" parent="."]
-offset_left = 768.0
-offset_top = 16.0
-offset_right = 1176.0
-offset_bottom = 148.0
+offset_left = 552.0
+offset_top = 40.0
+offset_right = 1376.0
+offset_bottom = 172.0
 theme_override_font_sizes/font_size = 96
 text = "Settings"
+label_settings = ExtResource("3_g7jhl")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -307,3 +322,15 @@ offset_right = 171.0
 offset_bottom = 493.0
 theme_override_font_sizes/font_size = 50
 text = "Back"
+
+[node name="PlayerCount" type="SpinBox" parent="."]
+offset_left = 344.0
+offset_top = 224.0
+offset_right = 592.0
+offset_bottom = 336.0
+theme = SubResource("Theme_xjbsa")
+min_value = 2.0
+max_value = 8.0
+value = 2.0
+rounded = true
+alignment = 1
