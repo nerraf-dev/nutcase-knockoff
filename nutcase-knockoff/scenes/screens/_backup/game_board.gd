@@ -1,12 +1,13 @@
-extends Control
+extends Node2D
 
 const SliderScene = preload("res://scenes/components/Slider.tscn")
 const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 
 @onready var grid = $GridContainer
-@onready var guess_btn = $GuessBtn
-@onready var current_player_label = $CurrentPlayer
-@onready var prize_label = $Prize
+@onready var pot_label = $HUD/PotLabel
+@onready var guess_btn = $HUD/GuessBtn
+@onready var player_list = $HUD/PlayerList
+@onready var current_player_label = $HUD/CurrentPlayer
 
 const BASE_POT = 100.0
 const MINIMUM_POT_PERCENT = 0.1  # Always reserve 10% as minimum pot
@@ -16,15 +17,16 @@ const DIFFICULTY_MULTIPLIERS = {
 	"hard": 2.0
 }
 
-var current_prize = 100.0
-var minimum_prize = 10.0
-var prize_per_word = 0.0
+
+var current_pot = 100.0
+var minimum_pot = 10.0
+var pot_per_word = 0.0
 var all_questions: Array[Question] = []
 var current_question: Question = null
 
 func _ready() -> void:
-	print("QnA scene ready")
-
+	print("MainGame scene ready")
+	guess_btn.pressed.connect(_on_guess_btn_pressed)
 	
 	# Load questions from JSON
 	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
@@ -32,7 +34,6 @@ func _ready() -> void:
 	#  Get first player
 	var up_next = PlayerManager.get_current_player().name
 	print("First player up: %s" % up_next)
-	print("Welcome players: %s" % str(PlayerManager.players))
 	current_player_label.text = up_next
 	
 	# Get a random question and spawn it
@@ -50,13 +51,14 @@ func spawn_question(question: Question) -> void:
 	
 	# Calculate pot based on difficulty
 	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(question.difficulty, 1.0)
-	current_prize = BASE_POT * difficulty_mult
+	current_pot = BASE_POT * difficulty_mult
 	# Reserve minimum pot (e.g., 10% of starting pot)
-	minimum_prize = current_prize * MINIMUM_POT_PERCENT
+	minimum_pot = current_pot * MINIMUM_POT_PERCENT
 	# Divide only the reducible portion among words
-	var reducible_prize = current_prize - minimum_prize
-	prize_per_word = reducible_prize / words.size()
-	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
+	var reducible_pot = current_pot - minimum_pot
+	pot_per_word = reducible_pot / words.size()
+	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_pot), int(minimum_pot)])
+
 	# Spawns a slider for each word in the `words` array, adds it to the grid, and connects its click signal.
 	# Each slider is given a minimum size and is numbered (1-indexed) when set up.
 	for i in range(words.size()):
@@ -67,28 +69,30 @@ func spawn_question(question: Question) -> void:
 		s.set_word(words[i], i + 1)  # Pass word and number (1-indexed)
 		s.clicked.connect(_on_slider_clicked)
 
+
 # Handles the event when the slider is clicked.
 # Decreases the current pot by the value of pot_per_word.
 # Ensures the current pot does not go below zero.
 # Updates the pot display and prints the new pot value to the output.
 func _on_slider_clicked():
-	current_prize -= prize_per_word
-	if current_prize < minimum_prize:
-		current_prize = minimum_prize
+	current_pot -= pot_per_word
+	if current_pot < minimum_pot:
+		current_pot = minimum_pot
 	update_pot_display()
-	print("Word revealed! Pot now: %d (min: %d)" % [int(current_prize), int(minimum_prize)])
+	print("Word revealed! Pot now: %d (min: %d)" % [int(current_pot), int(minimum_pot)])
 	# Next player
 	PlayerManager.next_turn()
 	print("Next turn: %s" % PlayerManager.get_current_player().name)
 	# print("First child of player_list: %s" % current_player_label.text)
 	current_player_label.text = PlayerManager.get_current_player().name
 
+
 # Update the score on the screen
 func update_pot_display():
-	prize_label.text = str(int(current_prize))
+	pot_label.text = str(int(current_pot))
 
 func _on_guess_btn_pressed() -> void:
-	print("Guess button pressed. Current pot: %d" % int(current_prize))
+	print("Guess button pressed. Current pot: %d" % int(current_pot))
 	# Here you would typically open the answer modal to allow the player to submit their guess
 	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
 	add_child(answer_modal)
@@ -103,7 +107,7 @@ func _on_answer_submitted(answer_text: String) -> void:
 		# Award points to current player
 		var current_player = PlayerManager.get_current_player()
 		if current_player:
-			PlayerManager.award_points(current_player, int(current_prize))
+			PlayerManager.award_points(current_player, int(current_pot))
 		else:
 			print("No current player to award points to.")
 	else:

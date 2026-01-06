@@ -1,37 +1,122 @@
 [
   {
-    "question": "How many hours are in a day?",
+    "question": "How many hours in one full rotation of the Earth?",
     "answer": "24",
+    "fun_fact": "Earth's rotation is actually slowing down by about 1.7 milliseconds every century.",
     "difficulty": "easy",
     "category": "General Knowledge",
     "tags": ["time", "basic"]
   },
   {
-    "question": "The capital city of France",
+    "question": "Which European city is the capital of France?",
     "answer": "Paris",
+    "fun_fact": "Paris was originally a Roman city called Lutetia.",
     "difficulty": "easy",
     "category": "Geography",
     "tags": ["europe", "capitals"]
   },
   {
-    "question": "The chemical symbol for gold",
+    "question": "What is the chemical symbol for the metal known as gold?",
     "answer": "Au",
+    "fun_fact": "The symbol 'Au' comes from 'aurum', the Latin word for shining dawn.",
     "difficulty": "medium",
     "category": "Science",
     "tags": ["chemistry", "elements"]
   },
   {
-    "question": "The year World War II ended",
+    "question": "In which year did the Second World War officially end?",
     "answer": "1945",
+    "fun_fact": "The war ended officially when Japan signed surrender documents aboard the USS Missouri.",
     "difficulty": "medium",
     "category": "History",
     "tags": ["war", "dates"]
   },
   {
-    "question": "The smallest prime number greater than 100",
+    "question": "What is the smallest prime number greater than one hundred?",
     "answer": "101",
+    "fun_fact": "A prime number can only be divided by itself and the number one.",
     "difficulty": "hard",
     "category": "Mathematics",
     "tags": ["math", "primes"]
+  },
+  {
+    "question": "Which planet in our solar system is known as the Red Planet?",
+    "answer": "Mars",
+    "fun_fact": "Mars appears red because it's one big sea of tomato soup.",
+    "difficulty": "easy",
+    "category": "Science",
+    "tags": ["space", "planets"]
+  },
+  {
+    "question": "What is the name of the largest ocean on the Earth's surface?",
+    "answer": "Pacific",
+    "fun_fact": "If you tried to drink the Pacific Ocean you'd probably be pretty sick.",
+    "difficulty": "easy",
+    "category": "Geography",
+    "tags": ["nature", "water"]
+  },
+  {
+    "question": "How many bones are found in the adult human body?",
+    "answer": "206",
+    "fun_fact": "Babies are actually born with around 300 bones, which fuse together as they grow.",
+    "difficulty": "medium",
+    "category": "Science",
+    "tags": ["biology", "human-body"]
+  },
+  {
+    "question": "Which famous artist is responsible for painting the ceiling of the Sistine Chapel?",
+    "answer": "Michelangelo",
+    "fun_fact": "Michelangelo actually hated painting the ceiling and preferred being a sculptor.",
+    "difficulty": "medium",
+    "category": "Art",
+    "tags": ["history", "renaissance"]
+  },
+  {
+    "question": "What is the hardest natural substance known to exist on Earth?",
+    "answer": "Diamond",
+    "fun_fact": "Diamonds are made of pure carbon that has been squeezed by intense pressure.",
+    "difficulty": "easy",
+    "category": "Science",
+    "tags": ["geology", "materials"]
+  },
+  {
+    "question": "Which country gifted the Statue of Liberty to the United States?",
+    "answer": "France",
+    "fun_fact": "The statue was sent in 350 individual pieces packed into 214 crates.",
+    "difficulty": "medium",
+    "category": "History",
+    "tags": ["culture", "landmarks"]
+  },
+  {
+    "question": "What is the capital city of the island nation of Japan?",
+    "answer": "Tokyo",
+    "fun_fact": "Tokyo was originally a small fishing village known as Edo.",
+    "difficulty": "easy",
+    "category": "Geography",
+    "tags": ["asia", "cities"]
+  },
+  {
+    "question": "Which gas do plants absorb from the atmosphere during the process of photosynthesis?",
+    "answer": "Carbon Dioxide",
+    "fun_fact": "While plants absorb CO2, they also release about 90% of the Earth's oxygen.",
+    "difficulty": "medium",
+    "category": "Science",
+    "tags": ["nature", "biology"]
+  },
+  {
+    "question": "Who was the first female pilot to fly solo across the Atlantic Ocean?",
+    "answer": "Amelia Earhart",
+    "fun_fact": "Earhart was only the second person ever to fly solo across the Atlantic.",
+    "difficulty": "hard",
+    "category": "History",
+    "tags": ["aviation", "pioneers"]
+  },
+  {
+    "question": "What is the mathematical term for a shape with exactly eight sides?",
+    "answer": "Octagon",
+    "fun_fact": "Most Octagons have more sides than squares.",
+    "difficulty": "easy",
+    "category": "Mathematics",
+    "tags": ["geometry", "shapes"]
   }
 ]

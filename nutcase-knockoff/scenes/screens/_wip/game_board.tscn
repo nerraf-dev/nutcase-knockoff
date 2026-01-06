@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://blgvh2822ek74"]
+[gd_scene load_steps=6 format=3 uid="uid://e6p4mvjiu1f8"]
 
-[ext_resource type="Script" uid="uid://bvmfv62q8ittl" path="res://scenes/screens/game_board.gd" id="1_0h872"]
+[ext_resource type="Script" uid="uid://bhhdxi6xtk1qp" path="res://scenes/screens/game_board.gd" id="1_0h872"]
 [ext_resource type="PackedScene" uid="uid://cn3r5wugsumvx" path="res://scenes/components/player_badge.tscn" id="2_46uwq"]
 [ext_resource type="PackedScene" uid="uid://cj1sp0u6xorms" path="res://scenes/components/rounds/qna.tscn" id="3_jtv66"]
 
@@ -81,15 +81,13 @@ layout_mode = 2
 
 [node name="RoundArea" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_left = 520.0
-offset_top = 288.0
-offset_right = 1880.0
-offset_bottom = 1048.0
+offset_left = 472.0
+offset_top = 16.0
+offset_right = 1912.0
+offset_bottom = 1076.0
+use_top_left = true
 
-[node name="MarginContainer" type="MarginContainer" parent="RoundArea"]
-layout_mode = 2
-
-[node name="QnA" parent="RoundArea/MarginContainer" instance=ExtResource("3_jtv66")]
+[node name="QnA" parent="RoundArea" instance=ExtResource("3_jtv66")]
 layout_mode = 2
 
 [node name="OptionsPopup" type="Control" parent="."]

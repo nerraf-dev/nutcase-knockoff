@@ -1,68 +1,74 @@
 [gd_scene load_steps=3 format=3 uid="uid://cj1sp0u6xorms"]
 
-[ext_resource type="PackedScene" uid="uid://b5giku58qyr3j" path="res://scenes/components/Slider.tscn" id="1_ll357"]
-
-[sub_resource type="GDScript" id="GDScript_0kp3l"]
-script/source = "extends Node2D
-"
+[ext_resource type="Script" uid="uid://drkfq3su42qao" path="res://scenes/components/rounds/qna.gd" id="1_h7n03"]
+[ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="1_ll357"]
 
 [node name="QnA" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-script = SubResource("GDScript_0kp3l")
+script = ExtResource("1_h7n03")
+metadata/_edit_vertical_guides_ = [720.0]
+metadata/_edit_horizontal_guides_ = [528.0]
 
-[node name="Backgorund" type="Container" parent="."]
+[node name="Background" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1360.0
-offset_bottom = 760.0
+offset_right = 1440.0
+offset_bottom = 1060.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="Backgorund"]
+[node name="ColorRect" type="ColorRect" parent="Background"]
 layout_mode = 2
-color = Color(0.051970966, 0.05197096, 0.05197095, 0.15686275)
+color = Color(0.23137255, 0.050980393, 0.64705884, 0.81960785)
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 1312.0
-offset_bottom = 624.0
+offset_left = 38.0
+offset_top = 176.0
+offset_right = 1398.0
+offset_bottom = 856.0
 grow_vertical = 2
 columns = 3
 
-[node name="Slider" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
+[node name="GuessBtn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 584.0
+offset_top = 888.0
+offset_right = 859.8718
+offset_bottom = 1004.0
+theme = ExtResource("1_ll357")
+theme_override_font_sizes/font_size = 64
+text = "Guess"
 
-[node name="Slider2" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
+[node name="CurrentPlayer" type="Label" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 7.9999995
+offset_right = 198.0
+offset_bottom = 31.0
+scale = Vector2(3.1902895, 3.6227791)
+text = "~~ Current Player ~~"
 
-[node name="Slider3" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 608.0
+offset_top = 7.9999995
+offset_right = 766.0
+offset_bottom = 31.0
+scale = Vector2(3.1902895, 3.6227791)
+text = "what is it?"
 
-[node name="Slider4" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
-
-[node name="Slider5" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
-
-[node name="Slider6" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
-
-[node name="Slider7" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
-
-[node name="Slider8" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
-
-[node name="Slider9" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
-
-[node name="Slider10" parent="GridContainer" instance=ExtResource("1_ll357")]
-layout_mode = 2
+[node name="Prize" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1208.0
+offset_top = 96.0
+offset_right = 1318.0
+offset_bottom = 184.0
+theme_override_font_sizes/font_size = 64
+text = "999"

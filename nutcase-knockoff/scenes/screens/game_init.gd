@@ -30,7 +30,7 @@ var settings = {
 
 # populate game modes and lengths
 const GAME_MODES = ["Q'n'A"]
-const GAME_LENGTHS = [5, 10, 15, 20, 25]  # number of rounds
+const GAME_LENGTHS = [1000, 2000, 3000]  # winning score thresholds
 
 # Main Functions
 func _ready() -> void:

@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccc4i4pmcqie4"]
+[gd_scene load_steps=9 format=3 uid="uid://ccc4i4pmcqie4"]
 
 [ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
+[ext_resource type="Theme" uid="uid://bhf44i8dnueqc" path="res://resources/game_init-list-iems.tres" id="3_g7jhl"]
 [ext_resource type="PackedScene" uid="uid://ddmycnm3j4tyh" path="res://scenes/components/player_badge_small.tscn" id="3_o5v4k"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
@@ -15,6 +16,9 @@ font_size = 54
 font_color = Color(0, 0.0313726, 1, 1)
 
 [sub_resource type="Theme" id="Theme_k42ct"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xjbsa"]
+bg_color = Color(0.48766226, 0.48766214, 0.48766208, 0.42745098)
 
 [node name="GameInit" type="Node2D"]
 script = ExtResource("1_nhm8p")
@@ -60,10 +64,11 @@ layout_mode = 2
 
 [node name="AddPlayerButton" type="Button" parent="PlayersContainer"]
 layout_mode = 0
-offset_left = 112.0
-offset_top = 64.0
-offset_right = 248.0
-offset_bottom = 127.0
+offset_left = 328.0
+offset_top = 112.0
+offset_right = 552.0
+offset_bottom = 199.0
+theme_override_font_sizes/font_size = 48
 text = "Add Player"
 
 [node name="PlayerSlider" type="Control" parent="PlayersContainer"]
@@ -131,6 +136,7 @@ offset_left = 1088.0
 offset_top = 558.0
 offset_right = 1352.0
 offset_bottom = 886.0
+theme = ExtResource("3_g7jhl")
 theme_override_font_sizes/font_size = 52
 allow_reselect = true
 auto_width = true
@@ -154,17 +160,18 @@ offset_left = 1432.0
 offset_top = 554.0
 offset_right = 1696.0
 offset_bottom = 1022.0
+theme = ExtResource("3_g7jhl")
+theme_override_colors/font_color = Color(0.39215687, 0, 0.84705883, 1)
 theme_override_font_sizes/font_size = 52
+theme_override_styles/panel = SubResource("StyleBoxFlat_xjbsa")
 allow_reselect = true
 auto_width = true
 auto_height = true
-item_count = 5
+item_count = 3
 same_column_width = true
-item_0/text = "3"
-item_1/text = "5"
-item_2/text = "10"
-item_3/text = "15"
-item_4/text = "25"
+item_0/text = "1000"
+item_1/text = "1500"
+item_2/text = "2000"
 
 [node name="StartBtn" type="Button" parent="."]
 offset_left = 872.0
