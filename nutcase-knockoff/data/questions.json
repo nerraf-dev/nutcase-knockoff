@@ -1,6 +1,6 @@
 [
   {
-    "question": "How many hours in one full rotation of the Earth?",
+    "question": "How many hours in one full Earth rotation?",
     "answer": "24",
     "fun_fact": "Earth's rotation is actually slowing down by about 1.7 milliseconds every century.",
     "difficulty": "easy",
@@ -8,7 +8,7 @@
     "tags": ["time", "basic"]
   },
   {
-    "question": "Which European city is the capital of France?",
+    "question": "Which city is the capital of France?",
     "answer": "Paris",
     "fun_fact": "Paris was originally a Roman city called Lutetia.",
     "difficulty": "easy",
@@ -16,7 +16,7 @@
     "tags": ["europe", "capitals"]
   },
   {
-    "question": "What is the chemical symbol for the metal known as gold?",
+    "question": "What is gold’s chemical symbol?",
     "answer": "Au",
     "fun_fact": "The symbol 'Au' comes from 'aurum', the Latin word for shining dawn.",
     "difficulty": "medium",
@@ -24,7 +24,7 @@
     "tags": ["chemistry", "elements"]
   },
   {
-    "question": "In which year did the Second World War officially end?",
+    "question": "In which year did World War Two end?",
     "answer": "1945",
     "fun_fact": "The war ended officially when Japan signed surrender documents aboard the USS Missouri.",
     "difficulty": "medium",
@@ -32,7 +32,7 @@
     "tags": ["war", "dates"]
   },
   {
-    "question": "What is the smallest prime number greater than one hundred?",
+    "question": "What is the smallest prime number above one hundred?",
     "answer": "101",
     "fun_fact": "A prime number can only be divided by itself and the number one.",
     "difficulty": "hard",
@@ -40,7 +40,7 @@
     "tags": ["math", "primes"]
   },
   {
-    "question": "Which planet in our solar system is known as the Red Planet?",
+    "question": "Which planet is called the Red Planet?",
     "answer": "Mars",
     "fun_fact": "Mars appears red because it's one big sea of tomato soup.",
     "difficulty": "easy",
@@ -48,7 +48,7 @@
     "tags": ["space", "planets"]
   },
   {
-    "question": "What is the name of the largest ocean on the Earth's surface?",
+    "question": "What is the largest ocean on Earth?",
     "answer": "Pacific",
     "fun_fact": "If you tried to drink the Pacific Ocean you'd probably be pretty sick.",
     "difficulty": "easy",
@@ -56,7 +56,7 @@
     "tags": ["nature", "water"]
   },
   {
-    "question": "How many bones are found in the adult human body?",
+    "question": "How many bones in the adult human body?",
     "answer": "206",
     "fun_fact": "Babies are actually born with around 300 bones, which fuse together as they grow.",
     "difficulty": "medium",
@@ -64,7 +64,7 @@
     "tags": ["biology", "human-body"]
   },
   {
-    "question": "Which famous artist is responsible for painting the ceiling of the Sistine Chapel?",
+    "question": "Who painted the Sistine Chapel ceiling?",
     "answer": "Michelangelo",
     "fun_fact": "Michelangelo actually hated painting the ceiling and preferred being a sculptor.",
     "difficulty": "medium",
@@ -72,7 +72,7 @@
     "tags": ["history", "renaissance"]
   },
   {
-    "question": "What is the hardest natural substance known to exist on Earth?",
+    "question": "What is Earth’s hardest natural substance?",
     "answer": "Diamond",
     "fun_fact": "Diamonds are made of pure carbon that has been squeezed by intense pressure.",
     "difficulty": "easy",
@@ -80,7 +80,7 @@
     "tags": ["geology", "materials"]
   },
   {
-    "question": "Which country gifted the Statue of Liberty to the United States?",
+    "question": "Which country gave the Statue of Liberty to the USA?",
     "answer": "France",
     "fun_fact": "The statue was sent in 350 individual pieces packed into 214 crates.",
     "difficulty": "medium",
@@ -88,7 +88,7 @@
     "tags": ["culture", "landmarks"]
   },
   {
-    "question": "What is the capital city of the island nation of Japan?",
+    "question": "What is the capital city of Japan?",
     "answer": "Tokyo",
     "fun_fact": "Tokyo was originally a small fishing village known as Edo.",
     "difficulty": "easy",
@@ -96,7 +96,7 @@
     "tags": ["asia", "cities"]
   },
   {
-    "question": "Which gas do plants absorb from the atmosphere during the process of photosynthesis?",
+    "question": "Which gas do plants absorb during photosynthesis?",
     "answer": "Carbon Dioxide",
     "fun_fact": "While plants absorb CO2, they also release about 90% of the Earth's oxygen.",
     "difficulty": "medium",
@@ -104,15 +104,7 @@
     "tags": ["nature", "biology"]
   },
   {
-    "question": "Who was the first female pilot to fly solo across the Atlantic Ocean?",
-    "answer": "Amelia Earhart",
-    "fun_fact": "Earhart was only the second person ever to fly solo across the Atlantic.",
-    "difficulty": "hard",
-    "category": "History",
-    "tags": ["aviation", "pioneers"]
-  },
-  {
-    "question": "What is the mathematical term for a shape with exactly eight sides?",
+    "question": "What is a shape with exactly eight sides called?",
     "answer": "Octagon",
     "fun_fact": "Most Octagons have more sides than squares.",
     "difficulty": "easy",

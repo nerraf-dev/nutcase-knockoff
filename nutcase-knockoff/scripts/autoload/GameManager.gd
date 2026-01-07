@@ -41,12 +41,13 @@ func start_game(settings: Dictionary) -> void:
         var player_name = "Player %d" % (i + 1)
         var player = PlayerManager.add_player(player_name)
         game.player_ids.append(player.id)
-
+    
+        
     # game.total_rounds = settings.get("round_count", 5)
     game.current_round = 0
     game.is_active = true
     # game.rounds = []  # Placeholder for future round types
-    
+
 
 
     # Initialize game state here

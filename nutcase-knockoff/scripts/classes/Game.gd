@@ -61,7 +61,7 @@ func is_last_active_player() -> bool:
 
 # Get all active (not frozen/eliminated) player IDs
 func get_active_players() -> Array[String]:
-	var active = []
+	var active: Array[String] = []
 	for pid in player_ids:
 		if not frozen_players.has(pid) and not eliminated_players.has(pid):
 			active.append(pid)
@@ -85,10 +85,10 @@ func reset() -> void:
 	current_question = null
 
 # Returns an array of winning player IDs (empty if no winner yet, one if a single winner, or multiple in case of a tie)
-func get_winners() -> Array[String]:
+func check_winners() -> Array[String]:
 	var winners: Array[String] = []
-	var active_players = get_active_players()
-
+	var active_players: Array[String] = get_active_players()
+	print("Active Players: ", active_players)
 	# If only one active player remains, they win
 	if active_players.size() == 1:
 		winners.append(active_players[0])
@@ -101,13 +101,7 @@ func get_winners() -> Array[String]:
 		if player != null:
 			if player.score > max_score:
 				max_score = player.score
-
-	# If any player(s) meet or exceed the target, collect all with max_score >= game_target
-	if max_score >= game_target:
-		for pid in active_players:
-			var player = PlayerManager.get_player_by_id(pid)
-			if player != null and player.score == max_score:
+			if player.score >= game_target:
 				winners.append(pid)
-
 	return winners
-
+	

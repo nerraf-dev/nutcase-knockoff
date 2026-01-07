@@ -1,5 +1,7 @@
 extends Control
 
+signal answer_correct(player: Player, points: int)
+
 const SliderScene = preload("res://scenes/components/Slider.tscn")
 const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 
@@ -24,8 +26,7 @@ var current_question: Question = null
 
 func _ready() -> void:
 	print("QnA scene ready")
-
-	
+	guess_btn.pressed.connect(_on_guess_btn_pressed)
 	# Load questions from JSON
 	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
 	
@@ -36,27 +37,31 @@ func _ready() -> void:
 	current_player_label.text = up_next
 	
 	# Get a random question and spawn it
+	spawn_question()
+
+		
+	
+
+func spawn_question() -> void:
 	var random_question = QuestionLoaderResource.get_random_question(all_questions)
 	if random_question:
 		current_question = random_question
-		spawn_question(random_question)
 		update_pot_display()
 	else:
 		push_error("No questions loaded!")
-
-func spawn_question(question: Question) -> void:
-	print("Spawning question: %s" % question.question_text)
-	var words = question.question_text.split(" ")
+	print("Spawning question: %s" % current_question.question_text)
+	print("Answer is: %s" % current_question.answer)
+	var words = current_question.question_text.split(" ")
 	
 	# Calculate pot based on difficulty
-	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(question.difficulty, 1.0)
+	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(current_question.difficulty, 1.0)
 	current_prize = BASE_POT * difficulty_mult
 	# Reserve minimum pot (e.g., 10% of starting pot)
 	minimum_prize = current_prize * MINIMUM_POT_PERCENT
 	# Divide only the reducible portion among words
 	var reducible_prize = current_prize - minimum_prize
 	prize_per_word = reducible_prize / words.size()
-	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
+	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [current_question.difficulty, int(current_prize), int(minimum_prize)])
 	# Spawns a slider for each word in the `words` array, adds it to the grid, and connects its click signal.
 	# Each slider is given a minimum size and is numbered (1-indexed) when set up.
 	for i in range(words.size()):
@@ -72,10 +77,11 @@ func spawn_question(question: Question) -> void:
 # Ensures the current pot does not go below zero.
 # Updates the pot display and prints the new pot value to the output.
 func _on_slider_clicked():
-	current_prize -= prize_per_word
-	if current_prize < minimum_prize:
-		current_prize = minimum_prize
-	update_pot_display()
+	# TODO: Uncomment and reappluy reducing prize if needed
+	# current_prize -= prize_per_word
+	# if current_prize < minimum_prize:
+	# 	current_prize = minimum_prize
+	# update_pot_display()
 	print("Word revealed! Pot now: %d (min: %d)" % [int(current_prize), int(minimum_prize)])
 	# Next player
 	PlayerManager.next_turn()
@@ -103,7 +109,8 @@ func _on_answer_submitted(answer_text: String) -> void:
 		# Award points to current player
 		var current_player = PlayerManager.get_current_player()
 		if current_player:
-			PlayerManager.award_points(current_player, int(current_prize))
+			# PlayerManager.award_points(current_player, int(current_prize))
+			answer_correct.emit(current_player, int(current_prize))
 		else:
 			print("No current player to award points to.")
 	else:

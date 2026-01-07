@@ -1,8 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://blgvh2822ek74"]
+[gd_scene load_steps=4 format=3 uid="uid://blgvh2822ek74"]
 
 [ext_resource type="Script" uid="uid://bhhdxi6xtk1qp" path="res://scenes/screens/game_board.gd" id="1_0h872"]
-[ext_resource type="PackedScene" uid="uid://cn3r5wugsumvx" path="res://scenes/components/player_badge.tscn" id="2_46uwq"]
-[ext_resource type="PackedScene" uid="uid://cj1sp0u6xorms" path="res://scenes/components/rounds/qna.tscn" id="3_jtv66"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
 colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
@@ -56,30 +54,6 @@ offset_right = 361.0
 offset_bottom = 832.0
 theme_override_constants/separation = 64
 
-[node name="PlayerBadge" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
-[node name="PlayerBadge2" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
-[node name="PlayerBadge3" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
-[node name="PlayerBadge4" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
-[node name="PlayerBadge5" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
-[node name="PlayerBadge6" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
-[node name="PlayerBadge7" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
-[node name="PlayerBadge8" parent="HUD/PlayersContainer" instance=ExtResource("2_46uwq")]
-layout_mode = 2
-
 [node name="RoundArea" type="CenterContainer" parent="."]
 layout_mode = 0
 offset_left = 472.0
@@ -87,9 +61,6 @@ offset_top = 16.0
 offset_right = 1912.0
 offset_bottom = 1076.0
 use_top_left = true
-
-[node name="QnA" parent="RoundArea" instance=ExtResource("3_jtv66")]
-layout_mode = 2
 
 [node name="OptionsPopup" type="Control" parent="."]
 visible = false

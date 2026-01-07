@@ -1,8 +1,11 @@
-[gd_scene format=3 uid="uid://cn3r5wugsumvx"]
+[gd_scene load_steps=2 format=3 uid="uid://cn3r5wugsumvx"]
+
+[ext_resource type="Script" uid="uid://coj4gfarod36g" path="res://scenes/components/player_badge.gd" id="1_5j3gc"]
 
 [node name="PlayerBadge" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_5j3gc")
 metadata/_edit_vertical_guides_ = [40.0]
 
 [node name="ColorRect" type="ColorRect" parent="."]

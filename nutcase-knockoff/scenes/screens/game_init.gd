@@ -27,13 +27,13 @@ var settings = {
 	"players": PlayerManager.players,
 	"player_count": 2,
 	"game_type": "qna",
-	"game_target": 1000,
+	"game_target": 200,
 	"round_count": 5
 }
 
 # populate game modes and lengths
 const GAME_MODES = ["Q'n'A"]
-const GAME_TARGETS = [1000, 2000, 3000]  # winning score thresholds
+const GAME_TARGETS = [200, 1000, 2000, 3000]  # winning score thresholds
 
 # Main Functions
 func _ready() -> void:
