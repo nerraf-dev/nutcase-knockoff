@@ -52,14 +52,13 @@ func _on_game_init_complete(settings: Dictionary) -> void:
 	GameManager.start_game(settings)
 	
 
-	load_game_board(settings)
+	load_game_board()
 
 # LOAD GAME BOARD
-func load_game_board(settings: Dictionary) -> void:
+func load_game_board() -> void:
 	var board_scene = preload("res://scenes/screens/game_board.tscn")
 	var board_instance = board_scene.instantiate()
 	scene_container.add_child(board_instance)
-	# pass settings to game board if needed
 	# board_instance.setup_game(settings)  # Uncomment if setup_game method is implemented
 
 # Cleanup current scene

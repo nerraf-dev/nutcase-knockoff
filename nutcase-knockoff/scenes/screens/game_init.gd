@@ -16,7 +16,7 @@ signal game_init_complete(settings: Dictionary)
 @onready var back_button = $ConfirmModal/BackBtn
 @onready var confirm_players = $ConfirmModal/Players/PlayersValue
 @onready var confirm_mode = $ConfirmModal/Mode/ModeValue
-@onready var confirm_length = $ConfirmModal/Length/LengthValue
+@onready var confirm_target = $ConfirmModal/Target/TargetValue
 @onready var total_players = $PlayerCount
 
 
@@ -27,12 +27,13 @@ var settings = {
 	"players": PlayerManager.players,
 	"player_count": 2,
 	"game_type": "qna",
+	"game_target": 1000,
 	"round_count": 5
 }
 
 # populate game modes and lengths
 const GAME_MODES = ["Q'n'A"]
-const GAME_LENGTHS = [1000, 2000, 3000]  # winning score thresholds
+const GAME_TARGETS = [1000, 2000, 3000]  # winning score thresholds
 
 # Main Functions
 func _ready() -> void:
@@ -57,8 +58,8 @@ func _init_lists() -> void:
 		game_mode_list.add_item(mode)
 	game_mode_list.select(0)  # Default selection
 
-	for i in range(GAME_LENGTHS.size()):
-		game_target_list.add_item("%d Rounds" % GAME_LENGTHS[i])
+	for i in range(GAME_TARGETS.size()):
+		game_target_list.add_item("%d Rounds" % GAME_TARGETS[i])
 	game_target_list.select(0)  # Default selection
 
 # func _initialize_players() -> void:
@@ -78,7 +79,7 @@ func _on_game_mode_selected(index: int) -> void:
 
 func _on_game_target_selected(index: int) -> void:
 	print("Game length selected: %d" % index)
-	settings["round_count"] = GAME_LENGTHS[index]
+	settings["game_target"] = GAME_TARGETS[index]
 
 func _on_add_player_button_pressed() -> void:
 	var new_player_index = PlayerManager.players.size() + 1
@@ -101,7 +102,7 @@ func _on_start_button_pressed() -> void:
 	settings["player_count"] = int(total_players.value)
 	confirm_players.text = str(settings["player_count"])
 	confirm_mode.text = settings["game_type"]
-	confirm_length.text = str(settings["round_count"])
+	confirm_target.text = str(settings["game_target"])
 
 func _on_back_button_pressed() -> void:
 	confirm_modal.visible = false

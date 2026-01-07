@@ -29,9 +29,25 @@ func _ready() -> void:
 func start_game(settings: Dictionary) -> void:
     print("Starting new game with settings: %s" % settings)
     game = Game.new()
-    game.id = GameIdGenerator.get_random_id() 
-    game.num_players = settings.get("player_count", 2)
+    game.id = GameIdGenerator.get_random_id()
+
     game.game_type = settings.get("game_type", "")
+    game.game_target = settings.get("game_target", 1000)
+    
+
+    game.num_players = settings.get("player_count", 2)
+    PlayerManager.players.clear()
+    for i in range(game.num_players):
+        var player_name = "Player %d" % (i + 1)
+        var player = PlayerManager.add_player(player_name)
+        game.player_ids.append(player.id)
+
+    # game.total_rounds = settings.get("round_count", 5)
+    game.current_round = 0
+    game.is_active = true
+    # game.rounds = []  # Placeholder for future round types
+    
+
 
     # Initialize game state here
     game_started.emit()

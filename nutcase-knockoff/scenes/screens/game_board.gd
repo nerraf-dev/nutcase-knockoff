@@ -14,6 +14,13 @@ extends Control
 
 @onready var round_area = $RoundArea
 
+const ROUND_SCENES = {
+	"qna": "res://scenes/components/rounds/qna.tscn"
+	# Add other round types here as needed
+}
+
+
 
 func _ready() -> void:
 	print("Game Board scene ready")
+	

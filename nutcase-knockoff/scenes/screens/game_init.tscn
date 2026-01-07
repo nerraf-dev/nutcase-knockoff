@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccc4i4pmcqie4"]
+[gd_scene load_steps=14 format=3 uid="uid://ccc4i4pmcqie4"]
 
 [ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="3_g7jhl"]
+[ext_resource type="Theme" uid="uid://cb6tnblk7m60s" path="res://scenes/screens/game_init-settings-list-theme.tres" id="3_h1k66"]
 [ext_resource type="PackedScene" uid="uid://ddmycnm3j4tyh" path="res://scenes/components/player_badge_small.tscn" id="3_o5v4k"]
+[ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="3_xjbsa"]
 [ext_resource type="FontFile" uid="uid://ohhyu6a83aoa" path="res://assets/fonts/Coffee Fills.otf" id="4_g7jhl"]
 
 [sub_resource type="Gradient" id="Gradient_i3a2a"]
@@ -155,6 +157,7 @@ offset_left = 1088.0
 offset_top = 558.0
 offset_right = 1352.0
 offset_bottom = 886.0
+theme = ExtResource("3_h1k66")
 allow_reselect = true
 auto_width = true
 auto_height = true
@@ -178,6 +181,7 @@ offset_left = 1432.0
 offset_top = 554.0
 offset_right = 1696.0
 offset_bottom = 1022.0
+theme = ExtResource("3_h1k66")
 allow_reselect = true
 auto_width = true
 auto_height = true
@@ -187,13 +191,13 @@ item_0/text = "1000"
 item_1/text = "1500"
 item_2/text = "2000"
 
-[node name="StartBtn" type="Button" parent="."]
-offset_left = 872.0
-offset_top = 936.0
-offset_right = 1009.0
-offset_bottom = 1032.0
-theme_override_font_sizes/font_size = 64
-text = "Start"
+[node name="StartBtn" type="TextureButton" parent="."]
+offset_left = 807.99994
+offset_top = 904.00006
+offset_right = 1222.0
+offset_bottom = 1118.0
+scale = Vector2(0.7316462, 0.7481033)
+texture_normal = ExtResource("3_xjbsa")
 
 [node name="HomeBtn" type="Button" parent="."]
 offset_left = 24.0
@@ -272,20 +276,20 @@ theme_override_font_sizes/font_size = 50
 text = "99"
 vertical_alignment = 1
 
-[node name="Length" type="HBoxContainer" parent="ConfirmModal"]
+[node name="Target" type="HBoxContainer" parent="ConfirmModal"]
 layout_mode = 0
 offset_left = 328.0
 offset_top = 328.0
 offset_right = 725.0
 offset_bottom = 397.0
 
-[node name="LengthLabel" type="Label" parent="ConfirmModal/Length"]
+[node name="TargetLabel" type="Label" parent="ConfirmModal/Target"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "Game Length:"
 vertical_alignment = 1
 
-[node name="LengthValue" type="Label" parent="ConfirmModal/Length"]
+[node name="TargetValue" type="Label" parent="ConfirmModal/Target"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 50
 text = "99"

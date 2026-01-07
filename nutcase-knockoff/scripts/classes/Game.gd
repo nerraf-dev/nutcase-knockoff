@@ -12,8 +12,8 @@ var current_round: int = 0
 var total_rounds: int = 0
 # Game mode/type
 var game_type: String = ""
-# Game length
-var game_length: int = 1000
+# Game target score
+var game_target: int = 1000
 # Is the game currently active
 var is_active: bool = false
 # List of round types (e.g., ["QnA", "Puzzle", "Speed"])
@@ -84,7 +84,30 @@ func reset() -> void:
 	eliminated_players.clear()
 	current_question = null
 
-# Utility: check if game is over (all but one player eliminated or rounds complete)
-func is_game_over() -> bool:
-	return (current_round >= total_rounds) or (get_active_players().size() <= 1)
+# Returns an array of winning player IDs (empty if no winner yet, one if a single winner, or multiple in case of a tie)
+func get_winners() -> Array[String]:
+	var winners: Array[String] = []
+	var active_players = get_active_players()
+
+	# If only one active player remains, they win
+	if active_players.size() == 1:
+		winners.append(active_players[0])
+		return winners
+
+	# Check for players who reached or exceeded the target score
+	var max_score = -INF
+	for pid in active_players:
+		var player = PlayerManager.get_player_by_id(pid)
+		if player != null:
+			if player.score > max_score:
+				max_score = player.score
+
+	# If any player(s) meet or exceed the target, collect all with max_score >= game_target
+	if max_score >= game_target:
+		for pid in active_players:
+			var player = PlayerManager.get_player_by_id(pid)
+			if player != null and player.score == max_score:
+				winners.append(pid)
+
+	return winners
 
