@@ -21,6 +21,8 @@ signal game_started
 signal game_ended(winner: Player)
 
 var game: Game = null
+var available_questions: Array[Question] = []
+var used_question_ids: Array[String] = []
 
 func _ready() -> void:
     print("GameManager initialized")
@@ -30,25 +32,40 @@ func start_game(settings: Dictionary) -> void:
     print("Starting new game with settings: %s" % settings)
     game = Game.new()
     game.id = GameIdGenerator.get_random_id()
-
-    game.game_type = settings.get("game_type", "")
+    game.game_type = settings.get("game_type", "qna")
     game.game_target = settings.get("game_target", 1000)
-    
-
-    game.num_players = settings.get("player_count", 2)
-    PlayerManager.players.clear()
-    for i in range(game.num_players):
-        var player_name = "Player %d" % (i + 1)
-        var player = PlayerManager.add_player(player_name)
-        game.player_ids.append(player.id)
-    
-        
-    # game.total_rounds = settings.get("round_count", 5)
-    game.current_round = 0
+    game.current_round = 1
     game.is_active = true
-    # game.rounds = []  # Placeholder for future round types
+    
+    # Load players
+    for i in range(settings.get("player_count", 2)):
+        var player_name = "Player %d" % (i + 1)
+        PlayerManager.add_player(player_name)
 
-
-
-    # Initialize game state here
+    # Load questions
+    const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
+    available_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
+    used_question_ids.clear()
+    
+    print("Game started with %d players" % PlayerManager.players.size())
     game_started.emit()
+
+# Get next unused question
+func get_next_question() -> Question:
+    var unused = available_questions.filter(func(q): 
+        return not used_question_ids.has(q.question_text)
+    )
+    if unused.is_empty():
+        print("No more unused questions!")
+        return null
+    var next_q = unused.pick_random()
+    used_question_ids.append(next_q.question_text)
+    return next_q
+
+# Check for winner by score
+func check_for_winner() -> Array[Player]:
+    var winners: Array[Player] = []
+    for player in PlayerManager.get_active_players():
+        if player.score >= game.game_target:
+            winners.append(player)
+    return winners

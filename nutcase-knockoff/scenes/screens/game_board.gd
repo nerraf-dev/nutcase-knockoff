@@ -20,14 +20,12 @@ const ROUND_SCENES = {
 	# Add other round types here as needed
 }
 
-
+var qna_instance = null
 
 func _ready() -> void:
-	
 	print("Game Board scene ready")
 	_setup_players_hud()
 	_setup_round_area()
-
 
 func  _setup_players_hud() -> void:
 	if players_container.get_child_count() > 0:
@@ -46,34 +44,51 @@ func _setup_round_area() -> void:
 		return
 	var round_scene = load(round_scene_path)
 	if round_scene:
-		var round_instance = round_scene.instantiate()
-		round_area.add_child(round_instance)
-		round_instance.connect("answer_correct", Callable(self, "_on_answer_correct"))
+		qna_instance = round_scene.instantiate()
+		round_area.add_child(qna_instance)
+		qna_instance.connect("round_result", Callable(self, "_on_round_result"))
 	else:
 		push_error("Failed to load round scene at path: %s" % round_scene_path)
 
-func _on_answer_correct(player: Player, points: int) -> void:
-	print("main: Player %s answered correctly and scored %d points!" % [player.name, points])
-	# Award points via PlayerManager
-	PlayerManager.award_points(player, points)
-	# update player badges
-
-	# Check for a winner
-	var winners = GameManager.game.check_winners()
-	if winners.size() > 0:
-		print("We have a winner!")
-		# For simplicity, take the first winner
-		var winner = winners[0]
-		GameManager.game_ended.emit(winner)
-		round_area.set_process_input(false)  # Disable further input
+func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
+	if is_correct:
+		print("Player %s answered correctly!" % player.name)
+		PlayerManager.award_points(player, prize)
 	else:
-		# Answer is correct but score not meeting target:
-		print("No winner yet, continuing game.")
-		# board needs a reset
+		print("Player %s answered incorrectly!" % player.name)
+		var penalty = int(player.score * 0.5)  # Half their current score
+		PlayerManager.award_points(player, -penalty)  # Negative points
+	
+	_update_all_badges()
+	
+	var winners = GameManager.check_for_winner()
+	if winners.is_empty():
+		print("No winner yet, continuing to next round.")
+		# TODO: Show round summary overlay
+		await get_tree().create_timer(1.0).timeout  # Placeholder delay
+		_start_next_round()
+	else:
+		print("We have a winner: %s!" % winners[0].name)
+		GameManager.game_ended.emit(winners[0])
+		round_area.set_process_input(false)
 
-	# Start end of round!
-	# - Update the player list to reflect new scores. 
-	# 
+func _update_all_badges() -> void:
+	var badges = players_container.get_children()
+	var current_player = PlayerManager.get_current_player()
+	for i in range(badges.size()):
+		if i < PlayerManager.players.size():
+			var player = PlayerManager.players[i]
+			badges[i].update_score(player.score)
+			badges[i].set_current_player(player == current_player)
+
+func _start_next_round() -> void:
+	var next_question = GameManager.get_next_question()
+	if next_question:
+		PlayerManager.unfreeze_all_players()
+		GameManager.game.current_round += 1
+		qna_instance.start_new_question(next_question)
+	else:
+		print("No more questions available!")
 
 # Signal handlers for buttons
 func _on_options_btn_pressed() -> void:

@@ -32,7 +32,7 @@ var settings = {
 }
 
 # populate game modes and lengths
-const GAME_MODES = ["Q'n'A"]
+const GAME_MODES = ["qna"]
 const GAME_TARGETS = [200, 1000, 2000, 3000]  # winning score thresholds
 
 # Main Functions

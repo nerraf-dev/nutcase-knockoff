@@ -1,6 +1,6 @@
 extends Control
 
-signal answer_correct(player: Player, points: int)
+signal round_result(player: Player, is_correct: bool, points: int)
 
 const SliderScene = preload("res://scenes/components/Slider.tscn")
 const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
@@ -27,49 +27,53 @@ var current_question: Question = null
 func _ready() -> void:
 	print("QnA scene ready")
 	guess_btn.pressed.connect(_on_guess_btn_pressed)
-	# Load questions from JSON
-	all_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
 	
-	#  Get first player
-	var up_next = PlayerManager.get_current_player().name
-	print("First player up: %s" % up_next)
-	print("Welcome players: %s" % str(PlayerManager.players))
-	current_player_label.text = up_next
-	
-	# Get a random question and spawn it
-	spawn_question()
-
-		
-	
-
-func spawn_question() -> void:
-	var random_question = QuestionLoaderResource.get_random_question(all_questions)
-	if random_question:
-		current_question = random_question
-		update_pot_display()
+	var current_player = PlayerManager.get_current_player()
+	if current_player:
+		current_player_label.text = current_player.name
 	else:
-		push_error("No questions loaded!")
-	print("Spawning question: %s" % current_question.question_text)
-	print("Answer is: %s" % current_question.answer)
-	var words = current_question.question_text.split(" ")
+		push_error("No current player available!")
+		return
 	
-	# Calculate pot based on difficulty
-	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(current_question.difficulty, 1.0)
+	# Get first question from GameManager
+	var first_question = GameManager.get_next_question()
+	if first_question:
+		start_new_question(first_question)
+	else:
+		push_error("No questions available!")
+
+func start_new_question(question: Question) -> void:
+	# Clear old sliders
+	for child in grid.get_children():
+		child.queue_free()
+	
+	# Set new question
+	current_question = question
+	print("Starting new question: %s" % question.question_text)
+	print("Answer is: %s" % question.answer)
+	
+	# Recalculate pot and spawn sliders
+	var words = question.question_text.split(" ")
+	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(question.difficulty, 1.0)
 	current_prize = BASE_POT * difficulty_mult
-	# Reserve minimum pot (e.g., 10% of starting pot)
 	minimum_prize = current_prize * MINIMUM_POT_PERCENT
-	# Divide only the reducible portion among words
 	var reducible_prize = current_prize - minimum_prize
 	prize_per_word = reducible_prize / words.size()
-	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [current_question.difficulty, int(current_prize), int(minimum_prize)])
-	# Spawns a slider for each word in the `words` array, adds it to the grid, and connects its click signal.
-	# Each slider is given a minimum size and is numbered (1-indexed) when set up.
+	
+	update_pot_display()
+	
+	var current_player = PlayerManager.get_current_player()
+	if current_player:
+		current_player_label.text = current_player.name
+	
+	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
+	
 	for i in range(words.size()):
 		var s = SliderScene.instantiate()
-		s.custom_minimum_size = Vector2(250, 80)  # Match the size from the scene
+		s.custom_minimum_size = Vector2(250, 80)
 		grid.columns = 3
 		grid.add_child(s)
-		s.set_word(words[i], i + 1)  # Pass word and number (1-indexed)
+		s.set_word(words[i], i + 1)
 		s.clicked.connect(_on_slider_clicked)
 
 # Handles the event when the slider is clicked.
@@ -77,17 +81,21 @@ func spawn_question() -> void:
 # Ensures the current pot does not go below zero.
 # Updates the pot display and prints the new pot value to the output.
 func _on_slider_clicked():
-	# TODO: Uncomment and reappluy reducing prize if needed
+	# TODO: Uncomment and reapply reducing prize if needed
 	# current_prize -= prize_per_word
 	# if current_prize < minimum_prize:
 	# 	current_prize = minimum_prize
 	# update_pot_display()
-	print("Word revealed! Pot now: %d (min: %d)" % [int(current_prize), int(minimum_prize)])
-	# Next player
+	
+	print("Word revealed! Pot now: %d" % int(current_prize))
+	
+	# Advance to next player
 	PlayerManager.next_turn()
-	print("Next turn: %s" % PlayerManager.get_current_player().name)
-	# print("First child of player_list: %s" % current_player_label.text)
-	current_player_label.text = PlayerManager.get_current_player().name
+	
+	var next_player = PlayerManager.get_current_player()
+	if next_player:
+		print("Next turn: %s" % next_player.name)
+		current_player_label.text = next_player.name
 
 # Update the score on the screen
 func update_pot_display():
@@ -103,18 +111,19 @@ func _on_guess_btn_pressed() -> void:
 
 func _on_answer_submitted(answer_text: String) -> void:
 	print("Player submitted answer: %s" % answer_text)
-	# Here you would check the answer and award points if correct
-	if answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower():
+	var current_player = PlayerManager.get_current_player()
+	if not current_player:
+		print("No current player to award points to.")
+		return
+	
+	var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()
+	
+	if is_correct:
 		print("CORRECT ANSWER!")
-		# Award points to current player
-		var current_player = PlayerManager.get_current_player()
-		if current_player:
-			# PlayerManager.award_points(current_player, int(current_prize))
-			answer_correct.emit(current_player, int(current_prize))
-		else:
-			print("No current player to award points to.")
+		round_result.emit(current_player, true, int(current_prize))
 	else:
 		print("WRONG ANSWER. The correct answer was: %s" % current_question.answer)
+		round_result.emit(current_player, false, int(current_prize))
 
 func _on_answer_cancelled() -> void:
 	print("Player cancelled the answer submission.")

@@ -84,6 +84,7 @@ columns = 4
 layout_mode = 2
 
 [node name="AddPlayerButton" type="Button" parent="PlayersContainer"]
+visible = false
 layout_mode = 0
 offset_left = 328.0
 offset_top = 112.0
