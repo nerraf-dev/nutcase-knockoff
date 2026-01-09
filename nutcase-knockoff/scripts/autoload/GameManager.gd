@@ -26,6 +26,7 @@ var used_question_ids: Array[String] = []
 
 func _ready() -> void:
     print("GameManager initialized")
+    game_ended.connect(_on_game_ended)
 
 # Start a new game with given settings
 func start_game(settings: Dictionary) -> void:
@@ -69,3 +70,15 @@ func check_for_winner() -> Array[Player]:
         if player.score >= game.game_target:
             winners.append(player)
     return winners
+
+
+func _on_game_ended(winner: Player) -> void:
+    print("Game ended! Winner: %s" % winner.name)
+    game.is_active = false
+    
+    # On game end:
+        # - Show winner/results
+        # - provide option to play with same settings or back to home
+        # - clean up the game state and scenes if needed
+
+    

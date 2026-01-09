@@ -59,7 +59,6 @@ func start_new_question(question: Question) -> void:
 	minimum_prize = current_prize * MINIMUM_POT_PERCENT
 	var reducible_prize = current_prize - minimum_prize
 	prize_per_word = reducible_prize / words.size()
-	
 	update_pot_display()
 	
 	var current_player = PlayerManager.get_current_player()
@@ -86,12 +85,9 @@ func _on_slider_clicked():
 	# if current_prize < minimum_prize:
 	# 	current_prize = minimum_prize
 	# update_pot_display()
-	
-	print("Word revealed! Pot now: %d" % int(current_prize))
-	
+
 	# Advance to next player
-	PlayerManager.next_turn()
-	
+	PlayerManager.next_turn()	
 	var next_player = PlayerManager.get_current_player()
 	if next_player:
 		print("Next turn: %s" % next_player.name)
@@ -103,21 +99,18 @@ func update_pot_display():
 
 func _on_guess_btn_pressed() -> void:
 	print("Guess button pressed. Current pot: %d" % int(current_prize))
-	# Here you would typically open the answer modal to allow the player to submit their guess
 	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
 	add_child(answer_modal)
 	answer_modal.answer_submitted.connect(_on_answer_submitted)
-	answer_modal.cancelled.connect(_on_answer_cancelled)
+	# answer_modal.cancelled.connect(_on_answer_cancelled)
 
 func _on_answer_submitted(answer_text: String) -> void:
-	print("Player submitted answer: %s" % answer_text)
 	var current_player = PlayerManager.get_current_player()
 	if not current_player:
 		print("No current player to award points to.")
 		return
 	
 	var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()
-	
 	if is_correct:
 		print("CORRECT ANSWER!")
 		round_result.emit(current_player, true, int(current_prize))
@@ -125,5 +118,5 @@ func _on_answer_submitted(answer_text: String) -> void:
 		print("WRONG ANSWER. The correct answer was: %s" % current_question.answer)
 		round_result.emit(current_player, false, int(current_prize))
 
-func _on_answer_cancelled() -> void:
-	print("Player cancelled the answer submission.")
+# func _on_answer_cancelled() -> void:
+# 	print("Player cancelled the answer submission.")

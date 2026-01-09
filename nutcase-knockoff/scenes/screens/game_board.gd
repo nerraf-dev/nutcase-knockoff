@@ -61,6 +61,8 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 	
 	_update_all_badges()
 	
+	# TODO: Fix the logic for no winners yet. The round should continue
+	
 	var winners = GameManager.check_for_winner()
 	if winners.is_empty():
 		print("No winner yet, continuing to next round.")
