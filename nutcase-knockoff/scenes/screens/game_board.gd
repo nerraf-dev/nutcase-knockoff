@@ -106,13 +106,13 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 			await get_tree().create_timer(1.0).timeout  # Placeholder delay
 			# TODO: Show round summary overlay
 
-			_update_overlay("No winner yet, \n& starting next round...")
+			_update_overlay("No winner yet,\nstarting next round...")
 			_start_next_round()
 		else:
 			print("We have a winner: %s!" % winners[0].name)
 			GameManager.game_ended.emit(winners[0])
 			round_area.set_process_input(false)
-			_update_overlay("The winner is \n& %s!" % winners[0].name)
+			_update_overlay("The winner is\n%s!" % winners[0].name)
 			# await get_tree().create_timer(2.0).timeout
 
 func _update_all_badges() -> void:
