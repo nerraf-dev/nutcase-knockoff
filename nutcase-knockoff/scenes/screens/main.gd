@@ -9,6 +9,8 @@ func _ready() -> void:
 	print("Generated Game ID: %s" % a)
 	load_splash_screen()
 
+
+
 func load_splash_screen() -> void:
 	var splash_scene = preload("res://scenes/screens/splash_screen.tscn")
 	var splash_instance = splash_scene.instantiate()    
@@ -27,11 +29,16 @@ func load_game_home() -> void:
 	var home_instance = home_scene.instantiate()
 	scene_container.add_child(home_instance)
 	home_instance.new_game.connect(_on_new_game)
+	home_instance.exit_game.connect(_on_exit_game)
 
 func _on_new_game() -> void:
 	print("New game started, loading Game Init (setup)")
 	cleanup_current_scene()
 	load_game_init()
+
+func _on_exit_game() -> void:
+	print("Exit game signal received, quitting application")
+	get_tree().quit()
 
 # LOAD GAME INIT
 func load_game_init() -> void:

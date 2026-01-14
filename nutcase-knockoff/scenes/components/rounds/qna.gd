@@ -1,5 +1,7 @@
 extends Control
 
+# TODO: Have to include 
+
 signal round_result(player: Player, is_correct: bool, points: int)
 
 const SliderScene = preload("res://scenes/components/Slider.tscn")
@@ -42,6 +44,10 @@ func _ready() -> void:
 	else:
 		push_error("No questions available!")
 
+# Update the score on the screen
+func update_pot_display() -> void:
+	prize_label.text = str(int(current_prize))
+ 
 func start_new_question(question: Question) -> void:
 	# Clear old sliders
 	for child in grid.get_children():
@@ -93,23 +99,19 @@ func _on_slider_clicked():
 		print("Next turn: %s" % next_player.name)
 		current_player_label.text = next_player.name
 
-# Update the score on the screen
-func update_pot_display():
-	prize_label.text = str(int(current_prize))
-
+# Guess Button
 func _on_guess_btn_pressed() -> void:
 	print("Guess button pressed. Current pot: %d" % int(current_prize))
 	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
 	add_child(answer_modal)
 	answer_modal.answer_submitted.connect(_on_answer_submitted)
-	# answer_modal.cancelled.connect(_on_answer_cancelled)
 
+# Answer submitted signal
 func _on_answer_submitted(answer_text: String) -> void:
 	var current_player = PlayerManager.get_current_player()
 	if not current_player:
 		print("No current player to award points to.")
 		return
-	
 	var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()
 	if is_correct:
 		print("CORRECT ANSWER!")
@@ -118,5 +120,5 @@ func _on_answer_submitted(answer_text: String) -> void:
 		print("WRONG ANSWER. The correct answer was: %s" % current_question.answer)
 		round_result.emit(current_player, false, int(current_prize))
 
-# func _on_answer_cancelled() -> void:
-# 	print("Player cancelled the answer submission.")
+
+

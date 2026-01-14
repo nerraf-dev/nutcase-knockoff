@@ -30,7 +30,7 @@ _on_new_game()
               └─> emit game_init_complete(settings)
 ```
 
-### 4. Game Initialization
+### 4. Game Initialisation
 ```
 _on_game_init_complete(settings)
   └─> GameManager.start_game(settings)

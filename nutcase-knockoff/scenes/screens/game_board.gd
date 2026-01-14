@@ -12,8 +12,12 @@ const player_badge = preload("res://scenes/components/player_badge.tscn")
 @onready var exit_btn = $HUD/Controls/ExitBtn
 @onready var players_container = $HUD/PlayersContainer
 
+@onready var res_overlay = $ResultOverlay
+@onready var res_label = $ResultOverlay/ResultLabel
+@onready var res_next_btn = $ResultOverlay/NextBtn
 
 @onready var round_area = $RoundArea
+@onready var exit_confirm = $AcceptDialog
 
 const ROUND_SCENES = {
 	"qna": "res://scenes/components/rounds/qna.tscn"
@@ -24,8 +28,18 @@ var qna_instance = null
 
 func _ready() -> void:
 	print("Game Board scene ready")
+	res_overlay.visible = false
+	exit_btn.pressed.connect(Callable(self, "_on_exit_btn_pressed"))
+	options_btn.pressed.connect(Callable(self, "_on_options_btn_pressed"))
+	
 	_setup_players_hud()
 	_setup_round_area()
+
+func _update_overlay(msg: String) -> void:
+	res_label.text = msg
+	res_overlay.visible = true
+	await res_next_btn.pressed
+	res_overlay.visible = false
 
 func  _setup_players_hud() -> void:
 	if players_container.get_child_count() > 0:
@@ -51,28 +65,53 @@ func _setup_round_area() -> void:
 		push_error("Failed to load round scene at path: %s" % round_scene_path)
 
 func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
-	if is_correct:
+	# occurs when a player chooses to answer.
+	# if the player guesses incorrectly:
+		#  - they are frozen until the next round.
+		#  - they are given the point deduction penalty (half of the question score)
+		#  - play continues with remaining players
+			# if only one player remains, they are given the chance of penalty free guess. (handled in qna??)
+	# if the player guesses correctly:
+		#  - they are awarded the current question prize points
+		#  - they are un-frozen if they were frozen
+		#  - check for winners (based on score)
+			# if winner(s) found, end game
+			# else continue to next round
+	if not is_correct:
+		player.is_frozen = true
+		print("Player %s is now frozen for next round." % player.name)
+		var penalty = int(prize * 0.5)  # Half the prize as penalty
+		PlayerManager.award_points(player, -penalty)  # Negative points
+		_update_all_badges()
+		PlayerManager.next_turn()
+		_update_overlay("Incorrect %s!\n You lose %d points!" % [player.name, penalty])	
+
+	elif is_correct:
 		print("Player %s answered correctly!" % player.name)
 		PlayerManager.award_points(player, prize)
-	else:
-		print("Player %s answered incorrectly!" % player.name)
-		var penalty = int(player.score * 0.5)  # Half their current score
-		PlayerManager.award_points(player, -penalty)  # Negative points
-	
-	_update_all_badges()
-	
-	# TODO: Fix the logic for no winners yet. The round should continue
-	
-	var winners = GameManager.check_for_winner()
-	if winners.is_empty():
-		print("No winner yet, continuing to next round.")
-		# TODO: Show round summary overlay
-		await get_tree().create_timer(1.0).timeout  # Placeholder delay
-		_start_next_round()
-	else:
-		print("We have a winner: %s!" % winners[0].name)
-		GameManager.game_ended.emit(winners[0])
-		round_area.set_process_input(false)
+		_update_all_badges()
+		player.is_frozen = false  # Unfreeze if they were frozen
+		
+		# PLACEHOLDER: Show result overlay for correct answer
+		# await get_tree().create_timer(2.0).timeout  # Show result for 2 seconds
+		_update_overlay("Correct %s!\n You get %d points!" % [player.name, prize])
+		print("NEXT pressed")
+
+		# Check for winners
+		var winners = GameManager.check_for_winner()
+		if winners.is_empty():
+			print("No winner yet,\n continuing to next round.")
+			await get_tree().create_timer(1.0).timeout  # Placeholder delay
+			# TODO: Show round summary overlay
+
+			_update_overlay("No winner yet, \n& starting next round...")
+			_start_next_round()
+		else:
+			print("We have a winner: %s!" % winners[0].name)
+			GameManager.game_ended.emit(winners[0])
+			round_area.set_process_input(false)
+			_update_overlay("The winner is \n& %s!" % winners[0].name)
+			# await get_tree().create_timer(2.0).timeout
 
 func _update_all_badges() -> void:
 	var badges = players_container.get_children()
@@ -84,6 +123,7 @@ func _update_all_badges() -> void:
 			badges[i].set_current_player(player == current_player)
 
 func _start_next_round() -> void:
+	# the winner of the last round should still be current player. 
 	var next_question = GameManager.get_next_question()
 	if next_question:
 		PlayerManager.unfreeze_all_players()
@@ -98,3 +138,14 @@ func _on_options_btn_pressed() -> void:
 
 func _on_exit_btn_pressed() -> void:
 	print("Exit button pressed")
+	exit_confirm.popup_centered()
+	exit_confirm.dialog_text = "Are you sure you want to exit to main menu?"
+	exit_confirm.connect("confirmed", Callable(self, "_on_exit_confirmed"))
+
+func _on_exit_confirmed() -> void:
+	print("Exit confirmed, returning to main menu")
+	get_tree().change_scene("res://scenes/screens/main.tscn")
+	GameManager.game = null  # Reset game state
+	PlayerManager.reset_players()
+
+	
