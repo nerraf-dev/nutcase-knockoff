@@ -16,6 +16,7 @@ func _load_words() -> void:
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	var json = JSON.new()
 	var error = json.parse(file.get_as_text())
+	file.close()
 	
 	if error == OK:
 		_adjectives = json.data["adjectives"]
