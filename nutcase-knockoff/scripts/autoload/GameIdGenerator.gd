@@ -14,6 +14,10 @@ func _load_words() -> void:
 		return
 
 	var file = FileAccess.open(file_path, FileAccess.READ)
+	if file == null:
+		printerr("ID Generator: Failed to open words.json")
+		return
+	
 	var json = JSON.new()
 	var error = json.parse(file.get_as_text())
 	file.close()
