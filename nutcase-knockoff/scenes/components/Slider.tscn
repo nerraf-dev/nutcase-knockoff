@@ -18,6 +18,7 @@ font_size = 48
 [node name="Slider" type="PanelContainer"]
 offset_right = 250.0
 offset_bottom = 80.0
+scale = Vector2(2, 2)
 script = ExtResource("1_lfa00")
 
 [node name="WordLabel" type="Label" parent="."]

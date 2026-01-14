@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://bgauep5mf2b7n"]
+
+[ext_resource type="Script" uid="uid://cjhiy8brgmk72" path="res://scenes/screens/game_home.gd" id="1_dobo1"]
+[ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="2_4765e"]
+[ext_resource type="LabelSettings" uid="uid://cfchkayhh0bn" path="res://resources/title.tres" id="2_kp88g"]
+[ext_resource type="Texture2D" uid="uid://ynyt4cu4a2mx" path="res://assets/images/buttons/start/start-down.svg" id="3_x7o0w"]
+[ext_resource type="Texture2D" uid="uid://c6ytquhu1aw7c" path="res://assets/images/buttons/start/start-hover.svg" id="4_7ggut"]
+[ext_resource type="Texture2D" uid="uid://dcror00b28ndj" path="res://assets/images/buttons/options/options-up.svg" id="5_7ggut"]
+[ext_resource type="Texture2D" uid="uid://bvxwkcgmoivy2" path="res://assets/images/buttons/exit/exit-up.svg" id="6_kp88g"]
+[ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="8_rcr06"]
+
+[sub_resource type="Gradient" id="Gradient_xyh14"]
+colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2brdo"]
+gradient = SubResource("Gradient_xyh14")
+width = 65
+
+[sub_resource type="Theme" id="Theme_4s0rd"]
+default_font = ExtResource("8_rcr06")
+default_font_size = 36
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/styles/normal = null
+
+[node name="GameHome" type="Node2D"]
+script = ExtResource("1_dobo1")
+metadata/_edit_vertical_guides_ = [960.0]
+metadata/_edit_horizontal_guides_ = [536.0]
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_2brdo")
+
+[node name="Title" type="Label" parent="."]
+offset_left = 176.0
+offset_top = 160.0
+offset_right = 1744.0
+offset_bottom = 448.0
+text = "What is it?"
+label_settings = ExtResource("2_kp88g")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NewGame" type="TextureButton" parent="."]
+offset_left = 776.0
+offset_top = 568.0
+offset_right = 1190.0
+offset_bottom = 782.0
+scale = Vector2(0.8687974, 0.8687974)
+texture_normal = ExtResource("2_4765e")
+texture_pressed = ExtResource("3_x7o0w")
+texture_hover = ExtResource("4_7ggut")
+stretch_mode = 0
+
+[node name="Options" type="TextureButton" parent="."]
+offset_left = 824.0
+offset_top = 792.0
+offset_right = 1103.0
+offset_bottom = 911.0
+texture_normal = ExtResource("5_7ggut")
+stretch_mode = 0
+
+[node name="Exit" type="TextureButton" parent="."]
+offset_left = 824.0
+offset_top = 944.0
+offset_right = 1103.0
+offset_bottom = 1063.0
+texture_normal = ExtResource("6_kp88g")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+oversampling_override = 1.0
+initial_position = 2
+size = Vector2i(480, 192)
+theme = SubResource("Theme_4s0rd")
+theme_override_constants/buttons_separation = 2
+dialog_text = "Are you sure you want to quit? (ESC to close)"
+dialog_autowrap = true

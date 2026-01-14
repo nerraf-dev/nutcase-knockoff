@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddmycnm3j4tyh"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1252w"]
+font_size = 54
+font_color = Color(0, 0.0313726, 1, 1)
+
+[node name="PlayerBadge" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 192.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 11.0
+offset_right = 184.0
+offset_bottom = 176.0
+text = "P1"
+label_settings = SubResource("LabelSettings_1252w")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+max_lines_visible = 1
