@@ -102,6 +102,23 @@ func get_scoreboard() -> Array[Player]:
 	sorted_players.sort_custom(func(a, b): return a.score > b.score)
 	return sorted_players
 
+# Get current leader(s) - returns all players with highest score
+func get_leaders() -> Array[Player]:
+	if players.is_empty():
+		return []
+	
+	var highest_score = 1
+	for player in players:
+		if player.score > highest_score:
+			highest_score = player.score
+	
+	var leaders: Array[Player] = []
+	for player in players:
+		if player.score == highest_score:
+			leaders.append(player)
+	
+	return leaders
+
 # Reset for new game
 func reset_game() -> void:
 	for player in players:

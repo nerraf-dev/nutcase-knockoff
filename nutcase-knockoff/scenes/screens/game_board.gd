@@ -29,12 +29,28 @@ const ROUND_SCENES = {
 var qna_instance = null
 
 func _ready() -> void:
+
+	if Engine.is_editor_hint():
+		return  # Don't run test code in the editor
+
+	if not GameManager.game:
+		# Setup dummy game for debugging
+		GameManager.start_game({
+			"game_type": "qna",
+			"game_target": 250,
+			"player_count": 2,
+			"round_count": 10
+		})
+
 	print("Game Board scene ready")
 	res_overlay.visible = false
 	exit_btn.pressed.connect(Callable(self, "_on_exit_btn_pressed"))
 	options_btn.pressed.connect(Callable(self, "_on_options_btn_pressed"))
 	
 	exit_confirm.confirmed.connect(_on_exit_confirmed)
+	
+	# Connect to turn changes to update current player indicator
+	PlayerManager.turn_changed.connect(_on_turn_changed)
 
 	_setup_players_hud()
 	_setup_round_area()
@@ -69,24 +85,25 @@ func _setup_round_area() -> void:
 		push_error("Failed to load round scene at path: %s" % round_scene_path)
 
 func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
-	# occurs when a player chooses to answer.
-	# if the player guesses incorrectly:
-		#  - they are frozen until the next round.
-		#  - they are given the point deduction penalty (half of the question score)
-		#  - play continues with remaining players
-			# if only one player remains, they are given the chance of penalty free guess. (handled in qna??)
-	# if the player guesses correctly:
-		#  - they are awarded the current question prize points
-		#  - they are un-frozen if they were frozen
-		#  - check for winners (based on score)
-			# if winner(s) found, end game
-			# else continue to next round
 	if not is_correct:
-		player.is_frozen = true
-		print("Player %s is now frozen for this question." % player.name)
-		
-		# Check if only one player left unfrozen (free guess rule)
+		# if not the last player (active players > 1)
+		#   - apply penalty
+		#   - update badges and overlay
+		#   - freeze player
+		# else (last player)
+		#   - no penalty
+		#   - update overlay
+
 		var active_players = PlayerManager.get_active_players()
+		if active_players.size() > 1:
+			var penalty = int(prize * 0.5)  # 50% of current question prize
+			PlayerManager.award_points(player, -penalty)
+			_update_all_badges()
+			_update_overlay("Incorrect %s!\nYou lose %d points!" % [player.name, penalty])
+			player.is_frozen = true
+			print("Player %s is now frozen for this question." % player.name)
+			PlayerManager.next_turn()
+		active_players = PlayerManager.get_active_players()
 		if active_players.size() == 1:
 			# Last player standing gets a free guess (no penalty)
 			PlayerManager.next_turn()  # Advance to last player
@@ -95,21 +112,11 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 			# Auto-show answer modal for free guess
 			if qna_instance:
 				qna_instance.show_answer_modal_for_free_guess()
-		else:
-			# Normal penalty applies
-			var penalty = int(player.score * 0.5)  # 50% of player's current score
-			PlayerManager.award_points(player, -penalty)
-			_update_all_badges()
-			_update_overlay("Incorrect %s!\nYou lose %d points!" % [player.name, penalty])
-		
-		PlayerManager.next_turn()	
-
 	elif is_correct:
 		print("Player %s answered correctly!" % player.name)
 		PlayerManager.award_points(player, prize)
 		_update_all_badges()
 		player.is_frozen = false  # Unfreeze if they were frozen
-		
 		# PLACEHOLDER: Show result overlay for correct answer
 		# await get_tree().create_timer(2.0).timeout  # Show result for 2 seconds
 		_update_overlay("Correct %s!\n You get %d points!" % [player.name, prize])
@@ -121,7 +128,6 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 			print("No winner yet,\n continuing to next round.")
 			await get_tree().create_timer(1.0).timeout  # Placeholder delay
 			# TODO: Show round summary overlay
-
 			_update_overlay("No winner yet,\nstarting next round...")
 			_start_next_round()
 		else:
@@ -134,11 +140,18 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 func _update_all_badges() -> void:
 	var badges = players_container.get_children()
 	var current_player = PlayerManager.get_current_player()
+	var leaders = PlayerManager.get_leaders()
+	
 	for i in range(badges.size()):
 		if i < PlayerManager.players.size():
 			var player = PlayerManager.players[i]
 			badges[i].update_score(player.score)
 			badges[i].set_current_player(player == current_player)
+			badges[i].set_current_leader(leaders.has(player))
+
+func _on_turn_changed(_player: Player) -> void:
+	# Update badges when turn changes
+	_update_all_badges()
 
 func _start_next_round() -> void:
 	# the winner of the last round should still be current player. 
