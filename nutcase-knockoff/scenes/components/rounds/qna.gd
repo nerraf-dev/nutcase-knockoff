@@ -1,7 +1,5 @@
 extends Control
 
-# TODO: Have to include 
-
 signal round_result(player: Player, is_correct: bool, points: int)
 
 const SliderScene = preload("res://scenes/components/Slider.tscn")
@@ -30,6 +28,9 @@ func _ready() -> void:
 	print("QnA scene ready")
 	guess_btn.pressed.connect(_on_guess_btn_pressed)
 	
+	# Connect to turn changes so label updates when turn advances
+	PlayerManager.turn_changed.connect(_on_turn_changed)
+	
 	var current_player = PlayerManager.get_current_player()
 	if current_player:
 		current_player_label.text = current_player.name
@@ -47,6 +48,15 @@ func _ready() -> void:
 # Update the score on the screen
 func update_pot_display() -> void:
 	prize_label.text = str(int(current_prize))
+
+func _on_turn_changed(player: Player) -> void:
+	current_player_label.text = player.name
+
+func show_answer_modal_for_free_guess() -> void:
+	# Automatically show answer modal for free guess
+	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
+	add_child(answer_modal)
+	answer_modal.answer_submitted.connect(_on_answer_submitted)
  
 func start_new_question(question: Question) -> void:
 	# Clear old sliders

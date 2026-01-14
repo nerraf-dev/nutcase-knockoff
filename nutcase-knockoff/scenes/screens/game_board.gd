@@ -34,6 +34,8 @@ func _ready() -> void:
 	exit_btn.pressed.connect(Callable(self, "_on_exit_btn_pressed"))
 	options_btn.pressed.connect(Callable(self, "_on_options_btn_pressed"))
 	
+	exit_confirm.confirmed.connect(_on_exit_confirmed)
+
 	_setup_players_hud()
 	_setup_round_area()
 
@@ -81,12 +83,26 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 			# else continue to next round
 	if not is_correct:
 		player.is_frozen = true
-		print("Player %s is now frozen for next round." % player.name)
-		var penalty = int(prize * 0.5)  # Half the prize as penalty
-		PlayerManager.award_points(player, -penalty)  # Negative points
-		_update_all_badges()
-		PlayerManager.next_turn()
-		_update_overlay("Incorrect %s!\n You lose %d points!" % [player.name, penalty])	
+		print("Player %s is now frozen for this question." % player.name)
+		
+		# Check if only one player left unfrozen (free guess rule)
+		var active_players = PlayerManager.get_active_players()
+		if active_players.size() == 1:
+			# Last player standing gets a free guess (no penalty)
+			PlayerManager.next_turn()  # Advance to last player
+			_update_overlay("Last player standing!\n%s gets a free guess!" % active_players[0].name)
+			print("Free guess for %s - no penalty applied" % active_players[0].name)
+			# Auto-show answer modal for free guess
+			if qna_instance:
+				qna_instance.show_answer_modal_for_free_guess()
+		else:
+			# Normal penalty applies
+			var penalty = int(player.score * 0.5)  # 50% of player's current score
+			PlayerManager.award_points(player, -penalty)
+			_update_all_badges()
+			_update_overlay("Incorrect %s!\nYou lose %d points!" % [player.name, penalty])
+		
+		PlayerManager.next_turn()	
 
 	elif is_correct:
 		print("Player %s answered correctly!" % player.name)
@@ -140,9 +156,8 @@ func _on_options_btn_pressed() -> void:
 
 func _on_exit_btn_pressed() -> void:
 	print("Exit button pressed")
-	exit_confirm.popup_centered()
 	exit_confirm.dialog_text = "Are you sure you want to exit to main menu?"
-	exit_confirm.connect("confirmed", Callable(self, "_on_exit_confirmed"))
+	exit_confirm.popup_centered()
 
 func _on_exit_confirmed() -> void:
 	print("Exit confirmed, returning to main menu")
@@ -151,8 +166,3 @@ func _on_exit_confirmed() -> void:
 	PlayerManager.clear_all_players()
 	# Emit signal to main - let main handle scene cleanup
 	return_to_home.emit()
-
-
-
-
-	
