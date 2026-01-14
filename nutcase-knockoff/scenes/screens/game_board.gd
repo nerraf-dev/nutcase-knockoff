@@ -5,6 +5,8 @@ extends Control
 # The RoundArea will host the 'game play'. That scene handles the game play logic.
 # Teh GameBoard HUD shows the player list & details, main controls, etc.
 
+signal return_to_home
+
 const player_badge = preload("res://scenes/components/player_badge.tscn")
 
 @onready var controls = $HUD/Controls
@@ -144,8 +146,13 @@ func _on_exit_btn_pressed() -> void:
 
 func _on_exit_confirmed() -> void:
 	print("Exit confirmed, returning to main menu")
-	get_tree().change_scene("res://scenes/screens/main.tscn")
-	GameManager.game = null  # Reset game state
-	PlayerManager.reset_players()
+	# Reset game state
+	GameManager.game = null
+	PlayerManager.clear_all_players()
+	# Emit signal to main - let main handle scene cleanup
+	return_to_home.emit()
+
+
+
 
 	

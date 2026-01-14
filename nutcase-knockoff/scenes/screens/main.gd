@@ -40,6 +40,11 @@ func _on_exit_game() -> void:
 	print("Exit game signal received, quitting application")
 	get_tree().quit()
 
+func _on_return_to_home() -> void:
+	print("Returning to home screen")
+	cleanup_current_scene()
+	load_game_home()
+
 # LOAD GAME INIT
 func load_game_init() -> void:
 	var init_scene = preload("res://scenes/screens/game_init.tscn")
@@ -66,6 +71,7 @@ func load_game_board() -> void:
 	var board_scene = preload("res://scenes/screens/game_board.tscn")
 	var board_instance = board_scene.instantiate()
 	scene_container.add_child(board_instance)
+	board_instance.return_to_home.connect(_on_return_to_home)
 	# board_instance.setup_game(settings)  # Uncomment if setup_game method is implemented
 
 # Cleanup current scene
