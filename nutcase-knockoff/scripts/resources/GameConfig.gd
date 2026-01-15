@@ -1,4 +1,4 @@
-extends Resource
+extends Node
 
 # Scoring
 const BASE_POT: float = 100.0

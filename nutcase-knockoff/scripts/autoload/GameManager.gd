@@ -67,6 +67,69 @@ func check_for_winner() -> Array[Player]:
             winners.append(player)
     return winners
 
+# Handle wrong answer with frozen player logic
+func handle_wrong_answer(player: Player, base_prize: int) -> Dictionary:
+    var result = {
+        "player": player,
+        "penalty": 0,
+        "is_frozen": false,
+        "is_last_standing": false,
+        "last_standing_player": null,
+        "message": ""
+    }
+    
+    var active_players = PlayerManager.get_active_players()
+    
+    # If multiple players active, apply penalty and freeze
+    if active_players.size() > 1:
+        var penalty = int(base_prize * GameConfig.PENALTY_MULTIPLIER)
+        PlayerManager.award_points(player, -penalty)
+        PlayerManager.freeze_player(player)
+        result["penalty"] = penalty
+        result["is_frozen"] = true
+        result["message"] = "Incorrect %s!\nYou lose %d points!" % [player.name, penalty]
+        print("Player %s is now frozen for this question." % player.name)
+        PlayerManager.next_turn()
+        
+        # Check if now last player standing
+        active_players = PlayerManager.get_active_players()
+        if active_players.size() == 1:
+            result["is_last_standing"] = true
+            result["last_standing_player"] = active_players[0]
+            result["message"] = "Last player standing!\n%s gets a free guess!" % active_players[0].name
+            print("Free guess for %s - no penalty applied" % active_players[0].name)
+            PlayerManager.next_turn()  # Advance to last player
+    
+    return result
+
+# Handle correct answer with winner checking
+func handle_correct_answer(player: Player, prize: int) -> Dictionary:
+    var result = {
+        "player": player,
+        "prize": prize,
+        "was_frozen": player.is_frozen,
+        "has_winner": false,
+        "winner": null,
+        "message": ""
+    }
+    
+    print("Player %s answered correctly!" % player.name)
+    PlayerManager.award_points(player, prize)
+    player.is_frozen = false  # Unfreeze if they were frozen
+    
+    result["message"] = "Correct %s!\nYou get %d points!" % [player.name, prize]
+    
+    # Check for winners
+    var winners = check_for_winner()
+    if not winners.is_empty():
+        result["has_winner"] = true
+        result["winner"] = winners[0]
+        print("We have a winner: %s!" % winners[0].name)
+    else:
+        print("No winner yet, continuing to next round.")
+    
+    return result
+
 
 func _on_game_ended(winner: Player) -> void:
     print("Game ended! Winner: %s" % winner.name)
