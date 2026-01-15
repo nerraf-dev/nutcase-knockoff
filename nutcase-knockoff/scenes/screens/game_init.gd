@@ -19,7 +19,6 @@ signal game_init_complete(settings: Dictionary)
 
 @onready var player_picker = preload("res://scenes/components/player_picker.tscn")
 
-# var player_count: int = 2
 var settings = {
 	"players": PlayerManager.players,
 	"player_count": 2,
@@ -37,7 +36,6 @@ func _ready() -> void:
 	confirm_modal.visible = false
 	_make_connections()
 	_init_lists()
-	# _initialize_players()
 
 # helper functions
 func _make_connections() -> void:
@@ -58,7 +56,6 @@ func _init_lists() -> void:
 		game_target_list.add_item("%d Rounds" % GAME_TARGETS[i])
 	game_target_list.select(0)  # Default selection
 
-
 # signal handlers
 func _on_game_mode_selected(index: int) -> void:
 	var selected_mode = game_mode_list.get_item_text(index)
@@ -71,7 +68,6 @@ func _on_game_target_selected(index: int) -> void:
 
 func _on_start_button_pressed() -> void:
 	confirm_modal.visible = true
-	# print("Start button pressed, game settings: %s" % settings)
 	settings["player_count"] = int(total_players.value)
 	confirm_players.text = str(settings["player_count"])
 	confirm_mode.text = settings["game_type"]
@@ -84,5 +80,3 @@ func _on_back_button_pressed() -> void:
 func _on_confirm_button_pressed() -> void:
 	game_init_complete.emit(settings)
 	confirm_modal.visible = false
-	# Use the settings to setup the game now and return to the main screen to load the game
-	# print("Confirm button pressed, finalizing game settings: %s" % settings)

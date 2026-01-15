@@ -91,16 +91,7 @@ func start_new_question(question: Question) -> void:
 		s.set_word(words[i], i + 1)
 		s.clicked.connect(_on_slider_clicked)
 
-# Handles the event when the slider is clicked.
-# Decreases the current pot by the value of pot_per_word.
-# Ensures the current pot does not go below zero.
-# Updates the pot display and prints the new pot value to the output.
 func _on_slider_clicked():
-	# TODO: Uncomment and reapply reducing prize if needed
-	# current_prize -= prize_per_word
-	# if current_prize < minimum_prize:
-	# 	current_prize = minimum_prize
-	# update_pot_display()
 
 	# Advance to next player
 	PlayerManager.next_turn()	

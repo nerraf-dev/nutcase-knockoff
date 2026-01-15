@@ -72,7 +72,6 @@ func load_game_board() -> void:
 	var board_instance = board_scene.instantiate()
 	scene_container.add_child(board_instance)
 	board_instance.return_to_home.connect(_on_return_to_home)
-	# board_instance.setup_game(settings)  # Uncomment if setup_game method is implemented
 
 # Cleanup current scene
 func cleanup_current_scene() -> void:
