@@ -4,20 +4,17 @@ signal game_init_complete(settings: Dictionary)
 
 @onready var players_container = $PlayersContainer
 @onready var players_grid = $PlayersContainer/PlayersGrid
-# @onready var player_slider = $PlayersContainer/PlayerSlider/Slider
-# @onready var player_count_label = $PlayersContainer/PlayerSlider/PlayerCount
-@onready var add_player_button = $PlayersContainer/AddPlayerButton
 @onready var game_settings_container = $GameSettingsContainer
 @onready var game_mode_list = $GameSettingsContainer/GameModes
 @onready var game_target_list = $GameSettingsContainer/GameTargets
 @onready var start_button = $StartBtn
+@onready var total_players = $PlayerCount
 @onready var confirm_modal = $ConfirmModal
 @onready var confirm_button = $ConfirmModal/ConfirmBtn
 @onready var back_button = $ConfirmModal/BackBtn
 @onready var confirm_players = $ConfirmModal/Players/PlayersValue
 @onready var confirm_mode = $ConfirmModal/Mode/ModeValue
 @onready var confirm_target = $ConfirmModal/Target/TargetValue
-@onready var total_players = $PlayerCount
 
 
 @onready var player_picker = preload("res://scenes/components/player_picker.tscn")
@@ -44,7 +41,6 @@ func _ready() -> void:
 
 # helper functions
 func _make_connections() -> void:
-	add_player_button.pressed.connect(Callable(self, "_on_add_player_button_pressed"))
 	game_mode_list.item_selected.connect(Callable(self, "_on_game_mode_selected"))
 	game_target_list.item_selected.connect(Callable(self, "_on_game_target_selected"))
 	start_button.pressed.connect(Callable(self, "_on_start_button_pressed"))
@@ -72,21 +68,6 @@ func _on_game_mode_selected(index: int) -> void:
 func _on_game_target_selected(index: int) -> void:
 	print("Game length selected: %d" % index)
 	settings["game_target"] = GAME_TARGETS[index]
-
-# func _on_add_player_button_pressed() -> void:
-# 	var new_player_index = PlayerManager.players.size() + 1
-# 	var player_name = "Player %d" % new_player_index
-# 	PlayerManager.add_player(player_name)
-# 	var picker_instance = player_picker.instantiate()
-# 	picker_instance.set_player_name(player_name)
-# 	players_grid.add_child(picker_instance)
-# 	print("Added new player: %s" % player_name)
-# 	settings["players"] = PlayerManager.players
-
-# 	if PlayerManager.players.size() >= 8:
-# 		print("Maximum number of players reached.")
-# 		add_player_button.disabled = true
-# 		return
 
 func _on_start_button_pressed() -> void:
 	confirm_modal.visible = true

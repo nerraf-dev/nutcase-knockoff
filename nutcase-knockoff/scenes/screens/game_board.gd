@@ -93,7 +93,7 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 			PlayerManager.award_points(player, -penalty)
 			_update_all_badges()
 			_update_overlay("Incorrect %s!\nYou lose %d points!" % [player.name, penalty])
-			player.is_frozen = true
+			PlayerManager.freeze_player(player)
 			print("Player %s is now frozen for this question." % player.name)
 			PlayerManager.next_turn()
 		active_players = PlayerManager.get_active_players()

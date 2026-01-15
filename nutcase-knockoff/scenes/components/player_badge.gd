@@ -3,7 +3,7 @@ extends Control
 @onready var player_name = $Name
 @onready var player_score = $Score
 @onready var icon = $Icon
-@onready var current_leaader = $Icon/CurrentLeader
+@onready var current_leader = $Icon/CurrentLeader
 @onready var current_player = $Icon/CurrentPlayer
 
 
@@ -19,7 +19,7 @@ func setup(player: Player) -> void:
     
     # Initially hide current leader/player indicators
     current_player.visible = false
-    current_leaader.visible = false
+    current_leader.visible = false
 
 func update_score(new_score: int) -> void:
     player_score.text = str(new_score)
@@ -28,5 +28,5 @@ func set_current_player(is_current: bool) -> void:
     current_player.visible = is_current
 
 func set_current_leader(is_leader: bool) -> void:
-    current_leaader.visible = is_leader
+    current_leader.visible = is_leader
 
