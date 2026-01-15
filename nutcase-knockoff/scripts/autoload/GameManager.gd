@@ -71,13 +71,6 @@ func check_for_winner() -> Array[Player]:
             winners.append(player)
     return winners
 
-func round_res_handler() -> void:
-    var winners = check_for_winner()
-    if winners.is_empty():
-        PlayerManager.unfreeze_all_players()
-        PlayerManager.next_turn()
-    else:
-        game_ended.emit(winners[0])
 
 func _on_game_ended(winner: Player) -> void:
     print("Game ended! Winner: %s" % winner.name)
