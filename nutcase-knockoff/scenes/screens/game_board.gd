@@ -29,29 +29,20 @@ const ROUND_SCENES = {
 var qna_instance = null
 
 func _ready() -> void:
-
 	if Engine.is_editor_hint():
-		return  # Don't run test code in the editor
-
-	if not GameManager.game:
-		# Setup dummy game for debugging
-		GameManager.start_game({
-			"game_type": "qna",
-			"game_target": 250,
-			"player_count": 2,
-			"round_count": 10
-		})
+		return
+	
+	# Validate game state
+	assert(GameManager.current_state == GameManager.GameState.IN_PROGRESS, "Game Board loaded but game not in progress!")
+	assert(GameManager.game != null, "Game Board loaded but no game exists!")
 
 	print("Game Board scene ready")
 	res_overlay.visible = false
 	exit_btn.pressed.connect(Callable(self, "_on_exit_btn_pressed"))
 	options_btn.pressed.connect(Callable(self, "_on_options_btn_pressed"))
-	
 	exit_confirm.confirmed.connect(_on_exit_confirmed)
-	
 	# Connect to turn changes to update current player indicator
 	PlayerManager.turn_changed.connect(_on_turn_changed)
-
 	_setup_players_hud()
 	_setup_round_area()
 
@@ -89,7 +80,7 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 	if not is_correct:
 		var active_players = PlayerManager.get_active_players()
 		if active_players.size() > 1:
-			var penalty = int(prize * 0.5)  # 50% of current question prize
+			var penalty = int(prize * GameConfig.PENALTY_MULTIPLIER)  # 50% of current question prize
 			PlayerManager.award_points(player, -penalty)
 			_update_all_badges()
 			_update_overlay("Incorrect %s!\nYou lose %d points!" % [player.name, penalty])
@@ -169,6 +160,6 @@ func _on_exit_confirmed() -> void:
 	print("Exit confirmed, returning to main menu")
 	# Reset game state
 	GameManager.game = null
+	GameManager.current_state = GameManager.GameState.NONE
 	PlayerManager.clear_all_players()
-	# Emit signal to main - let main handle scene cleanup
 	return_to_home.emit()

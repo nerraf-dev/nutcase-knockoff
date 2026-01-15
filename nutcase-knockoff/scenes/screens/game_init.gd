@@ -28,8 +28,8 @@ var settings = {
 }
 
 # populate game modes and lengths
-const GAME_MODES = ["qna"]
-const GAME_TARGETS = [200, 1000, 2000, 3000]  # winning score thresholds
+const GAME_MODES = GameConfig.GAME_MODES
+const GAME_TARGETS = GameConfig.GAME_TARGETS  # winning score thresholds
 
 # Main Functions
 func _ready() -> void:

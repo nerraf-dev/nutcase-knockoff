@@ -7,6 +7,7 @@ signal splash_complete
 func _ready() -> void:
 	print("SplashScreen scene ready")
 	timer.timeout.connect(_on_timer_timeout)
+	timer.wait_time = GameConfig.SPLASH_DURATION
 	timer.start()
 	print("SplashScreen timer started for %d seconds" % timer.wait_time)
 	

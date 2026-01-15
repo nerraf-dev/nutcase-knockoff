@@ -5,6 +5,8 @@ extends Node2D
 # LOAD SPLASH SCREEN
 func _ready() -> void:
 	print("Main scene ready, loading SplashScreen")
+	# Initialize game state
+	GameManager.current_state = GameManager.GameState.NONE
 	var a = GameIdGenerator.get_random_id()
 	print("Generated Game ID: %s" % a)
 	load_splash_screen()
@@ -25,6 +27,7 @@ func _on_splash_complete() -> void:
 
 # LOAD GAME HOME
 func load_game_home() -> void:
+	GameManager.change_state(GameManager.GameState.MENU)
 	var home_scene = preload("res://scenes/screens/game_home.tscn")
 	var home_instance = home_scene.instantiate()
 	scene_container.add_child(home_instance)
@@ -47,6 +50,7 @@ func _on_return_to_home() -> void:
 
 # LOAD GAME INIT
 func load_game_init() -> void:
+	GameManager.change_state(GameManager.GameState.SETUP)
 	var init_scene = preload("res://scenes/screens/game_init.tscn")
 	var init_instance = init_scene.instantiate()
 	init_instance.game_init_complete.connect(_on_game_init_complete)
