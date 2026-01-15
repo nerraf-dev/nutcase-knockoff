@@ -78,10 +78,12 @@ func award_points(player: Player, points: int) -> void:
 # Freeze a player (wrong guess)
 func freeze_player(player: Player) -> void:
 	player.freeze()
-	
 	# If it was their turn, move to next player
 	if get_current_player() == player:
 		next_turn()
+
+func unfreeze_player(player: Player) -> void:
+	player.unfreeze()
 
 # Unfreeze all players (e.g., new round)
 func unfreeze_all_players() -> void:

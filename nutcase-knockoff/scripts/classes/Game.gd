@@ -12,6 +12,8 @@ var game_target: int = 1000
 # Is the game currently active
 var is_active: bool = false
 
+var question_penalty: float = 0.5  # Penalty deducted for wrong answers
+
 # --- Round/question/result history ---
 # Array of dictionaries: {round: int, question: Question, result: Dictionary}
 var round_history: Array = []
