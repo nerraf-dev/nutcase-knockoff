@@ -85,15 +85,8 @@ func _setup_round_area() -> void:
 		push_error("Failed to load round scene at path: %s" % round_scene_path)
 
 func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
+	#  check if player is the last player standing (i.i active players > 1)
 	if not is_correct:
-		# if not the last player (active players > 1)
-		#   - apply penalty
-		#   - update badges and overlay
-		#   - freeze player
-		# else (last player)
-		#   - no penalty
-		#   - update overlay
-
 		var active_players = PlayerManager.get_active_players()
 		if active_players.size() > 1:
 			var penalty = int(prize * 0.5)  # 50% of current question prize
