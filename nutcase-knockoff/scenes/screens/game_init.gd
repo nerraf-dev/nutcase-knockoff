@@ -62,14 +62,6 @@ func _init_lists() -> void:
 		game_target_list.add_item("%d Rounds" % GAME_TARGETS[i])
 	game_target_list.select(0)  # Default selection
 
-# func _initialize_players() -> void:
-# 	for i in range(player_count):
-# 		var player_name = "Player %d" % (i + 1)
-# 		PlayerManager.add_player(player_name)
-# 		var picker_instance = player_picker.instantiate()
-# 		picker_instance.set_player_name(player_name)
-# 		players_grid.add_child(picker_instance)
-# 	settings["players"] = PlayerManager.players
 
 # signal handlers
 func _on_game_mode_selected(index: int) -> void:
@@ -81,20 +73,20 @@ func _on_game_target_selected(index: int) -> void:
 	print("Game length selected: %d" % index)
 	settings["game_target"] = GAME_TARGETS[index]
 
-func _on_add_player_button_pressed() -> void:
-	var new_player_index = PlayerManager.players.size() + 1
-	var player_name = "Player %d" % new_player_index
-	PlayerManager.add_player(player_name)
-	var picker_instance = player_picker.instantiate()
-	picker_instance.set_player_name(player_name)
-	players_grid.add_child(picker_instance)
-	print("Added new player: %s" % player_name)
-	settings["players"] = PlayerManager.players
+# func _on_add_player_button_pressed() -> void:
+# 	var new_player_index = PlayerManager.players.size() + 1
+# 	var player_name = "Player %d" % new_player_index
+# 	PlayerManager.add_player(player_name)
+# 	var picker_instance = player_picker.instantiate()
+# 	picker_instance.set_player_name(player_name)
+# 	players_grid.add_child(picker_instance)
+# 	print("Added new player: %s" % player_name)
+# 	settings["players"] = PlayerManager.players
 
-	if PlayerManager.players.size() >= 8:
-		print("Maximum number of players reached.")
-		add_player_button.disabled = true
-		return
+# 	if PlayerManager.players.size() >= 8:
+# 		print("Maximum number of players reached.")
+# 		add_player_button.disabled = true
+# 		return
 
 func _on_start_button_pressed() -> void:
 	confirm_modal.visible = true
