@@ -52,11 +52,6 @@ func update_pot_display() -> void:
 func _on_turn_changed(player: Player) -> void:
 	current_player_label.text = player.name
 
-func show_answer_modal_for_free_guess() -> void:
-	# Automatically show answer modal for free guess
-	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
-	add_child(answer_modal)
-	answer_modal.answer_submitted.connect(_on_answer_submitted)
  
 func start_new_question(question: Question) -> void:
 	# Clear old sliders
@@ -80,9 +75,7 @@ func start_new_question(question: Question) -> void:
 	var current_player = PlayerManager.get_current_player()
 	if current_player:
 		current_player_label.text = current_player.name
-	
 	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
-	
 	for i in range(words.size()):
 		var s = SliderScene.instantiate()
 		s.custom_minimum_size = Vector2(250, 80)
@@ -91,9 +84,8 @@ func start_new_question(question: Question) -> void:
 		s.set_word(words[i], i + 1)
 		s.clicked.connect(_on_slider_clicked)
 
+# Advance to next player
 func _on_slider_clicked():
-
-	# Advance to next player
 	PlayerManager.next_turn()	
 	var next_player = PlayerManager.get_current_player()
 	if next_player:
@@ -103,6 +95,12 @@ func _on_slider_clicked():
 # Guess Button
 func _on_guess_btn_pressed() -> void:
 	print("Guess button pressed. Current pot: %d" % int(current_prize))
+	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
+	add_child(answer_modal)
+	answer_modal.answer_submitted.connect(_on_answer_submitted)
+
+func show_answer_modal_for_free_guess() -> void:
+	# Automatically show answer modal for free guess
 	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
 	add_child(answer_modal)
 	answer_modal.answer_submitted.connect(_on_answer_submitted)
@@ -120,6 +118,3 @@ func _on_answer_submitted(answer_text: String) -> void:
 	else:
 		print("WRONG ANSWER. The correct answer was: %s" % current_question.answer)
 		round_result.emit(current_player, false, int(current_prize))
-
-
-
