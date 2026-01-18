@@ -11,11 +11,15 @@ static func validate_player_count(count: int) -> Dictionary:
 
 static func validate_player_name(name: String) -> Dictionary:
     # Check length, empty, special chars
-    if name.strip_edges() == "":
+    var trimmed_name := name.strip_edges()
+    if trimmed_name == "":
         return {"valid": false, "error": "Player name cannot be empty."}
-    elif name.length() > 20:
+    elif trimmed_name.length() > 20:
         return {"valid": false, "error": "Player name too long. Max 20 characters."}
-    elif not name.is_valid_identifier():
+    var regex := RegEx.new()
+    # Allow letters, digits, spaces, underscore, hyphen, dot, and apostrophe.
+    regex.compile("^[A-Za-z0-9 _\\-\\.']+$")
+    if not regex.search(trimmed_name):
         return {"valid": false, "error": "Player name contains invalid characters."}
     return {"valid": true, "error": ""}
 
