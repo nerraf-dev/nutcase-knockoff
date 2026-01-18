@@ -28,4 +28,7 @@ func _on_cancel_pressed() -> void:
 
 func _input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		
 		_on_cancel_pressed()
+	elif event is InputEventKey and event.pressed and event.keycode == KEY_ENTER:
+		_on_submit_pressed()

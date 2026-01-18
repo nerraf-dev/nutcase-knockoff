@@ -78,18 +78,35 @@ func _setup_round_area() -> void:
 func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 	if not is_correct:
 		var result = GameManager.handle_wrong_answer(player, prize)
+		print("RESULT DICT: %s" % str(result))
 		_update_all_badges()
+		
 		if result["is_frozen"]:
 			_update_overlay(result["message"])
+		
 		if result["is_last_standing"]:
 			_update_overlay(result["message"])
 			# Auto-show answer modal for free guess
 			if round_instance:
 				round_instance.show_answer_modal_for_free_guess()
+		
+		# Handle LPS wrong answer - show correct answer and move to next round
+		if result["is_lps_wrong"]:
+			_update_overlay(result["message"])
+			await get_tree().create_timer(2.0).timeout
+			_start_next_round()
+		
+		# Handle edge case: no active players left
+		if result["is_last_standing"] == false and result["is_lps_wrong"] == false and PlayerManager.get_active_players().size() == 0:
+			_update_overlay("No players left!\nStarting next round...")
+			await get_tree().create_timer(1.0).timeout
+			_start_next_round()
+			
 	elif is_correct:
 		var result = GameManager.handle_correct_answer(player, prize)
 		_update_all_badges()
 		_update_overlay(result["message"])
+		
 		if result["has_winner"]:
 			GameManager.game_ended.emit(result["winner"])
 			round_area.set_process_input(false)

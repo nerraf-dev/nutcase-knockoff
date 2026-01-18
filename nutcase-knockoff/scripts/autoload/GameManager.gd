@@ -57,6 +57,11 @@ func get_next_question() -> Question:
         return null
     var next_q = unused.pick_random()
     used_question_ids.append(next_q.question_text)
+    
+    # Store current question for access in game logic
+    if game:
+        game.current_question = next_q
+    
     return next_q
 
 # Check for winner by score
@@ -74,7 +79,9 @@ func handle_wrong_answer(player: Player, base_prize: int) -> Dictionary:
         "penalty": 0,
         "is_frozen": false,
         "is_last_standing": false,
+        "is_lps_wrong": false,  # NEW: Last player standing guessed wrong
         "last_standing_player": null,
+        "correct_answer": "",
         "message": ""
     }
     
@@ -100,6 +107,13 @@ func handle_wrong_answer(player: Player, base_prize: int) -> Dictionary:
             print("Free guess for %s - no penalty applied" % active_players[0].name)
             PlayerManager.next_turn()  # Advance to last player
     
+    # If only 1 player active (LPS got it wrong), end the round
+    elif active_players.size() == 1:
+        result["is_lps_wrong"] = true
+        result["correct_answer"] = game.current_question.answer if game.current_question else ""
+        result["message"] = "Wrong!\nThe answer was: %s" % result["correct_answer"]
+        print("Last player standing got it wrong. Round ends.")
+   
     return result
 
 # Handle correct answer with winner checking
