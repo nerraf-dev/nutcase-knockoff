@@ -11,11 +11,15 @@ static func validate_player_count(count: int) -> Dictionary:
 
 static func validate_player_name(name: String) -> Dictionary:
     # Check length, empty, special chars
-    if name.strip_edges() == "":
+    var trimmed_name := name.strip_edges()
+    if trimmed_name == "":
         return {"valid": false, "error": "Player name cannot be empty."}
-    elif name.length() > 20:
+    elif trimmed_name.length() > 20:
         return {"valid": false, "error": "Player name too long. Max 20 characters."}
-    elif not name.is_valid_identifier():
+    var regex := RegEx.new()
+    # Allow letters, digits, spaces, underscore, hyphen, dot, and apostrophe.
+    regex.compile("^[A-Za-z0-9 _\\-\\.']+$")
+    if not regex.search(trimmed_name):
         return {"valid": false, "error": "Player name contains invalid characters."}
     return {"valid": true, "error": ""}
 
@@ -29,7 +33,7 @@ static func validate_game_settings(settings: Dictionary) -> Dictionary:
     # Check all required fields present
     # Returns {"valid": bool, "errors": Array[String]}
     var errors: Array[String] = []
-    if not settings.has("players") or settings["players"].size() < GameConfig.MIN:
+    if not settings.has("players") or settings["players"].size() < GameConfig.MIN_PLAYERS:
         errors.append("Not enough players to start the game.")
     if not settings.has("game_type") or settings["game_type"] == "":
         errors.append("Game type must be selected.")

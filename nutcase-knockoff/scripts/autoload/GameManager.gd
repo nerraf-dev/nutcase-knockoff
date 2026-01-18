@@ -96,7 +96,7 @@ func handle_wrong_answer(player: Player, base_prize: int) -> Dictionary:
         result["is_frozen"] = true
         result["message"] = "Incorrect %s!\nYou lose %d points!" % [player.name, penalty]
         print("Player %s is now frozen for this question." % player.name)
-        PlayerManager.next_turn()
+        # PlayerManager.next_turn()
         
         # Check if now last player standing
         active_players = PlayerManager.get_active_players()
@@ -105,7 +105,7 @@ func handle_wrong_answer(player: Player, base_prize: int) -> Dictionary:
             result["last_standing_player"] = active_players[0]
             result["message"] = "Last player standing!\n%s gets a free guess!" % active_players[0].name
             print("Free guess for %s - no penalty applied" % active_players[0].name)
-            PlayerManager.next_turn()  # Advance to last player
+            # PlayerManager.next_turn()  # Advance to last player
     
     # If only 1 player active (LPS got it wrong), end the round
     elif active_players.size() == 1:

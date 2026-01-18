@@ -31,10 +31,13 @@ var round_instance = null
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
-	
 	# Validate game state
-	assert(GameManager.current_state == GameManager.GameState.IN_PROGRESS, "Game Board loaded but game not in progress!")
-	assert(GameManager.game != null, "Game Board loaded but no game exists!")
+	if GameManager.current_state != GameManager.GameState.IN_PROGRESS:
+		push_error("Game Board loaded but game not in progress!")
+		return
+	if GameManager.game == null:
+		push_error("Game Board loaded but no game exists!")
+		return
 
 	print("Game Board scene ready")
 	res_overlay.visible = false
@@ -97,7 +100,9 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 			_start_next_round()
 		
 		# Handle edge case: no active players left
-		if result["is_last_standing"] == false and result["is_lps_wrong"] == false and PlayerManager.get_active_players().size() == 0:
+		var no_special_end_condition = not result["is_last_standing"] and not result["is_lps_wrong"]
+		var no_active_players_left = PlayerManager.get_active_players().size() == 0
+		if no_special_end_condition and no_active_players_left:
 			_update_overlay("No players left!\nStarting next round...")
 			await get_tree().create_timer(1.0).timeout
 			_start_next_round()
