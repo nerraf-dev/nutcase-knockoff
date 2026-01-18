@@ -3,7 +3,9 @@ extends Control
 # GameBoard - game_board.gd
 # This script manages the main game board scene, including HUD and round area.
 # The RoundArea will host the 'game play'. That scene handles the game play logic.
-# Teh GameBoard HUD shows the player list & details, main controls, etc.
+# The GameBoard HUD shows the player list & details, main controls, etc.
+
+signal return_to_home
 
 const player_badge = preload("res://scenes/components/player_badge.tscn")
 
@@ -24,14 +26,26 @@ const ROUND_SCENES = {
 	# Add other round types here as needed
 }
 
-var qna_instance = null
+var round_instance = null
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	# Validate game state
+	if GameManager.current_state != GameManager.GameState.IN_PROGRESS:
+		push_error("Game Board loaded but game not in progress!")
+		return
+	if GameManager.game == null:
+		push_error("Game Board loaded but no game exists!")
+		return
+
 	print("Game Board scene ready")
 	res_overlay.visible = false
 	exit_btn.pressed.connect(Callable(self, "_on_exit_btn_pressed"))
 	options_btn.pressed.connect(Callable(self, "_on_options_btn_pressed"))
-	
+	exit_confirm.confirmed.connect(_on_exit_confirmed)
+	# Connect to turn changes to update current player indicator
+	PlayerManager.turn_changed.connect(_on_turn_changed)
 	_setup_players_hud()
 	_setup_round_area()
 
@@ -58,69 +72,70 @@ func _setup_round_area() -> void:
 		return
 	var round_scene = load(round_scene_path)
 	if round_scene:
-		qna_instance = round_scene.instantiate()
-		round_area.add_child(qna_instance)
-		qna_instance.connect("round_result", Callable(self, "_on_round_result"))
+		round_instance = round_scene.instantiate()
+		round_area.add_child(round_instance)
+		round_instance.connect("round_result", Callable(self, "_on_round_result"))
 	else:
 		push_error("Failed to load round scene at path: %s" % round_scene_path)
 
 func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
-	# occurs when a player chooses to answer.
-	# if the player guesses incorrectly:
-		#  - they are frozen until the next round.
-		#  - they are given the point deduction penalty (half of the question score)
-		#  - play continues with remaining players
-			# if only one player remains, they are given the chance of penalty free guess. (handled in qna??)
-	# if the player guesses correctly:
-		#  - they are awarded the current question prize points
-		#  - they are un-frozen if they were frozen
-		#  - check for winners (based on score)
-			# if winner(s) found, end game
-			# else continue to next round
 	if not is_correct:
-		player.is_frozen = true
-		print("Player %s is now frozen for next round." % player.name)
-		var penalty = int(prize * 0.5)  # Half the prize as penalty
-		PlayerManager.award_points(player, -penalty)  # Negative points
+		var result = GameManager.handle_wrong_answer(player, prize)
+		print("RESULT DICT: %s" % str(result))
 		_update_all_badges()
-		PlayerManager.next_turn()
-		_update_overlay("Incorrect %s!\n You lose %d points!" % [player.name, penalty])	
-
-	elif is_correct:
-		print("Player %s answered correctly!" % player.name)
-		PlayerManager.award_points(player, prize)
-		_update_all_badges()
-		player.is_frozen = false  # Unfreeze if they were frozen
 		
-		# PLACEHOLDER: Show result overlay for correct answer
-		# await get_tree().create_timer(2.0).timeout  # Show result for 2 seconds
-		_update_overlay("Correct %s!\n You get %d points!" % [player.name, prize])
-		print("NEXT pressed")
-
-		# Check for winners
-		var winners = GameManager.check_for_winner()
-		if winners.is_empty():
-			print("No winner yet,\n continuing to next round.")
-			await get_tree().create_timer(1.0).timeout  # Placeholder delay
-			# TODO: Show round summary overlay
-
-			_update_overlay("No winner yet, \n& starting next round...")
+		if result["is_frozen"]:
+			_update_overlay(result["message"])
+		
+		if result["is_last_standing"]:
+			_update_overlay(result["message"])
+			# Auto-show answer modal for free guess
+			if round_instance:
+				round_instance.show_answer_modal_for_free_guess()
+		
+		# Handle LPS wrong answer - show correct answer and move to next round
+		if result["is_lps_wrong"]:
+			_update_overlay(result["message"])
+			await get_tree().create_timer(2.0).timeout
 			_start_next_round()
-		else:
-			print("We have a winner: %s!" % winners[0].name)
-			GameManager.game_ended.emit(winners[0])
+		
+		# Handle edge case: no active players left
+		var no_special_end_condition = not result["is_last_standing"] and not result["is_lps_wrong"]
+		var no_active_players_left = PlayerManager.get_active_players().size() == 0
+		if no_special_end_condition and no_active_players_left:
+			_update_overlay("No players left!\nStarting next round...")
+			await get_tree().create_timer(1.0).timeout
+			_start_next_round()
+			
+	elif is_correct:
+		var result = GameManager.handle_correct_answer(player, prize)
+		_update_all_badges()
+		_update_overlay(result["message"])
+		
+		if result["has_winner"]:
+			GameManager.game_ended.emit(result["winner"])
 			round_area.set_process_input(false)
-			_update_overlay("The winner is \n& %s!" % winners[0].name)
-			# await get_tree().create_timer(2.0).timeout
+			_update_overlay("The winner is\n%s!" % result["winner"].name)
+		else:
+			await get_tree().create_timer(1.0).timeout
+			_update_overlay("No winner yet,\nstarting next round...")
+			_start_next_round()
 
 func _update_all_badges() -> void:
 	var badges = players_container.get_children()
 	var current_player = PlayerManager.get_current_player()
+	var leaders = PlayerManager.get_leaders()
+	
 	for i in range(badges.size()):
 		if i < PlayerManager.players.size():
 			var player = PlayerManager.players[i]
 			badges[i].update_score(player.score)
 			badges[i].set_current_player(player == current_player)
+			badges[i].set_current_leader(leaders.has(player))
+
+func _on_turn_changed(_player: Player) -> void:
+	# Update badges when turn changes
+	_update_all_badges()
 
 func _start_next_round() -> void:
 	# the winner of the last round should still be current player. 
@@ -128,7 +143,7 @@ func _start_next_round() -> void:
 	if next_question:
 		PlayerManager.unfreeze_all_players()
 		GameManager.game.current_round += 1
-		qna_instance.start_new_question(next_question)
+		round_instance.start_new_question(next_question)
 	else:
 		print("No more questions available!")
 
@@ -138,14 +153,13 @@ func _on_options_btn_pressed() -> void:
 
 func _on_exit_btn_pressed() -> void:
 	print("Exit button pressed")
-	exit_confirm.popup_centered()
 	exit_confirm.dialog_text = "Are you sure you want to exit to main menu?"
-	exit_confirm.connect("confirmed", Callable(self, "_on_exit_confirmed"))
+	exit_confirm.popup_centered()
 
 func _on_exit_confirmed() -> void:
 	print("Exit confirmed, returning to main menu")
-	get_tree().change_scene("res://scenes/screens/main.tscn")
-	GameManager.game = null  # Reset game state
-	PlayerManager.reset_players()
-
-	
+	# Reset game state
+	GameManager.game = null
+	GameManager.current_state = GameManager.GameState.NONE
+	PlayerManager.clear_all_players()
+	return_to_home.emit()

@@ -5,6 +5,8 @@ extends Node2D
 # LOAD SPLASH SCREEN
 func _ready() -> void:
 	print("Main scene ready, loading SplashScreen")
+	# Initialize game state
+	GameManager.current_state = GameManager.GameState.NONE
 	var a = GameIdGenerator.get_random_id()
 	print("Generated Game ID: %s" % a)
 	load_splash_screen()
@@ -25,6 +27,7 @@ func _on_splash_complete() -> void:
 
 # LOAD GAME HOME
 func load_game_home() -> void:
+	GameManager.change_state(GameManager.GameState.MENU)
 	var home_scene = preload("res://scenes/screens/game_home.tscn")
 	var home_instance = home_scene.instantiate()
 	scene_container.add_child(home_instance)
@@ -40,8 +43,14 @@ func _on_exit_game() -> void:
 	print("Exit game signal received, quitting application")
 	get_tree().quit()
 
+func _on_return_to_home() -> void:
+	print("Returning to home screen")
+	cleanup_current_scene()
+	load_game_home()
+
 # LOAD GAME INIT
 func load_game_init() -> void:
+	GameManager.change_state(GameManager.GameState.SETUP)
 	var init_scene = preload("res://scenes/screens/game_init.tscn")
 	var init_instance = init_scene.instantiate()
 	init_instance.game_init_complete.connect(_on_game_init_complete)
@@ -66,7 +75,7 @@ func load_game_board() -> void:
 	var board_scene = preload("res://scenes/screens/game_board.tscn")
 	var board_instance = board_scene.instantiate()
 	scene_container.add_child(board_instance)
-	# board_instance.setup_game(settings)  # Uncomment if setup_game method is implemented
+	board_instance.return_to_home.connect(_on_return_to_home)
 
 # Cleanup current scene
 func cleanup_current_scene() -> void:
