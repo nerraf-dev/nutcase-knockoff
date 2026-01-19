@@ -6,6 +6,7 @@ extends Control
 # The GameBoard HUD shows the player list & details, main controls, etc.
 
 signal return_to_home
+signal game_ended(winner: Player)
 
 const player_badge = preload("res://scenes/components/player_badge.tscn")
 
@@ -31,10 +32,10 @@ var round_instance = null
 func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
+	
 	# Validate game state
 	if GameManager.current_state != GameManager.GameState.IN_PROGRESS:
-		push_error("Game Board loaded but game not in progress!")
-		return
+		push_warning("Game Board loaded but game not in IN_PROGRESS state: %s" % GameManager.GameState.keys()[GameManager.current_state])
 	if GameManager.game == null:
 		push_error("Game Board loaded but no game exists!")
 		return
@@ -110,13 +111,17 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 	elif is_correct:
 		var result = GameManager.handle_correct_answer(player, prize)
 		_update_all_badges()
-		_update_overlay(result["message"])
 		
 		if result["has_winner"]:
-			GameManager.game_ended.emit(result["winner"])
+			# Skip the "Correct!" overlay and go straight to game end
 			round_area.set_process_input(false)
-			_update_overlay("The winner is\n%s!" % result["winner"].name)
+			# Trigger state change to GAME_OVER
+			GameManager.game_ended.emit(result["winner"])
+			# Tell main to load game end scene
+			game_ended.emit(result["winner"])
 		else:
+			# Show correct message for non-winning answers
+			_update_overlay(result["message"])
 			await get_tree().create_timer(1.0).timeout
 			_update_overlay("No winner yet,\nstarting next round...")
 			_start_next_round()

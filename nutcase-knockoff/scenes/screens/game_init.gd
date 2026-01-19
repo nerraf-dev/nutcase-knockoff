@@ -1,6 +1,7 @@
 extends Node2D
 
 signal game_init_complete(settings: Dictionary)
+signal back_to_home 
 
 @onready var players_container = $PlayersContainer
 @onready var players_grid = $PlayersContainer/PlayersGrid
@@ -8,6 +9,7 @@ signal game_init_complete(settings: Dictionary)
 @onready var game_mode_list = $GameSettingsContainer/GameModes
 @onready var game_target_list = $GameSettingsContainer/GameTargets
 @onready var start_button = $StartBtn
+@onready var home_button = $HomeBtn
 @onready var total_players = $PlayerCount
 @onready var confirm_modal = $ConfirmModal
 @onready var confirm_button = $ConfirmModal/ConfirmBtn
@@ -44,6 +46,7 @@ func _make_connections() -> void:
 	start_button.pressed.connect(Callable(self, "_on_start_button_pressed"))
 	confirm_button.pressed.connect(Callable(self, "_on_confirm_button_pressed"))
 	back_button.pressed.connect(Callable(self, "_on_back_button_pressed"))
+	home_button.pressed.connect(Callable(self, "_on_home_button_pressed"))
 
 func _init_lists() -> void:
 	game_mode_list.clear()
@@ -80,3 +83,9 @@ func _on_back_button_pressed() -> void:
 func _on_confirm_button_pressed() -> void:
 	game_init_complete.emit(settings)
 	confirm_modal.visible = false
+
+func _on_home_button_pressed() -> void:
+	confirm_modal.visible = false
+	back_to_home.emit()
+	print("Home button pressed, returning to main menu")
+	

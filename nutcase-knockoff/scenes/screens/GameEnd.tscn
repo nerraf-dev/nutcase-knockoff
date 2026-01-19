@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://dkvx63u5x4iq4"]
+
+[ext_resource type="Script" uid="uid://clqugmje4qe4l" path="res://scenes/screens/game_end.gd" id="1_hrp0r"]
+[ext_resource type="LabelSettings" uid="uid://cfchkayhh0bn" path="res://resources/title.tres" id="1_vpbbp"]
+[ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_hrp0r"]
+
+[sub_resource type="Gradient" id="Gradient_xyh14"]
+colors = PackedColorArray(0.5647059, 0.73333335, 1, 0.7019608, 0.78431374, 0.78431374, 0.78431374, 0.7058824)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q7dn1"]
+gradient = SubResource("Gradient_xyh14")
+width = 65
+
+[node name="GameEnd" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hrp0r")
+metadata/_edit_vertical_guides_ = [959.0]
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_q7dn1")
+
+[node name="Content" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Title" type="Label" parent="Content"]
+layout_mode = 2
+text = "Game Over!"
+label_settings = ExtResource("1_vpbbp")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="WinnerLabel" type="Label" parent="Content"]
+layout_mode = 2
+text = "🎉 Winner: {name}!"
+label_settings = ExtResource("2_hrp0r")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Scores" type="VBoxContainer" parent="Content"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="Content"]
+layout_mode = 2
+alignment = 1
+
+[node name="PlayAgainBtn" type="Button" parent="Content/Buttons"]
+layout_mode = 2
+text = "Play again?"
+
+[node name="HomeBtn" type="Button" parent="Content/Buttons"]
+layout_mode = 2
+text = "Back Home"

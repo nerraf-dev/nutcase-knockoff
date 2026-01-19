@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 @onready var scene_container = $SceneContainer
 
@@ -54,6 +54,7 @@ func load_game_init() -> void:
 	var init_scene = preload("res://scenes/screens/game_init.tscn")
 	var init_instance = init_scene.instantiate()
 	init_instance.game_init_complete.connect(_on_game_init_complete)
+	init_instance.back_to_home.connect(_on_return_to_home) 
 	scene_container.add_child(init_instance)
 
 func _on_game_init_complete(settings: Dictionary) -> void:
@@ -76,9 +77,59 @@ func load_game_board() -> void:
 	var board_instance = board_scene.instantiate()
 	scene_container.add_child(board_instance)
 	board_instance.return_to_home.connect(_on_return_to_home)
+	board_instance.game_ended.connect(_on_game_ended)
+
+# LOAD GAME END
+func load_game_end(winner: Player) -> void:
+	print("Loading game end screen, winner: %s" % winner.name)
+	var end_scene = preload("res://scenes/screens/GameEnd.tscn")
+	var end_instance = end_scene.instantiate()
+	scene_container.add_child(end_instance)
+	
+	# Force the Control to fill the viewport (needed when parent is Node2D)
+	end_instance.set_anchors_preset(Control.PRESET_FULL_RECT)
+	end_instance.set_size(get_viewport().get_visible_rect().size)
+	
+	# Pass game data to end screen
+	end_instance.setup(winner, PlayerManager.players, {
+		"game_type": GameManager.game.game_type,
+		"game_target": GameManager.game.game_target,
+		"player_count": PlayerManager.players.size()
+	})
+	
+	# Connect signals
+	end_instance.play_again_requested.connect(_on_play_again_requested)
+	end_instance.return_to_home.connect(_on_return_to_home)
+
+func _on_game_ended(winner: Player) -> void:
+	print("Game ended, winner: %s" % winner.name)
+	cleanup_current_scene()
+	load_game_end(winner)
+
+func _on_play_again_requested() -> void:
+	print("Play again with same settings")
+	cleanup_current_scene()
+	
+	# Store settings before reset
+	var settings = {
+		"game_type": GameManager.game.game_type,
+		"game_target": GameManager.game.game_target,
+		"player_count": PlayerManager.players.size()
+	}
+	
+	# Reset game data
+	GameManager.game = null
+	PlayerManager.clear_all_players()
+	
+	# Transition: GAME_OVER → MENU → SETUP → IN_PROGRESS
+	GameManager.change_state(GameManager.GameState.MENU)
+	GameManager.change_state(GameManager.GameState.SETUP)
+	
+	# Start new game with same settings (this will transition to IN_PROGRESS)
+	GameManager.start_game(settings)
+	load_game_board()
 
 # Cleanup current scene
 func cleanup_current_scene() -> void:
 	for child in scene_container.get_children():
 		child.queue_free()
-
