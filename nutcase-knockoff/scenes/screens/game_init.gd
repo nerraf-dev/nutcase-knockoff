@@ -4,13 +4,14 @@ signal game_init_complete(settings: Dictionary)
 signal back_to_home 
 
 @onready var players_container = $PlayersContainer
-@onready var players_grid = $PlayersContainer/PlayersGrid
+@onready var total_players = $PlayersContainer/PlayerCount
+
 @onready var game_settings_container = $GameSettingsContainer
 @onready var game_mode_list = $GameSettingsContainer/GameModes
 @onready var game_target_list = $GameSettingsContainer/GameTargets
 @onready var start_button = $StartBtn
 @onready var home_button = $HomeBtn
-@onready var total_players = $PlayerCount
+# confirm modal node (poss move to own scene)
 @onready var confirm_modal = $ConfirmModal
 @onready var confirm_button = $ConfirmModal/ConfirmBtn
 @onready var back_button = $ConfirmModal/BackBtn
@@ -88,4 +89,3 @@ func _on_home_button_pressed() -> void:
 	confirm_modal.visible = false
 	back_to_home.emit()
 	print("Home button pressed, returning to main menu")
-	

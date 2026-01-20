@@ -1,9 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://ccc4i4pmcqie4"]
+[gd_scene load_steps=12 format=3 uid="uid://ccc4i4pmcqie4"]
 
 [ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="3_g7jhl"]
 [ext_resource type="Theme" uid="uid://cb6tnblk7m60s" path="res://scenes/screens/game_init-settings-list-theme.tres" id="3_h1k66"]
-[ext_resource type="PackedScene" uid="uid://ddmycnm3j4tyh" path="res://scenes/components/player_badge_small.tscn" id="3_o5v4k"]
 [ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="3_xjbsa"]
 [ext_resource type="FontFile" uid="uid://ohhyu6a83aoa" path="res://assets/fonts/Coffee Fills.otf" id="4_g7jhl"]
 
@@ -17,8 +16,6 @@ width = 65
 [sub_resource type="LabelSettings" id="LabelSettings_nhm8p"]
 font_size = 54
 font_color = Color(0, 0.0313726, 1, 1)
-
-[sub_resource type="Theme" id="Theme_k42ct"]
 
 [sub_resource type="DPITexture" id="DPITexture_g7jhl"]
 _source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"8\"><path fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" d=\"m12 2-4 3.5L4 2\"/></svg>
@@ -49,83 +46,26 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_0jira")
 
-[node name="PlayersContainer" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 888.0
-offset_bottom = 888.0
+[node name="PlayersContainer" type="HBoxContainer" parent="."]
+offset_left = 84.0
+offset_top = 298.0
+offset_right = 995.0
+offset_bottom = 430.0
+theme_override_constants/separation = 32
 
 [node name="PlayersLabel" type="Label" parent="PlayersContainer"]
-layout_mode = 0
-offset_left = 88.0
-offset_top = 216.0
-offset_right = 288.0
-offset_bottom = 290.0
-text = "Players"
+layout_mode = 2
+text = "How many players?"
 label_settings = SubResource("LabelSettings_nhm8p")
 
-[node name="PlayersGrid" type="GridContainer" parent="PlayersContainer"]
-layout_mode = 0
-offset_left = 96.0
-offset_top = 314.0
-offset_right = 776.0
-offset_bottom = 946.0
-
-[node name="IconGrid" type="GridContainer" parent="PlayersContainer"]
-visible = false
-layout_mode = 0
-offset_left = 64.0
-offset_top = 320.0
-offset_right = 960.0
-offset_bottom = 824.0
-columns = 4
-
-[node name="PlayerBadge" parent="PlayersContainer/IconGrid" instance=ExtResource("3_o5v4k")]
+[node name="PlayerCount" type="SpinBox" parent="PlayersContainer"]
 layout_mode = 2
-
-[node name="AddPlayerButton" type="Button" parent="PlayersContainer"]
-visible = false
-layout_mode = 0
-offset_left = 328.0
-offset_top = 112.0
-offset_right = 552.0
-offset_bottom = 199.0
-theme_override_font_sizes/font_size = 48
-text = "Add Player"
-
-[node name="PlayerSlider" type="Control" parent="PlayersContainer"]
-visible = false
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="PlayerCount" type="Label" parent="PlayersContainer/PlayerSlider"]
-layout_mode = 0
-offset_left = 344.0
-offset_top = 112.0
-offset_right = 480.0
-offset_bottom = 224.0
-theme_override_font_sizes/font_size = 54
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slider" type="HSlider" parent="PlayersContainer/PlayerSlider"]
-layout_mode = 0
-offset_left = 96.0
-offset_top = 200.0
-offset_right = 416.0
-offset_bottom = 248.0
-scale = Vector2(2, 2)
-theme = SubResource("Theme_k42ct")
+theme = SubResource("Theme_xjbsa")
 min_value = 2.0
-max_value = 6.0
+max_value = 8.0
 value = 2.0
-exp_edit = true
 rounded = true
-tick_count = 6
-ticks_on_borders = true
-ticks_position = 3
+alignment = 1
 
 [node name="GameSettingsContainer" type="Control" parent="."]
 layout_mode = 3
@@ -157,7 +97,7 @@ layout_mode = 0
 offset_left = 1088.0
 offset_top = 558.0
 offset_right = 1352.0
-offset_bottom = 886.0
+offset_bottom = 758.0
 theme = ExtResource("3_h1k66")
 allow_reselect = true
 auto_width = true
@@ -181,7 +121,7 @@ layout_mode = 0
 offset_left = 1432.0
 offset_top = 554.0
 offset_right = 1696.0
-offset_bottom = 1022.0
+offset_bottom = 760.0
 theme = ExtResource("3_h1k66")
 allow_reselect = true
 auto_width = true
@@ -327,15 +267,3 @@ offset_right = 171.0
 offset_bottom = 493.0
 theme_override_font_sizes/font_size = 50
 text = "Back"
-
-[node name="PlayerCount" type="SpinBox" parent="."]
-offset_left = 344.0
-offset_top = 224.0
-offset_right = 592.0
-offset_bottom = 336.0
-theme = SubResource("Theme_xjbsa")
-min_value = 2.0
-max_value = 8.0
-value = 2.0
-rounded = true
-alignment = 1

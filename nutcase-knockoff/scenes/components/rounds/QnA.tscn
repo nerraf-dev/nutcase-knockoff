@@ -1,7 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://cj1sp0u6xorms"]
+[gd_scene load_steps=5 format=3 uid="uid://cj1sp0u6xorms"]
 
 [ext_resource type="Script" uid="uid://drkfq3su42qao" path="res://scenes/components/rounds/qna.gd" id="1_h7n03"]
 [ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="1_ll357"]
+[ext_resource type="FontFile" uid="uid://bex25m5snoet2" path="res://assets/fonts/Pencil Child.ttf" id="3_ybcsd"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_w8bgg"]
+font = ExtResource("3_ybcsd")
+font_size = 51
 
 [node name="QnA" type="Control"]
 layout_mode = 3
@@ -46,15 +51,6 @@ theme = ExtResource("1_ll357")
 theme_override_font_sizes/font_size = 64
 text = "Guess"
 
-[node name="CurrentPlayer" type="Label" parent="."]
-layout_mode = 0
-offset_left = 40.0
-offset_top = 7.9999995
-offset_right = 198.0
-offset_bottom = 31.0
-scale = Vector2(3.1902895, 3.6227791)
-text = "~~ Current Player ~~"
-
 [node name="Title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 608.0
@@ -62,7 +58,15 @@ offset_top = 7.9999995
 offset_right = 766.0
 offset_bottom = 31.0
 scale = Vector2(3.1902895, 3.6227791)
-text = "what is it?"
+
+[node name="CurrentPlayer" type="Label" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 19.0
+offset_right = 540.0
+offset_bottom = 75.0
+text = " - - Current Player - - "
+label_settings = SubResource("LabelSettings_w8bgg")
 
 [node name="Prize" type="Label" parent="."]
 layout_mode = 0

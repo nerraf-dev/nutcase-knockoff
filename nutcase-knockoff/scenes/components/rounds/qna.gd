@@ -33,7 +33,7 @@ func _ready() -> void:
 	
 	var current_player = PlayerManager.get_current_player()
 	if current_player:
-		current_player_label.text = current_player.name
+		current_player_label.text = "It's %s's turn" % current_player.name
 	else:
 		push_error("No current player available!")
 		return
@@ -50,7 +50,7 @@ func update_pot_display() -> void:
 	prize_label.text = str(int(current_prize))
 
 func _on_turn_changed(player: Player) -> void:
-	current_player_label.text = player.name
+	current_player_label.text = "It's %s's turn" % player.name
 
  
 func start_new_question(question: Question) -> void:
@@ -74,7 +74,7 @@ func start_new_question(question: Question) -> void:
 	
 	var current_player = PlayerManager.get_current_player()
 	if current_player:
-		current_player_label.text = current_player.name
+		current_player_label.text = "It's %s's turn" % current_player.name
 	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
 	for i in range(words.size()):
 		var s = SliderScene.instantiate()
@@ -90,7 +90,7 @@ func _on_slider_clicked():
 	var next_player = PlayerManager.get_current_player()
 	if next_player:
 		print("Next turn: %s" % next_player.name)
-		current_player_label.text = next_player.name
+		current_player_label.text = "It's %s's turn" % next_player.name
 
 # Guess Button
 func _on_guess_btn_pressed() -> void:
