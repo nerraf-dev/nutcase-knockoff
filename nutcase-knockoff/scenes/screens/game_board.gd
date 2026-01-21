@@ -49,12 +49,22 @@ func _ready() -> void:
 	PlayerManager.turn_changed.connect(_on_turn_changed)
 	_setup_players_hud()
 	_setup_round_area()
+	
+	# Enable input handling for overlay
+	set_process_input(true)
 
 func _update_overlay(msg: String) -> void:
 	res_label.text = msg
 	res_overlay.visible = true
+	res_next_btn.grab_focus()  # Auto-focus for controller
 	await res_next_btn.pressed
 	res_overlay.visible = false
+
+func _input(event):
+	# Allow A button / Enter to dismiss overlay
+	if res_overlay.visible and event.is_action_pressed("ui_accept"):
+		res_next_btn.emit_signal("pressed")
+		get_viewport().set_input_as_handled()
 
 func  _setup_players_hud() -> void:
 	if players_container.get_child_count() > 0:

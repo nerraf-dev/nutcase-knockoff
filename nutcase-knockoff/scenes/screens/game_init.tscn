@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccc4i4pmcqie4"]
+[gd_scene load_steps=16 format=3 uid="uid://ccc4i4pmcqie4"]
 
 [ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
+[ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="2_h1k66"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="3_g7jhl"]
 [ext_resource type="Theme" uid="uid://cb6tnblk7m60s" path="res://scenes/screens/game_init-settings-list-theme.tres" id="3_h1k66"]
 [ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="3_xjbsa"]
@@ -14,6 +15,7 @@ gradient = SubResource("Gradient_i3a2a")
 width = 65
 
 [sub_resource type="LabelSettings" id="LabelSettings_nhm8p"]
+font = ExtResource("2_h1k66")
 font_size = 54
 font_color = Color(0, 0.0313726, 1, 1)
 
@@ -36,6 +38,18 @@ SpinBox/constants/buttons_width = 64
 SpinBox/icons/down = SubResource("DPITexture_g7jhl")
 SpinBox/icons/up = SubResource("DPITexture_xjbsa")
 
+[sub_resource type="Theme" id="Theme_d4pih"]
+default_font = ExtResource("2_h1k66")
+default_font_size = 54
+
+[sub_resource type="Theme" id="Theme_t11tv"]
+default_font = ExtResource("2_h1k66")
+default_font_size = 54
+
+[sub_resource type="Theme" id="Theme_64jy4"]
+default_font = ExtResource("2_h1k66")
+default_font_size = 54
+
 [node name="GameInit" type="Node2D"]
 script = ExtResource("1_nhm8p")
 metadata/_edit_vertical_guides_ = [960.0]
@@ -47,6 +61,7 @@ offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_0jira")
 
 [node name="PlayersContainer" type="HBoxContainer" parent="."]
+visible = false
 offset_left = 84.0
 offset_top = 298.0
 offset_right = 995.0
@@ -68,6 +83,7 @@ rounded = true
 alignment = 1
 
 [node name="GameSettingsContainer" type="Control" parent="."]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = -184.0
@@ -133,18 +149,18 @@ item_1/text = "1500"
 item_2/text = "2000"
 
 [node name="StartBtn" type="TextureButton" parent="."]
-offset_left = 807.99994
-offset_top = 904.00006
-offset_right = 1222.0
-offset_bottom = 1118.0
-scale = Vector2(0.7316462, 0.7481033)
+offset_left = 822.00006
+offset_top = 779.00006
+offset_right = 1236.0
+offset_bottom = 993.00006
+scale = Vector2(0.60267645, 0.522713)
 texture_normal = ExtResource("3_xjbsa")
 
 [node name="HomeBtn" type="Button" parent="."]
-offset_left = 24.0
-offset_top = 968.0
-offset_right = 217.0
-offset_bottom = 1064.0
+offset_left = 859.0
+offset_top = 961.0
+offset_right = 1052.0
+offset_bottom = 1057.0
 theme_override_font_sizes/font_size = 64
 text = "Home"
 
@@ -158,6 +174,121 @@ text = "Settings"
 label_settings = ExtResource("3_g7jhl")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PlayerSelect" type="VBoxContainer" parent="."]
+offset_left = 688.0
+offset_top = 196.0
+offset_right = 1221.0
+offset_bottom = 341.0
+alignment = 1
+
+[node name="Label" type="Label" parent="PlayerSelect"]
+layout_mode = 2
+text = "How many players?"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="Buttons" type="HBoxContainer" parent="PlayerSelect"]
+layout_mode = 2
+theme = SubResource("Theme_d4pih")
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="2" type="Button" parent="PlayerSelect/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "2"
+metadata/value = 2
+
+[node name="3" type="Button" parent="PlayerSelect/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "3"
+metadata/value = 3
+
+[node name="4" type="Button" parent="PlayerSelect/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "4"
+metadata/value = 4
+
+[node name="5" type="Button" parent="PlayerSelect/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "5"
+metadata/value = 5
+
+[node name="6" type="Button" parent="PlayerSelect/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "6"
+metadata/value = 6
+
+[node name="7" type="Button" parent="PlayerSelect/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "7"
+metadata/value = 7
+
+[node name="8" type="Button" parent="PlayerSelect/Buttons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "8"
+metadata/value = 8
+
+[node name="ModeSelect" type="VBoxContainer" parent="."]
+offset_left = 885.0
+offset_top = 399.0
+offset_right = 1080.0
+offset_bottom = 541.0
+theme = SubResource("Theme_t11tv")
+
+[node name="Label" type="Label" parent="ModeSelect"]
+layout_mode = 2
+text = "Mode:"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="Buttons" type="HBoxContainer" parent="ModeSelect"]
+layout_mode = 2
+theme = SubResource("Theme_64jy4")
+theme_override_constants/separation = 16
+
+[node name="qna" type="Button" parent="ModeSelect/Buttons"]
+layout_mode = 2
+text = "Q 'n' A"
+metadata/value = "qna"
+
+[node name="LengthSelect" type="VBoxContainer" parent="."]
+offset_left = 714.0
+offset_top = 585.0
+offset_right = 1253.0
+offset_bottom = 727.0
+theme = SubResource("Theme_t11tv")
+
+[node name="Label" type="Label" parent="LengthSelect"]
+layout_mode = 2
+text = "Game Length"
+label_settings = SubResource("LabelSettings_nhm8p")
+
+[node name="Buttons" type="HBoxContainer" parent="LengthSelect"]
+layout_mode = 2
+theme = SubResource("Theme_64jy4")
+theme_override_constants/separation = 16
+
+[node name="Short" type="Button" parent="LengthSelect/Buttons"]
+layout_mode = 2
+text = "Short
+"
+metadata/value = 200
+
+[node name="Medium" type="Button" parent="LengthSelect/Buttons"]
+layout_mode = 2
+text = "Medium"
+metadata/value = 2000
+
+[node name="Long" type="Button" parent="LengthSelect/Buttons"]
+layout_mode = 2
+text = "Long"
+metadata/value = 3000
 
 [node name="ConfirmModal" type="Control" parent="."]
 visible = false
