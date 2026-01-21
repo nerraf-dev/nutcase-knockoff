@@ -28,6 +28,10 @@ func _ready() -> void:
 	print("QnA scene ready")
 	guess_btn.pressed.connect(_on_guess_btn_pressed)
 	
+	# Add spacing between sliders
+	grid.add_theme_constant_override("h_separation", 20)
+	grid.add_theme_constant_override("v_separation", 20)
+	
 	# Connect to turn changes so label updates when turn advances
 	PlayerManager.turn_changed.connect(_on_turn_changed)
 	
@@ -76,13 +80,61 @@ func start_new_question(question: Question) -> void:
 	if current_player:
 		current_player_label.text = "It's %s's turn" % current_player.name
 	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
+	
+	var sliders = []
 	for i in range(words.size()):
 		var s = SliderScene.instantiate()
-		s.custom_minimum_size = Vector2(250, 80)
-		grid.columns = 3
 		grid.add_child(s)
+		
+		# Reset scale and set size
+		s.scale = Vector2.ONE
+		s.custom_minimum_size = Vector2(350, 100)
+		
 		s.set_word(words[i], i + 1)
 		s.clicked.connect(_on_slider_clicked)
+		sliders.append(s)
+	
+	# Setup focus navigation in grid order (left-right, top-bottom)
+	await get_tree().process_frame
+	_setup_slider_navigation(sliders, 3)  # 3 columns
+	
+	# Focus first slider for controller navigation
+	if sliders.size() > 0:
+		sliders[0].grab_focus()
+
+func _setup_slider_navigation(sliders: Array, columns: int) -> void:
+	var rows = ceil(float(sliders.size()) / columns)
+	
+	for i in range(sliders.size()):
+		var slider = sliders[i]
+		var row = i / columns
+		var col = i % columns
+		
+		# Left neighbor
+		if col > 0:
+			slider.focus_neighbor_left = sliders[i - 1].get_path()
+		
+		# Right neighbor
+		if col < columns - 1 and i + 1 < sliders.size():
+			slider.focus_neighbor_right = sliders[i + 1].get_path()
+		
+		# Up neighbor
+		if row > 0:
+			var up_index = i - columns
+			if up_index >= 0:
+				slider.focus_neighbor_top = sliders[up_index].get_path()
+		
+		# Down neighbor
+		if row < rows - 1:
+			var down_index = i + columns
+			if down_index < sliders.size():
+				slider.focus_neighbor_bottom = sliders[down_index].get_path()
+		
+		# Tab to next slider, or to guess button at end
+		if i + 1 < sliders.size():
+			slider.focus_next = sliders[i + 1].get_path()
+		else:
+			slider.focus_next = guess_btn.get_path()
 
 # Advance to next player
 func _on_slider_clicked():

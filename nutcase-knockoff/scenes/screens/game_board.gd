@@ -96,25 +96,25 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 		_update_all_badges()
 		
 		if result["is_frozen"]:
-			_update_overlay(result["message"])
+			await _update_overlay(result["message"])
 		
 		if result["is_last_standing"]:
-			_update_overlay(result["message"])
+			await _update_overlay(result["message"])
 			# Auto-show answer modal for free guess
 			if round_instance:
 				round_instance.show_answer_modal_for_free_guess()
 		
 		# Handle LPS wrong answer - show correct answer and move to next round
 		if result["is_lps_wrong"]:
-			_update_overlay(result["message"])
-			await get_tree().create_timer(2.0).timeout
+			await _update_overlay(result["message"])
+			await get_tree().create_timer(1.0).timeout
 			_start_next_round()
 		
 		# Handle edge case: no active players left
 		var no_special_end_condition = not result["is_last_standing"] and not result["is_lps_wrong"]
 		var no_active_players_left = PlayerManager.get_active_players().size() == 0
 		if no_special_end_condition and no_active_players_left:
-			_update_overlay("No players left!\nStarting next round...")
+			await _update_overlay("No players left!\nStarting next round...")
 			await get_tree().create_timer(1.0).timeout
 			_start_next_round()
 			
@@ -131,9 +131,9 @@ func _on_round_result(player: Player, is_correct: bool, prize: int) -> void:
 			game_ended.emit(result["winner"])
 		else:
 			# Show correct message for non-winning answers
-			_update_overlay(result["message"])
-			await get_tree().create_timer(1.0).timeout
-			_update_overlay("No winner yet,\nstarting next round...")
+			await _update_overlay(result["message"])  # Wait for dismissal
+			await _update_overlay("No winner yet,\nstarting next round...")  # Wait for dismissal
+			
 			_start_next_round()
 
 func _update_all_badges() -> void:
@@ -153,14 +153,43 @@ func _on_turn_changed(_player: Player) -> void:
 	_update_all_badges()
 
 func _start_next_round() -> void:
-	# the winner of the last round should still be current player. 
+	# Disable focus on existing round before loading new one
+	if round_instance:
+		_set_round_focus(false)
+	
+	# Load next question
 	var next_question = GameManager.get_next_question()
 	if next_question:
 		PlayerManager.unfreeze_all_players()
 		GameManager.game.current_round += 1
 		round_instance.start_new_question(next_question)
+		
+		# Re-enable focus after round loads (sliders will auto-focus)
+		await get_tree().process_frame
+		_set_round_focus(true)
 	else:
 		print("No more questions available!")
+
+func _set_round_focus(enabled: bool) -> void:
+	# Recursively enable/disable focus on all round controls
+	if round_instance:
+		_recursive_set_focus(round_instance, enabled)
+
+func _recursive_set_focus(node: Node, enabled: bool) -> void:
+	if node is Control:
+		if enabled:
+			# Restore original focus mode if stored
+			if node.has_meta("stored_focus_mode"):
+				node.focus_mode = node.get_meta("stored_focus_mode")
+				node.remove_meta("stored_focus_mode")
+		else:
+			# Store and disable
+			if node.focus_mode != Control.FOCUS_NONE:
+				node.set_meta("stored_focus_mode", node.focus_mode)
+				node.focus_mode = Control.FOCUS_NONE
+	
+	for child in node.get_children():
+		_recursive_set_focus(child, enabled)
 
 # Signal handlers for buttons
 func _on_options_btn_pressed() -> void:

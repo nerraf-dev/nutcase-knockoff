@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b5giku58qyr3j"]
+[gd_scene load_steps=7 format=3 uid="uid://b5giku58qyr3j"]
 
 [ext_resource type="Script" uid="uid://d0mifludc5xxr" path="res://scenes/components/slider.gd" id="1_lfa00"]
+[ext_resource type="FontFile" uid="uid://dsjw1g8q8n42w" path="res://assets/fonts/Cute Dino.otf" id="2_p1un5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tfq63"]
-font_size = 36
+font = ExtResource("2_p1un5")
+font_size = 56
 font_color = Color(0.898478, 0.813056, 0.0395719, 1)
 
 [sub_resource type="Gradient" id="Gradient_tfq63"]
@@ -16,8 +18,8 @@ gradient = SubResource("Gradient_tfq63")
 font_size = 48
 
 [node name="Slider" type="PanelContainer"]
-offset_right = 250.0
-offset_bottom = 80.0
+offset_right = 450.0
+offset_bottom = 120.0
 scale = Vector2(2, 2)
 script = ExtResource("1_lfa00")
 

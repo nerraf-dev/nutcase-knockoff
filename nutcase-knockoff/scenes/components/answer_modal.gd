@@ -10,27 +10,18 @@ signal cancelled
 func _ready() -> void:
 	submit_button.pressed.connect(_on_submit_pressed)
 	cancel.pressed.connect(_on_cancel_pressed)
-	
-	# Enable Enter key in LineEdit to submit
 	answer_text.text_submitted.connect(func(_text): _on_submit_pressed())
 	
-	# Setup focus navigation for controller
 	_setup_focus()
-	
-	# Disable background controls
 	_disable_background_focus()
-	
-	# Start with input focused
 	answer_text.grab_focus()
 
 func _setup_focus() -> void:
 	# Create focus loop: Cancel <-> Submit
 	cancel.focus_neighbor_right = submit_button.get_path()
 	submit_button.focus_neighbor_left = cancel.get_path()
-	
 	# Allow Tab to move from input to buttons
 	answer_text.focus_next = cancel.get_path()
-	
 	# Lock vertical navigation to stay on modal
 	cancel.focus_neighbor_top = cancel.get_path()
 	cancel.focus_neighbor_bottom = cancel.get_path()
@@ -46,11 +37,9 @@ func _disable_background_focus() -> void:
 func _recursive_disable_focus(node: Node, exclude: Node) -> void:
 	if node == exclude:
 		return
-	
 	if node is Control and node.focus_mode != Control.FOCUS_NONE:
 		node.set_meta("original_focus_mode", node.focus_mode)
 		node.focus_mode = Control.FOCUS_NONE
-	
 	for child in node.get_children():
 		_recursive_disable_focus(child, exclude)
 

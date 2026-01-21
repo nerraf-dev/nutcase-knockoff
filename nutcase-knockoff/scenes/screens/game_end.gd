@@ -16,6 +16,14 @@ func _ready() -> void:
 	play_again_btn.pressed.connect(_on_play_again_pressed)
 	home_btn.pressed.connect(_on_home_pressed)
 
+	play_again_btn.focus_mode = Control.FOCUS_ALL
+	home_btn.focus_mode = Control.FOCUS_ALL
+	play_again_btn.grab_focus()
+
+	play_again_btn.focus_neighbor_right = home_btn.get_path()
+	home_btn.focus_neighbor_left = play_again_btn.get_path()
+
+
 # Called from main.gd when loading this scene
 func setup(winning_player: Player, players: Array[Player], settings: Dictionary) -> void:
 	game_settings = settings
