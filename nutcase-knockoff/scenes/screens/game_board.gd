@@ -9,11 +9,13 @@ signal return_to_home
 signal game_ended(winner: Player)
 
 const player_badge = preload("res://scenes/components/player_badge.tscn")
+const player_badge_sm = preload("res://scenes/components/player_badge_small.tscn")
 
 @onready var controls = $HUD/Controls
 @onready var options_btn = $HUD/Controls/OptionsBtn
 @onready var exit_btn = $HUD/Controls/ExitBtn
 @onready var players_container = $HUD/PlayersContainer
+@onready var player_badges = $HUD/PlayerBadges
 
 @onready var res_overlay = $ResultOverlay
 @onready var res_label = $ResultOverlay/ResultLabel
@@ -73,6 +75,14 @@ func  _setup_players_hud() -> void:
 	for player in PlayerManager.players:
 		var badge_instance = player_badge.instantiate()
 		players_container.add_child(badge_instance)
+		badge_instance.setup(player)
+
+	if player_badges.get_child_count() > 0:
+		for child in player_badges.get_children():
+			child.queue_free()
+	for player in PlayerManager.players:
+		var badge_instance = player_badge_sm.instantiate()
+		player_badges.add_child(badge_instance)
 		badge_instance.setup(player)
 
 func _setup_round_area() -> void:

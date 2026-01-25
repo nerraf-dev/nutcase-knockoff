@@ -3,7 +3,7 @@ extends PanelContainer
 signal clicked
 
 @onready var cover = $Cover
-@onready var word_label = $WordLabel
+@onready var word_label = $Margin/WordLabel
 @onready var number_label = $Cover/NumberLabel
 var is_revealed = false
 var word_number = 0

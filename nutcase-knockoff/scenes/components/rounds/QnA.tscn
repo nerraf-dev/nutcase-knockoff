@@ -65,18 +65,18 @@ scale = Vector2(3.1902895, 3.6227791)
 
 [node name="CurrentPlayer" type="Label" parent="."]
 layout_mode = 0
-offset_left = 24.0
-offset_top = 19.0
-offset_right = 540.0
-offset_bottom = 75.0
+offset_left = 153.0
+offset_top = 42.0
+offset_right = 669.0
+offset_bottom = 98.0
 text = " - - Current Player - - "
 label_settings = SubResource("LabelSettings_w8bgg")
 
 [node name="Prize" type="Label" parent="."]
 layout_mode = 0
-offset_left = 1208.0
-offset_top = 96.0
-offset_right = 1318.0
-offset_bottom = 184.0
+offset_left = 1364.0
+offset_top = 36.0
+offset_right = 1474.0
+offset_bottom = 124.0
 theme_override_font_sizes/font_size = 64
 text = "999"

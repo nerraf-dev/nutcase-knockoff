@@ -60,9 +60,17 @@ offset_right = 361.0
 offset_bottom = 832.0
 theme_override_constants/separation = 64
 
+[node name="PlayerBadges" type="HBoxContainer" parent="HUD"]
+offset_left = 44.0
+offset_top = 840.0
+offset_right = 1890.0
+offset_bottom = 1040.0
+theme_override_constants/separation = 16
+alignment = 1
+
 [node name="RoundArea" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_left = 472.0
+offset_left = 277.0
 offset_top = 16.0
 offset_right = 1912.0
 offset_bottom = 1076.0
