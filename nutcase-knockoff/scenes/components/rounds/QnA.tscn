@@ -10,10 +10,14 @@ font_size = 51
 
 [node name="QnA" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_h7n03")
-metadata/_edit_vertical_guides_ = [720.0]
-metadata/_edit_horizontal_guides_ = [528.0]
+metadata/_edit_vertical_guides_ = [720.0, 958.0]
+metadata/_edit_horizontal_guides_ = [528.0, 402.0]
 
 [node name="Background" type="PanelContainer" parent="."]
 visible = false
@@ -37,20 +41,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 5.0
-offset_top = 161.0
-offset_right = 1365.0
-offset_bottom = 841.0
+offset_left = 111.0
+offset_top = 170.0
+offset_right = 1783.0
+offset_bottom = 694.0
 grow_horizontal = 2
 grow_vertical = 2
 columns = 3
 
 [node name="GuessBtn" type="Button" parent="."]
 layout_mode = 0
-offset_left = 584.0
-offset_top = 888.0
-offset_right = 859.8718
-offset_bottom = 1004.0
+offset_left = 772.0
+offset_top = 736.0
+offset_right = 1047.8718
+offset_bottom = 852.0
 theme = ExtResource("1_ll357")
 theme_override_font_sizes/font_size = 64
 text = "Guess"
@@ -65,10 +69,10 @@ scale = Vector2(3.1902895, 3.6227791)
 
 [node name="CurrentPlayer" type="Label" parent="."]
 layout_mode = 0
-offset_left = 153.0
-offset_top = 42.0
-offset_right = 669.0
-offset_bottom = 98.0
+offset_left = 640.0
+offset_top = 52.0
+offset_right = 1156.0
+offset_bottom = 108.0
 text = " - - Current Player - - "
 label_settings = SubResource("LabelSettings_w8bgg")
 

@@ -61,19 +61,23 @@ offset_bottom = 832.0
 theme_override_constants/separation = 64
 
 [node name="PlayerBadges" type="HBoxContainer" parent="HUD"]
-offset_left = 44.0
-offset_top = 840.0
-offset_right = 1890.0
-offset_bottom = 1040.0
+offset_left = 222.0
+offset_top = 962.0
+offset_right = 3188.0
+offset_bottom = 1172.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 16
 alignment = 1
 
 [node name="RoundArea" type="CenterContainer" parent="."]
-layout_mode = 0
-offset_left = 277.0
-offset_top = 16.0
-offset_right = 1912.0
-offset_bottom = 1076.0
+layout_mode = 1
+offset_left = 28.0
+offset_top = 30.0
+offset_right = 1819.0
+offset_bottom = 898.0
+pivot_offset = Vector2(922, 495)
 use_top_left = true
 
 [node name="OptionsPopup" type="Control" parent="."]
