@@ -69,8 +69,17 @@ func _input(event: InputEvent):
 func set_word(text: String, number: int = 0):
 	word_label.text = text
 	word_number = number
-	if number_label:
-		number_label.text = str(number)
+	
+	# Handle blank tiles
+	if text == "":
+		word_label.text = ""
+		if number_label:
+			number_label.text = ""  # No number on blank tiles
+		# Optional: dim blank tiles visually
+		modulate = Color(0.7, 0.7, 0.7, 0.5)
+	else:
+		if number_label:
+			number_label.text = str(number)
 
 func reveal():
 	is_revealed = true

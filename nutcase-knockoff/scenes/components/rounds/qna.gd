@@ -67,13 +67,13 @@ func start_new_question(question: Question) -> void:
 	print("Starting new question: %s" % question.question_text)
 	print("Answer is: %s" % question.answer)
 	
-	# Recalculate pot and spawn sliders
+	# Recalculate pot - only actual words reduce prize
 	var words = question.question_text.split(" ")
 	var difficulty_mult = DIFFICULTY_MULTIPLIERS.get(question.difficulty, 1.0)
 	current_prize = BASE_POT * difficulty_mult
 	minimum_prize = current_prize * MINIMUM_POT_PERCENT
 	var reducible_prize = current_prize - minimum_prize
-	prize_per_word = reducible_prize / words.size()
+	prize_per_word = reducible_prize / words.size()  # Only count real words
 	update_pot_display()
 	
 	var current_player = PlayerManager.get_current_player()
@@ -82,15 +82,22 @@ func start_new_question(question: Question) -> void:
 	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
 	
 	var sliders = []
-	for i in range(words.size()):
+	# Always create exactly 9 tiles for a 3x3 grid
+	for i in range(9):
 		var s = SliderScene.instantiate()
 		grid.add_child(s)
 		
-		# Reset scale and set size
-		s.scale = Vector2.ONE
-		s.custom_minimum_size = Vector2(350, 100)
+		# Set fixed size for all sliders
+		s.custom_minimum_size = Vector2(280, 100)
+		s.size_flags_horizontal = Control.SIZE_FILL
+		s.size_flags_vertical = Control.SIZE_FILL
 		
-		s.set_word(words[i], i + 1)
+		# If we have a word for this position, use it; otherwise blank
+		if i < words.size():
+			s.set_word(words[i], i + 1)
+		else:
+			s.set_word("", i + 1)  # Blank tile
+		
 		s.clicked.connect(_on_slider_clicked)
 		sliders.append(s)
 	

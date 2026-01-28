@@ -8,12 +8,92 @@
     "tags": ["time", "basic"]
   },
   {
-    "question": "Which city is the capital of France?",
-    "answer": "Paris",
-    "fun_fact": "Paris was originally a Roman city called Lutetia.",
+    "question": "Shape with eight sides is called what?",
+    "answer": "Octagon",
+    "fun_fact": "Most Octagons have more sides than squares.",
     "difficulty": "easy",
+    "category": "Mathematics",
+    "tags": ["geometry", "shapes"]
+  },
+  {
+    "question": "What is the largest desert on Earth?",
+    "answer": "Antarctica",
+    "fun_fact": "Antarctica is technically a cold desert!",
+    "difficulty": "hard",
     "category": "Geography",
-    "tags": ["europe", "capitals"]
+    "tags": ["nature", "deserts"]
+  },
+  {
+    "question": "Which insect has colorful wings and drinks nectar?",
+    "answer": "Butterfly",
+    "fun_fact": "Butterflies taste with their feet!",
+    "difficulty": "easy",
+    "category": "Biology",
+    "tags": ["insects", "nature"]
+  },
+  {
+    "question": "Who wrote the play “Romeo and Juliet”?",
+    "answer": "William Shakespeare",
+    "fun_fact": "Shakespeare invented over 1,700 words!",
+    "difficulty": "medium",
+    "category": "Literature",
+    "tags": ["plays", "authors"]
+  },
+  {
+    "question": "What is the main ingredient in guacamole?",
+    "answer": "Avocado",
+    "fun_fact": "Avocados are berries, not vegetables!",
+    "difficulty": "easy",
+    "category": "Food",
+    "tags": ["ingredients", "fun"]
+  },
+  {
+    "question": "Which planet has the most moons?",
+    "answer": "Saturn",
+    "fun_fact": "Saturn has over 80 confirmed moons!",
+    "difficulty": "medium",
+    "category": "Science",
+    "tags": ["space", "planets"]
+  },
+  {
+    "question": "What is the fastest land animal?",
+    "answer": "Cheetah",
+    "fun_fact": "Cheetahs can run up to 75 mph!",
+    "difficulty": "easy",
+    "category": "Biology",
+    "tags": ["animals", "speed"]
+  },
+  {
+    "question": "Which country invented paper?",
+    "answer": "China",
+    "fun_fact": "Paper was invented in China around 105 AD.",
+    "difficulty": "medium",
+    "category": "History",
+    "tags": ["inventions", "countries"]
+  },
+  {
+    "question": "What is the smallest bone in the body?",
+    "answer": "Stapes",
+    "fun_fact": "The stapes is in your middle ear.",
+    "difficulty": "hard",
+    "category": "Biology",
+    "tags": ["anatomy", "bones"]
+  },
+  {
+    "question": "Who was the first person on the Moon?",
+    "answer": "Neil Armstrong",
+    "fun_fact": "Armstrong’s footprint is still on the Moon!",
+    "difficulty": "medium",
+    "category": "History",
+    "tags": ["space", "explorers"]
+  },
+  {
+    "question": "What is the only continent with no reptiles?",
+    "answer": "Antarctica",
+    "fun_fact": "It’s too cold for reptiles to survive there.",
+    "difficulty": "hard",
+    "category": "Geography",
+    "tags": ["continents", "animals"]
   },
   {
     "question": "What is gold’s chemical symbol?",
@@ -32,7 +112,7 @@
     "tags": ["war", "dates"]
   },
   {
-    "question": "What is the smallest prime number above one hundred?",
+    "question": "Smallest prime number above 100?",
     "answer": "101",
     "fun_fact": "A prime number can only be divided by itself and the number one.",
     "difficulty": "hard",
@@ -80,7 +160,7 @@
     "tags": ["geology", "materials"]
   },
   {
-    "question": "Which country gave the Statue of Liberty to the USA?",
+    "question": "Who gave the Statue of Liberty to USA?",
     "answer": "France",
     "fun_fact": "The statue was sent in 350 individual pieces packed into 214 crates.",
     "difficulty": "medium",
@@ -104,11 +184,92 @@
     "tags": ["nature", "biology"]
   },
   {
-    "question": "What is a shape with exactly eight sides called?",
+    "question": "Shape with eight sides is called what?",
     "answer": "Octagon",
     "fun_fact": "Most Octagons have more sides than squares.",
     "difficulty": "easy",
     "category": "Mathematics",
     "tags": ["geometry", "shapes"]
+  },
+  
+  {
+    "question": "What is the largest desert on Earth?",
+    "answer": "Antarctica",
+    "fun_fact": "Antarctica is technically a cold desert!",
+    "difficulty": "hard",
+    "category": "Geography",
+    "tags": ["nature", "deserts"]
+  },
+  {
+    "question": "Which insect has colorful wings and drinks nectar?",
+    "answer": "Butterfly",
+    "fun_fact": "Butterflies taste with their feet!",
+    "difficulty": "easy",
+    "category": "Biology",
+    "tags": ["insects", "nature"]
+  },
+  {
+    "question": "Who wrote the play “Romeo and Juliet”?",
+    "answer": "William Shakespeare",
+    "fun_fact": "Shakespeare invented over 1,700 words!",
+    "difficulty": "medium",
+    "category": "Literature",
+    "tags": ["plays", "authors"]
+  },
+  {
+    "question": "What is the main ingredient in guacamole?",
+    "answer": "Avocado",
+    "fun_fact": "Avocados are berries, not vegetables!",
+    "difficulty": "easy",
+    "category": "Food",
+    "tags": ["ingredients", "fun"]
+  },
+  {
+    "question": "Which planet has the most moons?",
+    "answer": "Saturn",
+    "fun_fact": "Saturn has over 80 confirmed moons!",
+    "difficulty": "medium",
+    "category": "Science",
+    "tags": ["space", "planets"]
+  },
+  {
+    "question": "What is the fastest land animal?",
+    "answer": "Cheetah",
+    "fun_fact": "Cheetahs can run up to 75 mph!",
+    "difficulty": "easy",
+    "category": "Biology",
+    "tags": ["animals", "speed"]
+  },
+  {
+    "question": "Which country invented paper?",
+    "answer": "China",
+    "fun_fact": "Paper was invented in China around 105 AD.",
+    "difficulty": "medium",
+    "category": "History",
+    "tags": ["inventions", "countries"]
+  },
+  {
+    "question": "What is the smallest bone in the body?",
+    "answer": "Stapes",
+    "fun_fact": "The stapes is in your middle ear.",
+    "difficulty": "hard",
+    "category": "Biology",
+    "tags": ["anatomy", "bones"]
+  },
+  {
+    "question": "Who was the first person on the Moon?",
+    "answer": "Neil Armstrong",
+    "fun_fact": "Armstrong’s footprint is still on the Moon!",
+    "difficulty": "medium",
+    "category": "History",
+    "tags": ["space", "explorers"]
+  },
+  {
+    "question": "What is the only continent with no reptiles?",
+    "answer": "Antarctica",
+    "fun_fact": "It’s too cold for reptiles to survive there.",
+    "difficulty": "hard",
+    "category": "Geography",
+    "tags": ["continents", "animals"]
   }
 ]
