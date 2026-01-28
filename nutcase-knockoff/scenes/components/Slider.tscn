@@ -48,9 +48,13 @@ expand_mode = 2
 
 [node name="NumberLabel" type="Label" parent="Cover"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 64.0
+offset_bottom = 64.0
 label_settings = SubResource("LabelSettings_lfa00")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Cover2" type="TextureRect" parent="."]
 visible = false

@@ -144,7 +144,14 @@ func _setup_slider_navigation(sliders: Array, columns: int) -> void:
 			slider.focus_next = guess_btn.get_path()
 
 # Advance to next player
-func _on_slider_clicked():
+func _on_slider_clicked(word: String, is_blank: bool):
+	print("Slider clicked - Word: '%s', Blank: %s" % [word, is_blank])
+	
+	# Example: Apply penalty only for non-blank sliders
+	if not is_blank:
+		# current_prize = max(current_prize - prize_per_word, minimum_prize)
+		update_pot_display()
+	
 	PlayerManager.next_turn()	
 	var next_player = PlayerManager.get_current_player()
 	if next_player:

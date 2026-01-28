@@ -1,6 +1,6 @@
 extends PanelContainer
 
-signal clicked
+signal clicked(word: String, is_blank: bool)
 
 @onready var cover = $Cover
 @onready var word_label = $Margin/WordLabel
@@ -34,13 +34,17 @@ func _gui_input(event: InputEvent):
 	# Mouse click
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		if not is_revealed:
-			clicked.emit()
+			var word = word_label.text.strip_edges()
+			var is_blank = word == ""
+			clicked.emit(word, is_blank)
 			reveal()
 			
 	# Touch input (mobile)
 	elif event is InputEventScreenTouch and event.pressed:
 		if not is_revealed:
-			clicked.emit()
+			var word = word_label.text.strip_edges()
+			var is_blank = word == ""
+			clicked.emit(word, is_blank)
 			reveal()
 
 func _input(event: InputEvent):
@@ -51,8 +55,10 @@ func _input(event: InputEvent):
 	# Controller A button or Space key
 	if event.is_action_pressed("ui_accept"):
 		if not is_revealed:
-			print("Slider %d revealed via controller" % word_number)
-			clicked.emit()
+			var word = word_label.text.strip_edges()
+			var is_blank = word == ""
+			print("Slider %d revealed via controller - Word: '%s', Blank: %s" % [word_number, word, is_blank])
+			clicked.emit(word, is_blank)
 			reveal()
 			get_viewport().set_input_as_handled()
 	
@@ -70,16 +76,12 @@ func set_word(text: String, number: int = 0):
 	word_label.text = text
 	word_number = number
 	
-	# Handle blank tiles
-	if text == "":
-		word_label.text = ""
-		if number_label:
-			number_label.text = ""  # No number on blank tiles
-		# Optional: dim blank tiles visually
-		modulate = Color(0.7, 0.7, 0.7, 0.5)
-	else:
-		if number_label:
-			number_label.text = str(number)
+	# Always show the number on the cover
+	if number_label:
+		number_label.text = str(number)
+	
+	# For blank tiles, keep the cover but word is empty
+	# No visual changes - they look identical when closed
 
 func reveal():
 	is_revealed = true
