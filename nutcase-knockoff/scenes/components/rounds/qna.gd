@@ -151,8 +151,7 @@ func _on_slider_clicked(word: String, is_blank: bool):
 	if not is_blank:
 		# current_prize = max(current_prize - prize_per_word, minimum_prize)
 		update_pot_display()
-	
-	PlayerManager.next_turn()	
+		PlayerManager.next_turn()	
 	var next_player = PlayerManager.get_current_player()
 	if next_player:
 		print("Next turn: %s" % next_player.name)

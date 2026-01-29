@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5giku58qyr3j"]
+[gd_scene load_steps=8 format=3 uid="uid://b5giku58qyr3j"]
 
 [ext_resource type="Script" uid="uid://d0mifludc5xxr" path="res://scenes/components/slider.gd" id="1_lfa00"]
 [ext_resource type="FontFile" uid="uid://dsjw1g8q8n42w" path="res://assets/fonts/Cute Dino.otf" id="2_p1un5"]
@@ -6,24 +6,23 @@
 
 [sub_resource type="Theme" id="Theme_p1un5"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bha06"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_tfq63"]
 font = ExtResource("2_p1un5")
-font_size = 64
-font_color = Color(0.898478, 0.813056, 0.0395719, 1)
+font_size = 72
+font_color = Color(0.16991994, 0.014400008, 0.36, 1)
+outline_size = 16
+outline_color = Color(0.90025425, 0.923348, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lfa00"]
 font_size = 48
-
-[sub_resource type="Gradient" id="Gradient_tfq63"]
-colors = PackedColorArray(0.611765, 0.4, 0, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_lfa00"]
-gradient = SubResource("Gradient_tfq63")
 
 [node name="Slider" type="PanelContainer"]
 offset_right = 900.0
 offset_bottom = 240.0
 theme = SubResource("Theme_p1un5")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_bha06")
 script = ExtResource("1_lfa00")
 
 [node name="Margin" type="MarginContainer" parent="."]
@@ -55,15 +54,3 @@ offset_bottom = 64.0
 label_settings = SubResource("LabelSettings_lfa00")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="Cover2" type="TextureRect" parent="."]
-visible = false
-layout_mode = 2
-texture = SubResource("GradientTexture2D_lfa00")
-expand_mode = 2
-
-[node name="NumberLabel" type="Label" parent="Cover2"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_lfa00")

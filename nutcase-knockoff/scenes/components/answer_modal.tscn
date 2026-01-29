@@ -41,23 +41,47 @@ border_width_right = 8
 border_width_bottom = 8
 border_color = Color(0, 0, 0, 1)
 
-[node name="AnswerModal" type="Node2D"]
+[node name="AnswerModal" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_vp3qt")
+metadata/_edit_vertical_guides_ = [961.0]
+metadata/_edit_horizontal_guides_ = [542.0]
 
 [node name="ColorRect2" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09791667
+anchor_top = 0.037962962
+anchor_right = 0.09791667
+anchor_bottom = 0.037962962
 offset_left = 80.0
 offset_top = 72.0
 offset_right = 1352.0
 offset_bottom = 896.0
 color = Color(0.028159041, 0.153047, 0.40969196, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09791667
+anchor_top = 0.037962962
+anchor_right = 0.09791667
+anchor_bottom = 0.037962962
 offset_left = 116.0
 offset_top = 112.0
 offset_right = 1316.0
 offset_bottom = 852.0
+metadata/_edit_use_anchors_ = true
 
 [node name="AnswerInput" type="LineEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09791667
+anchor_top = 0.037962962
+anchor_right = 0.09791667
+anchor_bottom = 0.037962962
 offset_left = 261.0
 offset_top = 473.0
 offset_right = 1165.0
@@ -67,24 +91,46 @@ theme_override_font_sizes/font_size = 72
 placeholder_text = "Type your answer"
 clear_button_enabled = true
 caret_blink = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09791667
+anchor_top = 0.037962962
+anchor_right = 0.09791667
+anchor_bottom = 0.037962962
 offset_left = 384.0
 offset_top = 344.0
 offset_right = 1073.0
 offset_bottom = 432.0
 text = "What's your guess?"
 label_settings = SubResource("LabelSettings_vp3qt")
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09791667
+anchor_top = 0.037962962
+anchor_right = 0.09791667
+anchor_bottom = 0.037962962
 offset_left = 304.0
 offset_top = 192.0
 offset_right = 1116.0
 offset_bottom = 280.0
-text = "Tell everyone your answer"
+text = "What is it?"
 label_settings = SubResource("LabelSettings_vp3qt")
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Submit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09791667
+anchor_top = 0.037962962
+anchor_right = 0.09791667
+anchor_bottom = 0.037962962
 offset_left = 833.0
 offset_top = 676.0
 offset_right = 961.0
@@ -95,8 +141,15 @@ theme_override_fonts/font = SubResource("FontFile_u0fgr")
 theme_override_font_sizes/font_size = 64
 theme_override_styles/normal = SubResource("StyleBoxFlat_lcgq1")
 text = "✔"
+metadata/_edit_use_anchors_ = true
 
 [node name="Cancel" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.09791667
+anchor_top = 0.037962962
+anchor_right = 0.09791667
+anchor_bottom = 0.037962962
 offset_left = 443.0
 offset_top = 673.0
 offset_right = 571.0
@@ -106,3 +159,4 @@ theme_override_colors/font_color = Color(0.853071, 0, 0, 1)
 theme_override_font_sizes/font_size = 64
 theme_override_styles/normal = SubResource("StyleBoxFlat_mfn3q")
 text = "✘"
+metadata/_edit_use_anchors_ = true

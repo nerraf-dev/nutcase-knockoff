@@ -57,7 +57,7 @@ func get_next_question() -> Question:
         return null
     var next_q = unused.pick_random()
     used_question_ids.append(next_q.question_text)
-    
+    # TODO: Consider stripping punction from questions
     # Store current question for access in game logic
     if game:
         game.current_question = next_q

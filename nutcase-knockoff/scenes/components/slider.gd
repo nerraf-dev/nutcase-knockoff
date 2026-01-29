@@ -21,6 +21,8 @@ func _ready() -> void:
 	focus_entered.connect(_on_focus_entered)
 	focus_exited.connect(_on_focus_exited)
 
+	cover.visible = true
+
 func _on_focus_entered() -> void:
 	# Bright yellow border/highlight when focused
 	modulate = Color(1.5, 1.5, 0.5)
@@ -75,14 +77,10 @@ func _input(event: InputEvent):
 func set_word(text: String, number: int = 0):
 	word_label.text = text
 	word_number = number
-	
 	# Always show the number on the cover
 	if number_label:
-		number_label.text = str(number)
+		number_label.text = str(number)	
 	
-	# For blank tiles, keep the cover but word is empty
-	# No visual changes - they look identical when closed
-
 func reveal():
 	is_revealed = true
 	var tween = create_tween()

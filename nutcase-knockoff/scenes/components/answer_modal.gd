@@ -1,4 +1,4 @@
-extends Node2D
+extends Control
 
 @onready var answer_text = $AnswerInput
 @onready var submit_button = $Submit
