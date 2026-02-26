@@ -5,6 +5,7 @@ extends Control
 @onready var icon = $Icon
 @onready var current_leader = $Icon/CurrentLeader
 @onready var current_player = $Icon/CurrentPlayer
+@onready var player_img = $Image/TextureRect
 
 
 func _ready() -> void:
@@ -15,6 +16,8 @@ func _ready() -> void:
 func setup(player: Player) -> void:
 	player_name.text = player.name
 	player_score.text = str(player.score)
+	var rnd_img = GameConfig.PLR_BADGE_ICONS.pick_random()
+	player_img.texture = ResourceLoader.load(rnd_img)
 	# icon.modulate = player.color
 	
 	# Initially hide current leader/player indicators

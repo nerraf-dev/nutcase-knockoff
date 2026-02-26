@@ -18,8 +18,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_h7n03")
-metadata/_edit_vertical_guides_ = [720.0, 958.0, 1749.0]
-metadata/_edit_horizontal_guides_ = [528.0, 402.0, 891.0]
+metadata/_edit_vertical_guides_ = [395.0, 958.0, 1788.0]
+metadata/_edit_horizontal_guides_ = [712.0, 199.0, 891.0]
+
+[node name="CenterContainer2" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1931.0
+offset_bottom = 1080.0
 
 [node name="Background" type="PanelContainer" parent="."]
 visible = false
@@ -70,12 +75,15 @@ offset_bottom = 113.0
 theme_override_font_sizes/font_size = 64
 text = "999"
 
-[node name="GridContainer" type="GridContainer" parent="."]
-custom_minimum_size = Vector2(1120, 500)
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_left = 400.0
-offset_top = 200.0
-offset_right = 1520.0
-offset_bottom = 700.0
+offset_left = 386.0
+offset_top = 197.0
+offset_right = 1790.0
+offset_bottom = 714.0
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(1120, 500)
+layout_mode = 2
 theme = SubResource("Theme_ybcsd")
 columns = 3

@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://blgvh2822ek74"]
+[gd_scene load_steps=8 format=3 uid="uid://blgvh2822ek74"]
 
 [ext_resource type="Script" uid="uid://bhhdxi6xtk1qp" path="res://scenes/screens/game_board.gd" id="1_0h872"]
+[ext_resource type="Texture2D" uid="uid://b8i8nyl45jj1l" path="res://assets/images/backgrounds/Untitled_Artwork.png" id="2_a4shw"]
 [ext_resource type="FontFile" uid="uid://dsjw1g8q8n42w" path="res://assets/fonts/Cute Dino.otf" id="2_rwufl"]
 [ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="3_6xqkr"]
 
@@ -31,6 +32,14 @@ layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_ms0ej")
+
+[node name="Background2" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = ExtResource("2_a4shw")
+expand_mode = 2
+stretch_mode = 3
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -96,8 +105,8 @@ anchor_right = 0.95600003
 anchor_bottom = 0.86300004
 offset_left = -2.5600052
 offset_top = 0.23999786
-offset_right = 4.4799805
-offset_bottom = -0.040039063
+offset_right = 76.47998
+offset_bottom = 147.95996
 pivot_offset = Vector2(922, 495)
 use_top_left = true
 

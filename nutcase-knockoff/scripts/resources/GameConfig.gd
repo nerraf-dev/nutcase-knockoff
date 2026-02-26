@@ -23,3 +23,32 @@ const GAME_TARGETS: Array[int] = [200, 1000, 2000, 3000]
 # Timing
 const SPLASH_DURATION: float = 2.0
 const RESULT_DISPLAY_DURATION: float = 2.0
+
+const PLR_BADGE_ICONS: Array[String] = [
+    "res://assets/images/player_badges/person_1.svg",
+    "res://assets/images/player_badges/person_2.svg",
+    "res://assets/images/player_badges/person_3.svg",
+    "res://assets/images/player_badges/person_4.svg",
+    "res://assets/images/player_badges/robot.svg",
+    "res://assets/images/player_badges/zombie.svg",
+    "res://assets/images/player_badges/animals/bear.svg",
+    "res://assets/images/player_badges/animals/buffalo.svg",
+    "res://assets/images/player_badges/animals/chick.svg",
+    "res://assets/images/player_badges/animals/chicken.svg",
+    "res://assets/images/player_badges/animals/elephant.svg",
+    "res://assets/images/player_badges/animals/frog.svg",
+    "res://assets/images/player_badges/animals/giraffe.svg",
+    "res://assets/images/player_badges/animals/hippo.svg",
+    "res://assets/images/player_badges/animals/horse.svg",
+    "res://assets/images/player_badges/animals/monkey.svg",
+    "res://assets/images/player_badges/animals/moose.svg",
+    "res://assets/images/player_badges/animals/nawhal.svg",
+    "res://assets/images/player_badges/animals/panda.svg",
+    "res://assets/images/player_badges/animals/parrot.svg",
+    "res://assets/images/player_badges/animals/penguin.svg",
+    "res://assets/images/player_badges/animals/pig.svg",
+    "res://assets/images/player_badges/animals/rabbit.svg",
+    "res://assets/images/player_badges/animals/snake.svg",
+    "res://assets/images/player_badges/animals/walrus.svg",
+    "res://assets/images/player_badges/animals/whale.svg"
+]
