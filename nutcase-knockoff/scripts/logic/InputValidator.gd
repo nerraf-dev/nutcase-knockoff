@@ -1,5 +1,12 @@
 class_name InputValidator
 
+enum ValidationResult {
+    EXACT,
+    INVALID,
+    AUTO_ACCEPT,
+    FUZZY
+}
+
 static func validate_player_count(count: int) -> Dictionary:
     # Returns {"valid": bool, "error": String}
     # Check against GameConfig.MIN_PLAYERS / MAX_PLAYERS
@@ -30,12 +37,17 @@ static func validate_answer(answer: String, current_question: Question) -> Dicti
     # return {"valid": true, "error": ""}
     # levenshtein_distance
     var distance = levenshtein_distance(answer.strip_edges().to_lower(), current_question.answer.strip_edges().to_lower())
+    # Auto distance ≤ max(1, answer_length / 8) 
+    # Fuzzy distance ≤ max(2, answer_length / 5) 
+    var answer_length = answer.strip_edges().length()
     if distance == 0:
-        return {"valid": true, "error": "", "distance": 0}
-    elif  distance <= 2:
-        return {"valid": true, "error": "", "distance": distance}
+        return {"result": ValidationResult.EXACT}
+    elif  distance <= max(1, answer_length / 8):
+        return {"result": ValidationResult.AUTO_ACCEPT, "distance": distance}
+    elif distance <= max(2, answer_length / 5):
+        return {"result": ValidationResult.FUZZY, "distance": distance}
     else:
-        return {"valid": false, "error": "Too different from correct answer.", "distance": distance}
+        return {"result": ValidationResult.INVALID, "distance": distance}
 
 static func levenshtein_distance(s1: String, s2: String) -> int:
     var m = s1.length()

@@ -204,12 +204,17 @@ func _on_answer_submitted(answer_text: String) -> void:
 	# TODO: Add fuzzy matching to InputValidator.validate_answer() — e.g. Levenshtein
 	#   distance ≤ 1-2 — so minor typos don't count as wrong on mobile. See review § 2.5.
 	var validation = InputValidator.validate_answer(answer_text, current_question)
-	if not validation["valid"]:
-		print("Invalid answer submitted: '%s' — %s" % [answer_text, validation["error"]])
+	if validation["result"] == InputValidator.ValidationResult.INVALID:
+		print("Invalid answer submitted: '%s'" % answer_text)
 		round_result.emit(current_player, false, int(current_prize))
+	elif validation["result"] == InputValidator.ValidationResult.AUTO_ACCEPT:
+		print("Answer submitted with minor issues: '%s'" % answer_text)
+		print("Levenshtein distance from correct answer: %s" % validation["distance"])
+		# Treat as correct for now, but here the player should have a choice: 
+			# continue or pass and take the penalty
+		round_result.emit(current_player, true, int(current_prize))
 	else:
 		print("Answer submitted: '%s' — valid input." % answer_text)
-		print("Levenshtein distance from correct answer: %s" % validation["distance"])
 		round_result.emit(current_player, true, int(current_prize))
 
 	# var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()

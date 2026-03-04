@@ -27,25 +27,58 @@
 - Minimum pot: 10% of starting value — always guaranteed regardless of how many words are revealed
 - Blank tiles (padding in the 3×3 grid) do **not** reduce the pot and do **not** advance the turn — the current player gets a **free pick** and continues their turn
 
-### Correct Answer
-- Player receives full **current** pot value (reduced by any reveals so far)
+### Answer Outcomes
+
+When a player submits a guess, the answer is compared to the correct answer using Levenshtein distance scaled to answer length. There are four possible outcomes:
+
+#### 1. Exact Match (distance = 0)
+- Player receives full current pot value
+- Round ends, winner starts next round
+- No fanfare needed — clean and immediate
+
+#### 2. Auto-Accept / Very Close (distance within auto-accept threshold)
+- Answer is close enough to be unambiguously a typo (e.g. "avacado" / "avocado", "octogon" / "octagon")
+- **Auto-accepted** — no player choice, no vote
+- Player receives full current pot value
+- A cheeky message is shown acknowledging it wasn't quite right but close enough
 - Round ends
-- Winner starts next round
+- *The distinction between this tier and the vote tier is the whole game — tune the threshold carefully*
 
-### Incorrect Answer
-- Player loses 50% of **current score** (not pot value)
-  - Example: Player has 200 points → Loses 100 points
-- Player is **frozen** for remainder of that question
-- Turn advances to next unfrozen player
-- **Exception - Last Player Standing**:
-  - If only 1 unfrozen player remains, they get a "free guess"
-  - No point penalty if wrong
-  - Acts as safety mechanism
+#### 3. Fuzzy Match — Player Choice + Vote (distance within fuzzy threshold)
+- Answer is recognisably related but not a clean typo — could be legitimately wrong or could be a rushed mobile answer
+- **Player chooses**: stand by their answer, or concede (take it as incorrect)
+  - If they **concede**: treated as Incorrect (see below) — no vote triggered
+  - If they **stand by it**: vote is triggered
+- **Vote phase:**
+  - Both the submitted answer *and* the correct answer are shown to all players on screen and devices
+  - All players except the submitter vote (including frozen players in normal play; all other players in LPS/2-player)
+  - Simple majority decides — accepted or rejected
+  - Timeout applies — if it expires, answer is **auto-accepted**
+  - Round ends regardless of vote outcome (the correct answer has been revealed)
+- If **accepted**: submitter receives full current pot value
+- If **rejected**: treated as Incorrect (see below), but round still ends (answer has been revealed)
 
-### Free Guess Conditions
-Triggered when:
-- All other players are frozen on current question
-- Last player gets to answer without risk
+> **Why the round always ends after a vote:** once the correct answer is shown to all players during the vote phase, the round cannot continue — remaining players would already know the answer.
+
+#### 4. Incorrect (distance exceeds fuzzy threshold)
+- Player loses 50% of their **current score** (not pot value)
+  - Example: 200 points → loses 100 points
+- Player is **frozen** for the remainder of this question
+- Turn advances to the next unfrozen player
+- Round continues
+- **Exception — Last Player Standing**: if only one unfrozen player remains after a freeze, they receive a free guess with no penalty (see below)
+
+### Distance Threshold
+- Thresholds are **relative to answer length**, not absolute
+- Formula (provisional): `auto_accept ≤ max(1, answer_length / 8)`, `fuzzy ≤ max(2, answer_length / 5)`
+- Short answers (≤ 4 chars) have tighter tolerances than long answers
+- These values will need tuning based on playtesting
+
+### Free Guess (Last Player Standing)
+Triggered when all other players are frozen on the current question:
+- Last player gets to answer without any score penalty if wrong
+- Voting rules still apply if their answer falls in the fuzzy tier
+- In a 2-player game where both conditions overlap (only one other player, who is frozen), all players including the frozen one vote
 
 ## Player States
 
@@ -84,7 +117,8 @@ Triggered when:
   - Consider: Color-coding badges by rank (1st, 2nd, 3rd, etc.)
 
 ## Future Considerations
-- Pot reduction per slider reveal (currently disabled)
 - Question word limit enforcement (10-12 words)
 - Round timer (optional)
 - Streak bonuses for consecutive correct answers
+- Tune fuzzy/auto-accept distance thresholds based on playtesting
+- Vote timeout duration (needs to feel snappy — current thinking: 10-15 seconds)
