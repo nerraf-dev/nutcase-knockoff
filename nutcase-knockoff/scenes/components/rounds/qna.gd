@@ -199,15 +199,23 @@ func _on_answer_submitted(answer_text: String) -> void:
 		print("No current player to award points to.")
 		return
 	
-	# TODO: Call InputValidator.validate_answer(answer_text) before proceeding.
-	# TODO: Use fuzzy matching (e.g. Levenshtein distance) rather than exact comparison.
-	#   Players typing quickly on phones will typo frequently. Even ±1-2 char tolerance
-	#   makes a big difference in party-game feel. InputValidator is the right home for this.
-	#   See code review doc § 2.4 and § 2.5.
-	var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()
-	if is_correct:
-		print("CORRECT ANSWER!")
-		round_result.emit(current_player, true, int(current_prize))
-	else:
-		print("WRONG ANSWER. The correct answer was: %s" % current_question.answer)
+	# Empty answers are already blocked by answer_modal before this signal fires,
+	# but validate here as a safety net and to keep validation logic centralised.
+	# TODO: Add fuzzy matching to InputValidator.validate_answer() — e.g. Levenshtein
+	#   distance ≤ 1-2 — so minor typos don't count as wrong on mobile. See review § 2.5.
+	var validation = InputValidator.validate_answer(answer_text, current_question)
+	if not validation["valid"]:
+		print("Invalid answer submitted: '%s' — %s" % [answer_text, validation["error"]])
 		round_result.emit(current_player, false, int(current_prize))
+	else:
+		print("Answer submitted: '%s' — valid input." % answer_text)
+		print("Levenshtein distance from correct answer: %s" % validation["distance"])
+		round_result.emit(current_player, true, int(current_prize))
+
+	# var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()
+	# if is_correct:
+	# 	print("CORRECT ANSWER!")
+	# 	round_result.emit(current_player, true, int(current_prize))
+	# else:
+	# 	print("WRONG ANSWER. The correct answer was: %s" % current_question.answer)
+	# 	round_result.emit(current_player, false, int(current_prize))
