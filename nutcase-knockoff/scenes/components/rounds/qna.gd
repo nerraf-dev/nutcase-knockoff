@@ -204,18 +204,30 @@ func _on_answer_submitted(answer_text: String) -> void:
 	# TODO: Add fuzzy matching to InputValidator.validate_answer() — e.g. Levenshtein
 	#   distance ≤ 1-2 — so minor typos don't count as wrong on mobile. See review § 2.5.
 	var validation = InputValidator.validate_answer(answer_text, current_question)
+	# Note: the validation result can be INVALID, FUZZY, AUTO_ACCEPT, or VALID.
+
+	# INCORRECT ANSWER - INVALID
 	if validation["result"] == InputValidator.ValidationResult.INVALID:
 		print("Invalid answer submitted: '%s'" % answer_text)
 		round_result.emit(current_player, false, int(current_prize))
+	# FUZZY MATCH - lauch confirm flow.
+	elif validation["result"] == InputValidator.ValidationResult.FUZZY:
+		print("Fuzzy answer submitted: '%s'" % answer_text)
+		# Treat fuzzy as correct for now.
+		#  Fuzzy should begin the player confirmation and possible vote scenario.
+		round_result.emit(current_player, true, int(current_prize))
+	# AUTO_ACCEPT - minor issues but close enough to count as correct. No confirm needed.
 	elif validation["result"] == InputValidator.ValidationResult.AUTO_ACCEPT:
 		print("Answer submitted with minor issues: '%s'" % answer_text)
 		print("Levenshtein distance from correct answer: %s" % validation["distance"])
-		# Treat as correct for now, but here the player should have a choice: 
-			# continue or pass and take the penalty
+		round_result.emit(current_player, true, int(current_prize))
+	# EXACT MATCH - straightforward correct answer.
+	elif validation["result"] == InputValidator.ValidationResult.EXACT:
+		print("Exact answer submitted: '%s'" % answer_text)
 		round_result.emit(current_player, true, int(current_prize))
 	else:
-		print("Answer submitted: '%s' — valid input." % answer_text)
-		round_result.emit(current_player, true, int(current_prize))
+		print("Unexpected validation result for answer '%s': %s" % [answer_text, validation["result"]])
+		round_result.emit(current_player, false, int(current_prize))
 
 	# var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()
 	# if is_correct:
