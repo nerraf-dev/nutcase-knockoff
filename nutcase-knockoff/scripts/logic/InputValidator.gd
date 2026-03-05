@@ -34,16 +34,16 @@ static func validate_answer(answer: String, current_question: Question) -> Dicti
     if answer.strip_edges() == "":
         return {"result": ValidationResult.INVALID, "error": "Answer cannot be empty."}
 
-    var normalized_submitted = _normalize(answer)
-    var normalized_correct = _normalize(current_question.answer)
+    var normalised_submitted = _normalise(answer)
+    var normalised_correct = _normalise(current_question.answer)
 
     # TODO: When Question gets an `alternatives` array, run this comparison against
     # each alternative too and take the minimum distance. That's how "Hastings" will
     # pass for "Battle of Hastings" — list it as an alternative in the data.
-    var distance = levenshtein_distance(normalized_submitted, normalized_correct)
+    var distance = levenshtein_distance(normalised_submitted, normalised_correct)
 
-    # Thresholds scale with the normalized correct answer length.
-    var answer_length = normalized_correct.length()
+    # Thresholds scale with the normalised correct answer length.
+    var answer_length = normalised_correct.length()
     var auto_accept_threshold = max(1, answer_length / 8)
     var fuzzy_threshold = max(2, answer_length / 6)
 
@@ -56,12 +56,12 @@ static func validate_answer(answer: String, current_question: Question) -> Dicti
     else:
         return {"result": ValidationResult.INVALID, "distance": distance, "error": "Answer is incorrect."}
 
-# Normalizes a string before comparison:
+# Normalises a string before comparison:
 #   - strips edges and lowercases
 #   - removes leading articles (the, a, an)
 #   - removes common geographical/title prefixes (mount, lake, saint, etc.)
 # Applied to BOTH submitted and correct answer so the comparison is symmetric.
-static func _normalize(s: String) -> String:
+static func _normalise(s: String) -> String:
     var result = s.strip_edges().to_lower()
 
     # Strip leading articles
