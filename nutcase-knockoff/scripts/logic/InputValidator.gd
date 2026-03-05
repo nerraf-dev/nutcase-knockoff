@@ -52,13 +52,19 @@ static func validate_answer(answer: String, current_question: Question) -> Dicti
 static func levenshtein_distance(s1: String, s2: String) -> int:
     var m = s1.length()
     var n = s2.length()
-    # dp = [[0 for _ in range(n+1)] for _ in range(m+1)]
     var dp = []
+    # Setup matrix, zeroed
     for i in range(m + 1):
         var row = []
         for j in range(n + 1):
             row.append(0)
         dp.append(row)
+
+    # Initialize base cases
+    for i in range(m + 1):
+        dp[i][0] = i  # Deletion cost
+    for j in range(n + 1):
+        dp[0][j] = j  # Insertion cost
 
     var cost = 0
     for i in range(1, m + 1):
