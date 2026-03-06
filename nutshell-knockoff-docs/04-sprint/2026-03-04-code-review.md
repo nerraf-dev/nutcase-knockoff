@@ -45,21 +45,62 @@ The pot reduction (`current_prize = max(current_prize - prize_per_word, minimum_
 
 The `highest_score = 1` was an intentional workaround to suppress the leader indicator before anyone has scored. Replaced with the explicit intent: find the real highest score across all players, then return an empty array if it is `<= 0`. This correctly shows no leader at the start of the game, shows the correct leader once someone scores, and handles ties.
 
-### 2.4 `InputValidator` Not Used for Answer Matching
+### 2.4 / 2.5 Answer Matching — 🔄 Partially Resolved (2026-03-07)
 
-**File:** `scenes/components/rounds/qna.gd` — `_on_answer_submitted()`
+**Files:** `scenes/components/rounds/qna.gd`, `scripts/logic/InputValidator.gd`
 
-`InputValidator.validate_answer()` exists but answer submission in `qna.gd` does its own bare string comparison. At minimum, `validate_answer()` should be called before emitting `round_result`. More importantly, the answer comparison itself could use fuzzy matching (see §2.5).
+#### What's done
 
-### 2.5 Answer Comparison Is Exact String Match Only
+`InputValidator.validate_answer()` is now wired into `qna.gd._on_answer_submitted()`. The old bare string comparison is gone. `InputValidator` now implements:
 
-**File:** `scenes/components/rounds/qna.gd` — `_on_answer_submitted()`
+- **`_normalise()`** — strips edges, lowercases, removes leading articles (`the/a/an`) and common geographical prefixes (`mount/lake/saint` etc), applied symmetrically to both submitted and correct answer.
+- **Levenshtein distance** — full DP matrix implementation.
+- **Four-outcome `ValidationResult` enum**: `EXACT`, `AUTO_ACCEPT`, `FUZZY`, `INCORRECT`/`INVALID`.
+- **Proportional thresholds** based on normalised correct answer length:
+  - `auto_accept_threshold = max(1, length / 8)`
+  - `fuzzy_threshold = max(2, length / 6)`
+- `qna.gd` branches on all four outcomes and emits the matching `GameManager.SubmissionResult`.
 
-```gdscript
-var is_correct = answer_text.strip_edges().to_lower() == current_question.answer.strip_edges().to_lower()
-```
+#### Current placeholder behaviour
 
-This will fail for minor typos, extra spaces between words, or punctuation differences. For a party game where players type quickly on phones this will cause frustration. Even a simple "close enough" check (e.g., Levenshtein distance ≤ 1 or 2) would help significantly. `InputValidator` would be the right home for this.
+`FUZZY` currently resolves as correct (points awarded, round ends). This is intentional scaffolding — the vote flow is not yet implemented. A `TODO` comment marks the site in `qna.gd`.
+
+#### Outstanding problems
+
+**1. Short answers accept wrong answers**
+
+For short correct answers the auto_accept threshold of `max(1, length/8)` evaluates to 1 regardless of how short the word is, meaning a single-character substitution always auto-accepts. Examples:
+- `"Au"` (length 2) — `"Ag"` is distance 1 → wrongly AUTO_ACCEPT
+- `"24"` (length 2) — `"25"` is distance 1 → wrongly AUTO_ACCEPT
+- `"Mars"` (length 4) — `"Cars"` is distance 1 → wrongly AUTO_ACCEPT
+
+**Proposed fix — tiered behaviour by length:**
+
+| Normalised answer length | Behaviour |
+|---|---|
+| ≤ 4 | Exact only — no fuzzy, no auto-accept |
+| 5–7 | FUZZY only (goes to vote), no AUTO_ACCEPT |
+| 8+ | Current proportional thresholds apply |
+
+**2. Numeric answers should always be exact**
+
+A digit off is a completely different answer, not a typo. If `normalised_correct.is_valid_int()` (or `.is_valid_float()`), require exact match regardless of length. Covers `"24"`, `"1945"`, `"101"`, `"206"`.
+
+**3. Alternatives array not yet implemented**
+
+The `Question` class has no `alternatives: Array[String]` field yet, and `questions.json` has no `alternatives` entries. `validate_answer()` has a `TODO` comment for the loop. Until alternatives are added, short-form answers like `"Hastings"` for `"Battle of Hastings"`, or `"Armstrong"` for `"Neil Armstrong"`, will not be accepted.
+
+See §2.6 for the related `id` field work — both should be added to `Question.gd` and `QuestionLoader.gd` together.
+
+#### Remaining to do
+
+- [ ] Add length-based guard (≤4 = exact only, 5–7 = FUZZY only) to `validate_answer()`
+- [ ] Add numeric exact-only guard (`is_valid_int()`)
+- [ ] Add `alternatives: Array[String]` to `Question.gd`
+- [ ] Update `QuestionLoader.gd` to read `alternatives` from JSON
+- [ ] Update `validate_answer()` to loop over alternatives, take minimum distance (tracked with its matched-string length for correct threshold calculation)
+- [ ] Add `alternatives` entries to `questions.json` where useful (short-form names, last-name-only, abbreviations)
+- [ ] Implement real FUZZY vote flow in `qna.gd` (replace placeholder)
 
 ### 2.6 Question Deduplication Uses Full Question Text as Key
 
