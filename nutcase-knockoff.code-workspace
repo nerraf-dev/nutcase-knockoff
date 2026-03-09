@@ -3,5 +3,8 @@
         {
             "path": "."
         }
-    ]
+    ],
+    "settings": {
+        "godotTools.editorPath.godot4": "d:\\Godot\\Editors\\4.6.1-stable\\Godot_v4.6.1-stable_win64.exe"
+    }
 }
