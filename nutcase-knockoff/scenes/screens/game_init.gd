@@ -5,8 +5,10 @@ signal back_to_home
 
 # Button containers
 @onready var player_buttons = $PlayerSelect/Buttons
-@onready var game_type = $TypeSelect/Buttons
+@onready var game_type_buttons = $GameType/Buttons
 @onready var length_buttons = $LengthSelect/Buttons
+@onready var mode_buttons = $ModeSelect/Buttons
+@onready var fuzzy_buttons = $FuzzySelect/Buttons
 
 # Action buttons
 @onready var start_button = $StartBtn
@@ -34,8 +36,10 @@ func _ready() -> void:
 	
 	# Setup all option button groups
 	_setup_buttons(player_buttons, "player_count")
-	_setup_buttons(game_type, "game_type")
+	_setup_buttons(game_type_buttons, "game_type")
 	_setup_buttons(length_buttons, "game_target")
+	_setup_buttons(mode_buttons, "game_mode")
+	_setup_buttons(fuzzy_buttons, "fuzzy_enabled")
 	
 	# Connect action buttons
 	start_button.pressed.connect(_on_start_button_pressed)
@@ -100,7 +104,7 @@ func _set_background_focus(enabled: bool) -> void:
 	for button in player_buttons.get_children():
 		if button is Button:
 			button.focus_mode = mode
-	for button in game_type.get_children():
+	for button in game_type_buttons.get_children():
 		if button is Button:
 			button.focus_mode = mode
 	for button in length_buttons.get_children():
