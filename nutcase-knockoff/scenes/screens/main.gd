@@ -54,13 +54,10 @@ func load_game_init() -> void:
 
 func _on_game_init_complete(settings: Dictionary) -> void:
 	print("Game Init complete with settings: %s, loading Game Board" % settings)
-	print("Player settings: %s" % str(settings["player_count"]))
-	print("Game type: %s" % settings["game_type"])
-	print("Round count: %d" % settings["round_count"])
 	# remove node, return to main to then load game board
 	cleanup_current_scene()
 
-	if settings["game_type"] == "multi":
+	if settings["game_mode"] == "multi":
 		print("Multiplayer mode selected, loading lobby")
 
 	else:

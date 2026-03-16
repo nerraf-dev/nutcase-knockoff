@@ -12,7 +12,7 @@ var is_frozen: bool = false      # Locked out after wrong guess this round
 var device_id: String = ""       # WebSocket connection ID (set by NetworkManager in multiplayer)
 var color: Color = Color.WHITE   # Visual identifier (random on init)
 var avatar_index: int = 0       # Index for avatar selection (optional, for multiplayer)
-var is_connected: bool = true   # Connection status (for multiplayer)
+var is_online: bool = true   	# Connection status (for multiplayer)
 
 func _init(p_id: String = "", p_name: String = "Player") -> void:
 	id = p_id

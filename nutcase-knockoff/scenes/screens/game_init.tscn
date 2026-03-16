@@ -23,6 +23,8 @@ default_font_size = 54
 default_font = ExtResource("2_h1k66")
 default_font_size = 54
 
+[sub_resource type="ButtonGroup" id="ButtonGroup_xjbsa"]
+
 [node name="GameInit2" type="Node2D" unique_id=111432682]
 script = ExtResource("1_nhm8p")
 metadata/_edit_vertical_guides_ = [960.0]
@@ -227,13 +229,15 @@ alignment = 1
 
 [node name="On" type="Button" parent="FuzzySelect/Buttons" unique_id=1451595840]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_xjbsa")
 text = "On"
-metadata/value = "on"
+metadata/value = true
 
 [node name="Off" type="Button" parent="FuzzySelect/Buttons" unique_id=1924264276]
 layout_mode = 2
+button_group = SubResource("ButtonGroup_xjbsa")
 text = "Off"
-metadata/value = "off"
+metadata/value = false
 
 [node name="ConfirmModal" type="Control" parent="." unique_id=201032704]
 visible = false
