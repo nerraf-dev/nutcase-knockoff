@@ -259,7 +259,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_h1k66")
 theme_override_font_sizes/font_size = 28
 text = "1 Player"
-metadata/value = 8
+metadata/value = "single"
 
 [node name="Multi" type="Button" parent="VBoxContainer/HBoxContainer" unique_id=986804941]
 layout_mode = 2
@@ -267,7 +267,7 @@ size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_h1k66")
 theme_override_font_sizes/font_size = 28
 text = "Multiplayer"
-metadata/value = 8
+metadata/value = "multi"
 
 [node name="TypeSelect" type="VBoxContainer" parent="." unique_id=1452947385]
 offset_left = 1223.0

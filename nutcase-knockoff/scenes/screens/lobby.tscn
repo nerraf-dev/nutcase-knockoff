@@ -58,53 +58,53 @@ label_settings = ExtResource("7_56qed")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PlayersList" type="VBoxContainer" parent="." unique_id=1974463176]
+[node name="PlayersContainer" type="VBoxContainer" parent="." unique_id=1974463176]
 offset_left = 1617.0
 offset_top = 158.0
 offset_right = 2150.0
 offset_bottom = 1053.0
 
-[node name="Label" type="Label" parent="PlayersList" unique_id=1025832794]
+[node name="Label" type="Label" parent="PlayersContainer" unique_id=1025832794]
 layout_mode = 2
 text = "Players:"
 label_settings = SubResource("LabelSettings_nhm8p")
 
-[node name="Players" type="VBoxContainer" parent="PlayersList" unique_id=511667378]
+[node name="Players" type="VBoxContainer" parent="PlayersContainer" unique_id=511667378]
 layout_mode = 2
 size_flags_vertical = 3
 theme = SubResource("Theme_d4pih")
 theme_override_constants/separation = 16
 
-[node name="RoomInfo" type="VBoxContainer" parent="." unique_id=30440664]
+[node name="RoomInfoContainer" type="VBoxContainer" parent="." unique_id=30440664]
 offset_left = 60.0
 offset_top = 184.0
 offset_right = 790.0
 offset_bottom = 378.0
 theme = SubResource("Theme_t11tv")
 
-[node name="Label" type="Label" parent="RoomInfo" unique_id=754499889]
+[node name="Label" type="Label" parent="RoomInfoContainer" unique_id=754499889]
 layout_mode = 2
 text = "Game Code:"
 label_settings = SubResource("LabelSettings_nhm8p")
 
-[node name="Code" type="Label" parent="RoomInfo" unique_id=1792281413]
+[node name="Code" type="Label" parent="RoomInfoContainer" unique_id=1792281413]
 layout_mode = 2
 text = "random code"
 label_settings = SubResource("LabelSettings_nhm8p")
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1818037960]
+[node name="JoinContainer" type="VBoxContainer" parent="." unique_id=1818037960]
 offset_left = 33.0
 offset_top = 417.0
 offset_right = 886.0
 offset_bottom = 783.0
 
-[node name="Label2" type="Label" parent="VBoxContainer" unique_id=654853190]
+[node name="Label2" type="Label" parent="JoinContainer" unique_id=654853190]
 layout_mode = 2
 text = "How to Join"
 label_settings = SubResource("LabelSettings_nhm8p")
 
-[node name="instructions" type="RichTextLabel" parent="VBoxContainer" unique_id=176562224]
+[node name="instructions" type="RichTextLabel" parent="JoinContainer" unique_id=176562224]
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 36
 theme_override_font_sizes/bold_font_size = 42

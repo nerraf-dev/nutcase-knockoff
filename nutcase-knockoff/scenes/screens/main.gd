@@ -60,6 +60,12 @@ func _on_game_init_complete(settings: Dictionary) -> void:
 	# remove node, return to main to then load game board
 	cleanup_current_scene()
 
+	if settings["game_type"] == "multi":
+		print("Multiplayer mode selected, loading lobby")
+
+	else:
+		print("Single-player mode selected, starting game directly")
+
 	# setup new game in game manger
 	GameManager.start_game(settings)
 	

@@ -23,6 +23,7 @@ signal back_to_home
 var settings = {
 	"players": PlayerManager.players,
 	"player_count": 2,
+	"game_mode": "single",
 	"game_type": "qna",
 	"game_target": 200,
 	"round_count": 5,
