@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Nutcase Controller</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="app">
+		<header class="panel">
+			<h1>Nutcase Controller</h1>
+			<p class="muted">Connect your phone to the host game.</p>
+		</header>
+
+		<section class="panel">
+			<label for="hostInput">Host (ws://ip:port)</label>
+			<input id="hostInput" type="text" placeholder="ws://192.168.1.20:9080">
+
+			<div class="row">
+				<button id="connectBtn" type="button">Connect</button>
+				<button id="disconnectBtn" type="button" class="secondary">Disconnect</button>
+			</div>
+
+			<p id="statusText" class="status">Status: Disconnected</p>
+		</section>
+
+		<section class="panel">
+			<label for="nameInput">Name</label>
+			<input id="nameInput" type="text" maxlength="16" placeholder="Player name">
+
+			<label for="avatarInput">Avatar Index</label>
+			<input id="avatarInput" type="number" min="0" max="20" step="1" value="0">
+
+			<div class="row">
+				<button id="joinBtn" type="button">Join Lobby</button>
+				<button id="readyBtn" type="button" class="secondary">Ready</button>
+			</div>
+		</section>
+
+		<section class="panel">
+			<h2>Debug Actions</h2>
+			<p class="muted">Useful while wiring gameplay input.</p>
+
+			<label for="sliderInput">Slider Index</label>
+			<input id="sliderInput" type="number" min="0" max="8" step="1" value="0">
+
+			<button id="sliderBtn" type="button" class="secondary">Send Slider Click</button>
+
+			<label for="guessInput">Guess</label>
+			<input id="guessInput" type="text" placeholder="Type a guess">
+			<button id="guessBtn" type="button" class="secondary">Send Guess</button>
+		</section>
+
+		<section class="panel">
+			<h2>Log</h2>
+			<pre id="logBox" class="log" aria-live="polite"></pre>
+		</section>
+	</main>
+
+	<script src="app.js"></script>
+</body>
+</html>

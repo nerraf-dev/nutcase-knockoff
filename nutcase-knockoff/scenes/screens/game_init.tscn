@@ -6,20 +6,20 @@
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="3_g7jhl"]
 [ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="3_xjbsa"]
 
+[sub_resource type="Theme" id="Theme_t11tv"]
+default_font = ExtResource("2_h1k66")
+default_font_size = 54
+
 [sub_resource type="LabelSettings" id="LabelSettings_nhm8p"]
 font = ExtResource("2_h1k66")
 font_size = 54
 font_color = Color(0, 0.0313726, 1, 1)
 
-[sub_resource type="Theme" id="Theme_d4pih"]
-default_font = ExtResource("2_h1k66")
-default_font_size = 54
-
-[sub_resource type="Theme" id="Theme_t11tv"]
-default_font = ExtResource("2_h1k66")
-default_font_size = 54
-
 [sub_resource type="Theme" id="Theme_64jy4"]
+default_font = ExtResource("2_h1k66")
+default_font_size = 54
+
+[sub_resource type="Theme" id="Theme_d4pih"]
 default_font = ExtResource("2_h1k66")
 default_font_size = 54
 
@@ -63,66 +63,6 @@ text = "Settings"
 label_settings = ExtResource("3_g7jhl")
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="PlayerSelect" type="VBoxContainer" parent="." unique_id=282642322]
-visible = false
-offset_left = 87.0
-offset_top = 151.0
-offset_right = 620.0
-offset_bottom = 307.0
-
-[node name="Label" type="Label" parent="PlayerSelect" unique_id=1081507672]
-layout_mode = 2
-text = "How many players?"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="Buttons" type="HBoxContainer" parent="PlayerSelect" unique_id=2073384684]
-layout_mode = 2
-theme = SubResource("Theme_d4pih")
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="2" type="Button" parent="PlayerSelect/Buttons" unique_id=37732101]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "2"
-metadata/value = 2
-
-[node name="3" type="Button" parent="PlayerSelect/Buttons" unique_id=971581477]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "3"
-metadata/value = 3
-
-[node name="4" type="Button" parent="PlayerSelect/Buttons" unique_id=1343296375]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "4"
-metadata/value = 4
-
-[node name="5" type="Button" parent="PlayerSelect/Buttons" unique_id=1775802427]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "5"
-metadata/value = 5
-
-[node name="6" type="Button" parent="PlayerSelect/Buttons" unique_id=1856523727]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "6"
-metadata/value = 6
-
-[node name="7" type="Button" parent="PlayerSelect/Buttons" unique_id=1681547652]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "7"
-metadata/value = 7
-
-[node name="8" type="Button" parent="PlayerSelect/Buttons" unique_id=127524568]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "8"
-metadata/value = 8
 
 [node name="ModeSelect" type="VBoxContainer" parent="." unique_id=1832525359]
 offset_left = 84.0

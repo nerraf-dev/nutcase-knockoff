@@ -42,7 +42,7 @@ extends Node
 signal client_connected(device_id: String)
 signal client_disconnected(device_id: String)
 signal player_join_received(device_id: String, player_name: String, avatar_index: int)
-signal player_ready_received(device_id: String)
+signal player_ready_received(device_id: String, is_ready: bool)
 signal slider_click_received(device_id: String, index: int)
 signal guess_received(device_id: String, answer: String)
 signal vote_cast_received(device_id: String, accepted: bool)
@@ -169,16 +169,23 @@ func _process_events() -> void:
 	while _server.get_available_packet_count() > 0:
 		var peer_id := _server.get_packet_peer()
 		var raw := _server.get_packet().get_string_from_utf8()
-		_handle_packet(peer_id, raw)
 
-	# Check for new connections / disconnections
-	for peer_id in _server.get_peers():
+		# Track newly seen peers from packet traffic.
 		if not _peer_ids.has(peer_id):
 			_peer_ids[peer_id] = str(peer_id)
 			client_connected.emit(str(peer_id))
 
+		_handle_packet(peer_id, raw)
+
+	# Check for disconnections in an API-compatible way.
 	for peer_id in _peer_ids.keys():
-		if not _server.has_peer(peer_id):
+		var peer_connected := true
+		if _server.has_method("has_peer"):
+			peer_connected = _server.has_peer(peer_id)
+		elif _server.has_method("get_peer"):
+			peer_connected = _server.get_peer(peer_id) != null
+
+		if not peer_connected:
 			var device_id: String = _peer_ids[peer_id]
 			_peer_ids.erase(peer_id)
 			client_disconnected.emit(device_id)
@@ -203,7 +210,8 @@ func _handle_packet(peer_id: int, raw: String) -> void:
 			player_join_received.emit(device_id, player_name, avatar_index)
 
 		"ready":
-			player_ready_received.emit(device_id)
+			var is_ready: bool = bool(msg.get("ready", true))
+			player_ready_received.emit(device_id, is_ready)
 
 		"slider_click":
 			var index: int = int(msg.get("index", -1))

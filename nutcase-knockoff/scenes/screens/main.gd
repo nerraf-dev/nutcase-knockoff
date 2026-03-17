@@ -40,6 +40,9 @@ func _on_exit_game() -> void:
 
 func _on_return_to_home() -> void:
 	print("Returning to home screen")
+	if GameManager.current_state == GameManager.GameState.LOBBY:
+		PlayerManager.clear_all_players()
+		NetworkManager.stop_server()
 	cleanup_current_scene()
 	load_game_home()
 
@@ -76,6 +79,10 @@ func load_lobby(settings: Dictionary) -> void:
 	#   Waiting for players to connect - as players connect need to update PlayerManager.players + update ui
 	#  start is only active if at least 2 players connected
 
+	# Always start each lobby session with a clean roster.
+	if not PlayerManager.players.is_empty():
+		PlayerManager.clear_all_players()
+
 	GameManager.change_state(GameManager.GameState.LOBBY)
 	var lobby_scene = preload("res://scenes/screens/lobby.tscn")
 	var lobby_instance = lobby_scene.instantiate()
@@ -83,7 +90,14 @@ func load_lobby(settings: Dictionary) -> void:
 	scene_container.add_child(lobby_instance)
 	lobby_instance.lobby_start_requested.connect(_on_lobby_start_requested)
 	lobby_instance.lobby_back_to_home.connect(_on_return_to_home)
-	lobby_instance.lobby_back_to_setup.connect(load_game_init)    #  Return to lobby: should return player to previous screen
+	lobby_instance.lobby_back_to_setup.connect(_on_return_to_setup_from_lobby)    # Return to setup with lobby cleanup
+
+func _on_return_to_setup_from_lobby() -> void:
+	if GameManager.current_state == GameManager.GameState.LOBBY:
+		PlayerManager.clear_all_players()
+		NetworkManager.stop_server()
+	cleanup_current_scene()
+	load_game_init()
 
 func _on_lobby_start_requested(settings: Dictionary) -> void:
 	print("Lobby start requested with settings: %s, loading Game Board" % settings)

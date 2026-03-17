@@ -59,9 +59,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PlayersContainer" type="VBoxContainer" parent="." unique_id=1974463176]
-offset_left = 1617.0
+offset_left = 1356.0
 offset_top = 158.0
-offset_right = 2150.0
+offset_right = 1889.0
 offset_bottom = 1053.0
 
 [node name="Label" type="Label" parent="PlayersContainer" unique_id=1025832794]

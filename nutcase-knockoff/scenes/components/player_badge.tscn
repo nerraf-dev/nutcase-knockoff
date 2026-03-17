@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dyha3sfpp5lcw" path="res://assets/images/player_badges/animals/monkey.svg" id="2_r081y"]
 
 [node name="PlayerBadge" type="Control" unique_id=1435356418]
+custom_minimum_size = Vector2(400, 50)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_5j3gc")
@@ -11,9 +12,8 @@ metadata/_edit_vertical_guides_ = [40.0]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=97663415]
 layout_mode = 0
-offset_right = 491.81744
-offset_bottom = 76.79139
-scale = Vector2(0.7753554, 0.5208918)
+offset_right = 400.0
+offset_bottom = 50.0
 
 [node name="Avatar" type="TextureRect" parent="." unique_id=818342619]
 layout_mode = 0
