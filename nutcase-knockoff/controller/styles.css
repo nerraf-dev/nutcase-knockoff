@@ -92,6 +92,24 @@ button:disabled {
 	margin-top: 10px;
 }
 
+.slider-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 8px;
+	margin-top: 10px;
+}
+
+.slider-tile {
+	min-height: 58px;
+	font-size: 1.1rem;
+}
+
+.slider-tile.revealed {
+	background: #c9f7d5;
+	color: #14532d;
+	font-weight: 800;
+}
+
 .status {
 	margin: 12px 0 0;
 	font-weight: 700;
@@ -116,5 +134,9 @@ button:disabled {
 @media (max-width: 520px) {
 	.row {
 		grid-template-columns: 1fr;
+	}
+
+	.slider-grid {
+		grid-template-columns: repeat(3, 1fr);
 	}
 }

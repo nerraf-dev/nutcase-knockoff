@@ -207,6 +207,11 @@ func _handle_packet(peer_id: int, raw: String) -> void:
 			if player_name.is_empty():
 				send_to_player(device_id, {"type": "error", "message": "Name cannot be empty"})
 				return
+			send_to_player(device_id, {
+				"type": "room_joined",
+				"player_id": device_id,
+				"room_code": room_code
+			})
 			player_join_received.emit(device_id, player_name, avatar_index)
 
 		"ready":

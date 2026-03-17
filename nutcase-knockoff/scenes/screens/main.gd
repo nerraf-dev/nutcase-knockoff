@@ -105,7 +105,6 @@ func _on_lobby_start_requested(settings: Dictionary) -> void:
 		print("Failed to start game.")
 		return
 	cleanup_current_scene()
-	NetworkManager.stop_server()  # Stop accepting new connections once game starts
 	load_game_board()
 
 # LOAD GAME BOARD

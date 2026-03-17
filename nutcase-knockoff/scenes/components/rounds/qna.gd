@@ -171,11 +171,20 @@ func _setup_slider_navigation(sliders: Array, columns: int) -> void:
 func _handle_slider_reveal(index: int) -> void:
 	var words = current_question.question_text.split(" ")
 	var is_blank = index >= words.size()
+	var revealer = PlayerManager.get_current_player()
 	if index < 0 or index >= _sliders.size():
 		push_error("Invalid slider index revealed: %d" % index)
 		return
 	_sliders[index].reveal()
 	print("Slider reveal - index: %d, blank: %s" % [index, is_blank])
+
+	# Notify controllers which tile was revealed.
+	if not NetworkManager.is_local:
+		var revealed_word = ""
+		if not is_blank:
+			revealed_word = words[index]
+		var revealer_id = revealer.id if revealer != null else ""
+		NetworkManager.broadcast_slider_revealed(index, revealed_word, revealer_id)
 	
 	# Turn advancement — two separate call sites, mutually exclusive:
 	#   1. Slider reveal (here): next_turn() called after a word tile is clicked.
@@ -192,6 +201,7 @@ func _handle_slider_reveal(index: int) -> void:
 	if next_player:
 		print("Next turn: %s" % next_player.name)
 		current_player_label.text = "It's %s's turn" % next_player.name
+	# hook for multiplayer: emit signal to send reveal event to clients so they can update their displays
 
 # Guess Button
 func _on_guess_btn_pressed() -> void:

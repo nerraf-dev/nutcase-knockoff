@@ -4,7 +4,10 @@ const state = {
 	ws: null,
 	connected: false,
 	joined: false,
+	inGame: false,
 	ready: false,
+	isYourTurn: false,
+	turnStateKnown: false,
 	clientId: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
 };
 
@@ -12,15 +15,15 @@ const el = {
 	hostInput: document.getElementById("hostInput"),
 	nameInput: document.getElementById("nameInput"),
 	avatarInput: document.getElementById("avatarInput"),
-	sliderInput: document.getElementById("sliderInput"),
+	sliderButtons: Array.from(document.querySelectorAll(".slider-tile")),
 	guessInput: document.getElementById("guessInput"),
 	connectBtn: document.getElementById("connectBtn"),
 	disconnectBtn: document.getElementById("disconnectBtn"),
 	joinBtn: document.getElementById("joinBtn"),
 	readyBtn: document.getElementById("readyBtn"),
-	sliderBtn: document.getElementById("sliderBtn"),
 	guessBtn: document.getElementById("guessBtn"),
 	statusText: document.getElementById("statusText"),
+	turnText: document.getElementById("turnText"),
 	logBox: document.getElementById("logBox"),
 };
 
@@ -65,7 +68,12 @@ function bindEvents() {
 	el.disconnectBtn.addEventListener("click", disconnect);
 	el.joinBtn.addEventListener("click", joinLobby);
 	el.readyBtn.addEventListener("click", sendReady);
-	el.sliderBtn.addEventListener("click", sendSliderClick);
+	el.sliderButtons.forEach((button) => {
+		button.addEventListener("click", () => {
+			const idx = Number(button.dataset.index || -1);
+			sendSliderClick(idx);
+		});
+	});
 	el.guessBtn.addEventListener("click", sendGuess);
 
 	[el.hostInput, el.nameInput, el.avatarInput].forEach((input) => {
@@ -99,7 +107,11 @@ function connect() {
 	state.ws.addEventListener("close", () => {
 		state.connected = false;
 		state.joined = false;
+		state.inGame = false;
 		state.ready = false;
+		state.isYourTurn = false;
+		state.turnStateKnown = false;
+		resetSliderButtons();
 		render();
 		log("Disconnected");
 	});
@@ -109,21 +121,63 @@ function connect() {
 	});
 
 	state.ws.addEventListener("message", (event) => {
-		log(`recv ${event.data}`);
-		try {
-			const msg = JSON.parse(event.data);
-			if (msg.type === "room_joined") {
-				state.joined = true;
-				render();
-				log("Joined lobby");
-			}
-			if (msg.type === "error") {
-				log(`server error: ${msg.message}`);
-			}
-		} catch (_err) {
-			// Keep raw log only.
-		}
+		handleServerMessage(event.data);
 	});
+}
+
+async function handleServerMessage(rawData) {
+	const text = await decodeWsData(rawData);
+	log(`recv ${text}`);
+
+	try {
+		const msg = JSON.parse(text);
+		if (msg.type === "room_joined") {
+			state.joined = true;
+			render();
+			log("Joined lobby");
+		}
+		if (msg.type === "game_started") {
+			state.inGame = true;
+			render();
+			log("Game started");
+		}
+		if (msg.type === "new_round") {
+			resetSliderButtons();
+			log(`New round ${msg.round_num ?? "?"}`);
+		}
+		if (msg.type === "your_turn") {
+			state.turnStateKnown = true;
+			state.isYourTurn = true;
+			render();
+			log("It is your turn");
+		}
+		if (msg.type === "turn_changed") {
+			state.turnStateKnown = true;
+			state.isYourTurn = false;
+			render();
+		}
+		if (msg.type === "slider_revealed") {
+			applySliderReveal(msg.index, msg.word);
+		}
+		if (msg.type === "error") {
+			log(`server error: ${msg.message}`);
+		}
+	} catch (_err) {
+		// Non-JSON message; already logged.
+	}
+}
+
+async function decodeWsData(rawData) {
+	if (typeof rawData === "string") {
+		return rawData;
+	}
+	if (rawData instanceof Blob) {
+		return await rawData.text();
+	}
+	if (rawData instanceof ArrayBuffer) {
+		return new TextDecoder().decode(new Uint8Array(rawData));
+	}
+	return String(rawData);
 }
 
 function disconnect() {
@@ -133,7 +187,11 @@ function disconnect() {
 	}
 	state.connected = false;
 	state.joined = false;
+	state.inGame = false;
 	state.ready = false;
+	state.isYourTurn = false;
+	state.turnStateKnown = false;
+	resetSliderButtons();
 	render();
 }
 
@@ -162,10 +220,6 @@ function joinLobby() {
 		avatar_index: avatarIndex,
 		client_id: state.clientId,
 	});
-
-	// Optimistic join state for current server behavior.
-	state.joined = true;
-	render();
 }
 
 function sendReady() {
@@ -174,8 +228,16 @@ function sendReady() {
 	send("ready", { ready: state.ready, client_id: state.clientId });
 }
 
-function sendSliderClick() {
-	const index = Number(el.sliderInput.value || 0);
+function sendSliderClick(index) {
+	if (index < 0 || index > 8) {
+		log(`Invalid slider index ${index}`);
+		return;
+	}
+
+	const button = el.sliderButtons.find((b) => Number(b.dataset.index) === index);
+	if (button && button.classList.contains("revealed")) {
+		return;
+	}
 	send("slider_click", { index });
 }
 
@@ -193,15 +255,49 @@ function render() {
 	el.statusText.textContent = `Status: ${status}`;
 	el.statusText.classList.toggle("ok", state.connected);
 
+	let turn = "Waiting for game";
+	if (!state.connected || !state.joined) {
+		turn = "Waiting for game";
+	} else if (!state.turnStateKnown) {
+		turn = "Waiting for turn sync";
+	} else {
+		turn = state.isYourTurn ? "Your turn" : "Waiting";
+	}
+	el.turnText.textContent = `Turn: ${turn}`;
+	el.turnText.classList.toggle("ok", state.isYourTurn);
+
 	el.connectBtn.disabled = state.connected;
 	el.disconnectBtn.disabled = !state.connected;
-	el.joinBtn.disabled = !state.connected;
-	el.readyBtn.disabled = !state.connected;
-	el.sliderBtn.disabled = !state.connected;
-	el.guessBtn.disabled = !state.connected;
+	el.joinBtn.disabled = !state.connected || state.inGame;
+	el.readyBtn.disabled = !state.connected || state.inGame;
+
+	const controlsEnabled = state.connected && state.joined && state.turnStateKnown && state.isYourTurn;
+	el.sliderButtons.forEach((button) => {
+		const isRevealed = button.classList.contains("revealed");
+		button.disabled = !controlsEnabled || isRevealed;
+	});
+	el.guessBtn.disabled = !controlsEnabled;
 
 	el.joinBtn.textContent = state.joined ? "Update Profile" : "Join Lobby";
 	el.readyBtn.textContent = state.ready ? "Unready" : "Ready";
+}
+
+function resetSliderButtons() {
+	el.sliderButtons.forEach((button, i) => {
+		button.classList.remove("revealed");
+		button.textContent = String(i + 1);
+	});
+}
+
+function applySliderReveal(index, word) {
+	const button = el.sliderButtons.find((b) => Number(b.dataset.index) === Number(index));
+	if (!button) {
+		return;
+	}
+
+	button.classList.add("revealed");
+	button.textContent = (word || "").trim() === "" ? "-" : word;
+	render();
 }
 
 function log(message) {

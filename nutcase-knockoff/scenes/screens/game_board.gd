@@ -66,10 +66,14 @@ func _ready() -> void:
 	PlayerManager.turn_changed.connect(_on_turn_changed)
 	_setup_players_hud()
 	_setup_round_area()
+	await get_tree().process_frame
+	_broadcast_new_round_to_controllers()
 
 	if not NetworkManager.is_local:
 		NetworkManager.slider_click_received.connect(_on_network_slider_click)
 		NetworkManager.guess_received.connect(_on_network_guess)
+		_broadcast_scores_to_controllers()
+		_broadcast_turn_to_controllers()
 
 
 	# Enable input handling for overlay
@@ -181,6 +185,8 @@ func _on_round_result(player: Player, is_correct: int, prize: int, submitted_ans
 		var result = GameManager.handle_correct_answer(player, prize, is_correct)
 		await _handle_correct_result(result)
 
+	# hook for multiplayer: emit signal to send round result to clients so they can update their displays (e.g. show correct answer, update scores)
+
 func _handle_correct_result(result: Dictionary) -> void:
 	_update_all_badges()
 	if result["has_winner"]:
@@ -205,9 +211,12 @@ func _update_all_badges() -> void:
 			badges[i].set_current_player(player == current_player)
 			badges[i].set_current_leader(leaders.has(player))
 
+	_broadcast_scores_to_controllers()
+
 func _on_turn_changed(_player: Player) -> void:
 	# Update badges when turn changes
 	_update_all_badges()
+	_broadcast_turn_to_controllers()
 
 func _start_next_round() -> void:
 	# Record the completed round before moving on
@@ -224,6 +233,7 @@ func _start_next_round() -> void:
 		PlayerManager.unfreeze_all_players()
 		GameManager.game.current_round += 1
 		round_instance.start_new_question(next_question)
+		_broadcast_new_round_to_controllers()
 		
 		# Re-enable focus after round loads (sliders will auto-focus)
 		await get_tree().process_frame
@@ -269,6 +279,36 @@ func _on_network_guess(device_id: String, guess_text: String) -> void:
 		return
 	if round_instance:
 		round_instance.guess_submitted.emit(guess_text)
+
+func _broadcast_scores_to_controllers() -> void:
+	if NetworkManager.is_local:
+		return
+	NetworkManager.broadcast_scores(PlayerManager.players)
+
+func _broadcast_turn_to_controllers() -> void:
+	if NetworkManager.is_local:
+		return
+
+	var current = PlayerManager.get_current_player()
+	if current == null:
+		return
+
+	NetworkManager.broadcast_turn_changed(current.id)
+	if current.device_id != "":
+		NetworkManager.broadcast_your_turn(current.device_id)
+
+func _broadcast_new_round_to_controllers() -> void:
+	if NetworkManager.is_local:
+		return
+	if round_instance == null:
+		return
+
+	var slider_count := 9
+	if round_instance.has_method("get") and round_instance.get("current_question") != null:
+		var words = round_instance.current_question.question_text.split(" ")
+		slider_count = words.size()
+
+	NetworkManager.broadcast_new_round(GameManager.game.current_round, slider_count)
 
 
 # Signal handlers for buttons

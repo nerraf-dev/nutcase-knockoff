@@ -23,6 +23,7 @@
 			</div>
 
 			<p id="statusText" class="status">Status: Disconnected</p>
+			<p id="turnText" class="status">Turn: Waiting for game</p>
 		</section>
 
 		<section class="panel">
@@ -42,10 +43,18 @@
 			<h2>Debug Actions</h2>
 			<p class="muted">Useful while wiring gameplay input.</p>
 
-			<label for="sliderInput">Slider Index</label>
-			<input id="sliderInput" type="number" min="0" max="8" step="1" value="0">
-
-			<button id="sliderBtn" type="button" class="secondary">Send Slider Click</button>
+			<p class="muted">Tap a tile to send a slider click. Buttons are 1-9; game receives 0-8.</p>
+			<div id="sliderGrid" class="slider-grid">
+				<button type="button" class="slider-tile secondary" data-index="0">1</button>
+				<button type="button" class="slider-tile secondary" data-index="1">2</button>
+				<button type="button" class="slider-tile secondary" data-index="2">3</button>
+				<button type="button" class="slider-tile secondary" data-index="3">4</button>
+				<button type="button" class="slider-tile secondary" data-index="4">5</button>
+				<button type="button" class="slider-tile secondary" data-index="5">6</button>
+				<button type="button" class="slider-tile secondary" data-index="6">7</button>
+				<button type="button" class="slider-tile secondary" data-index="7">8</button>
+				<button type="button" class="slider-tile secondary" data-index="8">9</button>
+			</div>
 
 			<label for="guessInput">Guess</label>
 			<input id="guessInput" type="text" placeholder="Type a guess">
