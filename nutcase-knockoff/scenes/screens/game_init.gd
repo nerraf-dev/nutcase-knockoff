@@ -4,7 +4,7 @@ signal game_init_complete(settings: Dictionary)
 signal back_to_home
 
 # Button containers
-@onready var player_buttons = $PlayerSelect/Buttons
+# @onready var player_buttons = $PlayerSelect/Buttons
 @onready var game_type_buttons = $GameType/Buttons
 @onready var length_buttons = $LengthSelect/Buttons
 @onready var mode_buttons = $ModeSelect/Buttons
@@ -18,9 +18,9 @@ signal back_to_home
 @onready var confirm_modal = $ConfirmModal
 @onready var confirm_button = $ConfirmModal/ConfirmBtn
 @onready var back_button = $ConfirmModal/BackBtn
-@onready var confirm_players = $ConfirmModal/Players/PlayersValue
-@onready var confirm_mode = $ConfirmModal/Mode/ModeValue
-@onready var confirm_target = $ConfirmModal/Target/TargetValue
+# @onready var confirm_players = $ConfirmModal/Players/PlayersValue
+# @onready var confirm_mode = $ConfirmModal/Mode/ModeValue
+# @onready var confirm_target = $ConfirmModal/Target/TargetValue
 @onready var confirm_values = $ConfirmModal/Values
 
 var settings = {
@@ -37,7 +37,7 @@ func _ready() -> void:
 	confirm_modal.visible = false
 	
 	# Setup all option button groups
-	_setup_buttons(player_buttons, "player_count")
+	# _setup_buttons(player_buttons, "player_count")
 	_setup_buttons(game_type_buttons, "game_type")
 	_setup_buttons(length_buttons, "game_target")
 	_setup_buttons(mode_buttons, "game_mode")
@@ -109,9 +109,9 @@ func _setup_modal_focus() -> void:
 func _set_background_focus(enabled: bool) -> void:
 	# Prevent controller from navigating to background buttons
 	var mode = Control.FOCUS_NONE if not enabled else Control.FOCUS_ALL
-	for button in player_buttons.get_children():
-		if button is Button:
-			button.focus_mode = mode
+	# for button in player_buttons.get_children():
+	# 	if button is Button:
+	# 		button.focus_mode = mode
 	for button in game_type_buttons.get_children():
 		if button is Button:
 			button.focus_mode = mode
@@ -124,7 +124,7 @@ func _set_background_focus(enabled: bool) -> void:
 func _on_back_button_pressed() -> void:
 	confirm_modal.visible = false
 	_set_background_focus(true)
-	player_buttons.get_child(0).grab_focus()
+	# player_buttons.get_child(0).grab_focus()
 
 func _on_confirm_button_pressed() -> void:
 	# TODO: if 1p - load game, if multi - load lobby and pass settings
