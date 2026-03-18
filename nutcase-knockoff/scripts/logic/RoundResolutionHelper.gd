@@ -2,8 +2,19 @@ class_name RoundResolutionHelper
 extends RefCounted
 
 # RoundResolutionHelper — scripts/logic/RoundResolutionHelper.gd
-# Encapsulates round-resolution and scoring rules.
-# GameManager should orchestrate flow/state, then delegate rule resolution here.
+# Role: Stateless rules helper for round resolution and scoring outcomes.
+# Owns: Winner detection, wrong/correct answer outcome shaping, vote-rejection payout logic.
+# Does not own: Game state transitions (GameManager), player storage/turn index (PlayerManager).
+#
+# Public API:
+# - check_for_winner(game_target)
+# - handle_wrong_answer(player, base_prize, current_question)
+# - handle_correct_answer(player, prize, is_auto_accept, game_target)
+# - handle_vote_rejection(prize, no_voters)
+#
+# Output contract:
+# - Returns plain dictionaries consumed by GameManager/UI flow.
+# - Mutates player score/freeze state only through PlayerManager/player fields.
 
 func check_for_winner(game_target: int) -> Array[Player]:
 	var winners: Array[Player] = []

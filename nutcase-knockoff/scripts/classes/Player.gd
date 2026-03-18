@@ -2,8 +2,14 @@ class_name Player
 extends Resource
 
 # Player — scripts/classes/Player.gd
-# Resource representing a single player. Intentionally thin — just data.
-# Game rules live in GameManager; collection/turn logic lives in PlayerManager.
+# Role: Resource model for a single player.
+# Owns: Identity, score, freeze status, avatar/visual metadata, connection metadata.
+# Does not own: Score rules (GameManager/RoundResolutionHelper), roster/turn order (PlayerManager).
+#
+# Public API:
+# - add_score(points)
+# - freeze(), unfreeze()
+# - reset_for_new_round()
 
 var id: String = ""              # Unique ID (e.g., "player_1")
 var name: String = ""            # Display name ("Alice")

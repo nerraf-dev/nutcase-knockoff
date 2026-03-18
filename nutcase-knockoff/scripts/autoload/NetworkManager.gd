@@ -1,39 +1,21 @@
 # NetworkManager — scripts/autoload/NetworkManager.gd
-# Autoload. Manages WebSocket server for Jackbox-style phone controllers.
+# Role: Autoload singleton for host-side WebSocket transport.
+# Owns: Server lifecycle, peer tracking, outbound messaging, disconnect detection.
+# Does not own: Packet message semantics (NetworkProtocolHandler), game rules/state.
 #
-# ARCHITECTURE
-#   - Host device runs a WebSocketServer on GameConfig.WEBSOCKET_PORT.
-#   - Each phone controller connects as a WebSocket client.
-#   - All messages are JSON strings: { "type": "...", ...payload }
+# Public API:
+# - start_server(), stop_server()
+# - broadcast(message), send_to_player(device_id, message)
+# - broadcast_game_started(), broadcast_new_round(), broadcast_your_turn()
+# - broadcast_slider_revealed(), broadcast_turn_changed(), broadcast_scores()
+# - broadcast_overlay_prompt(), broadcast_vote_request(), broadcast_vote_result()
+# - broadcast_round_end(), broadcast_game_over()
 #
-# LOCAL MODE
-#   When is_local = true (default) all network methods are no-ops.
-#   Local play is completely unaffected — no code path changes elsewhere.
-#
-# SIGNAL FLOW (server → game layer)
-#   Incoming messages from clients are validated and re-emitted as typed signals.
-#   The game layer (game_board, VoteModal, lobby screen) connects to these signals.
-#
-# MESSAGE PROTOCOL  (client → server)
-#   join          { type, name, avatar_index }    — player joining lobby
-#   ready         { type }                         — player ready to start
-#   slider_click  { type, index }                  — reveal a slider tile
-#   guess         { type, answer }                 — submit a guess
-#   vote          { type, accepted }               — cast a vote (FUZZY round)
-#
-# MESSAGE PROTOCOL  (server → client)
-#   room_joined   { type, player_id, room_code }   — join confirmed
-#   error         { type, message }                — join/validation error
-#   game_started  { type }                         — lobby closed, game beginning
-#   new_round     { type, round_num, slider_count } — new round beginning
-#   your_turn     { type }                         — sent to the active player
-#   slider_revealed { type, index, word }          — a tile was revealed
-#   turn_changed  { type, player_id }              — whose turn it is
-#   vote_request  { type, guesser_id, answer }     — FUZZY round: cast a vote
-#   vote_result   { type, accepted, correct_answer } — vote outcome revealed
-#   scores        { type, players: [{id, name, score}...] }
-#   round_end     { type, correct_answer, winner_id } — "" if no winner
-#   game_over     { type, winner_id, winner_name }
+# Runtime model:
+# - Host runs server on GameConfig.WEBSOCKET_PORT.
+# - Clients send JSON packets; protocol handler returns effects.
+# - NetworkManager applies effects by sending packets and emitting typed signals.
+# - When is_local is true, all network operations are no-ops.
 extends Node
 
 # ---------------------------------------------------------------------------
@@ -114,8 +96,13 @@ func broadcast(message: Dictionary) -> void:
 	if is_local or _server == null:
 		return
 	var json := JSON.stringify(message)
-	for peer_id in _peer_ids:
-		_server.get_peer(peer_id).put_packet(json.to_utf8_buffer())
+	var stale_peer_ids: Array[int] = []
+	for peer_id in _peer_ids.keys():
+		if not _send_json_to_peer(peer_id, json):
+			stale_peer_ids.append(peer_id)
+
+	for stale_peer_id in stale_peer_ids:
+		_mark_peer_disconnected(stale_peer_id)
 
 ## Send a message dict to a specific player by their device_id.
 func send_to_player(device_id: String, message: Dictionary) -> void:
@@ -125,7 +112,8 @@ func send_to_player(device_id: String, message: Dictionary) -> void:
 	if peer_id == -1:
 		return
 	var json := JSON.stringify(message)
-	_server.get_peer(peer_id).put_packet(json.to_utf8_buffer())
+	if not _send_json_to_peer(peer_id, json):
+		_mark_peer_disconnected(peer_id)
 
 # ---------------------------------------------------------------------------
 # Game-event broadcasts — called by GameManager / game_board
@@ -197,9 +185,7 @@ func _process_events() -> void:
 			peer_connected = _server.get_peer(peer_id) != null
 
 		if not peer_connected:
-			var device_id: String = _peer_ids[peer_id]
-			_peer_ids.erase(peer_id)
-			client_disconnected.emit(device_id)
+			_mark_peer_disconnected(peer_id)
 
 ## Handles a single incoming packet from a client.
 ## - Parses the JSON message and validates its structure.
@@ -249,3 +235,30 @@ func _device_id_to_peer(device_id: String) -> int:
 			return peer_id
 	push_warning("NetworkManager: no peer found for device_id '%s'" % device_id)
 	return -1
+
+func _send_json_to_peer(peer_id: int, json: String) -> bool:
+	if _server == null:
+		return false
+
+	var peer_connected := true
+	if _server.has_method("has_peer"):
+		peer_connected = _server.has_peer(peer_id)
+	elif _server.has_method("get_peer"):
+		peer_connected = _server.get_peer(peer_id) != null
+
+	if not peer_connected:
+		return false
+
+	var peer = _server.get_peer(peer_id)
+	if peer == null:
+		return false
+
+	peer.put_packet(json.to_utf8_buffer())
+	return true
+
+func _mark_peer_disconnected(peer_id: int) -> void:
+	if not _peer_ids.has(peer_id):
+		return
+	var device_id: String = _peer_ids[peer_id]
+	_peer_ids.erase(peer_id)
+	client_disconnected.emit(device_id)

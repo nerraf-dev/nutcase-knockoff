@@ -1,14 +1,20 @@
 extends Node
 
 # PlayerManager — scripts/autoload/PlayerManager.gd
-# Autoload singleton. Owns the canonical player list, turn order, and freeze state.
+# Role: Autoload singleton that owns canonical player state and turn order.
+# Owns: Player list, turn cursor, freeze/unfreeze state, scoring updates.
+# Does not own: Game lifecycle/state machine (GameManager), network sockets (NetworkManager).
 #
-# MULTIPLAYER TODO:
-#   - Add get_player_by_device_id(device_id: String) -> Player
-#     (currently only get_player_by_id exists; NetworkManager will need device_id lookup)
-#   - Player creation currently happens in GameManager.start_game() from a count.
-#     For MP, players are added one-by-one as they join the lobby via NetworkManager.
-#   - Consider a signal: player_disconnected(player) to handle drops mid-game.
+# Public API:
+# - add_player(...), remove_player(...), clear_all_players()
+# - get_current_player(), next_turn(), get_active_players()
+# - award_points(...), freeze_player(...), unfreeze_all_players()
+# - get_player_by_id(...), get_player_by_device_id(...)
+# - get_scoreboard(), get_leaders(), reset_game()
+#
+# Invariants:
+# - Player IDs are session-unique via monotonic _next_player_sequence.
+# - current_turn_index always points at a valid player when players are present.
 
 signal turn_changed(player: Player)
 signal player_added(player: Player)

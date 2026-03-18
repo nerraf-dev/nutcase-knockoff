@@ -1,5 +1,20 @@
 extends Node
 
+# GameIdGenerator — scripts/autoload/GameIdGenerator.gd
+# Role: Autoload singleton that generates readable room/game IDs.
+# Owns: Word-list loading and random ID construction from adjective/noun pools.
+# Does not own: Persistence, room registry, or network session lifecycle.
+#
+# Public API:
+# - get_random_id()
+#
+# Dependencies:
+# - res://data/words/words.json with "adjectives" and "nouns" arrays.
+#
+# Notes:
+# - _ready() loads words once and sets is_ready.
+# - If not ready, get_random_id() returns a placeholder string.
+
 var _adjectives: Array = []
 var _nouns: Array = []
 var is_ready: bool = false

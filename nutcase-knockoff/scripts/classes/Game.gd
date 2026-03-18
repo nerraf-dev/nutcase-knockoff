@@ -1,6 +1,21 @@
 class_name Game
 extends Resource
 
+# Game — scripts/classes/Game.gd
+# Role: Resource model for one game session.
+# Owns: Session metadata, active question pointer, and round result history.
+# Does not own: Scoring/round rules (RoundResolutionHelper), orchestration/state machine (GameManager).
+#
+# Key fields:
+# - id, game_mode, game_type, game_target
+# - current_round, is_active, fuzzy_enabled
+# - current_question, round_history
+#
+# Public API:
+# - record_round_result(...)
+# - set_current_question(...)
+# - reset()
+
 # Unique game ID
 var id: String = ""
 # Current round number

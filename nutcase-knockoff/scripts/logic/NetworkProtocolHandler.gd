@@ -2,8 +2,18 @@ class_name NetworkProtocolHandler
 extends RefCounted
 
 # NetworkProtocolHandler — scripts/logic/NetworkProtocolHandler.gd
-# Parses client messages and returns side effects for NetworkManager to apply.
-# This keeps protocol dispatch logic separate from WebSocket transport concerns.
+# Role: Stateless protocol parser/dispatcher for client->server packet semantics.
+# Owns: Packet JSON validation and translation into effect dictionaries.
+# Does not own: Socket I/O, peer lifecycle, or signal emission (NetworkManager).
+#
+# Public API:
+# - process_packet(peer_id, raw, device_id, room_code)
+#
+# Output contract:
+# - Returns effects with keys: warnings, outgoing, events.
+# - warnings: log strings for NetworkManager to push_warning.
+# - outgoing: [{device_id, message}] packets for NetworkManager to send.
+# - events: [{name, args}] domain events for NetworkManager to emit as typed signals.
 
 func process_packet(peer_id: int, raw: String, device_id: String, room_code: String) -> Dictionary:
 	var effects := {
