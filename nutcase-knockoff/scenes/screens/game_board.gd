@@ -99,6 +99,7 @@ func _input(event):
 		res_next_btn.emit_signal("pressed")
 		get_viewport().set_input_as_handled()
 
+## Sets up HUD: instantiates player badges (small) and displays them.
 func  _setup_players_hud() -> void:
 	# if players_container.get_child_count() > 0:
 	# 	for child in players_container.get_children():
@@ -116,6 +117,7 @@ func  _setup_players_hud() -> void:
 		player_badges.add_child(badge_instance)
 		badge_instance.setup(player)
 
+## Loads round scene based on game type and wires up round_result signal.
 func _setup_round_area() -> void:
 	var game_type = GameManager.game.game_type.to_lower()
 	var round_scene_path = ROUND_SCENES.get(game_type, "")
@@ -130,70 +132,84 @@ func _setup_round_area() -> void:
 	else:
 		push_error("Failed to load round scene at path: %s" % round_scene_path)
 
+## Round result handler — dispatches to specific submission type handlers.
+## Coordinates flow: wrong answer → freeze cascade, fuzzy → voting, exact → winner check
 func _on_round_result(player: Player, is_correct: int, prize: int, submitted_answer: String) -> void:
-	if is_correct == GameManager.SubmissionResult.INCORRECT:
-		var result = GameManager.handle_wrong_answer(player, prize)
-		print("RESULT DICT: %s" % str(result))
-		_update_all_badges()
-		
-		if result["is_frozen"]:
-			await _update_overlay(result["message"])
-		
-		if result["is_last_standing"]:
-			await _update_overlay(result["message"])
-			# Auto-show answer modal for free guess
-			if round_instance:
-				round_instance.show_answer_modal_for_free_guess()
-		
-		# Handle LPS wrong answer - show correct answer and move to next round
-		if result["is_lps_wrong"]:
-			await _update_overlay(result["message"])
-			await get_tree().create_timer(1.0).timeout
-			_start_next_round()
-		
-		# Handle edge case: no active players left
-		var no_special_end_condition = not result["is_last_standing"] and not result["is_lps_wrong"]
-		var no_active_players_left = PlayerManager.get_active_players().size() == 0
-		if no_special_end_condition and no_active_players_left:
-			await _update_overlay("No players left!\nStarting next round...")
-			await get_tree().create_timer(1.0).timeout
-			_start_next_round()
-	elif is_correct == GameManager.SubmissionResult.FUZZY:
-		# Find eligible voters: active (unfrozen) players who are not the guesser
-		var eligible_voters: Array[Player] = []
-		for p in PlayerManager.get_active_players():
-			if p != player:
-				eligible_voters.append(p)
-		
-		if eligible_voters.is_empty():
-			# No one to vote — auto-accept silently
+	match is_correct:
+		GameManager.SubmissionResult.INCORRECT:
+			await _handle_incorrect_answer(player, prize)
+		GameManager.SubmissionResult.FUZZY:
+			await _handle_fuzzy_answer(player, prize, submitted_answer)
+		GameManager.SubmissionResult.EXACT, GameManager.SubmissionResult.AUTO_ACCEPT:
 			var result = GameManager.handle_correct_answer(player, prize, is_correct)
 			await _handle_correct_result(result)
-		else:
-			var vote_modal = VoteModal.new()
-			vote_modal.setup(player, submitted_answer, round_instance.current_question.answer, eligible_voters)
-			add_child(vote_modal)
-			var vote_result: Dictionary = await vote_modal.vote_resolved
-			
-			if vote_result["accepted"]:
-				var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY)
-				await _handle_correct_result(result)
-			else:
-				var no_voters: Array[Player] = vote_result["no_voters"]
-				GameManager.handle_vote_rejection(prize, no_voters)
-				_update_all_badges()
-				if no_voters.is_empty():
-					await _update_overlay("It's a tie!\nNobody wins the prize.")
-				else:
-					await _update_overlay("Rejected!\nThe prize was shared among those who voted no.")
-				_start_next_round()
 
-	elif is_correct == GameManager.SubmissionResult.EXACT or is_correct == GameManager.SubmissionResult.AUTO_ACCEPT:
-		var result = GameManager.handle_correct_answer(player, prize, is_correct)
+## Handles incorrect submission: freeze cascade, last standing free guess, LPS reveal-all.
+func _handle_incorrect_answer(player: Player, prize: int) -> void:
+	var result = GameManager.handle_wrong_answer(player, prize)
+	print("RESULT DICT: %s" % str(result))
+	_update_all_badges()
+	
+	# Simple freeze: player locked until next round
+	if result["is_frozen"]:
+		await _update_overlay(result["message"])
+	
+	# Last standing: only player left gets free guess
+	if result["is_last_standing"]:
+		await _update_overlay(result["message"])
+		if round_instance:
+			round_instance.show_answer_modal_for_free_guess()
+	
+	# LPS (Last Person Standing) wrong answer: all answers revealed, move to next round
+	if result["is_lps_wrong"]:
+		await _update_overlay(result["message"])
+		await get_tree().create_timer(1.0).timeout
+		_start_next_round()
+		return
+	
+	# Edge case: no active players remain after wrong answer
+	var has_no_special_end = not result["is_last_standing"] and not result["is_lps_wrong"]
+	if has_no_special_end and PlayerManager.get_active_players().is_empty():
+		await _update_overlay("No players left!\nStarting next round...")
+		await get_tree().create_timer(1.0).timeout
+		_start_next_round()
+
+## Handles fuzzy (close-enough) answer: vote on acceptance or move to next round.
+func _handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String) -> void:
+	# Find eligible voters: active (unfrozen) players who are not the guesser
+	var eligible_voters: Array[Player] = []
+	for p in PlayerManager.get_active_players():
+		if p != player:
+			eligible_voters.append(p)
+	
+	# No voters: auto-accept the answer
+	if eligible_voters.is_empty():
+		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY)
 		await _handle_correct_result(result)
+		return
+	
+	# Show vote modal and wait for result
+	var vote_modal = VoteModal.new()
+	vote_modal.setup(player, submitted_answer, round_instance.current_question.answer, eligible_voters)
+	add_child(vote_modal)
+	var vote_result: Dictionary = await vote_modal.vote_resolved
+	
+	if vote_result["accepted"]:
+		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY)
+		await _handle_correct_result(result)
+	else:
+		# Vote rejected: distribute prize to "no" voters and continue
+		var no_voters: Array[Player] = vote_result["no_voters"]
+		GameManager.handle_vote_rejection(prize, no_voters)
+		_update_all_badges()
+		
+		if no_voters.is_empty():
+			await _update_overlay("It's a tie!\nNobody wins the prize.")
+		else:
+			await _update_overlay("Rejected!\nThe prize was shared among those who voted no.")
+		_start_next_round()
 
-	# hook for multiplayer: emit signal to send round result to clients so they can update their displays (e.g. show correct answer, update scores)
-
+## Checks for game-end condition; if winner exists, ends game; else shows overlay and loads next round.
 func _handle_correct_result(result: Dictionary) -> void:
 	_update_all_badges()
 	if result["has_winner"]:
@@ -206,6 +222,7 @@ func _handle_correct_result(result: Dictionary) -> void:
 		await _update_overlay("No winner yet,\nstarting next round...")
 		_start_next_round()
 
+## Syncs all player badge UI: score, current turn indicator, leader highlight. Also broadcasts to controllers.
 func _update_all_badges() -> void:
 	var badges = player_badges.get_children()
 	var current_player = PlayerManager.get_current_player()
@@ -220,13 +237,13 @@ func _update_all_badges() -> void:
 
 	_broadcast_scores_to_controllers()
 
+## Callback: when PlayerManager emits turn_changed, refresh UI and notify controllers.
 func _on_turn_changed(_player: Player) -> void:
-	# Update badges when turn changes
 	_update_all_badges()
 	_broadcast_turn_to_controllers()
 
+## Loads next question, unfreezes players, re-enables input focus, and broadcasts state.
 func _start_next_round() -> void:
-	# Record the completed round before moving on
 	if GameManager.game and GameManager.game.current_question:
 		GameManager.game.record_round_result(GameManager.game.current_round, GameManager.game.current_question, {})
 	
@@ -249,11 +266,12 @@ func _start_next_round() -> void:
 	else:
 		print("No more questions available!")
 
+## Recursively enable/disable focus on all controls in the round (for local keyboard fallback).
 func _set_round_focus(enabled: bool) -> void:
-	# Recursively enable/disable focus on all round controls
 	if round_instance:
 		_recursive_set_focus(round_instance, enabled)
 
+## Internal: recursive traversal to toggle focus_mode on all child Controls.
 func _recursive_set_focus(node: Node, enabled: bool) -> void:
 	if node is Control:
 		if enabled:
@@ -269,7 +287,7 @@ func _recursive_set_focus(node: Node, enabled: bool) -> void:
 	for child in node.get_children():
 		_recursive_set_focus(child, enabled)
 
-#  Network event handlers for multiplayer input
+## Network handler: validates sender is current player, then emits slider event to round.
 func _on_network_slider_click(device_id: String, slider_index: int) -> void:
 	var sender = PlayerManager.get_player_by_device_id(device_id)
 	var current = PlayerManager.get_current_player()
@@ -279,6 +297,7 @@ func _on_network_slider_click(device_id: String, slider_index: int) -> void:
 	if round_instance:
 		round_instance.slider_reveal_requested.emit(slider_index)
 
+## Network handler: validates sender is current player, then emits guess event to round.
 func _on_network_guess(device_id: String, guess_text: String) -> void:
 	var sender = PlayerManager.get_player_by_device_id(device_id)
 	var current = PlayerManager.get_current_player()
@@ -288,6 +307,7 @@ func _on_network_guess(device_id: String, guess_text: String) -> void:
 	if round_instance:
 		round_instance.guess_submitted.emit(guess_text)
 
+## Network handler: validates sender is current player and overlay is active, then dismisses overlay.
 func _on_network_overlay_continue(device_id: String) -> void:
 	if not _overlay_accepting_remote or not res_overlay.visible:
 		return
@@ -300,11 +320,13 @@ func _on_network_overlay_continue(device_id: String) -> void:
 
 	res_next_btn.emit_signal("pressed")
 
+## If multiplayer, send all player scores to connected controllers.
 func _broadcast_scores_to_controllers() -> void:
 	if NetworkManager.is_local:
 		return
 	NetworkManager.broadcast_scores(PlayerManager.players)
 
+## If multiplayer, broadcast current player and send "your turn" to their device.
 func _broadcast_turn_to_controllers() -> void:
 	if NetworkManager.is_local:
 		return
@@ -317,6 +339,7 @@ func _broadcast_turn_to_controllers() -> void:
 	if current.device_id != "":
 		NetworkManager.broadcast_your_turn(current.device_id)
 
+## If multiplayer, send round number and slider count to controllers.
 func _broadcast_new_round_to_controllers() -> void:
 	if NetworkManager.is_local:
 		return
@@ -330,21 +353,25 @@ func _broadcast_new_round_to_controllers() -> void:
 
 	NetworkManager.broadcast_new_round(GameManager.game.current_round, slider_count)
 
+## If multiplayer, show/hide overlay prompt on controllers with optional message.
 func _broadcast_overlay_prompt(active: bool, message: String) -> void:
 	if NetworkManager.is_local:
 		return
 	NetworkManager.broadcast_overlay_prompt(active, message)
 
 
-# Signal handlers for buttons
+## Button handlers
+## Called when options button is pressed. (Placeholder for future implementation.)
 func _on_options_btn_pressed() -> void:
 	print("Options button pressed")
 
+## Called when exit button is pressed; shows confirmation dialog.
 func _on_exit_btn_pressed() -> void:
 	print("Exit button pressed")
 	exit_confirm.dialog_text = "Are you sure you want to exit to main menu?"
 	exit_confirm.popup_centered()
 
+## Confirmed exit: stops network server, resets game state, returns to home.
 func _on_exit_confirmed() -> void:
 	print("Exit confirmed, returning to main menu")
 	if not NetworkManager.is_local:

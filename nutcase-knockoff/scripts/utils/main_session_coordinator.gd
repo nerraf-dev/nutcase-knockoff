@@ -37,11 +37,13 @@ func reset_for_setup_from_lobby() -> void:
 		PlayerManager.clear_all_players()
 		NetworkManager.stop_server()
 
-## Resets game state and player list for instant replay.
-## Clears GameManager.game, players, and transitions state back to SETUP.
+## Resets game state for instant replay.
+## Clears GameManager.game but preserves players (they're still connected).
+## Transitions state back to SETUP for new game start.
 ## New GameManager.start_game() call will transition to IN_PROGRESS.
 func reset_for_replay() -> void:
 	GameManager.game = null
-	PlayerManager.clear_all_players()
+	# Preserve players for replay — they're still connected via WebSocket
+	# and don't need to rejoin; they just need a fresh game state
 	GameManager.change_state(GameManager.GameState.MENU)
 	GameManager.change_state(GameManager.GameState.SETUP)
