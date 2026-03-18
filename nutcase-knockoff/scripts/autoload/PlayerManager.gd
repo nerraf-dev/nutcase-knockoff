@@ -70,14 +70,11 @@ func next_turn() -> void:
 	while attempts < max_attempts:
 		current_turn_index = (current_turn_index + 1) % players.size()
 		var current = get_current_player()
-		
 		if not current.is_frozen:
 			turn_changed.emit(current)
 			print("Turn changed to: %s" % current.name)
 			return
-		
 		attempts += 1
-	
 	# All players frozen (shouldn't happen in normal gameplay)
 	print("Warning: All players are frozen!")
 

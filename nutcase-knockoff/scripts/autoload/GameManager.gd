@@ -57,10 +57,6 @@ func start_game(settings: Dictionary) -> bool:
 	game.current_round = 1
 	game.is_active = true
 	
-	# TODO: Refactor start_game to only set up game state, not players. 
-	# For multiplayer, players are created in lobby and should already be in PlayerManager.
-
-	
 	# single or multi
 	if settings.get("game_mode", "multi") == "single":
 		print("Single-player mode: creating player instances")
@@ -107,7 +103,6 @@ func get_next_question() -> Question:
 	# Store current question for access in game logic
 	if game:
 		game.current_question = next_q
-	
 	return next_q
 
 # Check for winner by score
@@ -159,7 +154,6 @@ func handle_wrong_answer(player: Player, base_prize: int) -> Dictionary:
 		result["correct_answer"] = game.current_question.answer if game.current_question else ""
 		result["message"] = "Wrong!\nThe answer was: %s" % result["correct_answer"]
 		print("Last player standing got it wrong. Round ends.")
-   
 	return result
 
 # Handle correct answer with winner checking

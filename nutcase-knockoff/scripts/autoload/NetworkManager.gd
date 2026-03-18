@@ -166,9 +166,14 @@ func broadcast_game_over(winner: Player) -> void:
 	broadcast({"type": "game_over", "winner_id": winner.id, "winner_name": winner.name})
 
 # ---------------------------------------------------------------------------
-# Internal — event processing
+ # Internal — event processing
 # ---------------------------------------------------------------------------
 
+## Processes all incoming WebSocket packets and connection events.
+## - Handles new packets from clients, emitting signals for validated messages.
+## - Tracks new connections and emits `client_connected`.
+## - Handles client disconnections and emits `client_disconnected`.
+## Called every frame by _process() when the server is running.
 func _process_events() -> void:
 	while _server.get_available_packet_count() > 0:
 		var peer_id := _server.get_packet_peer()
@@ -194,6 +199,12 @@ func _process_events() -> void:
 			_peer_ids.erase(peer_id)
 			client_disconnected.emit(device_id)
 
+## Handles a single incoming packet from a client.
+## - Parses the JSON message and validates its structure.
+## - Dispatches actions based on the message type (join, ready, slider_click, guess, vote, overlay_continue).
+## - Emits relevant signals for the game layer to handle.
+## - Sends error responses for malformed or invalid packets.
+## Called internally by _process_events().
 func _handle_packet(peer_id: int, raw: String) -> void:
 	var parsed = JSON.parse_string(raw)
 	if not parsed is Dictionary:
