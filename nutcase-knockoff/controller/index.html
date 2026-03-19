@@ -45,6 +45,16 @@
 
 			<button id="continueBtn" type="button">Continue</button>
 
+			<div id="votePanel" class="vote-panel" aria-live="polite">
+				<p class="muted">Vote (fuzzy answers)</p>
+				<p id="votePrompt" class="vote-prompt">No vote in progress.</p>
+				<div class="row">
+					<button id="voteAcceptBtn" type="button">Accept</button>
+					<button id="voteRejectBtn" type="button" class="secondary">Reject</button>
+				</div>
+				<p id="voteResultText" class="muted"></p>
+			</div>
+
 			<p class="muted">Tap a tile to send a slider click. Buttons are 1-9; game receives 0-8.</p>
 			<div id="sliderGrid" class="slider-grid">
 				<button type="button" class="slider-tile secondary" data-index="0">1</button>

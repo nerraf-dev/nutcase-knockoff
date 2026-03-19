@@ -99,6 +99,19 @@ button:disabled {
 	margin-top: 10px;
 }
 
+.vote-panel {
+	margin: 12px 0;
+	padding: 10px;
+	border: 1px dashed var(--border);
+	border-radius: 10px;
+	background: #f8fbff;
+}
+
+.vote-prompt {
+	margin: 0 0 10px;
+	font-weight: 700;
+}
+
 .slider-tile {
 	min-height: 58px;
 	font-size: 1.1rem;

@@ -10,6 +10,11 @@ const state = {
 	isYourTurn: false,
 	turnStateKnown: false,
 	overlayActive: false,
+	voteActive: false,
+	voteSubmitted: false,
+	voteCanCast: false,
+	votePrompt: "No vote in progress.",
+	voteResultText: "",
 	clientId: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
 };
 
@@ -24,6 +29,10 @@ const el = {
 	joinBtn: document.getElementById("joinBtn"),
 	readyBtn: document.getElementById("readyBtn"),
 	continueBtn: document.getElementById("continueBtn"),
+	voteAcceptBtn: document.getElementById("voteAcceptBtn"),
+	voteRejectBtn: document.getElementById("voteRejectBtn"),
+	votePrompt: document.getElementById("votePrompt"),
+	voteResultText: document.getElementById("voteResultText"),
 	guessBtn: document.getElementById("guessBtn"),
 	statusText: document.getElementById("statusText"),
 	turnText: document.getElementById("turnText"),
@@ -72,6 +81,8 @@ function bindEvents() {
 	el.joinBtn.addEventListener("click", joinLobby);
 	el.readyBtn.addEventListener("click", sendReady);
 	el.continueBtn.addEventListener("click", sendOverlayContinue);
+	el.voteAcceptBtn.addEventListener("click", () => sendVote(true));
+	el.voteRejectBtn.addEventListener("click", () => sendVote(false));
 	el.sliderButtons.forEach((button) => {
 		button.addEventListener("click", () => {
 			const idx = Number(button.dataset.index || -1);
@@ -117,6 +128,7 @@ function connect() {
 		state.isYourTurn = false;
 		state.turnStateKnown = false;
 		state.overlayActive = false;
+		resetVoteState();
 		resetSliderButtons();
 		render();
 		log("Disconnected");
@@ -153,6 +165,7 @@ async function handleServerMessage(rawData) {
 			resetSliderButtons();
 			state.overlayActive = false;
 			state.turnStateKnown = false;
+			resetVoteState();
 			log(`New round ${msg.round_num ?? "?"}`);
 			render();
 		}
@@ -170,6 +183,34 @@ async function handleServerMessage(rawData) {
 		if (msg.type === "overlay_prompt") {
 			state.overlayActive = Boolean(msg.active);
 			render();
+		}
+		if (msg.type === "vote_request") {
+			state.voteActive = true;
+			state.voteSubmitted = false;
+			state.voteResultText = "";
+			const guesserId = String(msg.guesser_id || "");
+			const answerText = String(msg.answer || "");
+			state.voteCanCast = guesserId !== "" && guesserId !== state.playerId;
+			if (state.voteCanCast) {
+				state.votePrompt = `Vote now: \"${answerText}\"`;
+			} else {
+				state.votePrompt = "You submitted this answer. Waiting for votes...";
+			}
+			render();
+			log("Vote request received");
+		}
+		if (msg.type === "vote_result") {
+			const accepted = Boolean(msg.accepted);
+			const correctAnswer = String(msg.correct_answer || "");
+			state.voteActive = false;
+			state.voteSubmitted = false;
+			state.voteCanCast = false;
+			state.votePrompt = "No vote in progress.";
+			state.voteResultText = accepted
+				? `Vote accepted. Correct answer: \"${correctAnswer}\"`
+				: `Vote rejected. Correct answer: \"${correctAnswer}\"`;
+			render();
+			log(`Vote ${accepted ? "accepted" : "rejected"}`);
 		}
 		if (msg.type === "slider_revealed") {
 			applySliderReveal(msg.index, msg.word);
@@ -208,6 +249,7 @@ function disconnect() {
 	state.isYourTurn = false;
 	state.turnStateKnown = false;
 	state.overlayActive = false;
+	resetVoteState();
 	resetSliderButtons();
 	render();
 }
@@ -274,6 +316,25 @@ function sendGuess() {
 	send("guess", { answer });
 }
 
+function sendVote(accepted) {
+	if (!state.voteActive) {
+		log("No active vote");
+		return;
+	}
+	if (!state.voteCanCast) {
+		log("You are not eligible to vote this round");
+		return;
+	}
+	if (state.voteSubmitted) {
+		return;
+	}
+
+	state.voteSubmitted = true;
+	state.voteResultText = `Vote submitted: ${accepted ? "Accept" : "Reject"}`;
+	render();
+	send("vote", { accepted });
+}
+
 function render() {
 	const status = state.connected ? "Connected" : "Disconnected";
 	el.statusText.textContent = `Status: ${status}`;
@@ -304,6 +365,12 @@ function render() {
 	const canContinueOverlay = state.connected && state.joined && state.overlayActive && state.turnStateKnown && state.isYourTurn;
 	el.continueBtn.disabled = !canContinueOverlay;
 
+	el.votePrompt.textContent = state.votePrompt;
+	el.voteResultText.textContent = state.voteResultText;
+	const canVote = state.connected && state.joined && state.voteActive && state.voteCanCast && !state.voteSubmitted;
+	el.voteAcceptBtn.disabled = !canVote;
+	el.voteRejectBtn.disabled = !canVote;
+
 	el.joinBtn.textContent = state.joined ? "Update Profile" : "Join Lobby";
 	el.readyBtn.textContent = state.ready ? "Unready" : "Ready";
 }
@@ -324,6 +391,14 @@ function applySliderReveal(index, word) {
 	button.classList.add("revealed");
 	button.textContent = (word || "").trim() === "" ? "-" : word;
 	render();
+}
+
+function resetVoteState() {
+	state.voteActive = false;
+	state.voteSubmitted = false;
+	state.voteCanCast = false;
+	state.votePrompt = "No vote in progress.";
+	state.voteResultText = "";
 }
 
 function log(message) {
