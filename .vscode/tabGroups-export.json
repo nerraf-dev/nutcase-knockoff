@@ -1,0 +1,35 @@
+{
+  "42fb5b2a-ebd7-49d4-87e8-4a432ab310d7": {
+    "label": "Managers",
+    "items": [
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\autoload\\NetworkManager.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\autoload\\PlayerManager.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\autoload\\GameManager.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\logic\\RoundResolutionHelper.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\autoload\\ControllerServer.gd"
+    ],
+    "children": {},
+    "creationTime": "2026-03-18T21:04:55.197Z",
+    "colorName": "terminal.ansiRed"
+  },
+  "39b637d6-4492-460c-8879-736a1f40fbcf": {
+    "label": "Networking",
+    "items": [
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\logic\\NetworkProtocolHandler.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\autoload\\NetworkManager.gd"
+    ],
+    "children": {},
+    "creationTime": "2026-03-18T13:38:43.935Z",
+    "colorName": "terminal.ansiMagenta"
+  },
+  "02188993-13fe-462a-ab81-d8f965aec2fd": {
+    "label": "Classes",
+    "items": [
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\classes\\Game.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\nutcase-knockoff\\scripts\\classes\\Player.gd"
+    ],
+    "children": {},
+    "creationTime": "2026-03-18T12:58:20.968Z",
+    "colorName": "terminal.ansiYellow"
+  }
+}
