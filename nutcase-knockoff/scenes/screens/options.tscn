@@ -1,32 +1,24 @@
-[gd_scene format=3 uid="uid://ccc4i4pmcqie4"]
+[gd_scene format=3 uid="uid://brn7maecyahh4"]
 
-[ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
-[ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_d4pih"]
-[ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="2_h1k66"]
-[ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="3_g7jhl"]
-[ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="3_xjbsa"]
+[ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_dkq70"]
+[ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="3_t4xj1"]
+[ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="4_sp4sj"]
+[ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_tdua0"]
 
 [sub_resource type="Theme" id="Theme_t11tv"]
-default_font = ExtResource("2_h1k66")
+default_font = ExtResource("5_tdua0")
 default_font_size = 54
 
 [sub_resource type="LabelSettings" id="LabelSettings_nhm8p"]
-font = ExtResource("2_h1k66")
+font = ExtResource("5_tdua0")
 font_size = 54
 font_color = Color(0, 0.0313726, 1, 1)
 
 [sub_resource type="Theme" id="Theme_64jy4"]
-default_font = ExtResource("2_h1k66")
+default_font = ExtResource("5_tdua0")
 default_font_size = 54
-
-[sub_resource type="Theme" id="Theme_d4pih"]
-default_font = ExtResource("2_h1k66")
-default_font_size = 54
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_xjbsa"]
 
 [node name="GameInit2" type="Node2D" unique_id=111432682]
-script = ExtResource("1_nhm8p")
 metadata/_edit_vertical_guides_ = [960.0]
 metadata/_edit_horizontal_guides_ = [536.0]
 
@@ -35,7 +27,7 @@ offset_left = -91.0
 offset_top = -242.0
 offset_right = 2297.0
 offset_bottom = 1426.0
-texture = ExtResource("2_d4pih")
+texture = ExtResource("2_dkq70")
 
 [node name="StartBtn" type="TextureButton" parent="." unique_id=751907660]
 offset_left = 822.00006
@@ -43,7 +35,7 @@ offset_top = 779.00006
 offset_right = 1236.0
 offset_bottom = 993.00006
 scale = Vector2(0.60267645, 0.522713)
-texture_normal = ExtResource("3_xjbsa")
+texture_normal = ExtResource("3_t4xj1")
 
 [node name="HomeBtn" type="Button" parent="." unique_id=868827846]
 offset_left = 859.0
@@ -59,129 +51,96 @@ offset_top = 40.0
 offset_right = 1376.0
 offset_bottom = 172.0
 theme_override_font_sizes/font_size = 96
-text = "Settings"
-label_settings = ExtResource("3_g7jhl")
+text = "Options"
+label_settings = ExtResource("4_sp4sj")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ModeSelect" type="VBoxContainer" parent="." unique_id=1832525359]
-offset_left = 84.0
-offset_top = 339.0
-offset_right = 388.0
-offset_bottom = 447.0
+[node name="Sound" type="VBoxContainer" parent="." unique_id=1832525359]
+offset_left = 120.0
+offset_top = 144.0
+offset_right = 487.0
+offset_bottom = 252.0
 
-[node name="Label" type="Label" parent="ModeSelect" unique_id=896853207]
+[node name="Label" type="Label" parent="Sound" unique_id=896853207]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_h1k66")
+theme_override_fonts/font = ExtResource("5_tdua0")
 theme_override_font_sizes/font_size = 51
-text = "Mode"
+text = "Sound Effects"
 
-[node name="Buttons" type="HBoxContainer" parent="ModeSelect" unique_id=904802376]
+[node name="Buttons" type="HBoxContainer" parent="Sound" unique_id=904802376]
 layout_mode = 2
 
-[node name="Single" type="Button" parent="ModeSelect/Buttons" unique_id=1163498365]
+[node name="Single" type="Button" parent="Sound/Buttons" unique_id=1163498365]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("2_h1k66")
+theme_override_fonts/font = ExtResource("5_tdua0")
 theme_override_font_sizes/font_size = 28
 text = "1 Player"
 metadata/value = "single"
 
-[node name="Multi" type="Button" parent="ModeSelect/Buttons" unique_id=986804941]
+[node name="Multi" type="Button" parent="Sound/Buttons" unique_id=986804941]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_fonts/font = ExtResource("2_h1k66")
+theme_override_fonts/font = ExtResource("5_tdua0")
 theme_override_font_sizes/font_size = 28
 text = "Multiplayer"
 metadata/value = "multi"
 
-[node name="GameType" type="VBoxContainer" parent="." unique_id=1452947385]
-offset_left = 1223.0
-offset_top = 187.0
-offset_right = 1418.0
-offset_bottom = 329.0
+[node name="Music" type="VBoxContainer" parent="." unique_id=1452947385]
+offset_left = 112.0
+offset_top = 304.0
+offset_right = 307.0
+offset_bottom = 446.0
 theme = SubResource("Theme_t11tv")
 
-[node name="Label" type="Label" parent="GameType" unique_id=2098367219]
+[node name="Label" type="Label" parent="Music" unique_id=2098367219]
 layout_mode = 2
-text = "Game Type:"
+text = "Music"
 label_settings = SubResource("LabelSettings_nhm8p")
 
-[node name="Buttons" type="HBoxContainer" parent="GameType" unique_id=1614017250]
+[node name="Buttons" type="HBoxContainer" parent="Music" unique_id=1614017250]
 layout_mode = 2
 theme = SubResource("Theme_64jy4")
 theme_override_constants/separation = 16
 
-[node name="qna" type="Button" parent="GameType/Buttons" unique_id=1553933559]
+[node name="qna" type="Button" parent="Music/Buttons" unique_id=1553933559]
 layout_mode = 2
 text = "Q 'n' A"
 metadata/value = "qna"
 
-[node name="LengthSelect" type="VBoxContainer" parent="." unique_id=1148475699]
+[node name="Network" type="VBoxContainer" parent="." unique_id=1148475699]
 offset_left = 82.0
 offset_top = 544.0
 offset_right = 621.0
 offset_bottom = 686.0
 theme = SubResource("Theme_t11tv")
 
-[node name="Label" type="Label" parent="LengthSelect" unique_id=454009934]
+[node name="Label" type="Label" parent="Network" unique_id=454009934]
 layout_mode = 2
-text = "Game Length"
+text = "Network"
 label_settings = SubResource("LabelSettings_nhm8p")
 
-[node name="Buttons" type="HBoxContainer" parent="LengthSelect" unique_id=744490233]
+[node name="Buttons" type="HBoxContainer" parent="Network" unique_id=744490233]
 layout_mode = 2
 theme = SubResource("Theme_64jy4")
 theme_override_constants/separation = 16
 
-[node name="Short" type="Button" parent="LengthSelect/Buttons" unique_id=1449863624]
+[node name="Short" type="Button" parent="Network/Buttons" unique_id=1449863624]
 layout_mode = 2
 text = "Short
 "
 metadata/value = 200
 
-[node name="Medium" type="Button" parent="LengthSelect/Buttons" unique_id=1060266847]
+[node name="Medium" type="Button" parent="Network/Buttons" unique_id=1060266847]
 layout_mode = 2
 text = "Medium"
 metadata/value = 2000
 
-[node name="Long" type="Button" parent="LengthSelect/Buttons" unique_id=1183275851]
+[node name="Long" type="Button" parent="Network/Buttons" unique_id=1183275851]
 layout_mode = 2
 text = "Long"
 metadata/value = 3000
-
-[node name="FuzzySelect" type="VBoxContainer" parent="." unique_id=8345504]
-offset_left = 1212.0
-offset_top = 451.0
-offset_right = 1745.0
-offset_bottom = 596.0
-
-[node name="Label" type="Label" parent="FuzzySelect" unique_id=1935418705]
-layout_mode = 2
-text = "Fuzzy Matches"
-label_settings = SubResource("LabelSettings_nhm8p")
-
-[node name="Buttons" type="HBoxContainer" parent="FuzzySelect" unique_id=587196841]
-layout_mode = 2
-size_flags_horizontal = 0
-theme = SubResource("Theme_d4pih")
-theme_override_constants/separation = 16
-alignment = 1
-
-[node name="On" type="Button" parent="FuzzySelect/Buttons" unique_id=1451595840]
-layout_mode = 2
-toggle_mode = true
-button_pressed = true
-button_group = SubResource("ButtonGroup_xjbsa")
-text = "On"
-metadata/value = true
-
-[node name="Off" type="Button" parent="FuzzySelect/Buttons" unique_id=1924264276]
-layout_mode = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_xjbsa")
-text = "Off"
-metadata/value = false
 
 [node name="ConfirmModal" type="Control" parent="." unique_id=201032704]
 visible = false
