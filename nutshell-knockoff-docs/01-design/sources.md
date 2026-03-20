@@ -29,3 +29,59 @@ Animal Pack Redux
 			------------------------------
 	License (Creative Commons Zero, CC0)
 	http://creativecommons.org/publicdomain/zero/1.0/
+
+
+### Audio
+
+8bit Bossa.mp3 - from https://opengameart.org/content/bossa-nova
+by: https://opengameart.org/users/joth
+
+
+--- 
+by Matthew Pablo *CHECK THE NOTES!*
+Curious Critters (Extended Version) - (Curious Critters (Extended Version) 1.mp3) - https://opengameart.org/content/curious-critters
+
+A Cloudy Morning (2012) - A Cloudy Morning (2012).mp3 - https://opengameart.org/content/a-cloudy-morning-jazz
+
+```
+**Games and Interactive Media:**  
+Not all these credits are required, but it should be discussed with me as to which credits will be provided. Usually a credit on the credits screen and a credit in the description on the app store are my standard requirements. If you are providing any other types of credits for me this is how they should be formatted:
+
+Front-end credits:  
+Music by Matthew Pablo
+
+> [Front-Page](https://matthewpablo.com/)
+
+Main title screen (if you wish to put any credits there you should also include mine as well, if you aren’t putting any credits, then you don’t need to)  
+Featuring Music by Matthew Pablo
+
+> [Front-Page](https://matthewpablo.com/)
+
+Ending credits:  
+Music by Matthew Pablo
+
+> [Front-Page](https://matthewpablo.com/)
+
+Lastly, if you are publishing to an online app store or anything similar, please make sure I am credited in the description there as well:Featuring Music by Matthew Pablo
+```
+
+
+RPG - Costal Town Background - https://opengameart.org/content/rpg-costal-town-background-music 
+
+The_Little_Big_Adventure - https://opengameart.org/content/the-little-big-adventure
+
+HitCtrl - Happy Pixie Town - https://opengameart.org/content/hitctrl-happy-pixie-town
+
+by HitCtrl - https://opengameart.org/users/hitctrl / https://soundcloud.com/hitctrl
+
+
+---
+The Essential Retro Video Game Sound Effects Collection [512 sounds].zip
+https://opengameart.org/content/512-sound-effects-8-bit-style
+
+
+
+UI_SFX_Set.zip
+https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks
+Credit "Kenney.nl" or "www.kenney.nl"
+
