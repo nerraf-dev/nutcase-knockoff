@@ -3,8 +3,10 @@
 [ext_resource type="Script" uid="uid://d10ua6gsw5ta" path="res://scenes/screens/game_init.gd" id="1_nhm8p"]
 [ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_d4pih"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="2_h1k66"]
+[ext_resource type="Texture2D" uid="uid://mc42nrkmt20r" path="res://assets/images/buttons/start/start-normal.svg" id="3_d4pih"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="3_g7jhl"]
-[ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="3_xjbsa"]
+[ext_resource type="Texture2D" uid="uid://s45wsj5wha81" path="res://assets/images/buttons/start/start-over.svg" id="4_t11tv"]
+[ext_resource type="Texture2D" uid="uid://vvvbgch27fvq" path="res://assets/images/buttons/home/home-normal.svg" id="5_d4pih"]
 
 [sub_resource type="Theme" id="Theme_t11tv"]
 default_font = ExtResource("2_h1k66")
@@ -27,7 +29,7 @@ default_font_size = 54
 
 [node name="GameInit2" type="Node2D" unique_id=111432682]
 script = ExtResource("1_nhm8p")
-metadata/_edit_vertical_guides_ = [960.0]
+metadata/_edit_vertical_guides_ = [960.0, 1919.0]
 metadata/_edit_horizontal_guides_ = [536.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=330997447]
@@ -40,18 +42,18 @@ texture = ExtResource("2_d4pih")
 [node name="StartBtn" type="TextureButton" parent="." unique_id=751907660]
 offset_left = 822.00006
 offset_top = 779.00006
-offset_right = 1236.0
-offset_bottom = 993.00006
-scale = Vector2(0.60267645, 0.522713)
-texture_normal = ExtResource("3_xjbsa")
+offset_right = 1122.0
+offset_bottom = 929.00006
+texture_normal = ExtResource("3_d4pih")
+texture_hover = ExtResource("4_t11tv")
 
-[node name="HomeBtn" type="Button" parent="." unique_id=868827846]
-offset_left = 859.0
-offset_top = 961.0
-offset_right = 1052.0
-offset_bottom = 1057.0
-theme_override_font_sizes/font_size = 64
-text = "Home"
+[node name="HomeBtn" type="TextureButton" parent="." unique_id=1767487196]
+offset_left = 1792.0
+offset_top = 18.0
+offset_right = 1892.0
+offset_bottom = 118.0
+scale = Vector2(0.75, 0.75)
+texture_normal = ExtResource("5_d4pih")
 
 [node name="Title" type="Label" parent="." unique_id=2040698587]
 offset_left = 552.0

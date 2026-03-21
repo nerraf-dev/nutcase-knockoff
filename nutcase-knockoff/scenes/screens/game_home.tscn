@@ -2,13 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cjhiy8brgmk72" path="res://scenes/screens/game_home.gd" id="1_dobo1"]
 [ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_4s0rd"]
-[ext_resource type="Texture2D" uid="uid://csbyuyjrgshiw" path="res://assets/images/buttons/start/start-up.svg" id="2_4765e"]
 [ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_rcr06"]
-[ext_resource type="Texture2D" uid="uid://ynyt4cu4a2mx" path="res://assets/images/buttons/start/start-down.svg" id="3_x7o0w"]
-[ext_resource type="Texture2D" uid="uid://c6ytquhu1aw7c" path="res://assets/images/buttons/start/start-hover.svg" id="4_7ggut"]
-[ext_resource type="Texture2D" uid="uid://dcror00b28ndj" path="res://assets/images/buttons/options/options-up.svg" id="5_7ggut"]
-[ext_resource type="Texture2D" uid="uid://bvxwkcgmoivy2" path="res://assets/images/buttons/exit/exit-up.svg" id="6_kp88g"]
+[ext_resource type="Texture2D" uid="uid://mc42nrkmt20r" path="res://assets/images/buttons/start/start-normal.svg" id="4_4s0rd"]
+[ext_resource type="Texture2D" uid="uid://s45wsj5wha81" path="res://assets/images/buttons/start/start-over.svg" id="5_uq5lg"]
+[ext_resource type="Texture2D" uid="uid://dox1cnisfjuob" path="res://assets/images/buttons/start/start-focus.svg" id="6_6fwxl"]
+[ext_resource type="Texture2D" uid="uid://b2vducltvynky" path="res://assets/images/buttons/options/options-normal.svg" id="7_ltmyb"]
 [ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="8_rcr06"]
+[ext_resource type="Texture2D" uid="uid://ckaxbscp3tave" path="res://assets/images/buttons/options/options-over.svg" id="8_vmkxd"]
+[ext_resource type="Texture2D" uid="uid://d3js7wmo8uwym" path="res://assets/images/buttons/credits/creadit-normal.svg" id="9_45uvd"]
+[ext_resource type="Texture2D" uid="uid://pmcdoofamp3h" path="res://assets/images/buttons/exit/exit-normal.svg" id="10_qknor"]
+[ext_resource type="Texture2D" uid="uid://dck2jl2wolbhr" path="res://assets/images/buttons/exit/exit-over.svg" id="11_e1u3m"]
 
 [sub_resource type="Gradient" id="Gradient_4s0rd"]
 colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
@@ -42,10 +45,10 @@ offset_bottom = 1508.0
 texture = ExtResource("2_4s0rd")
 
 [node name="Title" type="Label" parent="." unique_id=730235545]
-offset_left = 97.0
-offset_top = 91.0
-offset_right = 1825.0
-offset_bottom = 422.0
+offset_left = 96.0
+offset_top = 320.0
+offset_right = 1824.0
+offset_bottom = 651.0
 text = "In a Nutshell Knockoff!"
 label_settings = ExtResource("2_rcr06")
 horizontal_alignment = 1
@@ -54,38 +57,42 @@ autowrap_mode = 2
 
 [node name="StartGame" type="TextureButton" parent="." unique_id=1222801282]
 offset_left = 776.0
-offset_top = 568.0
+offset_top = 816.0
 offset_right = 1190.0
-offset_bottom = 782.0
+offset_bottom = 1030.0
 scale = Vector2(0.8687974, 0.8687974)
-texture_normal = ExtResource("2_4765e")
-texture_pressed = ExtResource("3_x7o0w")
-texture_hover = ExtResource("4_7ggut")
-texture_focused = ExtResource("4_7ggut")
+texture_normal = ExtResource("4_4s0rd")
+texture_hover = ExtResource("5_uq5lg")
+texture_focused = ExtResource("6_6fwxl")
 stretch_mode = 0
 
 [node name="Options" type="TextureButton" parent="." unique_id=17533870]
-offset_left = 664.0
-offset_top = 792.0
-offset_right = 943.0
-offset_bottom = 911.0
-texture_normal = ExtResource("5_7ggut")
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 116.0
+offset_bottom = 116.0
+scale = Vector2(0.75, 0.75)
+texture_normal = ExtResource("7_ltmyb")
+texture_hover = ExtResource("8_vmkxd")
 stretch_mode = 0
 
 [node name="Credits" type="TextureButton" parent="." unique_id=1411087166]
-offset_left = 976.0
-offset_top = 792.0
-offset_right = 1255.0
-offset_bottom = 911.0
-texture_normal = ExtResource("5_7ggut")
+offset_left = 1616.0001
+offset_top = 927.99994
+offset_right = 1916.0001
+offset_bottom = 1078.0
+scale = Vector2(0.78921217, 0.69554406)
+texture_normal = ExtResource("9_45uvd")
 stretch_mode = 0
 
 [node name="Exit" type="TextureButton" parent="." unique_id=1014416984]
-offset_left = 824.0
-offset_top = 944.0
-offset_right = 1103.0
-offset_bottom = 1063.0
-texture_normal = ExtResource("6_kp88g")
+offset_left = 1800.0
+offset_top = 16.0
+offset_right = 1900.0
+offset_bottom = 116.0
+scale = Vector2(0.75, 0.75)
+texture_normal = ExtResource("10_qknor")
+texture_hover = ExtResource("11_e1u3m")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=1822986078]
 oversampling_override = 1.0
