@@ -24,7 +24,7 @@ Notes:
 @onready var icon = $Icon
 @onready var current_leader = $Icon/CurrentLeader
 @onready var current_player = $Icon/CurrentPlayer
-@onready var player_img = $Image/TextureRect
+@onready var player_img = $Image
 
 
 func _ready() -> void:
