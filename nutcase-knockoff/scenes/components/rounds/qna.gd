@@ -28,6 +28,8 @@ const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 
 const BASE_POT = 100.0
 const MINIMUM_POT_PERCENT = 0.1  # Always reserve 10% as minimum pot
+const GRID_COLUMNS = 3
+const GRID_ROWS = 3
 const DIFFICULTY_MULTIPLIERS = {
 	"easy": 1.0,
 	"medium": 1.5,
@@ -75,6 +77,18 @@ func update_pot_display() -> void:
 func _on_turn_changed(player: Player) -> void:
 	current_player_label.text = "It's %s's turn" % player.name
 
+func _get_uniform_slider_size() -> Vector2:
+	# Keep all 9 tiles identical regardless of word length.
+	var h_sep = float(grid.get_theme_constant("h_separation"))
+	var v_sep = float(grid.get_theme_constant("v_separation"))
+	var grid_size = grid.size
+	if grid_size.x <= 0.0 or grid_size.y <= 0.0:
+		grid_size = grid.custom_minimum_size
+
+	var usable_width = max(grid_size.x - (GRID_COLUMNS - 1) * h_sep, 1.0)
+	var usable_height = max(grid_size.y - (GRID_ROWS - 1) * v_sep, 1.0)
+	return Vector2(usable_width / GRID_COLUMNS, usable_height / GRID_ROWS)
+
  
 func start_new_question(question: Question) -> void:
 	# Clear old sliders
@@ -101,14 +115,15 @@ func start_new_question(question: Question) -> void:
 		current_player_label.text = "It's %s's turn" % current_player.name
 	print("Difficulty: %s | Starting pot: %d | Minimum guaranteed: %d" % [question.difficulty, int(current_prize), int(minimum_prize)])
 	
+	var tile_size = _get_uniform_slider_size()
 	var sliders = []
 	# Always create exactly 9 tiles for a 3x3 grid
 	for i in range(9):
 		var s = SliderScene.instantiate()
 		grid.add_child(s)
 		
-		# Set fixed size for all sliders
-		s.custom_minimum_size = Vector2(280, 100)
+		# Force a uniform tile size so one long word cannot stretch a column.
+		s.custom_minimum_size = tile_size
 		s.size_flags_horizontal = Control.SIZE_FILL
 		s.size_flags_vertical = Control.SIZE_FILL
 		
@@ -125,7 +140,7 @@ func start_new_question(question: Question) -> void:
 	
 	# Setup focus navigation in grid order (left-right, top-bottom)
 	await get_tree().process_frame
-	_setup_slider_navigation(sliders, 3)  # 3 columns
+	_setup_slider_navigation(sliders, GRID_COLUMNS)
 	
 	# Focus first slider for controller navigation
 	if sliders.size() > 0:
