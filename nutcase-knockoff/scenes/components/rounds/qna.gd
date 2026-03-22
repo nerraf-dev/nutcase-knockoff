@@ -21,7 +21,7 @@ signal guess_submitted(answer: String)
 const SliderScene = preload("res://scenes/components/Slider.tscn")
 const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 
-@onready var grid = $CenterContainer/GridContainer
+@onready var grid = $GridContainer
 @onready var guess_btn = $GuessBtn
 @onready var current_player_label = $CurrentPlayer
 @onready var prize_label = $Prize

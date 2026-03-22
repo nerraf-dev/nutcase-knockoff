@@ -1,5 +1,5 @@
 
-The game is 2 or more players, a 'party' style game where the more the merrier. 
+The game is for 2 or more players, a 'party' style game where the more the merrier. 
 
 The players are presented a board showing a question where each word is hidden. 
 - Each turn a player can choose to reveal a word or try to answer the question. 

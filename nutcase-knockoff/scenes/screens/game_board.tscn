@@ -54,10 +54,11 @@ offset_right = 1856.0
 offset_bottom = 256.0
 
 [node name="ExitBtn" type="TextureButton" parent="HUD" unique_id=304776567]
-offset_left = 1800.0
+offset_left = 1824.0
 offset_top = 16.0
-offset_right = 1900.0
+offset_right = 1924.0
 offset_bottom = 116.0
+scale = Vector2(0.75, 0.75)
 size_flags_horizontal = 3
 texture_normal = ExtResource("3_d7w16")
 texture_hover = ExtResource("4_lswpd")
@@ -67,6 +68,7 @@ offset_left = 8.0
 offset_top = 16.0
 offset_right = 108.0
 offset_bottom = 116.0
+scale = Vector2(0.75, 0.75)
 texture_normal = ExtResource("4_6n5tc")
 texture_hover = ExtResource("5_lswpd")
 

@@ -81,9 +81,9 @@ text = "999"
 [node name="GridContainer" type="GridContainer" parent="." unique_id=2039667510]
 custom_minimum_size = Vector2(1300, 500)
 layout_mode = 0
-offset_left = 247.0
+offset_left = 78.0
 offset_top = 205.0
-offset_right = 1547.0
+offset_right = 1695.0
 offset_bottom = 705.0
 theme = SubResource("Theme_ybcsd")
 theme_override_constants/h_separation = 8
