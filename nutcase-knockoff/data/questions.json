@@ -1,9 +1,10 @@
 [
   {
     "id": 1,
-    "question": "How many hours in one full Earth rotation?",
+    "question": "One full Earth rotation takes this many hours?",
     "answer": "24",
     "fun_fact": "Earth's rotation is actually slowing down by about 1.7 milliseconds every century.",
+    "joke": "If Earth spun any slower, Mondays would last forever!",
     "difficulty": "easy",
     "category": "General Knowledge",
     "tags": ["time", "basic"]
@@ -12,16 +13,18 @@
     "id": 2,
     "question": "Shape with eight sides is called what?",
     "answer": "Octagon",
-    "fun_fact": "Most Octagons have more sides than squares.",
+    "fun_fact": "An octagon has eight sides.",
+    "joke": "Most octagons have more sides than squares—unless you ask a confused mathematician!",
     "difficulty": "easy",
     "category": "Mathematics",
     "tags": ["geometry", "shapes"]
   },
   {
     "id": 3,
-    "question": "What is the largest desert on Earth?",
+    "question": "Earth’s largest desert is actually found in...?",
     "answer": "Antarctica",
-    "fun_fact": "Antarctica is technically a cold desert!",
+    "fun_fact": "Antarctica is technically a cold desert because it receives very little precipitation.",
+    "joke": "It's the only desert where you need a parka, not a parasol!",
     "difficulty": "hard",
     "category": "Geography",
     "tags": ["nature", "deserts"]
@@ -30,7 +33,8 @@
     "id": 4,
     "question": "Which insect has colorful wings and drinks nectar?",
     "answer": "Butterfly",
-    "fun_fact": "Butterflies taste with their feet!",
+    "fun_fact": "Butterflies taste with their feet.",
+    "joke": "Imagine if you could taste pizza just by stepping on it!",
     "difficulty": "easy",
     "category": "Biology",
     "tags": ["insects", "nature"]
@@ -39,8 +43,9 @@
     "id": 5,
     "question": "Who wrote the play “Romeo and Juliet”?",
     "answer": "William Shakespeare",
-    "alt_answers": ["Shakespeare", "Shakespeare, William"],
-    "fun_fact": "Shakespeare invented over 1,700 words!",
+    "alt_answers": ["Shakespeare", "Bill Shakespeare"],
+    "fun_fact": "Shakespeare is credited with inventing over 1,700 words in the English language.",
+    "joke": "He probably invented the 'selfie' too, but forgot to write it down!",
     "difficulty": "medium",
     "category": "Literature",
     "tags": ["plays", "authors"]
@@ -49,7 +54,8 @@
     "id": 6,
     "question": "What is the main ingredient in guacamole?",
     "answer": "Avocado",
-    "fun_fact": "Avocados are berries, not vegetables!",
+    "fun_fact": "Avocados are technically berries, not vegetables.",
+    "joke": "So guacamole is basically a fruit salad!",
     "difficulty": "easy",
     "category": "Food",
     "tags": ["ingredients", "fun"]
@@ -58,7 +64,8 @@
     "id": 7,
     "question": "Which planet has the most moons?",
     "answer": "Saturn",
-    "fun_fact": "Saturn has over 80 confirmed moons!",
+    "fun_fact": "Saturn has over 80 confirmed moons, more than any other planet in our solar system.",
+    "joke": "Saturn's moon parties are out of this world!",
     "difficulty": "medium",
     "category": "Science",
     "tags": ["space", "planets"]
@@ -67,7 +74,8 @@
     "id": 8,
     "question": "What is the fastest land animal?",
     "answer": "Cheetah",
-    "fun_fact": "Cheetahs can run up to 75 mph!",
+    "fun_fact": "Cheetahs can run up to 75 mph (120 km/h).",
+    "joke": "If a cheetah asks for a ride, just say no—your car can't keep up!",
     "difficulty": "easy",
     "category": "Biology",
     "tags": ["animals", "speed"]
@@ -76,7 +84,8 @@
     "id": 9,
     "question": "Which country invented paper?",
     "answer": "China",
-    "fun_fact": "Paper was invented in China around 105 AD.",
+    "fun_fact": "Paper was invented in China around 105 AD by Cai Lun.",
+    "joke": "Before paper, people just had really long memories!",
     "difficulty": "medium",
     "category": "History",
     "tags": ["inventions", "countries"]
@@ -85,7 +94,8 @@
     "id": 10,
     "question": "What is the smallest bone in the body?",
     "answer": "Stapes",
-    "fun_fact": "The stapes is in your middle ear.",
+    "fun_fact": "The stapes, located in the middle ear, is the smallest bone in the human body.",
+    "joke": "It's so small, even a mouse would need glasses to see it!",
     "difficulty": "hard",
     "category": "Biology",
     "tags": ["anatomy", "bones"]
@@ -95,7 +105,8 @@
     "question": "Who was the first person on the Moon?",
     "answer": "Neil Armstrong",
     "alt_answers": ["Armstrong"],
-    "fun_fact": "Armstrong’s footprint is still on the Moon!",
+    "fun_fact": "Neil Armstrong's footprint is still on the Moon because there's no wind to erase it.",
+    "joke": "He forgot to wipe his boots before coming back!",
     "difficulty": "medium",
     "category": "History",
     "tags": ["space", "explorers"]
@@ -104,7 +115,8 @@
     "id": 12,
     "question": "What is the only continent with no reptiles?",
     "answer": "Antarctica",
-    "fun_fact": "It’s too cold for reptiles to survive there.",
+    "fun_fact": "Antarctica is the only continent with no native reptiles due to its extreme cold.",
+    "joke": "Even snakes need a scarf down there!",
     "difficulty": "hard",
     "category": "Geography",
     "tags": ["continents", "animals"]
@@ -113,7 +125,8 @@
     "id": 13,
     "question": "What is gold’s chemical symbol?",
     "answer": "Au",
-    "fun_fact": "The symbol 'Au' comes from 'aurum', the Latin word for shining dawn.",
+    "fun_fact": "The symbol 'Au' for gold comes from the Latin word 'aurum'.",
+    "joke": "Gold's symbol is 'Au'—as in, 'Au, that's expensive!'",
     "difficulty": "medium",
     "category": "Science",
     "tags": ["chemistry", "elements"]
@@ -122,7 +135,8 @@
     "id": 14,
     "question": "In which year did World War Two end?",
     "answer": "1945",
-    "fun_fact": "The war ended officially when Japan signed surrender documents aboard the USS Missouri.",
+    "fun_fact": "World War Two ended in 1945 when Japan surrendered aboard the USS Missouri.",
+    "joke": "The world finally got a break from history class!",
     "difficulty": "medium",
     "category": "History",
     "tags": ["war", "dates"]
@@ -131,16 +145,18 @@
     "id": 15,
     "question": "Smallest prime number above 100?",
     "answer": "101",
-    "fun_fact": "A prime number can only be divided by itself and the number one.",
+    "fun_fact": "A prime number is only divisible by itself and one.",
+    "joke": "101 is so prime, it refuses to be divided—even by peer pressure!",
     "difficulty": "hard",
     "category": "Mathematics",
     "tags": ["math", "primes"]
   },
   {
     "id": 16,
-    "question": "Which planet is called the Red Planet?",
+    "question": "Which planet is known as the Red Planet?",
     "answer": "Mars",
-    "fun_fact": "Mars appears red because it's one big sea of tomato soup.",
+    "fun_fact": "Mars appears red because its surface is covered in iron oxide, also known as rust.",
+    "joke": "Mars: the only planet that looks like it's constantly blushing!",
     "difficulty": "easy",
     "category": "Science",
     "tags": ["space", "planets"]
@@ -150,7 +166,8 @@
     "question": "What is the largest ocean on Earth?",
     "answer": "Pacific",
     "alt_answers": ["Pacific Ocean"],
-    "fun_fact": "If you tried to drink the Pacific Ocean you'd probably be pretty sick.",
+    "fun_fact": "The Pacific Ocean is so vast it could hold all of Earth's continents with room to spare.",
+    "joke": "If you tried to drink the Pacific, you'd need a really big straw!",
     "difficulty": "easy",
     "category": "Geography",
     "tags": ["nature", "water"]
@@ -159,7 +176,8 @@
     "id": 18,
     "question": "How many bones in the adult human body?",
     "answer": "206",
-    "fun_fact": "Babies are actually born with around 300 bones, which fuse together as they grow.",
+    "fun_fact": "Babies are born with about 300 bones, but adults have 206 as some fuse together.",
+    "joke": "That's a lot of bones to keep track of at playtime!",
     "difficulty": "medium",
     "category": "Science",
     "tags": ["biology", "human-body"]
@@ -168,7 +186,8 @@
     "id": 19,
     "question": "Who painted the Sistine Chapel ceiling?",
     "answer": "Michelangelo",
-    "fun_fact": "Michelangelo actually hated painting the ceiling and preferred being a sculptor.",
+    "fun_fact": "Michelangelo was primarily a sculptor, but painted the Sistine Chapel ceiling.",
+    "joke": "He got a real pain in the neck from that job!",
     "difficulty": "medium",
     "category": "Art",
     "tags": ["history", "renaissance"]
@@ -177,7 +196,8 @@
     "id": 20,
     "question": "What is Earth’s hardest natural substance?",
     "answer": "Diamond",
-    "fun_fact": "Diamonds are made of pure carbon that has been squeezed by intense pressure.",
+    "fun_fact": "Diamonds are made of pure carbon compressed under extreme pressure.",
+    "joke": "Diamonds: proof that even carbon can shine under pressure!",
     "difficulty": "easy",
     "category": "Science",
     "tags": ["geology", "materials"]
@@ -186,7 +206,8 @@
     "id": 21,
     "question": "Who gave the Statue of Liberty to USA?",
     "answer": "France",
-    "fun_fact": "The statue was sent in 350 individual pieces packed into 214 crates.",
+    "fun_fact": "France gave the Statue of Liberty to the USA in 1886 as a symbol of friendship.",
+    "joke": "Some assembly required—thanks, France!",
     "difficulty": "medium",
     "category": "History",
     "tags": ["culture", "landmarks"]
@@ -195,7 +216,8 @@
     "id": 22,
     "question": "What is the capital city of Japan?",
     "answer": "Tokyo",
-    "fun_fact": "Tokyo was originally a small fishing village known as Edo.",
+    "fun_fact": "Tokyo was once a small fishing village called Edo.",
+    "joke": "From sushi to skyscrapers—Tokyo's glow-up is real!",
     "difficulty": "easy",
     "category": "Geography",
     "tags": ["asia", "cities"]
@@ -205,7 +227,8 @@
     "question": "Which gas do plants absorb during photosynthesis?",
     "answer": "Carbon Dioxide",
     "alt_answers": ["CO2"],
-    "fun_fact": "While plants absorb CO2, they also release about 90% of the Earth's oxygen.",
+    "fun_fact": "Plants absorb carbon dioxide (CO2) during photosynthesis and release oxygen.",
+    "joke": "Plants: Earth's original air fresheners!",
     "difficulty": "medium",
     "category": "Science",
     "tags": ["nature", "biology"]
@@ -215,7 +238,8 @@
     "question": "Which British battle was fought in 1066?",
     "answer": "Battle of Hastings",
     "alt_answers": ["Hastings"],
-    "fun_fact": "This battle resulted in the Norman Conquest of England.",
+    "fun_fact": "The Battle of Hastings in 1066 led to the Norman Conquest of England.",
+    "joke": "The Normans really put the 'conquer' in 'conquest'!",
     "difficulty": "easy",
     "category": "History",
     "tags": ["history", "battles", "english-history"]
@@ -224,7 +248,8 @@
     "id": 25,
     "question": "What is the highest mountain in the world?",
     "answer": "Mount Everest",
-    "fun_fact": "Mount Everest is located in the Himalayas on the border of Nepal and Tibet.",
+    "fun_fact": "Mount Everest is the highest mountain on Earth, at 8,848 meters (29,029 ft).",
+    "joke": "Climbing Everest: the ultimate uphill battle!",
     "difficulty": "easy",
     "category": "Geography",
     "tags": ["nature", "mountains"]
@@ -233,7 +258,8 @@
     "id": 26,
     "question": "What year did the Titanic sink?",
     "answer": "1912",
-    "fun_fact": "The Titanic sank on its maiden voyage after striking an iceberg in the North Atlantic.",
+    "fun_fact": "The Titanic sank in 1912 after hitting an iceberg on its maiden voyage.",
+    "joke": "Even the unsinkable can have a bad day!",
     "difficulty": "medium",
     "category": "History",
     "tags": ["disasters", "dates"]
@@ -242,7 +268,8 @@
     "id": 27,
     "question": "The moon landing: What year was it?",
     "answer": "1969",
-    "fun_fact": "Apollo 11 landed on the Moon on July 20, 1969. Neil Armstrong stepped out first.",
+    "fun_fact": "Apollo 11 landed on the Moon on July 20, 1969. Neil Armstrong was the first to step out.",
+    "joke": "One small step for man, one giant leap for moon dust!",
     "difficulty": "easy",
     "category": "History",
     "tags": ["space", "dates"]
@@ -251,7 +278,8 @@
     "id": 28,
     "question": "What year did the Berlin Wall fall?",
     "answer": "1989",
-    "fun_fact": "The fall of the Berlin Wall on November 9, 1989 marked the beginning of German reunification.",
+    "fun_fact": "The Berlin Wall fell on November 9, 1989, leading to German reunification.",
+    "joke": "The wall came down faster than a bad soufflé!",
     "difficulty": "medium",
     "category": "History",
     "tags": ["politics", "dates"]
@@ -260,7 +288,8 @@
     "id": 29,
     "question": "What year did Columbus first reach the Americas?",
     "answer": "1492",
-    "fun_fact": "Columbus landed in the Bahamas on October 12, 1492, believing he had reached Asia.",
+    "fun_fact": "Columbus reached the Americas in 1492, landing in the Bahamas.",
+    "joke": "He was looking for India, but found a whole new world instead!",
     "difficulty": "hard",
     "category": "History",
     "tags": ["exploration", "dates"]
