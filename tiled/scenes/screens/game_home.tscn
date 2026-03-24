@@ -58,9 +58,9 @@ autowrap_mode = 2
 [node name="StartGame" type="TextureButton" parent="." unique_id=1222801282]
 offset_left = 776.0
 offset_top = 816.0
-offset_right = 1190.0
-offset_bottom = 1030.0
-scale = Vector2(0.8687974, 0.8687974)
+offset_right = 1076.0
+offset_bottom = 966.0
+scale = Vector2(1.25, 1.25)
 texture_normal = ExtResource("4_4s0rd")
 texture_hover = ExtResource("5_uq5lg")
 texture_focused = ExtResource("6_6fwxl")
