@@ -47,13 +47,13 @@ const ROUND_SCENES = {
 const NETWORK_VOTE_TIMEOUT_SECONDS = 20.0
 
 var round_instance = null
-var _stored_focus_modes: Dictionary = {}  # node path -> focus mode, used by _recursive_set_focus
+var _stored_focus_modes: Dictionary = {} # node path -> focus mode, used by _recursive_set_focus
 var _overlay_accepting_remote: bool = false
 var _vote_session_active: bool = false
 var _vote_session_guesser: Player = null
 var _vote_session_correct_answer: String = ""
-var _vote_session_eligible_by_device: Dictionary = {}  # device_id -> Player
-var _vote_session_votes_by_device: Dictionary = {}      # device_id -> bool
+var _vote_session_eligible_by_device: Dictionary = {} # device_id -> Player
+var _vote_session_votes_by_device: Dictionary = {} # device_id -> bool
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -67,8 +67,8 @@ func _ready() -> void:
 		return
 	print("Game Board scene ready")
 	res_overlay.visible = false
-	exit_btn.pressed.connect(Callable(self, "_on_exit_btn_pressed"))
-	options_btn.pressed.connect(Callable(self, "_on_options_btn_pressed"))
+	exit_btn.pressed.connect(Callable(self , "_on_exit_btn_pressed"))
+	options_btn.pressed.connect(Callable(self , "_on_options_btn_pressed"))
 	exit_confirm.confirmed.connect(_on_exit_confirmed)
 	
 	# Connect to turn changes to update current player indicator
@@ -96,10 +96,24 @@ func _update_overlay(msg: String) -> void:
 	_overlay_accepting_remote = true
 	_broadcast_turn_to_controllers()
 	_broadcast_overlay_prompt(true, msg)
-	res_next_btn.grab_focus()  # Auto-focus for controller
-	await res_next_btn.pressed
+	res_next_btn.grab_focus() # Auto-focus for controller
+
+	var timer = get_tree().create_timer(3.0)
+	var dismissed := false
+	var mark_dismissed := func() -> void:
+		dismissed = true
+
+	res_next_btn.pressed.connect(mark_dismissed, CONNECT_ONE_SHOT)
+
+	while not dismissed and timer.time_left > 0.0:
+		await get_tree().process_frame
+
+	if res_next_btn.pressed.is_connected(mark_dismissed):
+		res_next_btn.pressed.disconnect(mark_dismissed)
+
 	_overlay_accepting_remote = false
 	res_overlay.visible = false
+	_broadcast_overlay_prompt(false, "")
 	_broadcast_overlay_prompt(false, "")
 
 func _input(event):
@@ -109,7 +123,7 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 ## Sets up HUD: instantiates player badges (small) and displays them.
-func  _setup_players_hud() -> void:
+func _setup_players_hud() -> void:
 	if player_badges.get_child_count() > 0:
 		for child in player_badges.get_children():
 			child.queue_free()
@@ -127,7 +141,7 @@ func _setup_round_area() -> void:
 		return
 	round_instance = round_scene.instantiate()
 	round_area.add_child(round_instance)
-	round_instance.connect("round_result", Callable(self, "_on_round_result"))
+	round_instance.connect("round_result", Callable(self , "_on_round_result"))
 ## Round result handler — dispatches to specific submission type handlers.
 ## Coordinates flow: wrong answer → freeze cascade, fuzzy → voting, exact → winner check
 func _on_round_result(player: Player, is_correct: int, prize: int, submitted_answer: String) -> void:
