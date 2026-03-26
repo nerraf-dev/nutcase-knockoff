@@ -3,17 +3,16 @@
 ---
 
 ## To Do
-- Homepage: Finalize layout and fonts
+- Homepage: Finalise layout and fonts
 - Settings page: Finish layout, style buttons
 - Confirmation modal: Decide on approach and implement (improve, double-click, or remove)
-- Game screens: Standardize fonts, center numbers on sliders, improve positioning
+- Game screens: Standardise fonts, center numbers on sliders, improve positioning
 - Accessibility: Review color contrast, add options for slider numbers
 - Move guess button to bottom (single player)
 - Clarify player badge labels
 - Fix guess button focus/click issues
-- Automate overlay between questions (timer)
 - Review and improve overlay messaging (winner/next round)
-- Add/standardize lobby title
+- Add/standardise lobby title
 - Update lobby background/color
 - Fix QR code functionality
 - Resize/fix player badges for multiple players
@@ -28,6 +27,7 @@
 
 
 ## Done
+- Automate overlay between questions (timer)
 
 
 ---

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cjhiy8brgmk72" path="res://scenes/screens/game_home.gd" id="1_dobo1"]
 [ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_4s0rd"]
-[ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_rcr06"]
+[ext_resource type="LabelSettings" uid="uid://b6m3via4ld2ab" path="res://scenes/screens/home-title.tres" id="3_qknor"]
 [ext_resource type="FontFile" uid="uid://bld3e72siatr2" path="res://assets/fonts/Cute Dino.ttf" id="4_45uvd"]
 [ext_resource type="LabelSettings" uid="uid://ofcvveq5047f" path="res://resources/font_test.tres" id="5_e1u3m"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_qknor"]
@@ -16,13 +16,6 @@
 [ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="13_45uvd"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="14_qknor"]
 
-[sub_resource type="Gradient" id="Gradient_4s0rd"]
-colors = PackedColorArray(0.564706, 0.733333, 1, 1, 0.785641, 0.785641, 0.785641, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_2brdo"]
-gradient = SubResource("Gradient_4s0rd")
-width = 65
-
 [sub_resource type="Theme" id="Theme_4s0rd"]
 default_font = ExtResource("8_rcr06")
 default_font_size = 36
@@ -34,13 +27,7 @@ script = ExtResource("1_dobo1")
 metadata/_edit_vertical_guides_ = [960.0, -354.0, 1920.0]
 metadata/_edit_horizontal_guides_ = [536.0, 1080.0]
 
-[node name="Background" type="TextureRect" parent="." unique_id=1714284062]
-visible = false
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = SubResource("GradientTexture2D_2brdo")
-
-[node name="Background2" type="TextureRect" parent="." unique_id=1917874966]
+[node name="Background" type="TextureRect" parent="." unique_id=1917874966]
 offset_left = -216.0
 offset_top = -160.0
 offset_right = 2172.0
@@ -53,12 +40,13 @@ offset_top = 152.0
 offset_right = 1824.0
 offset_bottom = 483.0
 text = "Tiled"
-label_settings = ExtResource("2_rcr06")
+label_settings = ExtResource("3_qknor")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Title2" type="Label" parent="." unique_id=2042692521]
+visible = false
 offset_left = 104.0
 offset_top = 336.0
 offset_right = 616.0
@@ -72,6 +60,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Title3" type="Label" parent="." unique_id=1520184982]
+visible = false
 offset_left = 104.0
 offset_top = 512.0
 offset_right = 616.0
@@ -85,6 +74,7 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="Title4" type="Label" parent="." unique_id=1283864699]
+visible = false
 offset_left = 104.0
 offset_top = 696.0
 offset_right = 616.0
