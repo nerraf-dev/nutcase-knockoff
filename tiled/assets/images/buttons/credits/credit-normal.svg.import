@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3js7wmo8uwym"
-path="res://.godot/imported/creadit-normal.svg-679f7e715e2f3009f3239412e847342b.ctex"
+path="res://.godot/imported/credit-normal.svg-b331cb21609b30216784b1303cd39ff8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/buttons/credits/creadit-normal.svg"
-dest_files=["res://.godot/imported/creadit-normal.svg-679f7e715e2f3009f3239412e847342b.ctex"]
+source_file="res://assets/images/buttons/credits/credit-normal.svg"
+dest_files=["res://.godot/imported/credit-normal.svg-b331cb21609b30216784b1303cd39ff8.ctex"]
 
 [params]
 

@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://b2vducltvynky" path="res://assets/images/buttons/options/options-normal.svg" id="7_ltmyb"]
 [ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="8_rcr06"]
 [ext_resource type="Texture2D" uid="uid://ckaxbscp3tave" path="res://assets/images/buttons/options/options-over.svg" id="8_vmkxd"]
-[ext_resource type="Texture2D" uid="uid://d3js7wmo8uwym" path="res://assets/images/buttons/credits/creadit-normal.svg" id="9_45uvd"]
+[ext_resource type="Texture2D" uid="uid://d3js7wmo8uwym" path="res://assets/images/buttons/credits/credit-normal.svg" id="9_45uvd"]
 [ext_resource type="Texture2D" uid="uid://pmcdoofamp3h" path="res://assets/images/buttons/exit/exit-normal.svg" id="10_qknor"]
 [ext_resource type="Texture2D" uid="uid://dck2jl2wolbhr" path="res://assets/images/buttons/exit/exit-over.svg" id="11_e1u3m"]
 [ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="13_45uvd"]
@@ -88,11 +88,11 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="StartGame" type="TextureButton" parent="." unique_id=1222801282]
-offset_left = 776.0
-offset_top = 816.0
-offset_right = 1076.0
-offset_bottom = 966.0
-scale = Vector2(1.25, 1.25)
+offset_left = 736.0
+offset_top = 624.0
+offset_right = 1036.0
+offset_bottom = 774.0
+scale = Vector2(1.601459, 1.601459)
 stretch_mode = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StartGame" unique_id=1917237482]
