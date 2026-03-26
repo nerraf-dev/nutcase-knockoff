@@ -1,9 +1,6 @@
 [gd_resource type="LabelSettings" format=3 uid="uid://ofcvveq5047f"]
 
-[ext_resource type="FontFile" uid="uid://b5cbkoqd11q8l" path="res://assets/fonts/Bloopoly.otf" id="1_twgwq"]
-
 [resource]
-font = ExtResource("1_twgwq")
 font_size = 101
 font_color = Color(0, 0.0313726, 1, 1)
 outline_size = 32

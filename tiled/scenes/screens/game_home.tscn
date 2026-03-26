@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_4s0rd"]
 [ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_rcr06"]
 [ext_resource type="FontFile" uid="uid://bld3e72siatr2" path="res://assets/fonts/Cute Dino.ttf" id="4_45uvd"]
+[ext_resource type="LabelSettings" uid="uid://ofcvveq5047f" path="res://resources/font_test.tres" id="5_e1u3m"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_qknor"]
 [ext_resource type="FontFile" uid="uid://ohhyu6a83aoa" path="res://assets/fonts/Coffee Fills.otf" id="6_e1u3m"]
 [ext_resource type="Texture2D" uid="uid://b2vducltvynky" path="res://assets/images/buttons/options/options-normal.svg" id="7_ltmyb"]
@@ -65,6 +66,7 @@ offset_bottom = 496.0
 theme_override_fonts/font = ExtResource("4_45uvd")
 theme_override_font_sizes/font_size = 128
 text = "Tiled"
+label_settings = ExtResource("5_e1u3m")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -77,6 +79,7 @@ offset_bottom = 672.0
 theme_override_fonts/font = ExtResource("5_qknor")
 theme_override_font_sizes/font_size = 128
 text = "Tiled"
+label_settings = ExtResource("5_e1u3m")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -89,6 +92,7 @@ offset_bottom = 856.0
 theme_override_fonts/font = ExtResource("6_e1u3m")
 theme_override_font_sizes/font_size = 128
 text = "Tiled"
+label_settings = ExtResource("5_e1u3m")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
