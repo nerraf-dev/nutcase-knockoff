@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://mc42nrkmt20r" path="res://assets/images/buttons/start/start-normal.svg" id="3_jdbly"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="3_pdtbn"]
 [ext_resource type="Texture2D" uid="uid://s45wsj5wha81" path="res://assets/images/buttons/start/start-over.svg" id="4_5gglr"]
+[ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="5_5gglr"]
 [ext_resource type="Texture2D" uid="uid://vvvbgch27fvq" path="res://assets/images/buttons/home/home-normal.svg" id="5_pdtbn"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="7_56qed"]
 
@@ -33,13 +34,39 @@ offset_right = 2297.0
 offset_bottom = 1426.0
 texture = ExtResource("2_5gglr")
 
-[node name="StartBtn" type="TextureButton" parent="." unique_id=1698733788]
+[node name="StartBtn-old" type="TextureButton" parent="." unique_id=1698733788]
+visible = false
 offset_left = 808.0
 offset_top = 784.0
 offset_right = 1108.0
 offset_bottom = 934.0
 texture_normal = ExtResource("3_jdbly")
 texture_hover = ExtResource("4_5gglr")
+
+[node name="StartBtn" type="TextureButton" parent="." unique_id=807638832]
+offset_left = 776.0
+offset_top = 816.0
+offset_right = 1076.0
+offset_bottom = 966.0
+scale = Vector2(1.25, 1.25)
+stretch_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StartBtn" unique_id=2001928274]
+position = Vector2(147.19998, 76.80001)
+scale = Vector2(0.50999993, 0.5199999)
+sprite_frames = ExtResource("5_5gglr")
+autoplay = "default"
+
+[node name="Label" type="Label" parent="StartBtn" unique_id=1499958555]
+layout_mode = 0
+offset_left = 31.999992
+offset_top = 38.40001
+offset_right = 353.0
+offset_bottom = 167.40001
+scale = Vector2(0.75, 0.75)
+text = "GO!"
+label_settings = ExtResource("7_56qed")
+horizontal_alignment = 1
 
 [node name="HomeBtn" type="TextureButton" parent="." unique_id=2094923599]
 offset_left = 1801.0

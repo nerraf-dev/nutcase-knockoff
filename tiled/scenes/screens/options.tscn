@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://mc42nrkmt20r" path="res://assets/images/buttons/start/start-normal.svg" id="2_t4xj1"]
 [ext_resource type="Texture2D" uid="uid://s45wsj5wha81" path="res://assets/images/buttons/start/start-over.svg" id="3_sp4sj"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="4_sp4sj"]
+[ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="4_t4xj1"]
 [ext_resource type="Texture2D" uid="uid://vvvbgch27fvq" path="res://assets/images/buttons/home/home-normal.svg" id="4_tdua0"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_tdua0"]
 
@@ -31,13 +32,39 @@ offset_right = 2297.0
 offset_bottom = 1426.0
 texture = ExtResource("2_dkq70")
 
-[node name="StartBtn" type="TextureButton" parent="." unique_id=751907660]
+[node name="StartBtnold" type="TextureButton" parent="." unique_id=751907660]
+visible = false
 offset_left = 808.0
 offset_top = 776.0
 offset_right = 1108.0
 offset_bottom = 926.0
 texture_normal = ExtResource("2_t4xj1")
 texture_hover = ExtResource("3_sp4sj")
+
+[node name="StartBtn" type="TextureButton" parent="." unique_id=537009957]
+offset_left = 776.0
+offset_top = 816.0
+offset_right = 1076.0
+offset_bottom = 966.0
+scale = Vector2(1.25, 1.25)
+stretch_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StartBtn" unique_id=1095048275]
+position = Vector2(147.19998, 76.80001)
+scale = Vector2(0.50999993, 0.5199999)
+sprite_frames = ExtResource("4_t4xj1")
+autoplay = "default"
+
+[node name="Label" type="Label" parent="StartBtn" unique_id=842902523]
+layout_mode = 0
+offset_left = 31.999992
+offset_top = 38.40001
+offset_right = 353.0
+offset_bottom = 167.40001
+scale = Vector2(0.75, 0.75)
+text = "Back"
+label_settings = ExtResource("4_sp4sj")
+horizontal_alignment = 1
 
 [node name="HomeBtn" type="TextureButton" parent="." unique_id=561963222]
 offset_left = 1792.0

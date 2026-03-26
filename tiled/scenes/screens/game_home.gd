@@ -9,7 +9,6 @@ signal exit_game
 @onready var accept_dialog = $AcceptDialog
 
 
-
 func _ready() -> void:
 	print("GameHome scene ready")
 	start_game_btn.pressed.connect(_on_start_game_btn_pressed)
@@ -34,11 +33,11 @@ func _on_options_btn_pressed() -> void:
 
 func _on_exit_btn_pressed() -> void:
 	accept_dialog.popup_centered()
-	await get_tree().process_frame  # Wait one frame
+	await get_tree().process_frame # Wait one frame
 	if is_instance_valid(accept_dialog):
 		var ok_button = accept_dialog.get_ok_button()
 		if is_instance_valid(ok_button):
-			ok_button.grab_focus()  # Focus the OK button
+			ok_button.grab_focus() # Focus the OK button
 
 func _on_AcceptDialog_confirmed() -> void:
 	if not NetworkManager.is_local:

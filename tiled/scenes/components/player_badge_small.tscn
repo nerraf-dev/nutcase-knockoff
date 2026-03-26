@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ddmycnm3j4tyh"]
 
 [ext_resource type="Script" uid="uid://b8pf528yu651o" path="res://scenes/components/player_badge_small.gd" id="1_hc5qc"]
-[ext_resource type="Texture2D" uid="uid://dyha3sfpp5lcw" path="res://assets/images/player_badges/animals/monkey.svg" id="2_hc5qc"]
+[ext_resource type="Texture2D" uid="uid://510x1l5kn4n0" path="res://assets/images/player_badges/mine/duck.png" id="2_hc5qc"]
 
 [sub_resource type="Gradient" id="Gradient_hc5qc"]
 offsets = PackedFloat32Array(0, 0.54814816, 1)
@@ -12,7 +12,7 @@ metadata/_snap_enabled = true
 gradient = SubResource("Gradient_hc5qc")
 
 [sub_resource type="LabelSettings" id="LabelSettings_1252w"]
-font_size = 28
+font_size = 30
 font_color = Color(0, 0.0313726, 1, 1)
 
 [node name="PlayerBadge" type="Control" unique_id=492291402]
@@ -30,19 +30,19 @@ texture = SubResource("GradientTexture1D_n7c6u")
 
 [node name="Image" type="TextureRect" parent="." unique_id=921027845]
 layout_mode = 0
-offset_left = 23.0
-offset_top = 67.0
-offset_right = 365.0
-offset_bottom = 354.0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 404.0
+offset_bottom = 403.0
 texture = ExtResource("2_hc5qc")
 stretch_mode = 5
 
 [node name="Name" type="Label" parent="." unique_id=548488132]
 layout_mode = 0
-offset_left = 82.0
-offset_top = 340.0
-offset_right = 312.0
-offset_bottom = 398.0
+offset_left = 80.0
+offset_top = 349.0
+offset_right = 310.0
+offset_bottom = 407.0
 text = "P1"
 label_settings = SubResource("LabelSettings_1252w")
 horizontal_alignment = 1
@@ -86,12 +86,12 @@ text = "▶"
 
 [node name="Score" type="Label" parent="." unique_id=1769908326]
 layout_mode = 0
-offset_left = 297.0
+offset_left = 285.0
 offset_top = 9.0
-offset_right = 377.0
-offset_bottom = 49.0
+offset_right = 399.0
+offset_bottom = 78.0
 theme_override_colors/font_color = Color(0.49803922, 0.078431375, 1, 1)
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 50
 text = "9999"
 horizontal_alignment = 1
 vertical_alignment = 1

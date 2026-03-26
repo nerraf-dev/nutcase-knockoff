@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://cjhiy8brgmk72" path="res://scenes/screens/game_home.gd" id="1_dobo1"]
 [ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_4s0rd"]
 [ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_rcr06"]
-[ext_resource type="Texture2D" uid="uid://mc42nrkmt20r" path="res://assets/images/buttons/start/start-normal.svg" id="4_4s0rd"]
-[ext_resource type="Texture2D" uid="uid://s45wsj5wha81" path="res://assets/images/buttons/start/start-over.svg" id="5_uq5lg"]
-[ext_resource type="Texture2D" uid="uid://dox1cnisfjuob" path="res://assets/images/buttons/start/start-focus.svg" id="6_6fwxl"]
+[ext_resource type="FontFile" uid="uid://bld3e72siatr2" path="res://assets/fonts/Cute Dino.ttf" id="4_45uvd"]
+[ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_qknor"]
+[ext_resource type="FontFile" uid="uid://ohhyu6a83aoa" path="res://assets/fonts/Coffee Fills.otf" id="6_e1u3m"]
 [ext_resource type="Texture2D" uid="uid://b2vducltvynky" path="res://assets/images/buttons/options/options-normal.svg" id="7_ltmyb"]
 [ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="8_rcr06"]
 [ext_resource type="Texture2D" uid="uid://ckaxbscp3tave" path="res://assets/images/buttons/options/options-over.svg" id="8_vmkxd"]
@@ -57,16 +57,65 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
+[node name="Title2" type="Label" parent="." unique_id=2042692521]
+offset_left = 104.0
+offset_top = 336.0
+offset_right = 616.0
+offset_bottom = 496.0
+theme_override_fonts/font = ExtResource("4_45uvd")
+theme_override_font_sizes/font_size = 128
+text = "Tiled"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Title3" type="Label" parent="." unique_id=1520184982]
+offset_left = 104.0
+offset_top = 512.0
+offset_right = 616.0
+offset_bottom = 672.0
+theme_override_fonts/font = ExtResource("5_qknor")
+theme_override_font_sizes/font_size = 128
+text = "Tiled"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Title4" type="Label" parent="." unique_id=1283864699]
+offset_left = 104.0
+offset_top = 696.0
+offset_right = 616.0
+offset_bottom = 856.0
+theme_override_fonts/font = ExtResource("6_e1u3m")
+theme_override_font_sizes/font_size = 128
+text = "Tiled"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
 [node name="StartGame" type="TextureButton" parent="." unique_id=1222801282]
 offset_left = 776.0
 offset_top = 816.0
 offset_right = 1076.0
 offset_bottom = 966.0
 scale = Vector2(1.25, 1.25)
-texture_normal = ExtResource("4_4s0rd")
-texture_hover = ExtResource("5_uq5lg")
-texture_focused = ExtResource("6_6fwxl")
 stretch_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StartGame" unique_id=1917237482]
+position = Vector2(147.19998, 76.80001)
+scale = Vector2(0.50999993, 0.5199999)
+sprite_frames = ExtResource("13_45uvd")
+autoplay = "default"
+
+[node name="Label" type="Label" parent="StartGame" unique_id=786996247]
+layout_mode = 0
+offset_left = 31.999992
+offset_top = 38.40001
+offset_right = 353.0
+offset_bottom = 167.40001
+scale = Vector2(0.75, 0.75)
+text = "Start"
+label_settings = ExtResource("14_qknor")
 
 [node name="Options" type="TextureButton" parent="." unique_id=17533870]
 offset_left = 16.0
@@ -104,24 +153,3 @@ theme = SubResource("Theme_4s0rd")
 theme_override_constants/buttons_separation = 2
 dialog_text = "Are you sure you want to quit? (ESC to close)"
 dialog_autowrap = true
-
-[node name="Button" type="Area2D" parent="." unique_id=911355542]
-position = Vector2(64.00003, 712)
-scale = Vector2(0.49964017, 0.4528816)
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Button" unique_id=1552122364]
-polygon = PackedVector2Array(280, 424, 328, 432, 440, 424, 544, 440, 672, 440, 784, 440, 816, 416, 840, 384, 832, 240, 816, 160, 696, 152, 592, 160, 448, 160, 344, 168, 272, 168, 248, 216, 240, 304, 248, 360)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Button" unique_id=1971536097]
-position = Vector2(536, 296)
-sprite_frames = ExtResource("13_45uvd")
-autoplay = "default"
-
-[node name="Label" type="Label" parent="Button" unique_id=1725505721]
-offset_left = 312.0
-offset_top = 208.0
-offset_right = 633.0
-offset_bottom = 337.0
-scale = Vector2(1.4114437, 1.5911595)
-text = "Start"
-label_settings = ExtResource("14_qknor")
