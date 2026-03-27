@@ -149,16 +149,16 @@ func _setup_round_area() -> void:
 func _on_round_result(player: Player, is_correct: int, prize: int, submitted_answer: String) -> void:
 	match is_correct:
 		GameManager.SubmissionResult.INCORRECT:
-			await _handle_incorrect_answer(player, prize)
+			await _handle_incorrect_answer(player, prize, submitted_answer)
 		GameManager.SubmissionResult.FUZZY:
 			await _handle_fuzzy_answer(player, prize, submitted_answer)
 		GameManager.SubmissionResult.EXACT, GameManager.SubmissionResult.AUTO_ACCEPT:
-			var result = GameManager.handle_correct_answer(player, prize, is_correct)
+			var result = GameManager.handle_correct_answer(player, prize, is_correct, submitted_answer)
 			await _handle_correct_result(result)
 
 ## Handles incorrect submission: freeze cascade, last standing free guess, LPS reveal-all.
-func _handle_incorrect_answer(player: Player, prize: int) -> void:
-	var result = GameManager.handle_wrong_answer(player, prize)
+func _handle_incorrect_answer(player: Player, prize: int, submitted_answer: String) -> void:
+	var result = GameManager.handle_wrong_answer(player, prize, submitted_answer)
 	print("RESULT DICT: %s" % str(result))
 	_update_all_badges()
 	
@@ -196,7 +196,7 @@ func _handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String) 
 	
 	# No voters: auto-accept the answer
 	if eligible_voters.is_empty():
-		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY)
+		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY, submitted_answer)
 		await _handle_correct_result(result)
 		return
 
@@ -210,24 +210,24 @@ func _handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String) 
 				network_voters.append(voter)
 		if network_voters.is_empty():
 			# Safety fallback in case no eligible voter has a mapped device.
-			var no_device_result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY)
+			var no_device_result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY, submitted_answer)
 			await _handle_correct_result(no_device_result)
 			return
 
 		_start_network_vote_session(player, submitted_answer, network_voters)
 		var network_vote_result: Dictionary = await network_vote_resolved
-		await _apply_fuzzy_vote_result(player, prize, network_vote_result)
+		await _apply_fuzzy_vote_result(player, prize, submitted_answer, network_vote_result)
 	else:
 		# Show vote modal and wait for result
 		var vote_modal = VoteModal.new()
 		vote_modal.setup(player, submitted_answer, round_instance.current_question.answer, eligible_voters)
 		add_child(vote_modal)
 		var vote_result: Dictionary = await vote_modal.vote_resolved
-		await _apply_fuzzy_vote_result(player, prize, vote_result)
+		await _apply_fuzzy_vote_result(player, prize, submitted_answer, vote_result)
 
-func _apply_fuzzy_vote_result(player: Player, prize: int, vote_result: Dictionary) -> void:
+func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: String, vote_result: Dictionary) -> void:
 	if vote_result.get("accepted", false):
-		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY)
+		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY, submitted_answer)
 		await _handle_correct_result(result)
 		return
 

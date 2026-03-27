@@ -22,13 +22,13 @@ extends Node
 # - ROUND_END exists for future inter-round pause flow.
 
 enum GameState {
-	NONE,           # No game active
-	MENU,           # Main menu
-	SETUP,          # Configuring game settings
-	LOBBY,          # Waiting for players to connect (future — needed for multiplayer)
-	IN_PROGRESS,    # Game active
-	ROUND_END,      # Between rounds (defined but currently unused — see header note)
-	GAME_OVER       # Winner declared
+	NONE, # No game active
+	MENU, # Main menu
+	SETUP, # Configuring game settings
+	LOBBY, # Waiting for players to connect (future — needed for multiplayer)
+	IN_PROGRESS, # Game active
+	ROUND_END, # Between rounds (defined but currently unused — see header note)
+	GAME_OVER # Winner declared
 }
 
 enum SubmissionResult {
@@ -110,7 +110,7 @@ func start_game(settings: Dictionary) -> bool:
 
 # Get next unused question
 func get_next_question() -> Question:
-	var unused = available_questions.filter(func(q): 
+	var unused = available_questions.filter(func(q):
 		return not used_question_ids.has(q.question_id)
 	)
 	if unused.is_empty():
@@ -131,15 +131,15 @@ func check_for_winner() -> Array[Player]:
 	return _round_resolution.check_for_winner(game.game_target)
 
 # Handle wrong answer with frozen player logic
-func handle_wrong_answer(player: Player, base_prize: int) -> Dictionary:
+func handle_wrong_answer(player: Player, base_prize: int, submitted_answer: String) -> Dictionary:
 	var current_question: Resource = game.current_question if game else null
-	return _round_resolution.handle_wrong_answer(player, base_prize, current_question)
+	return _round_resolution.handle_wrong_answer(player, base_prize, current_question, submitted_answer)
 
 # Handle correct answer with winner checking
-func handle_correct_answer(player: Player, prize: int, type: SubmissionResult) -> Dictionary:
+func handle_correct_answer(player: Player, prize: int, type: SubmissionResult, submitted_answer: String) -> Dictionary:
 	var is_auto_accept := type == SubmissionResult.AUTO_ACCEPT
 	var target := game.game_target if game else 0
-	return _round_resolution.handle_correct_answer(player, prize, is_auto_accept, target)
+	return _round_resolution.handle_correct_answer(player, prize, is_auto_accept, target, submitted_answer)
 
 
 # Handle vote rejection: no-voters split half the prize.

@@ -85,7 +85,7 @@ offset_top = 40.0
 offset_right = 1376.0
 offset_bottom = 172.0
 theme_override_font_sizes/font_size = 96
-text = "Settings"
+text = "Game Setup"
 label_settings = ExtResource("3_g7jhl")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -105,13 +105,12 @@ label_settings = ExtResource("9_64jy4")
 
 [node name="Buttons" type="HBoxContainer" parent="ModeSelect" unique_id=904802376]
 layout_mode = 2
+theme_override_constants/separation = 34
 
 [node name="Single" type="Button" parent="ModeSelect/Buttons" unique_id=1163498365]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("10_0ivg7")
-theme_override_fonts/font = ExtResource("2_h1k66")
-theme_override_font_sizes/font_size = 28
 text = "1 Player"
 metadata/value = "single"
 
@@ -119,8 +118,6 @@ metadata/value = "single"
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("10_0ivg7")
-theme_override_fonts/font = ExtResource("2_h1k66")
-theme_override_font_sizes/font_size = 28
 text = "Multiplayer"
 metadata/value = "multi"
 
@@ -150,8 +147,8 @@ metadata/value = "qna"
 [node name="LengthSelect" type="VBoxContainer" parent="." unique_id=1148475699]
 offset_left = 72.0
 offset_top = 536.0
-offset_right = 611.0
-offset_bottom = 701.0
+offset_right = 644.0
+offset_bottom = 693.0
 theme = SubResource("Theme_t11tv")
 
 [node name="Label" type="Label" parent="LengthSelect" unique_id=454009934]
@@ -162,13 +159,13 @@ label_settings = ExtResource("9_64jy4")
 [node name="Buttons" type="HBoxContainer" parent="LengthSelect" unique_id=744490233]
 layout_mode = 2
 theme = SubResource("Theme_64jy4")
-theme_override_constants/separation = 16
+theme_override_constants/separation = 32
+alignment = 1
 
 [node name="Short" type="Button" parent="LengthSelect/Buttons" unique_id=1449863624]
 layout_mode = 2
 theme = ExtResource("10_0ivg7")
-text = "Short
-"
+text = "Short"
 metadata/value = 200
 
 [node name="Medium" type="Button" parent="LengthSelect/Buttons" unique_id=1060266847]

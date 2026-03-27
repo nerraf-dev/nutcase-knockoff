@@ -1,5 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://dyi5djidnodrn"]
 
+[ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="1_tka55"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tmeva"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0ivg7"]
@@ -7,6 +9,11 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_64jy4"]
 
 [resource]
+default_font = ExtResource("1_tka55")
+default_font_size = 54
+Button/colors/font_color = Color(0.98, 0.98, 0.98, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/constants/outline_size = 6
 Button/styles/focus = SubResource("StyleBoxEmpty_tmeva")
 Button/styles/hover = SubResource("StyleBoxEmpty_0ivg7")
 Button/styles/normal = SubResource("StyleBoxEmpty_64jy4")
