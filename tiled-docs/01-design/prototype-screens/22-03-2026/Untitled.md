@@ -1,9 +1,10 @@
 
 HOME (Main screen)
-![[Pasted image 20260322174044.png|501]]
+![[Pasted image 20260328182820.png]]
+
 
 Settings (game setup)
-![[Pasted image 20260322174111.png|503]]
+![[Pasted image 20260328182839.png]]
 
 Multiplayer Lobby
 ![[Pasted image 20260322174136.png|506]]
