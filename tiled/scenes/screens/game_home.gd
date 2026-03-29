@@ -7,6 +7,7 @@ signal exit_game
 @onready var options_btn = $Options
 @onready var exit_btn = $Exit
 @onready var accept_dialog = $AcceptDialog
+@onready var click_sound = $ClickSound
 
 
 func _ready() -> void:
@@ -24,6 +25,7 @@ func _ready() -> void:
 
 
 func _on_start_game_btn_pressed() -> void:
+	click_sound.play()
 	print("Start Game button pressed, emitting start_game signal")
 	start_game.emit()
 

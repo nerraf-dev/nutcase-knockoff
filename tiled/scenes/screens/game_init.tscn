@@ -25,16 +25,16 @@ default_font_size = 54
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_xjbsa"]
 
-[node name="GameInit2" type="Node2D" unique_id=111432682]
+[node name="GameInit" type="Node2D" unique_id=111432682]
 script = ExtResource("1_nhm8p")
 metadata/_edit_vertical_guides_ = [960.0, 1919.0, 73.0, 1128.0]
 metadata/_edit_horizontal_guides_ = [536.0, 221.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=330997447]
 offset_left = -91.0
-offset_top = -242.0
+offset_top = -201.0
 offset_right = 2297.0
-offset_bottom = 1426.0
+offset_bottom = 1467.0
 texture = ExtResource("2_d4pih")
 
 [node name="StartBtn2" type="TextureButton" parent="." unique_id=751907660]

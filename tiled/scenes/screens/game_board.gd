@@ -32,6 +32,7 @@ const player_badge_sm = preload("res://scenes/components/player_badge_small.tscn
 @onready var players_container = $HUD/PlayersContainer
 @onready var player_badges = $HUD/PlayerBadges
 
+
 @onready var round_area = $RoundArea
 @onready var exit_confirm = $AcceptDialog
 

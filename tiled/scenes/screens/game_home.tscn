@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://dck2jl2wolbhr" path="res://assets/images/buttons/exit/exit-over.svg" id="11_e1u3m"]
 [ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="13_45uvd"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="14_qknor"]
+[ext_resource type="AudioStream" uid="uid://bbjejut6tibrm" path="res://assets/sound/effects/click1.wav" id="16_e1u3m"]
 
 [sub_resource type="Theme" id="Theme_4s0rd"]
 default_font = ExtResource("8_rcr06")
@@ -147,3 +148,6 @@ theme = SubResource("Theme_4s0rd")
 theme_override_constants/buttons_separation = 2
 dialog_text = "Are you sure you want to quit? (ESC to close)"
 dialog_autowrap = true
+
+[node name="ClickSound" type="AudioStreamPlayer" parent="." unique_id=524037839]
+stream = ExtResource("16_e1u3m")
