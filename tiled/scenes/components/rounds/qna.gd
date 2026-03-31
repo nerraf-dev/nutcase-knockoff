@@ -69,6 +69,9 @@ func _ready() -> void:
 		start_new_question(first_question)
 	else:
 		push_error("No questions available!")
+		return
+	if GameManager.game.game_mode == "multi":
+		guess_btn.visible = false  # Guesses come from players' phones in multiplayer, so hide local guess button
 
 # Update the score on the screen
 func update_pot_display() -> void:
