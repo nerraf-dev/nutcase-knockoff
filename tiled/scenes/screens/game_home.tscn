@@ -5,18 +5,18 @@
 [ext_resource type="Texture2D" uid="uid://6vk4uudip76p" path="res://assets/images/backgrounds/bg_large_tiles.png" id="3_h8mh5"]
 [ext_resource type="LabelSettings" uid="uid://b6m3via4ld2ab" path="res://scenes/screens/home-title.tres" id="3_qknor"]
 [ext_resource type="Texture2D" uid="uid://b2vducltvynky" path="res://assets/images/buttons/options/options-normal.svg" id="7_ltmyb"]
-[ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="8_rcr06"]
 [ext_resource type="Texture2D" uid="uid://ckaxbscp3tave" path="res://assets/images/buttons/options/options-over.svg" id="8_vmkxd"]
 [ext_resource type="Texture2D" uid="uid://d3js7wmo8uwym" path="res://assets/images/buttons/credits/credit-normal.svg" id="9_45uvd"]
 [ext_resource type="Texture2D" uid="uid://pmcdoofamp3h" path="res://assets/images/buttons/exit/exit-normal.svg" id="10_qknor"]
 [ext_resource type="Texture2D" uid="uid://dck2jl2wolbhr" path="res://assets/images/buttons/exit/exit-over.svg" id="11_e1u3m"]
+[ext_resource type="FontFile" uid="uid://bex25m5snoet2" path="res://assets/fonts/Pencil Child.ttf" id="12_45uvd"]
 [ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="13_45uvd"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="14_qknor"]
 [ext_resource type="AudioStream" uid="uid://bbjejut6tibrm" path="res://assets/sound/effects/click1.wav" id="16_e1u3m"]
 [ext_resource type="AudioStream" uid="uid://88sibutakfug" path="res://assets/sound/music/8bit Bossa.mp3" id="18_5symn"]
 
 [sub_resource type="Theme" id="Theme_4s0rd"]
-default_font = ExtResource("8_rcr06")
+default_font = ExtResource("12_45uvd")
 default_font_size = 36
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/styles/normal = null
@@ -106,10 +106,10 @@ texture_hover = ExtResource("11_e1u3m")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=1822986078]
 oversampling_override = 1.0
+title = "Quit?"
 initial_position = 2
-size = Vector2i(480, 192)
+size = Vector2i(640, 400)
 theme = SubResource("Theme_4s0rd")
-theme_override_constants/buttons_separation = 2
 dialog_text = "Are you sure you want to quit? (ESC to close)"
 dialog_autowrap = true
 
