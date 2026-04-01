@@ -9,7 +9,6 @@ signal exit_game
 @onready var credits_btn = $Credits
 @onready var exit_btn = $Exit
 @onready var accept_dialog = $AcceptDialog
-@onready var bg_music = $BGM
 
 const CLICK_LEAD_IN_SECONDS: float = 0.05
 const TITLE_ANIMATION_STYLE: String = "dramatic" # clean | playful | dramatic
@@ -48,10 +47,6 @@ func _ready() -> void:
 	options_btn.focus_mode = Control.FOCUS_ALL
 	options_btn.disabled = false
 	exit_btn.focus_mode = Control.FOCUS_ALL
-	_apply_music_settings()
-	if not UserSettings.settings_changed.is_connected(_on_user_settings_changed):
-		UserSettings.settings_changed.connect(_on_user_settings_changed)
-	bg_music.play()
 
 	await _animate_title_in()
 	await _animate_home_controls_in()
@@ -102,15 +97,6 @@ func _on_start_game_btn_pressed() -> void:
 func _on_options_btn_pressed() -> void:
 	_play_click_sound()
 	open_options.emit()
-
-
-func _on_user_settings_changed() -> void:
-	_apply_music_settings()
-
-
-func _apply_music_settings() -> void:
-	bg_music.volume_db = UserSettings.music_volume_db
-	bg_music.stream_paused = not UserSettings.music_enabled
 
 func _on_exit_btn_pressed() -> void:
 	_play_click_sound()

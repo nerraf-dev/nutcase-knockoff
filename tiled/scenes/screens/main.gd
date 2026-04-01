@@ -28,6 +28,7 @@ func _ready() -> void:
 	print("Main scene ready, loading SplashScreen")
 	scene_loader = MainSceneLoader.new(scene_container)
 	session_coordinator = MainSessionCoordinatorScript.new()
+	MusicManager.play_menu_music()
 	# Initialize game state
 	GameManager.current_state = GameManager.GameState.NONE
 	# var a = GameIdGenerator.get_random_id()

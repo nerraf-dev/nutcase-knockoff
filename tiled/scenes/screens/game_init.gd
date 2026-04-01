@@ -24,7 +24,7 @@ const REQUIRED_SETTING_KEYS = ["game_mode", "game_type", "game_target", "fuzzy_e
 var settings = {
 	"players": PlayerManager.players,
 	"player_count": 1,
-	"game_mode": "single", # mode = "single", "multi", "pass_and_play"
+	"game_mode": "multi", # mode = "single", "multi", "pass_and_play"
 	"game_type": "qna", # type = "qna", "challenge", "timed" etc
 	"game_target": DEFAULT_GAME_TARGET,
 	"round_count": 5,

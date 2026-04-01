@@ -29,6 +29,7 @@ GameConfig="*res://scripts/resources/GameConfig.gd"
 ControllerServer="*res://scripts/autoload/ControllerServer.gd"
 UserSettings="*res://scripts/autoload/UserSettings.gd"
 UISfx="*res://scripts/autoload/UISfx.gd"
+MusicManager="*res://scripts/autoload/MusicManager.gd"
 
 [display]
 

@@ -12,7 +12,6 @@
 [ext_resource type="FontFile" uid="uid://bex25m5snoet2" path="res://assets/fonts/Pencil Child.ttf" id="12_45uvd"]
 [ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="13_45uvd"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="14_qknor"]
-[ext_resource type="AudioStream" uid="uid://88sibutakfug" path="res://assets/sound/music/8bit Bossa.mp3" id="18_5symn"]
 
 [sub_resource type="Theme" id="Theme_4s0rd"]
 default_font = ExtResource("12_45uvd")
@@ -122,6 +121,3 @@ theme_override_constants/buttons_separation = 2
 dialog_text = "Are you sure you want to quit? (ESC to close)"
 dialog_autowrap = true
 
-[node name="BGM" type="AudioStreamPlayer" parent="." unique_id=1373970544]
-stream = ExtResource("18_5symn")
-parameters/looping = true
