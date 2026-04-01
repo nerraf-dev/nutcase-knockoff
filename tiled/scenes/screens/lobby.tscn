@@ -69,10 +69,11 @@ label_settings = ExtResource("7_56qed")
 horizontal_alignment = 1
 
 [node name="HomeBtn" type="TextureButton" parent="." unique_id=2094923599]
-offset_left = 1801.0
-offset_top = 23.0
-offset_right = 1901.0
-offset_bottom = 123.0
+offset_left = 1830.0
+offset_top = 17.0
+offset_right = 2386.0
+offset_bottom = 573.0
+scale = Vector2(0.13, 0.13)
 texture_normal = ExtResource("5_pdtbn")
 
 [node name="Title" type="Label" parent="." unique_id=581773540]

@@ -4,7 +4,6 @@ signal game_init_complete(settings: Dictionary)
 signal back_to_home
 
 const DEFAULT_GAME_TARGET = 200
-const SELECTED_BUTTON_COLOR: Color = Color(0.9843137, 0.9294118, 0.1686275, 1.0)
 const REQUIRED_SETTING_KEYS = ["game_mode", "game_type", "game_target", "fuzzy_enabled"]
 
 # Button containers
@@ -25,8 +24,8 @@ const REQUIRED_SETTING_KEYS = ["game_mode", "game_type", "game_target", "fuzzy_e
 var settings = {
 	"players": PlayerManager.players,
 	"player_count": 1,
-	"game_mode": "single",	# mode = "single", "multi", "pass_and_play" 
-	"game_type": "qna",		# type = "qna", "challenge", "timed" etc
+	"game_mode": "single", # mode = "single", "multi", "pass_and_play"
+	"game_type": "qna", # type = "qna", "challenge", "timed" etc
 	"game_target": DEFAULT_GAME_TARGET,
 	"round_count": 5,
 	"fuzzy_enabled": GameConfig.FUZZY_ENABLED_DEFAULT
@@ -46,6 +45,10 @@ func _ready() -> void:
 	back_button.pressed.connect(_on_back_button_pressed)
 	# Setup modal button navigation
 	_setup_modal_focus()
+	# Highlight pre-selected defaults
+	_highlight_selected_button(mode_buttons.get_child(1), mode_buttons) # Multiplayer (index 1)
+	_highlight_selected_button(game_type_buttons.get_child(0), game_type_buttons) # Q'n'A (index 0)
+	_highlight_selected_button(length_buttons.get_child(0), length_buttons) # Short (index 0)
 	# Set initial focus for controller navigation
 	game_type_buttons.get_child(0).grab_focus()
 
@@ -74,11 +77,12 @@ func _on_option_selected(button: Button, key: String, container: Control) -> voi
 	_highlight_selected_button(button, container)
 
 func _highlight_selected_button(selected: Button, container: Control) -> void:
-	# Reset all buttons in this container
+	# Show circle indicator on selected button, hide on others
 	for button in _get_buttons(container):
-		button.modulate = Color.WHITE
-	# Highlight the selected one
-	selected.modulate = SELECTED_BUTTON_COLOR
+		if button.has_node("TextureRect"):
+			var rect = button.get_node("TextureRect")
+			rect.visible = (button == selected)
+	
 
 func _on_start_button_pressed() -> void:
 	# Show confirmation modal with selected settings

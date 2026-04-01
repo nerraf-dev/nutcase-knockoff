@@ -10,6 +10,11 @@
 [ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="5_t11tv"]
 [ext_resource type="LabelSettings" uid="uid://e6f41uqtekh1" path="res://resources/settings_label_settings.tres" id="9_64jy4"]
 [ext_resource type="Theme" uid="uid://dyi5djidnodrn" path="res://resources/setting_buttons_.tres" id="10_0ivg7"]
+[ext_resource type="Texture2D" uid="uid://bb1x2uw35o3x" path="res://assets/images/buttons/option_select_1.png" id="11_5f3e1"]
+[ext_resource type="Texture2D" uid="uid://d2a52ohk6h1v4" path="res://assets/images/buttons/option_select_2.png" id="12_w1tbd"]
+[ext_resource type="Texture2D" uid="uid://pqns71nrxa7q" path="res://assets/images/buttons/option_select_3.png" id="13_wys3k"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_0ivg7"]
 
 [sub_resource type="Theme" id="Theme_t11tv"]
 default_font = ExtResource("2_h1k66")
@@ -41,11 +46,11 @@ texture_normal = ExtResource("3_d4pih")
 texture_hover = ExtResource("4_t11tv")
 
 [node name="StartBtn" type="TextureButton" parent="." unique_id=393360652]
-offset_left = 776.0
-offset_top = 816.0
-offset_right = 1076.0
-offset_bottom = 966.0
-scale = Vector2(1.25, 1.25)
+offset_left = 852.0
+offset_top = 937.00006
+offset_right = 1152.0
+offset_bottom = 1087.0
+scale = Vector2(0.75, 0.75)
 stretch_mode = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StartBtn" unique_id=676834258]
@@ -66,11 +71,11 @@ label_settings = ExtResource("3_g7jhl")
 horizontal_alignment = 1
 
 [node name="HomeBtn" type="TextureButton" parent="." unique_id=1767487196]
-offset_left = 1792.0
-offset_top = 18.0
-offset_right = 1892.0
-offset_bottom = 118.0
-scale = Vector2(0.75, 0.75)
+offset_left = 1836.0001
+offset_top = 9.0
+offset_right = 2392.0
+offset_bottom = 565.0
+scale = Vector2(0.13042945, 0.13042945)
 texture_normal = ExtResource("5_d4pih")
 
 [node name="Title" type="Label" parent="." unique_id=2040698587]
@@ -85,10 +90,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ModeSelect" type="VBoxContainer" parent="." unique_id=1832525359]
-offset_left = 81.0
-offset_top = 225.0
-offset_right = 385.0
-offset_bottom = 359.0
+offset_left = 697.0
+offset_top = 221.0
+offset_right = 1277.0
+offset_bottom = 378.0
 
 [node name="Label" type="Label" parent="ModeSelect" unique_id=896853207]
 layout_mode = 2
@@ -105,21 +110,46 @@ theme_override_constants/separation = 34
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("10_0ivg7")
+toggle_mode = true
+button_group = SubResource("ButtonGroup_0ivg7")
 text = "1 Player"
 metadata/value = "single"
+
+[node name="TextureRect" type="TextureRect" parent="ModeSelect/Buttons/Single" unique_id=1681154519]
+visible = false
+layout_mode = 0
+offset_left = -28.0
+offset_top = -7.0
+offset_right = 270.05524
+offset_bottom = 129.0
+scale = Vector2(0.9427784, 0.5784604)
+texture = ExtResource("11_5f3e1")
 
 [node name="Multi" type="Button" parent="ModeSelect/Buttons" unique_id=986804941]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("10_0ivg7")
+toggle_mode = true
+button_pressed = true
+button_group = SubResource("ButtonGroup_0ivg7")
 text = "Multiplayer"
 metadata/value = "multi"
 
+[node name="TextureRect" type="TextureRect" parent="ModeSelect/Buttons/Multi" unique_id=943894522]
+visible = false
+layout_mode = 0
+offset_left = -4.0
+offset_top = -17.0
+offset_right = 365.12177
+offset_bottom = 148.9578
+scale = Vector2(0.9427784, 0.5784604)
+texture = ExtResource("12_w1tbd")
+
 [node name="GameType" type="VBoxContainer" parent="." unique_id=1452947385]
-offset_left = 1127.0
-offset_top = 218.0
-offset_right = 1543.0
-offset_bottom = 383.0
+offset_left = 697.0
+offset_top = 431.0
+offset_right = 1113.0
+offset_bottom = 596.0
 theme = SubResource("Theme_t11tv")
 
 [node name="Label" type="Label" parent="GameType" unique_id=2098367219]
@@ -135,14 +165,26 @@ theme_override_constants/separation = 16
 [node name="qna" type="Button" parent="GameType/Buttons" unique_id=1553933559]
 layout_mode = 2
 theme = ExtResource("10_0ivg7")
+toggle_mode = true
+button_pressed = true
 text = "Q 'n' A"
 metadata/value = "qna"
 
+[node name="TextureRect" type="TextureRect" parent="GameType/Buttons/qna" unique_id=1972304437]
+visible = false
+layout_mode = 0
+offset_left = -28.0
+offset_top = -7.0
+offset_right = 270.05524
+offset_bottom = 129.0
+scale = Vector2(0.9427784, 0.5784604)
+texture = ExtResource("11_5f3e1")
+
 [node name="LengthSelect" type="VBoxContainer" parent="." unique_id=1148475699]
-offset_left = 72.0
-offset_top = 536.0
-offset_right = 644.0
-offset_bottom = 693.0
+offset_left = 697.0
+offset_top = 649.0
+offset_right = 1269.0
+offset_bottom = 806.0
 theme = SubResource("Theme_t11tv")
 
 [node name="Label" type="Label" parent="LengthSelect" unique_id=454009934]
@@ -159,8 +201,20 @@ alignment = 1
 [node name="Short" type="Button" parent="LengthSelect/Buttons" unique_id=1449863624]
 layout_mode = 2
 theme = ExtResource("10_0ivg7")
+toggle_mode = true
+button_pressed = true
 text = "Short"
 metadata/value = 200
+
+[node name="TextureRect" type="TextureRect" parent="LengthSelect/Buttons/Short" unique_id=1632473962]
+visible = false
+layout_mode = 0
+offset_left = -28.0
+offset_top = -7.0
+offset_right = 270.05524
+offset_bottom = 129.0
+scale = Vector2(0.70307446, 0.5784604)
+texture = ExtResource("13_wys3k")
 
 [node name="Medium" type="Button" parent="LengthSelect/Buttons" unique_id=1060266847]
 layout_mode = 2
@@ -168,11 +222,31 @@ theme = ExtResource("10_0ivg7")
 text = "Medium"
 metadata/value = 2000
 
+[node name="TextureRect" type="TextureRect" parent="LengthSelect/Buttons/Medium" unique_id=344910402]
+visible = false
+layout_mode = 0
+offset_left = -28.0
+offset_top = -7.0
+offset_right = 270.05524
+offset_bottom = 129.0
+scale = Vector2(0.9427784, 0.5784604)
+texture = ExtResource("11_5f3e1")
+
 [node name="Long" type="Button" parent="LengthSelect/Buttons" unique_id=1183275851]
 layout_mode = 2
 theme = ExtResource("10_0ivg7")
 text = "Long"
 metadata/value = 3000
+
+[node name="TextureRect" type="TextureRect" parent="LengthSelect/Buttons/Long" unique_id=1290429585]
+visible = false
+layout_mode = 0
+offset_left = -28.0
+offset_top = -7.0
+offset_right = 242.0
+offset_bottom = 129.0
+scale = Vector2(0.7503108, 0.596057)
+texture = ExtResource("13_wys3k")
 
 [node name="ConfirmModal" type="Control" parent="." unique_id=201032704]
 visible = false
