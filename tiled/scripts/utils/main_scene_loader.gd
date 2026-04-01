@@ -38,15 +38,27 @@ func show_splash(on_splash_complete: Callable) -> void:
 
 ## Show main menu home screen and connect user action signals.
 ## on_start_game: Callback when user initiates new game
+## on_open_options: Callback when user opens options
 ## on_exit_game: Callback when user requests to quit
-func show_game_home(on_start_game: Callable, on_exit_game: Callable) -> void:
+func show_game_home(on_start_game: Callable, on_open_options: Callable, on_exit_game: Callable) -> void:
 	var home_scene = preload("res://scenes/screens/game_home.tscn")
 	var home_instance = home_scene.instantiate()
 	_scene_container.add_child(home_instance)
 	if on_start_game.is_valid():
 		home_instance.start_game.connect(on_start_game)
+	if on_open_options.is_valid():
+		home_instance.open_options.connect(on_open_options)
 	if on_exit_game.is_valid():
 		home_instance.exit_game.connect(on_exit_game)
+
+## Show options screen.
+## on_back_to_home: Callback when user closes options.
+func show_options(on_back_to_home: Callable) -> void:
+	var options_scene = preload("res://scenes/screens/options.tscn")
+	var options_instance = options_scene.instantiate()
+	_scene_container.add_child(options_instance)
+	if on_back_to_home.is_valid():
+		options_instance.back_to_home.connect(on_back_to_home)
 
 ## Show game setup/init screen (game type, target, player count, etc).
 ## on_game_init_complete: Callback when user finishes setup (receives settings Dict)

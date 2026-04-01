@@ -27,6 +27,8 @@ PlayerManager="*res://scripts/autoload/PlayerManager.gd"
 NetworkManager="*res://scripts/autoload/NetworkManager.gd"
 GameConfig="*res://scripts/resources/GameConfig.gd"
 ControllerServer="*res://scripts/autoload/ControllerServer.gd"
+UserSettings="*res://scripts/autoload/UserSettings.gd"
+UISfx="*res://scripts/autoload/UISfx.gd"
 
 [display]
 

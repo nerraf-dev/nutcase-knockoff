@@ -14,7 +14,9 @@
 [ext_resource type="Texture2D" uid="uid://bul314deq3mmj" path="res://assets/images/buttons/setup_screen/mp-circle.svg" id="12_ao6sj"]
 [ext_resource type="Texture2D" uid="uid://bmpgosxx41fym" path="res://assets/images/buttons/setup_screen/qna-circle.svg" id="13_nwynh"]
 [ext_resource type="Texture2D" uid="uid://dbslcfxq5q6jl" path="res://assets/images/buttons/setup_screen/short-circle.svg" id="14_7p4uc"]
+[ext_resource type="Texture2D" uid="uid://cxgunxx1vx6ye" path="res://assets/images/buttons/setup_screen/short-circle-2.svg" id="15_nwynh"]
 [ext_resource type="Texture2D" uid="uid://c5g3f74n4xkik" path="res://assets/images/buttons/setup_screen/med-circle.svg" id="15_quw76"]
+[ext_resource type="Texture2D" uid="uid://dsopqpa6wvboc" path="res://assets/images/buttons/setup_screen/short-circle-3.svg" id="16_7p4uc"]
 [ext_resource type="Texture2D" uid="uid://ej5ytb8rbqhl" path="res://assets/images/buttons/setup_screen/long-circle.svg" id="16_okqwt"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_0ivg7"]
@@ -26,6 +28,23 @@ default_font_size = 54
 [sub_resource type="Theme" id="Theme_64jy4"]
 default_font = ExtResource("2_h1k66")
 default_font_size = 54
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_quw76"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_7p4uc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_nwynh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_7p4uc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="GameInit" type="Node2D" unique_id=111432682]
 script = ExtResource("1_nhm8p")
@@ -218,6 +237,12 @@ offset_right = 270.05524
 offset_bottom = 129.0
 scale = Vector2(0.70307446, 0.5784604)
 texture = ExtResource("14_7p4uc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="LengthSelect/Buttons/Short" unique_id=890579764]
+visible = false
+position = Vector2(67, 30)
+sprite_frames = SubResource("SpriteFrames_quw76")
+frame_progress = 0.046074327
 
 [node name="Medium" type="Button" parent="LengthSelect/Buttons" unique_id=1060266847]
 layout_mode = 2

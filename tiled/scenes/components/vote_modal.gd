@@ -19,7 +19,7 @@ var _guesser: Player
 var _submitted_answer: String
 var _correct_answer: String
 var _eligible_voters: Array[Player]
-var _votes: Dictionary = {}     # voter.id -> bool (true = accept)
+var _votes: Dictionary = {} # voter.id -> bool (true = accept)
 var _vote_result: Dictionary = {}
 
 var _voters_container: VBoxContainer
@@ -126,17 +126,17 @@ func _add_voter_row(voter: Player) -> void:
 
 	var yes_btn = Button.new()
 	yes_btn.text = "Accept"
-	yes_btn.pressed.connect(func(): _on_vote(voter, true, row))
+	yes_btn.pressed.connect(func(): UISfx.play_ui_click(); _on_vote(voter, true, row))
 	row.add_child(yes_btn)
 
 	var no_btn = Button.new()
 	no_btn.text = "Reject"
-	no_btn.pressed.connect(func(): _on_vote(voter, false, row))
+	no_btn.pressed.connect(func(): UISfx.play_ui_click(); _on_vote(voter, false, row))
 	row.add_child(no_btn)
 
 func _on_vote(voter: Player, accept: bool, row: HBoxContainer) -> void:
 	if _votes.has(voter.id):
-		return  # Already voted
+		return # Already voted
 
 	_votes[voter.id] = accept
 
@@ -187,5 +187,6 @@ func _reveal_result() -> void:
 	}
 
 func _on_continue_pressed() -> void:
+	UISfx.play_ui_click()
 	vote_resolved.emit(_vote_result)
 	queue_free()

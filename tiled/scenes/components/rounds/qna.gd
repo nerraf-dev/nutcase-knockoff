@@ -27,7 +27,7 @@ const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
 @onready var prize_label = $Prize
 
 const BASE_POT = 100.0
-const MINIMUM_POT_PERCENT = 0.1  # Always reserve 10% as minimum pot
+const MINIMUM_POT_PERCENT = 0.1 # Always reserve 10% as minimum pot
 const GRID_COLUMNS = 3
 const GRID_ROWS = 3
 const DIFFICULTY_MULTIPLIERS = {
@@ -41,13 +41,13 @@ var minimum_prize = 10.0
 var prize_per_word = 0.0
 var all_questions: Array[Question] = []
 var current_question: Question = null
-var _sliders: Array = []  # slider instances by position, for programmatic reveal in multiplayer
+var _sliders: Array = [] # slider instances by position, for programmatic reveal in multiplayer
 
 func _ready() -> void:
 	print("QnA scene ready")
 	guess_btn.pressed.connect(_on_guess_btn_pressed)
 	slider_reveal_requested.connect(_handle_slider_reveal)
-	guess_submitted.connect(_on_answer_submitted)  # NetworkManager will emit this with answer text in multiplayer
+	guess_submitted.connect(_on_answer_submitted) # NetworkManager will emit this with answer text in multiplayer
 	
 	# Add spacing between sliders
 	grid.add_theme_constant_override("h_separation", 20)
@@ -71,7 +71,7 @@ func _ready() -> void:
 		push_error("No questions available!")
 		return
 	if GameManager.game.game_mode == "multi":
-		guess_btn.visible = false  # Guesses come from players' phones in multiplayer, so hide local guess button
+		guess_btn.visible = false # Guesses come from players' phones in multiplayer, so hide local guess button
 
 # Update the score on the screen
 func update_pot_display() -> void:
@@ -110,7 +110,7 @@ func start_new_question(question: Question) -> void:
 	current_prize = BASE_POT * difficulty_mult
 	minimum_prize = current_prize * MINIMUM_POT_PERCENT
 	var reducible_prize = current_prize - minimum_prize
-	prize_per_word = reducible_prize / words.size()  # Only count real words
+	prize_per_word = reducible_prize / words.size() # Only count real words
 	update_pot_display()
 	
 	var current_player = PlayerManager.get_current_player()
@@ -134,7 +134,7 @@ func start_new_question(question: Question) -> void:
 		if i < words.size():
 			s.set_word(words[i], i + 1)
 		else:
-			s.set_word("", i + 1)  # Blank tile
+			s.set_word("", i + 1) # Blank tile
 		
 		var idx = i
 		s.clicked.connect(func(_w, _b): slider_reveal_requested.emit(idx))
@@ -223,6 +223,7 @@ func _handle_slider_reveal(index: int) -> void:
 
 # Guess Button
 func _on_guess_btn_pressed() -> void:
+	UISfx.play_ui_click()
 	print("Guess button pressed. Current pot: %d" % int(current_prize))
 	var answer_modal = preload("res://scenes/components/answer_modal.tscn").instantiate()
 	add_child(answer_modal)

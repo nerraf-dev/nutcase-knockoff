@@ -45,7 +45,7 @@ func _on_splash_complete() -> void:
 ## Load the home/menu screen.
 func load_game_home() -> void:
 	GameManager.change_state(GameManager.GameState.MENU)
-	scene_loader.show_game_home(_on_start_game, _on_exit_game)
+	scene_loader.show_game_home(_on_start_game, _on_open_options, _on_exit_game)
 
 func _on_start_game() -> void:
 	print("New game started, loading Game Init (setup)")
@@ -55,6 +55,16 @@ func _on_start_game() -> void:
 func _on_exit_game() -> void:
 	print("Exit game signal received, quitting application")
 	get_tree().quit()
+
+
+func _on_open_options() -> void:
+	print("Opening options screen")
+	cleanup_current_scene()
+	load_options()
+
+
+func load_options() -> void:
+	scene_loader.show_options(_on_return_to_home)
 
 func _on_return_to_home() -> void:
 	print("Returning to home screen")
@@ -102,7 +112,6 @@ func load_lobby(settings: Dictionary) -> void:
 	# LOBBY: show room code, instructions, player list, start button (disabled until 2+ players), back to home button
 	#   Waiting for players to connect - as players connect need to update PlayerManager.players + update ui
 	#  start is only active if at least 2 players connected
-
 	session_coordinator.prepare_lobby_session()
 	GameManager.change_state(GameManager.GameState.LOBBY)
 	scene_loader.show_lobby(settings, _on_lobby_start_requested, _on_return_to_home, _on_return_to_setup_from_lobby)

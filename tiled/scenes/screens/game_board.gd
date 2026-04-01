@@ -476,16 +476,19 @@ func _on_network_vote_cast(device_id: String, accept: bool) -> void:
 ## Called when options button is pressed. (Placeholder for future implementation.)
 func _on_options_btn_pressed() -> void:
 	print("Options button pressed")
+	UISfx.play_ui_click()
 
 ## Called when exit button is pressed; shows confirmation dialog.
 func _on_exit_btn_pressed() -> void:
 	print("Exit button pressed")
+	UISfx.play_ui_click()
 	exit_confirm.dialog_text = "Are you sure you want to exit to main menu?"
 	exit_confirm.popup_centered()
 
 ## Confirmed exit: stops network server, resets game state, returns to home.
 func _on_exit_confirmed() -> void:
 	print("Exit confirmed, returning to main menu")
+	UISfx.play_ui_click()
 	_reset_vote_session()
 	if not NetworkManager.is_local:
 		NetworkManager.stop_server()

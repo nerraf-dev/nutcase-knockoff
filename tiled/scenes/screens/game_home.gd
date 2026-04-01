@@ -1,6 +1,7 @@
 extends Node2D
 
 signal start_game
+signal open_options
 signal exit_game
 
 @onready var start_game_btn = $StartGame
@@ -8,7 +9,6 @@ signal exit_game
 @onready var credits_btn = $Credits
 @onready var exit_btn = $Exit
 @onready var accept_dialog = $AcceptDialog
-@onready var click_sound = $ClickSound
 @onready var bg_music = $BGM
 
 const CLICK_LEAD_IN_SECONDS: float = 0.05
@@ -45,15 +45,18 @@ func _ready() -> void:
 	accept_dialog.confirmed.connect(_on_AcceptDialog_confirmed)
 
 	start_game_btn.focus_mode = Control.FOCUS_ALL
-	options_btn.focus_mode = Control.FOCUS_NONE
-	options_btn.disabled = true
+	options_btn.focus_mode = Control.FOCUS_ALL
+	options_btn.disabled = false
 	exit_btn.focus_mode = Control.FOCUS_ALL
+	_apply_music_settings()
+	if not UserSettings.settings_changed.is_connected(_on_user_settings_changed):
+		UserSettings.settings_changed.connect(_on_user_settings_changed)
 	bg_music.play()
 
 	await _animate_title_in()
 	await _animate_home_controls_in()
 	_title_idle_tween = TitleAnimatorScript.start_idle_motion(
-		self,
+		self ,
 		$Title,
 		TITLE_IDLE_STYLE,
 		TITLE_IDLE_OVERRIDES
@@ -83,10 +86,7 @@ func _exit_tree() -> void:
 	
 
 func _play_click_sound() -> void:
-	# Restart if already playing so rapid presses always produce a click.
-	if click_sound.playing:
-		click_sound.stop()
-	click_sound.play()
+	UISfx.play_ui_click()
 
 func _on_start_game_btn_pressed() -> void:
 	if _start_requested:
@@ -100,8 +100,17 @@ func _on_start_game_btn_pressed() -> void:
 	start_game.emit()
 
 func _on_options_btn_pressed() -> void:
-	# TODO: Implement settings screen
-	print("Options button pressed - no options implemented yet")
+	_play_click_sound()
+	open_options.emit()
+
+
+func _on_user_settings_changed() -> void:
+	_apply_music_settings()
+
+
+func _apply_music_settings() -> void:
+	bg_music.volume_db = UserSettings.music_volume_db
+	bg_music.stream_paused = not UserSettings.music_enabled
 
 func _on_exit_btn_pressed() -> void:
 	_play_click_sound()

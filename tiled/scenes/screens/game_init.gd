@@ -64,6 +64,7 @@ func _get_buttons(container: Control) -> Array[Button]:
 	return buttons
 
 func _on_option_selected(button: Button, key: String, container: Control) -> void:
+	UISfx.play_ui_click()
 	var value = button.get_meta("value") if button.has_meta("value") else button.text
 	if key == "game_target":
 		value = int(value)
@@ -85,6 +86,7 @@ func _highlight_selected_button(selected: Button, container: Control) -> void:
 	
 
 func _on_start_button_pressed() -> void:
+	UISfx.play_ui_click()
 	# Show confirmation modal with selected settings
 	confirm_modal.visible = true
 	confirm_values.text = "Game Type: %s\nGame Mode: %s player\nTarget Score: %d\n" % [
@@ -120,11 +122,13 @@ func _set_background_focus(enabled: bool) -> void:
 	home_button.focus_mode = mode
 
 func _on_back_button_pressed() -> void:
+	UISfx.play_ui_click()
 	confirm_modal.visible = false
 	_set_background_focus(true)
 	game_type_buttons.get_child(0).grab_focus()
 
 func _on_confirm_button_pressed() -> void:
+	UISfx.play_ui_click()
 	# TODO: if 1p - load game, if multi - load lobby and pass settings
 	# Emit signal to start game with selected settings
 	if not _validate_settings(settings):
@@ -155,5 +159,6 @@ func _validate_settings(settings_to_validate: Dictionary) -> bool:
 	return true
 
 func _on_home_button_pressed() -> void:
+	UISfx.play_ui_click()
 	confirm_modal.visible = false
 	back_to_home.emit()

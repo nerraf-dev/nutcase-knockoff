@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://brn7maecyahh4"]
 
+[ext_resource type="Script" path="res://scenes/screens/options.gd" id="1_y7uop"]
 [ext_resource type="Texture2D" uid="uid://5m5hpdlsl61l" path="res://assets/images/backgrounds/Untitled_Artwork3.png" id="2_dkq70"]
 [ext_resource type="Texture2D" uid="uid://mc42nrkmt20r" path="res://assets/images/buttons/start/start-normal.svg" id="2_t4xj1"]
 [ext_resource type="Texture2D" uid="uid://s45wsj5wha81" path="res://assets/images/buttons/start/start-over.svg" id="3_sp4sj"]
@@ -22,6 +23,7 @@ default_font = ExtResource("5_tdua0")
 default_font_size = 54
 
 [node name="GameInit2" type="Node2D" unique_id=111432682]
+script = ExtResource("1_y7uop")
 metadata/_edit_vertical_guides_ = [960.0, 1920.0]
 metadata/_edit_horizontal_guides_ = [536.0]
 

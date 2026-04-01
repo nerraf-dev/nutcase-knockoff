@@ -34,7 +34,7 @@ extends Control
 signal answer_submitted(answer_text: String)
 signal cancelled
 
-var _stored_focus_modes: Dictionary = {}  # node path -> previous focus mode
+var _stored_focus_modes: Dictionary = {} # node path -> previous focus mode
 
 func _ready() -> void:
 	# Hook up UI events. Use explicit connections so external scenes can still re-bind if desired.
@@ -71,7 +71,7 @@ func _disable_background_focus() -> void:
 	# Find parent scene and disable its focusable controls
 	var parent_scene = get_parent()
 	if parent_scene:
-		_recursive_disable_focus(parent_scene, self)
+		_recursive_disable_focus(parent_scene, self )
 
 ## Recursively disables focus on Controls, skipping `exclude` node.
 ## Uses node.get_path() as a stable key for storing/restoring focus mode.
@@ -87,6 +87,7 @@ func _recursive_disable_focus(node: Node, exclude: Node) -> void:
 ## Called when the user confirms their input (Submit button or LineEdit Enter).
 ## Emits `answer_submitted` only for non-empty trimmed input, restores focus, then frees modal.
 func _on_submit_pressed() -> void:
+	UISfx.play_ui_click()
 	var answer = answer_text.text.strip_edges()
 	if answer != "":
 		print("Answer submitted: %s" % answer)
@@ -98,6 +99,7 @@ func _on_submit_pressed() -> void:
 
 ## Called when the user cancels the modal. Restores focus, emits `cancelled`, and frees the modal.
 func _on_cancel_pressed() -> void:
+	UISfx.play_ui_click()
 	print("Answer submission canceled.")
 	_restore_background_focus()
 	cancelled.emit()

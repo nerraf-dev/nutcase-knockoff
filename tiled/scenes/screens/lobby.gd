@@ -11,11 +11,10 @@ signal lobby_start_requested(settings: Dictionary)
 signal lobby_back_to_home
 signal lobby_back_to_setup
 
-const p_badge = preload("res://scenes/components/player_badge.tscn") 
+const p_badge = preload("res://scenes/components/player_badge.tscn")
 const SimpleQrCode = preload("res://scripts/utils/simple_qr_code.gd")
 var _setup_settings: Dictionary = {}
 var ready_by_device: Dictionary = {}
-
 
 
 func configure(settings: Dictionary) -> void:
@@ -122,6 +121,7 @@ func _update_start_button_state() -> void:
 	start_button.disabled = not enough_players or not all_ready
 
 func _on_start_button_pressed() -> void:
+	UISfx.play_ui_click()
 	print("Start button pressed in lobby, emitting lobby_start_requested signal")
 	if _setup_settings.is_empty():
 		push_warning("Lobby settings are empty; cannot start game")
@@ -144,12 +144,13 @@ func _on_start_button_pressed() -> void:
 	# lobby_start_requested.emit(settings)
 
 func _on_home_button_pressed() -> void:
+	UISfx.play_ui_click()
 	print("Home button pressed in lobby, emitting lobby_back_to_home signal")
 	lobby_back_to_home.emit()
-	NetworkManager.stop_server()  # Stop server if we're going back to home
+	NetworkManager.stop_server() # Stop server if we're going back to home
 	
 func _on_return_to_setup_pressed() -> void:
+	UISfx.play_ui_click()
 	print("Back to setup button pressed in lobby, emitting lobby_back_to_setup signal")
 	lobby_back_to_setup.emit()
-	NetworkManager.stop_server()  # Stop server if we're going back to setup
-
+	NetworkManager.stop_server() # Stop server if we're going back to setup
