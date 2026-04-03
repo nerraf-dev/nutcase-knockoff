@@ -33,10 +33,8 @@ func _ready() -> void:
 ## Initialize the badge from a `Player` resource.
 ## Sets the displayed name, score, and avatar image.
 func setup(player: Player) -> void:
-	player_name.text = player.name
+	update_identity(player.name, player.avatar_index)
 	player_score.text = str(player.score)
-	var avatar_texture = GameConfig.PLR_BADGE_ICONS[player.avatar_index]
-	avatar.texture = ResourceLoader.load(avatar_texture)
 
 	# Initially hide current leader/player indicators
 	current_player.visible = false
@@ -46,6 +44,14 @@ func setup(player: Player) -> void:
 ## Update the displayed score value.
 func update_score(new_score: int) -> void:
 	player_score.text = str(new_score)
+
+
+## Update displayed name and avatar image when a player edits profile.
+func update_identity(new_name: String, avatar_index: int) -> void:
+	player_name.text = new_name
+	if avatar_index >= 0 and avatar_index < GameConfig.PLR_BADGE_ICONS.size():
+		var avatar_texture = GameConfig.PLR_BADGE_ICONS[avatar_index]
+		avatar.texture = ResourceLoader.load(avatar_texture)
 
 
 ## Toggle the current-player marker visibility.

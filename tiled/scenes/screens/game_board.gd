@@ -30,7 +30,7 @@ const player_badge_sm = preload("res://scenes/components/player_badge_small.tscn
 @onready var controls = $HUD/Controls
 @onready var options_btn = $HUD/OptionsBtn
 @onready var exit_btn = $HUD/ExitBtn
-@onready var players_container = $HUD/PlayersContainer
+# @onready var players_container = $HUD/PlayersContainer
 @onready var player_badges = $HUD/PlayerBadges
 
 
@@ -333,6 +333,8 @@ func _update_all_badges() -> void:
 	for i in range(badges.size()):
 		if i < PlayerManager.players.size():
 			var player = PlayerManager.players[i]
+			if badges[i].has_method("update_identity"):
+				badges[i].update_identity(player.name, player.avatar_index)
 			badges[i].update_score(player.score)
 			badges[i].set_current_player(player == current_player)
 			badges[i].set_current_leader(leaders.has(player))
@@ -426,16 +428,31 @@ func _on_network_guess(device_id: String, guess_text: String) -> void:
 	if round_instance:
 		round_instance.guess_submitted.emit(guess_text)
 
-## Network handler: allow disconnected players to reclaim control by rejoining with same name.
-func _on_network_player_join_during_game(device_id: String, player_name: String, _avatar_index: int) -> void:
+## Network handler: apply in-game profile updates (same device) and allow disconnected players to reclaim control.
+func _on_network_player_join_during_game(device_id: String, player_name: String, avatar_index: int) -> void:
 	if GameManager.current_state != GameManager.GameState.IN_PROGRESS:
+		return
+
+	var player_by_device = PlayerManager.get_player_by_device_id(device_id)
+	if player_by_device != null:
+		var changed_identity = player_by_device.name != player_name or player_by_device.avatar_index != avatar_index
+		player_by_device.name = player_name
+		player_by_device.avatar_index = avatar_index
+		if changed_identity:
+			print("Updated in-game profile for %s" % player_by_device.id)
+			_update_all_badges()
+		_sync_rejoined_controller_state(device_id)
+		_broadcast_turn_to_controllers()
 		return
 
 	for player in PlayerManager.players:
 		if player.name.to_lower() == player_name.to_lower():
 			_clear_disconnect_grace_timer(player.id)
 			player.device_id = device_id
+			player.name = player_name
+			player.avatar_index = avatar_index
 			print("Reconnected player %s to device %s during game" % [player.name, device_id])
+			_update_all_badges()
 			_sync_rejoined_controller_state(device_id)
 			_broadcast_turn_to_controllers()
 			return
@@ -568,7 +585,6 @@ func _resolve_disconnect_match_end(winner_player_id: String) -> void:
 		NetworkManager.stop_server()
 
 	GameManager.game = null
-	GameManager.current_state = GameManager.GameState.NONE
 	PlayerManager.clear_all_players()
 
 	_disconnect_resolution_in_progress = false

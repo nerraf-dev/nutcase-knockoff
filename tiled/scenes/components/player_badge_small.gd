@@ -37,11 +37,8 @@ func _ready() -> void:
 ## - Picks a random badge icon from GameConfig.PLR_BADGE_ICONS and loads it.
 ## - Hides leader/current indicators by default.
 func setup(player: Player) -> void:
-	player_name.text = player.name
+	update_identity(player.name, player.avatar_index)
 	player_score.text = str(player.score)
-	# Choose a random icon path from config and load the texture resource.
-	var rnd_img = GameConfig.PLR_BADGE_ICONS.pick_random()
-	player_img.texture = ResourceLoader.load(rnd_img)
 	# Optional: tint icon to player's color
 	# icon.modulate = player.color
 
@@ -53,6 +50,14 @@ func setup(player: Player) -> void:
 ## Update the displayed score (keeps badge UI in sync with model).
 func update_score(new_score: int) -> void:
 	player_score.text = str(new_score)
+
+
+## Update displayed name and avatar image when a player edits profile.
+func update_identity(new_name: String, avatar_index: int) -> void:
+	player_name.text = new_name
+	if avatar_index >= 0 and avatar_index < GameConfig.PLR_BADGE_ICONS.size():
+		var icon_path = GameConfig.PLR_BADGE_ICONS[avatar_index]
+		player_img.texture = ResourceLoader.load(icon_path)
 
 
 ## Toggle the 'current player' indicator on the badge.

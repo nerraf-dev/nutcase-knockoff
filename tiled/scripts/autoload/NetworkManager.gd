@@ -76,6 +76,11 @@ func start_server() -> bool:
 		_server = null
 		return false
 
+	if not _server.peer_connected.is_connected(_on_peer_connected):
+		_server.peer_connected.connect(_on_peer_connected)
+	if not _server.peer_disconnected.is_connected(_on_peer_disconnected):
+		_server.peer_disconnected.connect(_on_peer_disconnected)
+
 	room_code = GameIdGenerator.get_random_id()
 	print("NetworkManager: server started on port %d — room code: %s" % [GameConfig.WEBSOCKET_PORT, room_code])
 	return true
@@ -177,17 +182,6 @@ func _process_events() -> void:
 
 		_handle_packet(peer_id, raw)
 
-	# Check for disconnections in an API-compatible way.
-	for peer_id in _peer_ids.keys():
-		var peer_connected := true
-		if _server.has_method("has_peer"):
-			peer_connected = _server.has_peer(peer_id)
-		elif _server.has_method("get_peer"):
-			peer_connected = _server.get_peer(peer_id) != null
-
-		if not peer_connected:
-			_mark_peer_disconnected(peer_id)
-
 ## Handles a single incoming packet from a client.
 ## - Parses the JSON message and validates its structure.
 ## - Dispatches actions based on the message type (join, ready, slider_click, guess, vote, overlay_continue).
@@ -242,14 +236,7 @@ func _device_id_to_peer(device_id: String) -> int:
 func _send_json_to_peer(peer_id: int, json: String) -> bool:
 	if _server == null:
 		return false
-
-	var peer_connected := true
-	if _server.has_method("has_peer"):
-		peer_connected = _server.has_peer(peer_id)
-	elif _server.has_method("get_peer"):
-		peer_connected = _server.get_peer(peer_id) != null
-
-	if not peer_connected:
+	if not _peer_ids.has(peer_id):
 		return false
 
 	var peer = _server.get_peer(peer_id)
@@ -258,6 +245,15 @@ func _send_json_to_peer(peer_id: int, json: String) -> bool:
 
 	peer.put_packet(json.to_utf8_buffer())
 	return true
+
+
+func _on_peer_connected(peer_id: int) -> void:
+	# Wait for the first packet to bind peer_id to a device_id.
+	print("NetworkManager: peer connected %d" % peer_id)
+
+
+func _on_peer_disconnected(peer_id: int) -> void:
+	_mark_peer_disconnected(peer_id)
 
 func _mark_peer_disconnected(peer_id: int) -> void:
 	if not _peer_ids.has(peer_id):

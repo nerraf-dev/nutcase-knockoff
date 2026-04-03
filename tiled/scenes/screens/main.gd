@@ -145,7 +145,21 @@ func _on_return_to_lobby_from_game(settings: Dictionary) -> void:
 	print("Returning to lobby from active game with settings: %s" % settings)
 	cleanup_current_scene()
 	NetworkManager.is_local = false
+	_ensure_state_ready_for_lobby()
 	load_lobby(settings)
+
+
+func _ensure_state_ready_for_lobby() -> void:
+	match GameManager.current_state:
+		GameManager.GameState.IN_PROGRESS:
+			GameManager.change_state(GameManager.GameState.MENU)
+		GameManager.GameState.GAME_OVER:
+			GameManager.change_state(GameManager.GameState.MENU)
+		GameManager.GameState.NONE:
+			GameManager.change_state(GameManager.GameState.MENU)
+
+	if GameManager.current_state == GameManager.GameState.MENU:
+		GameManager.change_state(GameManager.GameState.SETUP)
 
 # LOAD GAME END
 func load_game_end(winner: Player) -> void:
