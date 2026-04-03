@@ -20,6 +20,7 @@ extends Control
 #     moves to phones, but keep it for the host's local keyboard fallback.
 
 signal return_to_home
+signal return_to_lobby(settings: Dictionary)
 signal game_ended(winner: Player)
 signal network_vote_resolved(result: Dictionary)
 
@@ -46,6 +47,7 @@ const ROUND_SCENES = {
 
 const NETWORK_VOTE_TIMEOUT_SECONDS = 20.0
 const DISCONNECT_GRACE_SECONDS = 20.0
+const DISCONNECT_MIN_CONNECTED_PLAYERS = 2
 
 var round_instance = null
 var _stored_focus_modes: Dictionary = {} # node path -> focus mode, used by _recursive_set_focus
@@ -57,6 +59,7 @@ var _vote_session_correct_answer: String = ""
 var _vote_session_eligible_by_device: Dictionary = {} # device_id -> Player
 var _vote_session_votes_by_device: Dictionary = {} # device_id -> bool
 var _disconnect_grace_timers_by_player_id: Dictionary = {} # player_id -> SceneTreeTimer
+var _disconnect_resolution_in_progress: bool = false
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -467,10 +470,120 @@ func _on_disconnect_grace_timeout(player_id: String) -> void:
 		PlayerManager.next_turn()
 		_broadcast_turn_to_controllers()
 
+	_evaluate_post_disconnect_state()
+
 
 func _clear_disconnect_grace_timer(player_id: String) -> void:
 	if _disconnect_grace_timers_by_player_id.has(player_id):
 		_disconnect_grace_timers_by_player_id.erase(player_id)
+
+
+func _evaluate_post_disconnect_state() -> void:
+	if NetworkManager.is_local or GameManager.current_state != GameManager.GameState.IN_PROGRESS:
+		return
+	if _disconnect_resolution_in_progress:
+		return
+
+	var connected_players = _get_connected_players()
+	if connected_players.size() >= DISCONNECT_MIN_CONNECTED_PLAYERS:
+		_handle_disconnect_lps_edge(connected_players)
+		return
+
+	_disconnect_resolution_in_progress = true
+	var winner_id = ""
+	if connected_players.size() == 1:
+		winner_id = connected_players[0].id
+	call_deferred("_resolve_disconnect_match_end", winner_id)
+
+
+func _handle_disconnect_lps_edge(connected_players: Array[Player]) -> void:
+	if connected_players.size() != 2:
+		return
+
+	var connected_active: Array[Player] = []
+	for player in connected_players:
+		if not player.is_frozen:
+			connected_active.append(player)
+
+	if connected_active.size() != 1:
+		return
+
+	var survivor = connected_active[0]
+	var current = PlayerManager.get_current_player()
+	if current == null or current.id != survivor.id:
+		for i in range(PlayerManager.players.size()):
+			if PlayerManager.players[i].id == survivor.id:
+				PlayerManager.current_turn_index = i
+				PlayerManager.turn_changed.emit(survivor)
+				break
+
+	if _disconnect_resolution_in_progress:
+		return
+	_disconnect_resolution_in_progress = true
+	call_deferred("_show_disconnect_lps_prompt", survivor.id)
+
+
+func _show_disconnect_lps_prompt(player_id: String) -> void:
+	var survivor = PlayerManager.get_player_by_id(player_id)
+	if survivor == null:
+		_disconnect_resolution_in_progress = false
+		return
+
+	await _update_overlay("%s is last standing among connected players!\nFree guess." % survivor.name)
+	if NetworkManager.is_local and round_instance:
+		round_instance.show_answer_modal_for_free_guess()
+
+	_disconnect_resolution_in_progress = false
+
+
+func _resolve_disconnect_match_end(winner_player_id: String) -> void:
+	var winner: Player = null
+	if not winner_player_id.is_empty():
+		winner = PlayerManager.get_player_by_id(winner_player_id)
+
+	if winner != null:
+		await _update_overlay("%s wins by default!\nReturning to lobby..." % winner.name)
+	else:
+		await _update_overlay("All players disconnected.\nReturning to lobby...")
+
+	var lobby_settings = _build_lobby_settings_from_current_game()
+	_reset_vote_session()
+	_disconnect_grace_timers_by_player_id.clear()
+
+	if not NetworkManager.is_local:
+		NetworkManager.stop_server()
+
+	GameManager.game = null
+	GameManager.current_state = GameManager.GameState.NONE
+	PlayerManager.clear_all_players()
+
+	_disconnect_resolution_in_progress = false
+	return_to_lobby.emit(lobby_settings)
+
+
+func _build_lobby_settings_from_current_game() -> Dictionary:
+	var settings = {
+		"game_mode": "multi",
+		"game_type": "qna",
+		"game_target": 200,
+		"fuzzy_enabled": GameConfig.FUZZY_ENABLED_DEFAULT,
+	}
+
+	if GameManager.game != null:
+		settings["game_mode"] = GameManager.game.game_mode
+		settings["game_type"] = GameManager.game.game_type
+		settings["game_target"] = GameManager.game.game_target
+		settings["fuzzy_enabled"] = GameManager.game.fuzzy_enabled
+
+	return settings
+
+
+func _get_connected_players() -> Array[Player]:
+	var connected: Array[Player] = []
+	for player in PlayerManager.players:
+		if not player.device_id.is_empty():
+			connected.append(player)
+	return connected
 
 
 func _sync_rejoined_controller_state(device_id: String) -> void:

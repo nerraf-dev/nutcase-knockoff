@@ -91,13 +91,16 @@ func show_lobby(settings: Dictionary, on_start_requested: Callable, on_back_to_h
 
 ## Show active gameplay board.
 ## on_return_to_home: Callback when user exits/gives up during game
+## on_return_to_lobby: Callback when host forces return to lobby (receives settings Dict)
 ## on_game_ended: Callback when game finishes (receives winner Player object)
-func show_game_board(on_return_to_home: Callable, on_game_ended: Callable) -> void:
+func show_game_board(on_return_to_home: Callable, on_return_to_lobby: Callable, on_game_ended: Callable) -> void:
 	var board_scene = preload("res://scenes/screens/game_board.tscn")
 	var board_instance = board_scene.instantiate()
 	_scene_container.add_child(board_instance)
 	if on_return_to_home.is_valid():
 		board_instance.return_to_home.connect(on_return_to_home)
+	if on_return_to_lobby.is_valid():
+		board_instance.return_to_lobby.connect(on_return_to_lobby)
 	if on_game_ended.is_valid():
 		board_instance.game_ended.connect(on_game_ended)
 

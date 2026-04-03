@@ -48,7 +48,24 @@ The host game is authoritative. Controller clients (mobile browsers) are input d
 1. If a device disconnects, the player remains in `PlayerManager` and a reconnect grace timer starts in `game_board.gd`.
 2. Grace window is currently `DISCONNECT_GRACE_SECONDS = 20.0`.
 3. If the player rejoins within the grace window (matched by name), the host remaps the player's `device_id` and sends a targeted game-state sync.
-4. If grace expires and the disconnected player still owns the current turn, host advances turn to avoid deadlock.
+4. If grace expires, host evaluates connected player count and applies disconnection rule policy.
+
+## Disconnection Rule Policy (Current)
+
+After grace timeout:
+
+1. If connected players >= 2: game continues with remaining connected players.
+2. If connected players == 1: remaining connected player wins by default; host returns to lobby.
+3. If connected players == 0: no winner; host returns to lobby.
+
+### LPS edge for disconnects
+
+If exactly 2 connected players remain and only 1 of them is active (the other is frozen), host forces an LPS-style continuation:
+
+1. Active connected player is set as current turn.
+2. Overlay announces free-guess situation.
+3. In local mode, host answer modal opens.
+4. In network mode, controller remains the input surface.
 
 ### Targeted rejoin sync payload
 

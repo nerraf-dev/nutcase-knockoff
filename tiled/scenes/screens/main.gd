@@ -138,7 +138,14 @@ func _on_lobby_start_requested(settings: Dictionary) -> void:
 ## Load the active game board screen (gameplay).
 func load_game_board() -> void:
 	MusicManager.play_game_music()
-	scene_loader.show_game_board(_on_return_to_home, _on_game_ended)
+	scene_loader.show_game_board(_on_return_to_home, _on_return_to_lobby_from_game, _on_game_ended)
+
+
+func _on_return_to_lobby_from_game(settings: Dictionary) -> void:
+	print("Returning to lobby from active game with settings: %s" % settings)
+	cleanup_current_scene()
+	NetworkManager.is_local = false
+	load_lobby(settings)
 
 # LOAD GAME END
 func load_game_end(winner: Player) -> void:
