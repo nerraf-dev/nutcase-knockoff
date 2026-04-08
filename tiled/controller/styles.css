@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "Bloopoly";
+	src: url("./fonts/Bloopoly.otf") format("opentype");
+}
+
 :root {
 	--bg: #f4f6f8;
 	--panel: #ffffff;
@@ -33,6 +38,16 @@ body {
 	border-radius: 14px;
 	padding: 14px;
 	box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+}
+
+.tiled-title {
+	font-family: "Bloopoly", cursive;
+	font-size: 2.5rem;
+	font-weight: 800;
+	margin: 0 0 4px;
+	color: blue;
+	-webkit-text-stroke-color: #ffffff;
+	-webkit-text-stroke-width: 1px;
 }
 
 h1,

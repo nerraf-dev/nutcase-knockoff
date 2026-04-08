@@ -36,6 +36,7 @@ func _ready() -> void:
 	focus_entered.connect(_on_focus_entered)
 	focus_exited.connect(_on_focus_exited)
 
+	_set_random_cover()
 	cover.visible = true
 
 func _on_focus_entered() -> void:
@@ -122,4 +123,3 @@ func reveal():
 func _set_random_cover() -> void:
 	var random_cover = slider_covers[randi() % slider_covers.size()]
 	cover.texture = load(random_cover)
-	
