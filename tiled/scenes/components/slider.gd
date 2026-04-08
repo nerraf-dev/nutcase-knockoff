@@ -8,6 +8,12 @@ const LONGER_WORD_FONT_SIZE := 50
 const MAX_LENGTH_FOR_BASE_FONT := 10
 const MAX_LENGTH_FOR_LONG_FONT := 14
 
+var slider_covers = [
+	'res://assets/images/sliders/slider_blue_1.svg',
+	'res://assets/images/sliders/slider_blue_2.svg',
+	'res://assets/images/sliders/slider_blue_3.svg',
+] # To keep track of covers for all sliders, if needed for future enhancements
+
 @onready var cover = $Cover
 @onready var word_label = $Margin/WordLabel
 @onready var number_label = $Cover/NumberLabel
@@ -34,7 +40,8 @@ func _ready() -> void:
 
 func _on_focus_entered() -> void:
 	# Bright yellow border/highlight when focused
-	modulate = Color(1.5, 1.5, 0.5)
+	# modulate = Color(1.5, 1.5, 0.5)
+	modulate = original_modulate
 	print("Slider %d focused" % word_number)
 
 func _on_focus_exited() -> void:
@@ -110,3 +117,9 @@ func reveal():
 	tween.tween_property(cover, "position:x", size.x, 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	# fade out
 	tween.parallel().tween_property(cover, "modulate:a", 0, 0.3)
+
+
+func _set_random_cover() -> void:
+	var random_cover = slider_covers[randi() % slider_covers.size()]
+	cover.texture = load(random_cover)
+	

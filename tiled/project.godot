@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Tiled by LittleCogWorks"
 run/main_scene="uid://cos2mdk3ikq0t"
-config/features=PackedStringArray("4.6", "Forward Plus")
+config/features=PackedStringArray("4.6")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -54,3 +54,10 @@ ui_cancel={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
+
+[rendering]
+
+rendering_device/driver.android="opengl3"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true

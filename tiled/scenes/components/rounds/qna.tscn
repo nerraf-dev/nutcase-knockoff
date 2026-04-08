@@ -2,7 +2,9 @@
 
 [ext_resource type="Script" uid="uid://drkfq3su42qao" path="res://scenes/components/rounds/qna.gd" id="1_h7n03"]
 [ext_resource type="Theme" uid="uid://b1vdv74xd0icc" path="res://resources/guess_button.tres" id="1_ll357"]
+[ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="3_bgcxs"]
 [ext_resource type="FontFile" uid="uid://bex25m5snoet2" path="res://assets/fonts/Pencil Child.ttf" id="3_ybcsd"]
+[ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="4_nj5d4"]
 [ext_resource type="FontFile" uid="uid://dsjw1g8q8n42w" path="res://assets/fonts/Cute Dino.otf" id="4_w8bgg"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_w8bgg"]
@@ -41,7 +43,8 @@ grow_vertical = 2
 layout_mode = 2
 color = Color(0.23137255, 0.050980393, 0.64705884, 0.81960785)
 
-[node name="GuessBtn" type="Button" parent="." unique_id=541022875]
+[node name="GuessBtn2" type="Button" parent="." unique_id=541022875]
+visible = false
 layout_mode = 0
 offset_left = 888.0
 offset_top = 832.0
@@ -51,6 +54,31 @@ scale = Vector2(0.5, 0.5)
 theme = ExtResource("1_ll357")
 theme_override_font_sizes/font_size = 73
 text = "Guess"
+
+[node name="GuessBtn" type="TextureButton" parent="." unique_id=491847949]
+layout_mode = 0
+offset_left = 912.0
+offset_top = 848.0
+offset_right = 1212.0
+offset_bottom = 998.0
+scale = Vector2(0.5305239, 0.5345963)
+stretch_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="GuessBtn" unique_id=1783764439]
+position = Vector2(147.19998, 76.80001)
+scale = Vector2(0.50999993, 0.5199999)
+sprite_frames = ExtResource("3_bgcxs")
+autoplay = "default"
+
+[node name="Label" type="Label" parent="GuessBtn" unique_id=2095064527]
+layout_mode = 0
+offset_left = 26.389038
+offset_top = 35.540833
+offset_right = 350.38904
+offset_bottom = 164.54083
+scale = Vector2(0.75, 0.75)
+text = "Guess"
+label_settings = ExtResource("4_nj5d4")
 
 [node name="Title" type="Label" parent="." unique_id=1848662594]
 layout_mode = 0

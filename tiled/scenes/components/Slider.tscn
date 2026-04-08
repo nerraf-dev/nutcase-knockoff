@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://d0mifludc5xxr" path="res://scenes/components/slider.gd" id="1_lfa00"]
 [ext_resource type="FontFile" uid="uid://dsjw1g8q8n42w" path="res://assets/fonts/Cute Dino.otf" id="2_p1un5"]
-[ext_resource type="Texture2D" uid="uid://woyhe05stqmh" path="res://assets/images/slider.svg" id="3_bha06"]
+[ext_resource type="Texture2D" uid="uid://bkbo673irbyat" path="res://assets/images/slider_2.svg" id="3_bha06"]
+[ext_resource type="FontFile" uid="uid://bex25m5snoet2" path="res://assets/fonts/Pencil Child.ttf" id="4_q61tu"]
 
 [sub_resource type="Theme" id="Theme_p1un5"]
 
@@ -16,7 +17,11 @@ outline_size = 16
 outline_color = Color(0.90025425, 0.923348, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_lfa00"]
-font_size = 48
+font = ExtResource("4_q61tu")
+font_size = 100
+shadow_size = 5
+shadow_color = Color(0.07, 0.07, 0.07, 0.6901961)
+shadow_offset = Vector2(2, 2)
 
 [node name="Slider" type="PanelContainer" unique_id=302610436]
 offset_right = 900.0
@@ -49,10 +54,11 @@ expand_mode = 2
 
 [node name="NumberLabel" type="Label" parent="Cover" unique_id=354551545]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 64.0
-offset_bottom = 64.0
+offset_left = 223.0
+offset_top = 2.0
+offset_right = 282.0
+offset_bottom = 141.0
+text = "9"
 label_settings = SubResource("LabelSettings_lfa00")
 horizontal_alignment = 1
 vertical_alignment = 1
