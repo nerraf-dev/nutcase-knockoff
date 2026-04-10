@@ -1,18 +1,40 @@
-// network.js:
-// handles all websocket and networking related logic, including
-// connection management, message sending/receiving, 
-// and network error handling.
+/**
+ * WebSocket and networking layer for the controller UI.
+ *
+ * This module owns connection lifecycle, outbound messages, inbound message handling,
+ * and reconnect behavior.
+ */
 
-import { el } from "./dom.js";
-import { state, ControllerState, stateHint, resetVoteState, updateControllerState } from "./state.js";
-import { render, resetSliderButtons } from "./ui.js";
 import {
-	joinLobby,
-	log
-} from "./actions.js";
+			el
+		} from "./dom.js";
+		
+import {
+			state,
+			ControllerState,
+			resetVoteState,
+			updateControllerState
+		} from "./state.js";
 
+import {
+			render,
+			applySliderReveal,
+			resetSliderButtons
+		} from "./ui.js";
 
+import {
+			joinLobby,
+			log
+		} from "./actions.js";
 
+/**
+ * Opens a WebSocket connection to the host in the UI.
+ *
+ * When the connection opens, the controller restores prior lobby/ready state if needed.
+ * Connection events also drive UI state resets and auto-reconnect scheduling.
+ *
+ * @returns {void}
+ */
 export function connect() {
 	const url = el.hostInput.value.trim();
 	if (!url) {
@@ -79,6 +101,13 @@ export function connect() {
 	});
 }
 
+/**
+ * Closes the active WebSocket connection and resets local controller state.
+ *
+ * @param {boolean} [manual=true] - True when the disconnect was initiated by the user.
+ * @param {boolean} [clearReconnectIntent=true] - True to cancel any pending auto-reconnect behavior.
+ * @returns {void}
+ */
 export function disconnect(manual = true, clearReconnectIntent = true) {
 	if (manual && clearReconnectIntent) {
 		state.shouldAutoReconnect = false;
@@ -104,6 +133,13 @@ export function disconnect(manual = true, clearReconnectIntent = true) {
 	render();
 }
 
+/**
+ * Sends a JSON message over the active WebSocket connection.
+ *
+ * @param {string} type - Message type to send.
+ * @param {object} [payload={}] - Additional message payload fields.
+ * @returns {void}
+ */
 export function send(type, payload = {}) {
 	if (!state.ws || state.ws.readyState !== WebSocket.OPEN) {
 		log(`Cannot send ${type}: not connected`);
@@ -115,6 +151,15 @@ export function send(type, payload = {}) {
 	log(`send ${JSON.stringify(message)}`);
 }
 
+/**
+ * Handles an incoming message from the server.
+ *
+ * The payload is decoded, parsed as JSON when possible, and applied to controller state.
+ * Non-JSON messages are ignored after being logged.
+ *
+ * @param {string|Blob|ArrayBuffer} rawData - Raw WebSocket message payload.
+ * @returns {Promise<void>}
+ */
 export async function handleServerMessage(rawData) {
 	const text = await decodeWsData(rawData);
 	log(`recv ${text}`);
@@ -234,6 +279,12 @@ export async function handleServerMessage(rawData) {
 	}
 }
 
+/**
+ * Converts a WebSocket payload into text.
+ *
+ * @param {string|Blob|ArrayBuffer} rawData - Raw payload from the socket.
+ * @returns {Promise<string>}
+ */
 export async function decodeWsData(rawData) {
 	if (typeof rawData === "string") {
 		return rawData;
@@ -247,6 +298,13 @@ export async function decodeWsData(rawData) {
 	return String(rawData);
 }
 
+/**
+ * Schedules the next reconnect attempt using a simple backoff.
+ *
+ * The wait time increases with each retry up to a fixed cap.
+ *
+ * @returns {void}
+ */
 export function scheduleReconnect() {
 	if (state.reconnectTimer != null) {
 		return;
@@ -263,6 +321,11 @@ export function scheduleReconnect() {
 	}, waitMs);
 }
 
+/**
+ * Clears any pending reconnect timer.
+ *
+ * @returns {void}
+ */
 export function _clearReconnectTimer() {
 	if (state.reconnectTimer != null) {
 		clearTimeout(state.reconnectTimer);

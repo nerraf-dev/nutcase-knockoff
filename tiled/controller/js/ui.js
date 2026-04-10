@@ -2,6 +2,24 @@ import { el } from "./dom.js";
 import { state, stateHint, updateControllerState } from "./state.js";
 
 
+/**
+ * Renders the controller UI based on the latest application state.
+ *
+ * This function:
+ * - Refreshes controller-related state via `updateControllerState()`.
+ * - Updates status, turn, controller state, and hint text.
+ * - Enables/disables action buttons and inputs according to connection,
+ *   game phase, turn ownership, overlay visibility, guess mode, and vote state.
+ * - Toggles visibility of panels/modals (connect, profile, gameplay, vote, guess, log).
+ * - Updates forced-guess banner messaging and slider button availability.
+ *
+ * @function render
+ * @returns {void}
+ *
+ * @sideeffects
+ * Mutates DOM elements referenced by `el` (text content, `disabled` flags, CSS classes),
+ * and reads shared runtime state from `state`.
+ */
 export function render() {
 	updateControllerState();
 	const status = state.connected ? "Connected" : "Disconnected";
@@ -66,6 +84,15 @@ export function render() {
 	el.logPanel.classList.toggle("hidden", !state.debugMode);
 }
 
+/**
+ * Resets all slider buttons to their default visual and label state.
+ *
+ * Iterates through `el.sliderButtons`, removes the `"revealed"` CSS class
+ * from each button, and sets its text content to a 1-based index
+ * (e.g., `"1"`, `"2"`, `"3"`, ...).
+ *
+ * @returns {void}
+ */
 export function resetSliderButtons() {
 	el.sliderButtons.forEach((button, i) => {
 		button.classList.remove("revealed");
@@ -73,6 +100,19 @@ export function resetSliderButtons() {
 	});
 }
 
+/**
+ * Reveals a slider button for the given index and updates its displayed label.
+ *
+ * Finds the matching button in `el.sliderButtons` by comparing each element's
+ * `data-index` with the provided `index`. If found, it adds the `"revealed"`
+ * CSS class, sets the button text to `word` (or `"-"` when `word` is empty/blank),
+ * and triggers a UI refresh via `render()`.
+ *
+ * @param {number|string} index - The target slider button index to reveal.
+ * @param {string} [word] - The text to display on the revealed button. If omitted
+ * or whitespace-only, a hyphen (`"-"`) is displayed instead.
+ * @returns {void}
+ */
 export function applySliderReveal(index, word) {
 	const button = el.sliderButtons.find((b) => Number(b.dataset.index) === Number(index));
 	if (!button) {

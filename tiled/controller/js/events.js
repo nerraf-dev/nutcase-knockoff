@@ -1,5 +1,4 @@
 import { el } from "./dom.js";
-import { state } from "./state.js";
 import {
 	connect,
 	disconnect
@@ -18,6 +17,26 @@ import {
 } from "./actions.js";
 
 
+/**
+ * Registers all UI event listeners for the controller layer.
+ *
+ * Wires button clicks, keyboard submit behavior, and form field persistence
+ * handlers to their corresponding action functions. This function should be
+ * called once during initialization to activate user interaction.
+ *
+ * @function bindEvents
+ * @returns {void}
+ *
+ * @listens HTMLElement#click
+ * @listens HTMLElement#keydown
+ * @listens HTMLElement#change
+ * @listens HTMLElement#blur
+ *
+ * @sideeffects
+ * Attaches multiple DOM event listeners to elements referenced by `el`,
+ * enabling connection flow, lobby actions, guessing flow, voting, slider
+ * interactions, and settings persistence.
+ */
 export function bindEvents() {
 	el.connectBtn.addEventListener("click", connect);
 	el.disconnectBtn.addEventListener("click", () => disconnect(true));
