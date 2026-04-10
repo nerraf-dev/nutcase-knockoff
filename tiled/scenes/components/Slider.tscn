@@ -11,7 +11,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_tfq63"]
 font = ExtResource("2_p1un5")
-font_size = 72
+font_size = 66
 font_color = Color(0.292592, 0.046657562, 0.5908938, 1)
 outline_size = 16
 outline_color = Color(0.90025425, 0.923348, 0, 1)
