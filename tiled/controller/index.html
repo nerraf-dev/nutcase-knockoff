@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Nutcase Controller</title>
+	<title>Tiled Controller</title>
 	<link rel="stylesheet" href="styles.css">
 </head>
 
@@ -41,8 +41,26 @@
 			<label for="nameInput">Name</label>
 			<input id="nameInput" type="text" maxlength="16" placeholder="Player name">
 
-			<label for="avatarInput">Avatar Index</label>
-			<input id="avatarInput" type="number" min="0" max="20" step="1" value="0">
+			<label>Avatar</label>
+			<div id="avatarGrid" class="avatar-grid" role="group" aria-label="Choose avatar">
+				<button type="button" class="avatar-option" data-avatar-index="0" aria-pressed="false">
+					<img src="./assets/avatars/duck.png" alt="Duck avatar">
+				</button>
+				<button type="button" class="avatar-option" data-avatar-index="1" aria-pressed="false">
+					<img src="./assets/avatars/mr_box.png" alt="Box avatar">
+				</button>
+				<button type="button" class="avatar-option" data-avatar-index="2" aria-pressed="false">
+					<img src="./assets/avatars/purps.png" alt="Purps avatar">
+				</button>
+				<button type="button" class="avatar-option" data-avatar-index="3" aria-pressed="false">
+					<img src="./assets/avatars/square-head-zombie.png" alt="Zombie avatar">
+				</button>
+				<button type="button" class="avatar-option" data-avatar-index="4" aria-pressed="false">
+					<img src="./assets/avatars/flower_c.png" alt="Flower avatar">
+				</button>
+			</div>
+			<input id="avatarInput" class="hidden-input" type="number" min="0" max="20" step="1" value="0"
+				aria-hidden="true" tabindex="-1">
 
 			<div class="row">
 				<button id="joinBtn" type="button">Join Lobby</button>

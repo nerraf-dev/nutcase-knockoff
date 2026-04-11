@@ -65,6 +65,18 @@ export function persist() {
 }
 
 /**
+ * Sets selected avatar index from the visual avatar picker.
+ *
+ * @param {number} index - Avatar index to store and send on join/profile updates.
+ * @returns {void}
+ */
+export function selectAvatar(index) {
+	el.avatarInput.value = String(index);
+	persist();
+	render();
+}
+
+/**
  * Attempts to join the lobby using the entered profile information.
  *
  * @returns {void}

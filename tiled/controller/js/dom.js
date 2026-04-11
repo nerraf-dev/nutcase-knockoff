@@ -17,6 +17,8 @@
 export const el = {
 	hostInput: document.getElementById("hostInput"),
 	nameInput: document.getElementById("nameInput"),
+	avatarGrid: document.getElementById("avatarGrid"),
+	avatarButtons: Array.from(document.querySelectorAll(".avatar-option")),
 	avatarInput: document.getElementById("avatarInput"),
 	sliderButtons: Array.from(document.querySelectorAll(".slider-tile")),
 	guessInput: document.getElementById("guessInput"),

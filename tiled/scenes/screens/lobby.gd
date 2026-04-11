@@ -36,6 +36,9 @@ func _ready() -> void:
 	else:
 		qr_code_rect.visible = false
 		instructions_label.text += "\n\nQR unavailable for this URL"
+		var qr_reason := _describe_qr_failure(controller_url)
+		if not qr_reason.is_empty():
+			instructions_label.text += "\nReason: %s" % qr_reason
 
 	if NetworkManager.is_local == false:
 		NetworkManager.start_server()
@@ -48,6 +51,19 @@ func _ready() -> void:
 		_update_start_button_state()
 	else:
 		room_code_label.text = "Offline Lobby (Multiplayer mode not active)"
+
+
+func _describe_qr_failure(value: String) -> String:
+	# simple_qr_code.gd currently supports QR version 1 and 2 only.
+	if value.length() > 47:
+		return "URL too long for built-in QR (%d chars, max 47)." % value.length()
+
+	const ALLOWED := "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:"
+	for ch in value.to_upper():
+		if ALLOWED.find(ch) == -1:
+			return "Unsupported character '%s' in URL." % ch
+
+	return "Unknown generator limitation."
 
 
 func _on_player_joined(device_id: String, player_name: String, avatar_index: int) -> void:

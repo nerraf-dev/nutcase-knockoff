@@ -71,6 +71,41 @@ label {
 	font-weight: 600;
 }
 
+.avatar-grid {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 8px;
+	margin: 8px 0 12px;
+}
+
+.avatar-option {
+	min-height: auto;
+	padding: 4px;
+	border: 2px solid var(--border);
+	border-radius: 12px;
+	background: #ffffff;
+	cursor: pointer;
+	transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.avatar-option img {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	display: block;
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+.avatar-option.selected {
+	border-color: var(--accent);
+	box-shadow: 0 0 0 3px var(--accent-weak);
+	transform: translateY(-1px);
+}
+
+.hidden-input {
+	display: none;
+}
+
 input,
 button {
 	width: 100%;
@@ -190,6 +225,10 @@ button:disabled {
 @media (max-width: 520px) {
 	.row {
 		grid-template-columns: 1fr;
+	}
+
+	.avatar-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
 	}
 
 	.slider-grid {

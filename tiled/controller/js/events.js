@@ -12,6 +12,7 @@ import {
 	submitGuess,
 	cancelGuessFlow,
 	sendVote,
+	selectAvatar,
 	toggleDebugMode,
 	persist
 } from "./actions.js";
@@ -53,6 +54,12 @@ export function bindEvents() {
 		button.addEventListener("click", () => {
 			const idx = Number(button.dataset.index || -1);
 			sendSliderClick(idx);
+		});
+	});
+	el.avatarButtons.forEach((button) => {
+		button.addEventListener("click", () => {
+			const idx = Number(button.dataset.avatarIndex || 0);
+			selectAvatar(idx);
 		});
 	});
 	el.guessInput.addEventListener("keydown", (event) => {

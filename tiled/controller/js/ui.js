@@ -41,6 +41,14 @@ export function render() {
 	el.turnText.textContent = `Turn: ${turn}`;
 	el.turnText.classList.toggle("ok", state.isYourTurn);
 
+	const selectedAvatarIndex = Number(el.avatarInput.value || 0);
+	el.avatarButtons.forEach((button) => {
+		const idx = Number(button.dataset.avatarIndex || -1);
+		const selected = idx === selectedAvatarIndex;
+		button.classList.toggle("selected", selected);
+		button.setAttribute("aria-pressed", selected ? "true" : "false");
+	});
+
 	el.connectBtn.disabled = state.connected;
 	el.disconnectBtn.disabled = !state.connected;
 	el.joinBtn.disabled = !state.connected;
