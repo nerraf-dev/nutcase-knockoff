@@ -6,26 +6,26 @@
  */
 
 import {
-			el
-		} from "./dom.js";
-		
-import {
-			state,
-			ControllerState,
-			resetVoteState,
-			updateControllerState
-		} from "./state.js";
+	el
+} from "./dom.js";
 
 import {
-			render,
-			applySliderReveal,
-			resetSliderButtons
-		} from "./ui.js";
+	state,
+	ControllerState,
+	resetVoteState,
+	updateControllerState
+} from "./state.js";
 
 import {
-			joinLobby,
-			log
-		} from "./actions.js";
+	render,
+	applySliderReveal,
+	resetSliderButtons
+} from "./ui.js";
+
+import {
+	joinLobby,
+	log
+} from "./actions.js";
 
 /**
  * Opens a WebSocket connection to the host in the UI.
