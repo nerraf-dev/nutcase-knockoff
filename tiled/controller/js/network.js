@@ -196,6 +196,10 @@ export async function handleServerMessage(rawData) {
 		if (msg.type === "your_turn") {
 			state.turnStateKnown = true;
 			state.isYourTurn = true;
+			// Normal turn ownership should not keep forced-guess lock unless a
+			// subsequent explicit force_guess message arrives.
+			state.forcedGuess = false;
+			state.guessMode = false;
 			updateControllerState();
 			render();
 			log("It is your turn");
@@ -203,9 +207,11 @@ export async function handleServerMessage(rawData) {
 		if (msg.type === "turn_changed") {
 			state.turnStateKnown = true;
 			state.isYourTurn = String(msg.player_id || "") === state.playerId;
+			// Turn changes represent normal flow; clear forced-guess latch here.
+			state.forcedGuess = false;
+			state.guessMode = false;
 			if (!state.isYourTurn) {
 				state.guessMode = false;
-				state.forcedGuess = false;
 			}
 			updateControllerState();
 			render();

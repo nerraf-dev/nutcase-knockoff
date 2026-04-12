@@ -270,6 +270,9 @@ func _start_next_round() -> void:
 		round_instance.start_new_question(next_question)
 		_broadcast_new_round_to_controllers()
 		_broadcast_turn_to_controllers()
+		# Extra turn sync on the next idle tick ensures controllers recover if a
+		# late/queued new_round packet temporarily reset their turn-known state.
+		call_deferred("_broadcast_turn_to_controllers")
 		
 		# Re-enable focus after round loads (sliders will auto-focus)
 		await get_tree().process_frame

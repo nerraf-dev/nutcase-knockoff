@@ -56,6 +56,15 @@ export function render() {
 
 	const controlsEnabled = state.connected && state.joined && state.turnStateKnown && state.isYourTurn && !state.overlayActive;
 	const canRevealSliders = controlsEnabled && !state.forcedGuess;
+	const lockReasons = _getSliderLockReasons();
+	if (state.debugMode && state.isYourTurn && !canRevealSliders && lockReasons.length > 0) {
+		el.turnText.textContent = `Turn: ${turn} (locked: ${lockReasons.join(", ")})`;
+	}
+	if (state.debugMode && state.isYourTurn && !canRevealSliders) {
+		if (lockReasons.length > 0) {
+			el.controllerHintText.textContent = `${el.controllerHintText.textContent} [Debug lock: ${lockReasons.join(", ")}]`;
+		}
+	}
 	el.forcedGuessBanner.classList.toggle("hidden", !state.forcedGuess);
 	if (state.forcedGuess) {
 		el.forcedGuessBanner.textContent = "Forced guess mode: submit your answer now. Tile reveals are locked.";
@@ -70,6 +79,7 @@ export function render() {
 	el.guessInput.disabled = !state.guessMode;
 	const canContinueOverlay = state.connected && state.joined && state.overlayActive && state.turnStateKnown && state.isYourTurn;
 	el.continueBtn.disabled = !canContinueOverlay;
+	el.continueBtn.classList.toggle("hidden", !state.overlayActive);
 
 	el.votePrompt.textContent = state.votePrompt;
 	el.voteResultText.textContent = state.voteResultText;
@@ -90,6 +100,20 @@ export function render() {
 	el.profilePanel.classList.toggle("hidden", !showProfilePanel);
 	el.gameplayPanel.classList.toggle("hidden", !showGameplayPanel);
 	el.logPanel.classList.toggle("hidden", !state.debugMode);
+}
+
+function _getSliderLockReasons() {
+	const reasons = [];
+	if (!state.connected) reasons.push("not connected");
+	if (!state.joined) reasons.push("not joined");
+	if (!state.turnStateKnown) reasons.push("turn not synced");
+	if (!state.isYourTurn) reasons.push("not your turn");
+	if (state.overlayActive) reasons.push("overlay active");
+	if (state.forcedGuess) reasons.push("forced guess active");
+	if (el.sliderButtons.length > 0 && el.sliderButtons.every((b) => b.classList.contains("revealed"))) {
+		reasons.push("all sliders already revealed");
+	}
+	return reasons;
 }
 
 /**
