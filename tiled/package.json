@@ -1,14 +1,14 @@
 {
-  "name": "tiled-controller-tests",
-  "private": true,
-  "version": "0.1.0",
-  "description": "Playwright smoke tests for Tiled controller pages",
-  "scripts": {
-    "test:e2e": "playwright test",
-    "test:e2e:headed": "playwright test --headed",
-    "test:e2e:ui": "playwright test --ui"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.53.1"
-  }
+	"name": "tiled-controller-tests",
+	"private": true,
+	"version": "0.1.0",
+	"description": "Playwright smoke tests for Tiled controller pages",
+	"scripts": {
+		"test:e2e": "playwright test",
+		"test:e2e:headed": "playwright test --headed",
+		"test:e2e:ui": "playwright test --ui"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.53.1"
+	}
 }
