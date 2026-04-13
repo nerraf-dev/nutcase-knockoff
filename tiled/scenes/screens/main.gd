@@ -209,6 +209,8 @@ func _on_play_again_requested() -> void:
 
 	session_coordinator.reset_for_replay()
 
+	PlayerManager.reset_game()
+
 	# Start new game with same settings (this will transition to IN_PROGRESS)
 	if not GameManager.start_game(settings):
 		push_error("Failed to start replay with settings: %s" % settings)
