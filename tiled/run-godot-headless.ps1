@@ -1,7 +1,7 @@
 param(
 	[string]$GodotExe = $env:GODOT_EXE,
 	[string]$TestScript = "res://scenes/tests/vote_multiplayer_headless_scaffold.gd",
-	[string]$ProjectPath = ".\tiled"
+	[string]$ProjectPath = "."
 )
 
 function Resolve-GodotExeFromDirectory {

@@ -1,9 +1,10 @@
 param(
 	[string]$GodotExe = $env:GODOT_EXE,
-	[string]$ProjectPath = ".\tiled"
+	[string]$ProjectPath = "."
 )
 
 $tests = @(
+	"res://scenes/tests/input_validator_test.gd",
 	"res://scenes/tests/answer_modal_headless_test.gd",
 	"res://scenes/tests/vote_multiplayer_headless_scaffold.gd"
 )

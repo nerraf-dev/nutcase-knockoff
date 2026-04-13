@@ -5,6 +5,7 @@ const GAME_MUSIC_STREAM := preload("res://assets/sound/music/8bit Bossa.mp3")
 const MASTER_BUS_NAME := "Master"
 const MUSIC_BUS_NAME := "Music"
 const SILENT_DB := -80.0
+const LOOP_DELAY_SECONDS: float = 1.5
 
 var _player: AudioStreamPlayer
 var _active_track: String = ""
@@ -20,10 +21,13 @@ func _ready() -> void:
 	_apply_settings()
 	if not UserSettings.settings_changed.is_connected(_on_settings_changed):
 		UserSettings.settings_changed.connect(_on_settings_changed)
+	_player.finished.connect(_on_track_finished)
 
+	
 
 func play_menu_music() -> void:
 	_play_track("menu", MENU_MUSIC_STREAM)
+	print("Playing menu music")
 
 
 func play_game_music() -> void:
@@ -31,8 +35,21 @@ func play_game_music() -> void:
 
 
 func stop_music() -> void:
+	_active_track = ""
 	if is_instance_valid(_player) and _player.playing:
 		_player.stop()
+
+
+func _on_track_finished() -> void:
+	if _active_track == "":
+		return
+	get_tree().create_timer(LOOP_DELAY_SECONDS).timeout.connect(_restart_active_track)
+
+
+func _restart_active_track() -> void:
+	match _active_track:
+		"menu": play_menu_music()
+		"game": play_game_music()
 
 
 func _play_track(track_key: String, stream: AudioStream) -> void:

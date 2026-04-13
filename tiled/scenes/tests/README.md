@@ -1,3 +1,13 @@
+InputValidator test
+
+Run with: `godot --headless -s res://scenes/tests/input_validator_test.gd`
+Covers validate_player_name and validate_answer: exact, case, article/prefix
+stripping, empty, numeric guard, short-word no-fuzzy, auto-accept, fuzzy,
+incorrect, alt_answers, and fuzzy_enabled=false toggle.
+Exit code 0 = all pass.
+
+---
+
 AnswerModal test
 
 This folder contains a small Godot test helper to exercise the AnswerModal UI.
@@ -54,6 +64,11 @@ Priority cases to validate host-authoritative fuzzy voting:
 - Action: start next round or exit to home.
 - Expect: vote session cleared; no stale votes carry over.
 
+8. Fuzzy answer triggers vote session
+- Setup: fuzzy answer and eligible voters available.
+- Action: start vote session.
+- Expect: session becomes active, eligible voter map is populated, vote request payload includes guesser id and submitted answer.
+
 Quick manual run checklist
 
 1. Start multiplayer game with 2+ controller clients.
@@ -70,7 +85,7 @@ Headless scaffold
 
 Windows shortcut runner
 
-- From repo root you can run:
+- From `tiled/` you can run:
   - `./run-godot-headless.ps1`
 - To run a specific test script:
   - `./run-godot-headless.ps1 -TestScript res://scenes/tests/answer_modal_headless_test.gd`
@@ -79,7 +94,7 @@ Windows shortcut runner
 
 Smoke suite runner
 
-- Run both headless tests from repo root:
+- Run all headless tests from `tiled/`:
   - `./run-godot-smoke.ps1`
 - Optional explicit executable override:
   - `./run-godot-smoke.ps1 -GodotExe "D:/Godot/Editors/4.6.1-stable/Godot_v4.6.1-stable_win64_console.exe"`

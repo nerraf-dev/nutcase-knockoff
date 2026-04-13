@@ -17,6 +17,7 @@ class VoteSessionHarness:
 	var _vote_session_votes_by_device: Dictionary = {}
 	var _finalized_count: int = 0
 	var _last_vote_result: Dictionary = {}
+	var _last_vote_request: Dictionary = {}
 
 	func _reset_vote_session() -> void:
 		_vote_session_active = false
@@ -64,6 +65,16 @@ class VoteSessionHarness:
 	func _on_network_vote_timeout() -> void:
 		_finalize_network_vote_session()
 
+	func start_network_vote_session(guesser: Dictionary, submitted_answer: String, eligible_by_device: Dictionary) -> void:
+		_reset_vote_session()
+		_vote_session_active = true
+		for device_id in eligible_by_device.keys():
+			_vote_session_eligible_by_device[device_id] = eligible_by_device[device_id]
+		_last_vote_request = {
+			"guesser_id": guesser.get("id", ""),
+			"answer": submitted_answer
+		}
+
 	func calculate_reject_payout(prize: int, no_voters: Array) -> Dictionary:
 		if no_voters.is_empty():
 			return {"each_share": 0, "awards": {}}
@@ -75,6 +86,7 @@ class VoteSessionHarness:
 		return {"each_share": each_share, "awards": awards}
 
 const CASES = [
+	"fuzzy_vote_session_trigger",
 	"eligible_voters_only",
 	"duplicate_vote_ignored",
 	"guesser_cannot_vote",
@@ -109,6 +121,8 @@ func _run() -> void:
 
 func _run_case(case_name: String) -> bool:
 	match case_name:
+		"fuzzy_vote_session_trigger":
+			return _test_fuzzy_vote_session_trigger()
 		"eligible_voters_only":
 			return _test_eligible_voters_only()
 		"duplicate_vote_ignored":
@@ -131,6 +145,27 @@ func _todo_case(case_name: String) -> bool:
 	print("TODO: implement %s" % case_name)
 	# Keep scaffold green while you replace TODOs with real assertions.
 	return true
+
+func _test_fuzzy_vote_session_trigger() -> bool:
+	var guesser = {"id": "player_1", "name": "Guesser"}
+	var voter_a = {"id": "player_2", "name": "A"}
+	var voter_b = {"id": "player_3", "name": "B"}
+	var board = VoteSessionHarness.new()
+	var eligible = {
+		"dev-a": voter_a,
+		"dev-b": voter_b
+	}
+
+	# Simulates the production start call that should happen on FUZZY answer.
+	board.start_network_vote_session(guesser, "octogan", eligible)
+
+	var ok = true
+	ok = ok and _assert_true(board._vote_session_active, "fuzzy path should activate vote session")
+	ok = ok and _assert_true(board._vote_session_eligible_by_device.size() == 2, "eligible voter map should be populated")
+	ok = ok and _assert_true(board._last_vote_request.get("guesser_id", "") == "player_1", "vote request should carry guesser id")
+	ok = ok and _assert_true(board._last_vote_request.get("answer", "") == "octogan", "vote request should carry submitted answer")
+
+	return ok
 
 func _test_duplicate_vote_ignored() -> bool:
 	# Arrange: one eligible voter, active vote session.
