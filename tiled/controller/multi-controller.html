@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tiled Multi-Controller</title>
+	<style>
+		:root {
+			color-scheme: dark;
+			--bg: #111821;
+			--panel: #1b2532;
+			--panel-2: #233246;
+			--text: #e8eff8;
+			--muted: #9db2cc;
+			--accent: #60c3ff;
+			--danger: #ef7f7f;
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			background: radial-gradient(circle at 20% 0%, #1f2c3d, var(--bg) 55%);
+			color: var(--text);
+		}
+
+		header {
+			position: sticky;
+			top: 0;
+			z-index: 10;
+			padding: 12px;
+			background: color-mix(in srgb, var(--bg) 88%, black);
+			border-bottom: 1px solid #2f3e54;
+		}
+
+		h1 {
+			margin: 0 0 8px;
+			font-size: 18px;
+		}
+
+		.row {
+			display: grid;
+			grid-template-columns: repeat(12, 1fr);
+			gap: 8px;
+			align-items: end;
+		}
+
+		.field {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+
+		.field label {
+			font-size: 12px;
+			color: var(--muted);
+		}
+
+		input,
+		select,
+		button {
+			width: 100%;
+			min-height: 36px;
+			border-radius: 8px;
+			border: 1px solid #3b4b63;
+			background: var(--panel);
+			color: var(--text);
+			padding: 8px 10px;
+		}
+
+		button {
+			cursor: pointer;
+			background: var(--panel-2);
+			font-weight: 600;
+		}
+
+		button:hover {
+			border-color: var(--accent);
+		}
+
+		button.clear {
+			border-color: #664545;
+			color: #ffc7c7;
+		}
+
+		.note {
+			margin: 8px 0 0;
+			font-size: 12px;
+			color: var(--muted);
+		}
+
+		.grid {
+			display: grid;
+			gap: 10px;
+			padding: 12px;
+			grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+		}
+
+		.client {
+			border: 1px solid #33465f;
+			border-radius: 12px;
+			overflow: hidden;
+			background: #111923;
+		}
+
+		.client .title {
+			padding: 8px 10px;
+			font-size: 12px;
+			color: var(--muted);
+			border-bottom: 1px solid #2a3a4f;
+		}
+
+		iframe {
+			width: 100%;
+			height: 760px;
+			border: 0;
+			background: #0d141d;
+		}
+
+		.span-2 {
+			grid-column: span 2;
+		}
+
+		.span-3 {
+			grid-column: span 3;
+		}
+
+		@media (max-width: 960px) {
+			.row {
+				grid-template-columns: repeat(6, 1fr);
+			}
+
+			.span-2,
+			.span-3 {
+				grid-column: span 6;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>Multi-Controller Quick Harness</h1>
+		<div class="row">
+			<div class="field span-3">
+				<label for="host">Host</label>
+				<input id="host" value="ws://127.0.0.1:9080">
+			</div>
+			<div class="field span-2">
+				<label for="count">Controllers</label>
+				<select id="count">
+					<option>2</option>
+					<option selected>3</option>
+					<option>4</option>
+					<option>5</option>
+					<option>6</option>
+					<option>8</option>
+				</select>
+			</div>
+			<div class="field span-2">
+				<label for="namePrefix">Name prefix</label>
+				<input id="namePrefix" value="Bot">
+			</div>
+			<div class="field span-2">
+				<label for="startAvatar">Start avatar</label>
+				<input id="startAvatar" type="number" min="0" max="20" value="0">
+			</div>
+			<div class="field span-2">
+				<label for="autoReady">Autoready</label>
+				<select id="autoReady">
+					<option value="1" selected>On</option>
+					<option value="0">Off</option>
+				</select>
+			</div>
+			<div class="field span-2">
+				<label>&nbsp;</label>
+				<button id="spawn">Spawn / Refresh</button>
+			</div>
+			<div class="field span-2">
+				<label>&nbsp;</label>
+				<button id="clear" class="clear">Clear</button>
+			</div>
+		</div>
+		<p class="note">Each frame is a separate controller tab context. For strict storage isolation, use Playwright contexts later.</p>
+	</header>
+
+	<main id="grid" class="grid"></main>
+
+	<script>
+		const grid = document.getElementById("grid");
+		const hostInput = document.getElementById("host");
+		const countInput = document.getElementById("count");
+		const namePrefixInput = document.getElementById("namePrefix");
+		const startAvatarInput = document.getElementById("startAvatar");
+		const autoReadyInput = document.getElementById("autoReady");
+		const spawnBtn = document.getElementById("spawn");
+		const clearBtn = document.getElementById("clear");
+
+		function createClientCard(index, src) {
+			const card = document.createElement("section");
+			card.className = "client";
+			const title = document.createElement("div");
+			title.className = "title";
+			title.textContent = `Controller ${index + 1}`;
+			const frame = document.createElement("iframe");
+			frame.loading = "eager";
+			frame.src = src;
+			card.appendChild(title);
+			card.appendChild(frame);
+			return card;
+		}
+
+		function buildControllerUrl(index) {
+			const host = hostInput.value.trim();
+			const prefix = namePrefixInput.value.trim() || "Bot";
+			const startAvatar = Math.max(0, Number(startAvatarInput.value) || 0);
+			const avatar = startAvatar + index;
+			const autoReady = autoReadyInput.value === "1" ? "1" : "0";
+			const params = new URLSearchParams({
+				host,
+				name: `${prefix}${index + 1}`,
+				avatar: String(avatar),
+				debug: "1",
+				autoconnect: "1",
+				autojoin: "1",
+				autoready: autoReady,
+			});
+			return `./index.html?${params.toString()}`;
+		}
+
+		function spawnControllers() {
+			const count = Math.max(1, Math.min(12, Number(countInput.value) || 1));
+			grid.innerHTML = "";
+			for (let i = 0; i < count; i += 1) {
+				const src = buildControllerUrl(i);
+				grid.appendChild(createClientCard(i, src));
+			}
+		}
+
+		spawnBtn.addEventListener("click", spawnControllers);
+		clearBtn.addEventListener("click", () => {
+			grid.innerHTML = "";
+		});
+
+		spawnControllers();
+	</script>
+</body>
+
+</html>

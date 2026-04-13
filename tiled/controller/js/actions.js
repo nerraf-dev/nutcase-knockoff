@@ -27,10 +27,18 @@ export function log(message) {
  */
 export function hydrate() {
 	const defaultHost = `ws://${window.location.hostname || "127.0.0.1"}:9080`;
-	const urlDebug = new URLSearchParams(window.location.search).get("debug");
+	const params = new URLSearchParams(window.location.search);
+	const urlDebug = params.get("debug");
+	const urlHost = params.get("host");
+	const urlName = params.get("name");
+	const urlAvatar = params.get("avatar");
 	const savedRaw = localStorage.getItem(STORAGE_KEY);
 	if (!savedRaw) {
-		el.hostInput.value = defaultHost;
+		el.hostInput.value = urlHost || defaultHost;
+		el.nameInput.value = urlName || "";
+		if (urlAvatar !== null) {
+			el.avatarInput.value = String(Math.max(0, Number(urlAvatar) || 0));
+		}
 		state.debugMode = urlDebug === "1";
 		return;
 	}
@@ -40,10 +48,23 @@ export function hydrate() {
 		el.hostInput.value = saved.host || defaultHost;
 		el.nameInput.value = saved.name || "";
 		el.avatarInput.value = String(saved.avatarIndex ?? 0);
+		if (urlHost) {
+			el.hostInput.value = urlHost;
+		}
+		if (urlName) {
+			el.nameInput.value = urlName;
+		}
+		if (urlAvatar !== null) {
+			el.avatarInput.value = String(Math.max(0, Number(urlAvatar) || 0));
+		}
 		state.clientId = saved.clientId || state.clientId;
 		state.debugMode = urlDebug === "1" ? true : Boolean(saved.debugMode);
 	} catch (_err) {
-		el.hostInput.value = defaultHost;
+		el.hostInput.value = urlHost || defaultHost;
+		el.nameInput.value = urlName || "";
+		if (urlAvatar !== null) {
+			el.avatarInput.value = String(Math.max(0, Number(urlAvatar) || 0));
+		}
 		state.debugMode = urlDebug === "1";
 	}
 }
