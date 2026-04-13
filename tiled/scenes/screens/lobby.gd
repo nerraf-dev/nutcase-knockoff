@@ -12,7 +12,7 @@ signal lobby_back_to_home
 signal lobby_back_to_setup
 
 const p_badge = preload("res://scenes/components/player_badge.tscn")
-const QR_CODE_SCRIPT = preload("res://addons/godot-qrcode-generator/classes/qr_code.gd")
+const QR_CODE_SCRIPT = preload("res://scripts/third_party/qrcode/qr_code.gd")
 const QR_TARGET_PIXEL_SIZE := 200
 
 var _setup_settings: Dictionary = {}
@@ -48,7 +48,11 @@ func _ready() -> void:
 		room_code_label.text = "Offline Lobby (Multiplayer mode not active)"
 
 	var qr_code = QR_CODE_SCRIPT.new()
-	qr_code.error_correct_level = QR_CODE_SCRIPT.ErrorCorrectionLevel.MEDIUM
+
+	# Use MEDIUM correction level (enum value 1) when available.
+	if qr_code.get("error_correct_level") != null:
+		qr_code.error_correct_level = 1
+
 	var qr_texture: ImageTexture = qr_code.get_texture(controller_url)
 	qr_code.queue_free()
 

@@ -80,7 +80,10 @@ func show_game_init(on_game_init_complete: Callable, on_back_to_home: Callable) 
 func show_lobby(settings: Dictionary, on_start_requested: Callable, on_back_to_home: Callable, on_back_to_setup: Callable) -> void:
 	var lobby_scene = preload("res://scenes/screens/lobby.tscn")
 	var lobby_instance = lobby_scene.instantiate()
-	lobby_instance.configure(settings)
+	if lobby_instance.has_method("configure"):
+		lobby_instance.configure(settings)
+	else:
+		push_error("Lobby scene instance does not expose configure(settings). Script may have failed to load.")
 	_scene_container.add_child(lobby_instance)
 	if on_start_requested.is_valid():
 		lobby_instance.lobby_start_requested.connect(on_start_requested)

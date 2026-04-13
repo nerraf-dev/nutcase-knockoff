@@ -129,11 +129,31 @@ func _process_request(client: StreamPeerTCP) -> void:
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	
 	if file == null:
+		var fallback = _try_load_image_resource(file_path)
+		if not fallback.is_empty():
+			_send_binary_response(client, 200, fallback["bytes"], fallback["mime"])
+			return
+
+		var font_fallback = _try_load_font_resource(file_path, path)
+		if not font_fallback.is_empty():
+			_send_binary_response(client, 200, font_fallback["bytes"], font_fallback["mime"])
+			return
+
+		# Debug: log all font requests
+		if path.ends_with(".otf") or path.ends_with(".ttf") or path.ends_with(".woff") or path.ends_with(".woff2"):
+			push_warning("ControllerServer: FONT NOT FOUND - HTTP path '%s' (resolved: %s)" % [path, file_path])
+		else:
+			push_warning("ControllerServer: file not found for HTTP path '%s' (resolved: %s)" % [path, file_path])
 		_send_text_response(client, 404, "Not Found", "text/plain")
 		return
 	
 	var content = file.get_buffer(file.get_length())
 	var mime_type = _get_mime_type(path)
+	
+	# Debug: log font files being served
+	if path.ends_with(".otf") or path.ends_with(".ttf") or path.ends_with(".woff") or path.ends_with(".woff2"):
+		print("✓ ControllerServer: serving font %s (%d bytes) with MIME type: %s" % [path, content.size(), mime_type])
+	
 	_send_binary_response(client, 200, content, mime_type)
 
 func _send_text_response(client: StreamPeerTCP, status_code: int, body: String, content_type: String) -> void:
@@ -149,6 +169,8 @@ func _send_binary_response(client: StreamPeerTCP, status_code: int, body: Packed
 	var headers = "HTTP/1.1 %d %s\r\n" % [status_code, status_text]
 	headers += "Content-Type: %s\r\n" % content_type
 	headers += "Content-Length: %d\r\n" % body.size()
+	headers += "Access-Control-Allow-Origin: *\r\n"
+	headers += "Cache-Control: no-cache\r\n"
 	headers += "Connection: close\r\n"
 	headers += "\r\n"
 
@@ -166,6 +188,10 @@ func _get_mime_type(path: String) -> String:
 		".jpg": "image/jpeg",
 		".jpeg": "image/jpeg",
 		".svg": "image/svg+xml",
+		".otf": "application/x-font-opentype",
+		".ttf": "application/x-font-truetype",
+		".woff": "application/font-woff",
+		".woff2": "font/woff2",
 		".txt": "text/plain"
 	}
 	
@@ -174,6 +200,66 @@ func _get_mime_type(path: String) -> String:
 			return types[ext]
 	
 	return "application/octet-stream"
+
+func _try_load_image_resource(file_path: String) -> Dictionary:
+	# In exported projects, imported textures may exist as resources even when
+	# the original source file is not directly readable via FileAccess.
+	var ext = file_path.get_extension().to_lower()
+	if ext != "png" and ext != "jpg" and ext != "jpeg":
+		return {}
+
+	var texture = load(file_path)
+	if texture == null or not (texture is Texture2D):
+		return {}
+
+	var image: Image = (texture as Texture2D).get_image()
+	if image == null:
+		return {}
+
+	# Encode to PNG for browser compatibility and deterministic bytes.
+	var bytes: PackedByteArray = image.save_png_to_buffer()
+	if bytes.is_empty():
+		return {}
+
+	return {
+		"bytes": bytes,
+		"mime": "image/png"
+	}
+
+func _try_load_font_resource(file_path: String, request_path: String) -> Dictionary:
+	# In exported projects, .ttf/.otf can be imported as FontFile resources.
+	# If the raw file is missing, try loading the imported resource bytes.
+	var ext = file_path.get_extension().to_lower()
+	if ext != "ttf" and ext != "otf":
+		return {}
+
+	var font_resource = load(file_path)
+	if font_resource == null:
+		var file_name = file_path.get_file()
+		if file_path.contains("/webfonts/"):
+			font_resource = load("res://controller/fonts/" + file_name)
+		elif file_path.contains("/fonts/"):
+			font_resource = load("res://controller/webfonts/" + file_name)
+	if font_resource == null:
+		return {}
+
+	if not font_resource.has_method("get_data"):
+		return {}
+
+	var bytes_candidate = font_resource.call("get_data")
+	if not (bytes_candidate is PackedByteArray):
+		return {}
+
+	var bytes: PackedByteArray = bytes_candidate
+	if bytes.is_empty():
+		return {}
+
+	var mime = _get_mime_type(request_path)
+	print("✓ ControllerServer: serving imported font resource %s (%d bytes) as %s" % [request_path, bytes.size(), mime])
+	return {
+		"bytes": bytes,
+		"mime": mime
+	}
 
 func _get_local_ip() -> String:
 	var explicit_ip = _get_explicit_host_ip_override()
