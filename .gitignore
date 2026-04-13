@@ -35,6 +35,10 @@ env/
 .env.local
 *.pyc
 
+# Playwright
+test-results/
+playwright-report/
+
 # --- Game Source (Godot) ---
 # Godot editor and import metadata/cache
 .godot/
@@ -64,3 +68,4 @@ Thumbs.db
 
 nutcase-knockoff.code-workspace
 *.code-workspace
+
