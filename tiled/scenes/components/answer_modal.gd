@@ -87,7 +87,7 @@ func _recursive_disable_focus(node: Node, exclude: Node) -> void:
 ## Called when the user confirms their input (Submit button or LineEdit Enter).
 ## Emits `answer_submitted` only for non-empty trimmed input, restores focus, then frees modal.
 func _on_submit_pressed() -> void:
-	UISfx.play_ui_click()
+	_play_ui_click_safe()
 	var answer = answer_text.text.strip_edges()
 	if answer != "":
 		print("Answer submitted: %s" % answer)
@@ -99,11 +99,17 @@ func _on_submit_pressed() -> void:
 
 ## Called when the user cancels the modal. Restores focus, emits `cancelled`, and frees the modal.
 func _on_cancel_pressed() -> void:
-	UISfx.play_ui_click()
+	_play_ui_click_safe()
 	print("Answer submission canceled.")
 	_restore_background_focus()
 	cancelled.emit()
 	queue_free()
+
+func _play_ui_click_safe() -> void:
+	# Keep answer submission functional even if UI SFX singleton is missing.
+	var ui_sfx := get_node_or_null("/root/UISfx")
+	if ui_sfx and ui_sfx.has_method("play_ui_click"):
+		ui_sfx.call("play_ui_click")
 
 ## Restores previously stored focus modes on background controls.
 ## Safe to call multiple times; entries are removed from storage as they're restored.
