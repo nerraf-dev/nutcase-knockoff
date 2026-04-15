@@ -24,11 +24,11 @@ If an issue is not clearly `BIG` or `SHORT`, mark it `LATER` and keep moving.
 
 ## Session Notes
 
-- Date:
+- Date: 14/04/2026
 
 - Build checked on:
 
-- Test device(s):
+- Test device(s): PC – Asus Laptop
 
 - Number of players simulated:
 
