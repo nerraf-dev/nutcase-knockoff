@@ -21,7 +21,7 @@ const MAX_PLAYERS: int = 8
 
 # Game modes
 const GAME_MODES: Array[String] = ["qna"]
-const GAME_TARGETS: Array[int] = [200, 1000, 2000, 3000]
+const GAME_TARGETS: Array[int] = [200, 350, 500]
 
 # Game Options
 const FUZZY_ENABLED_DEFAULT: bool = true

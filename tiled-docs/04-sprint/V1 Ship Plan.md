@@ -46,6 +46,7 @@ A player can:
 - cheeky/adult content branch as a separate product
 - classroom-specific features
 - open-ended content framework work beyond what directly helps v1
+- question sprint / alternative end condition format (see [[End Condition Design]])
 
 ## Release Priorities
 
@@ -112,6 +113,8 @@ Tiled v1 is ready when:
 - How many players should v1 officially support with confidence?
 - Which rule variants are real features, and which are just unresolved design choices?
 - What is the minimum acceptable polish bar for an itch.io release?
+- Should 1P mode be removed before external testers see the build? (see [[1P Mode Decision]])
+- What numeric values should Short/Medium/Long map to if labels are replaced?
 
 ## Immediate Next Steps
 

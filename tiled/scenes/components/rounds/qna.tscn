@@ -97,6 +97,7 @@ text = " - - Current Player - - "
 label_settings = SubResource("LabelSettings_w8bgg")
 
 [node name="Prize" type="Label" parent="." unique_id=957552302]
+visible = false
 layout_mode = 0
 offset_left = 1568.0
 offset_top = 48.0

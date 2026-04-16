@@ -2,11 +2,8 @@
 
 [ext_resource type="Script" uid="uid://diseisyc2bdd5" path="res://scenes/screens/splash_screen.gd" id="1_jg1i1"]
 [ext_resource type="Texture2D" uid="uid://dnor24awq3xwf" path="res://assets/images/itch_banner.png" id="2_8hwfj"]
-
-[sub_resource type="Gradient" id="Gradient_5vyjk"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_8hwfj"]
-gradient = SubResource("Gradient_5vyjk")
+[ext_resource type="Texture2D" uid="uid://87iyjhtkdo23" path="res://assets/images/backgrounds/Untitled_Artwork2.png" id="2_cu0jt"]
+[ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="4_e12sn"]
 
 [node name="Splash" type="Control" unique_id=1204895660]
 layout_mode = 3
@@ -17,20 +14,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jg1i1")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=334059015]
-visible = false
+[node name="BGImage" type="TextureRect" parent="." unique_id=334059015]
 layout_mode = 0
-offset_right = 1920.0
-offset_bottom = 1080.0
-texture = SubResource("GradientTexture2D_8hwfj")
+offset_right = 2388.0
+offset_bottom = 1668.0
+scale = Vector2(0.91968644, 0.81295955)
+texture = ExtResource("2_cu0jt")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1848726870]
+[node name="ColourOverlay" type="ColorRect" parent="." unique_id=1848726870]
 layout_mode = 0
-offset_left = 475.0
-offset_top = 264.0
-offset_right = 1467.0
-offset_bottom = 698.0
-color = Color(0.0024878304, 0.14238882, 0.23969707, 1)
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 1954.0
+offset_bottom = 1115.0
+color = Color(0.14552572, 0.14552572, 0.1455257, 0.455)
 
 [node name="Label" type="Label" parent="." unique_id=1089978127]
 visible = false
@@ -45,6 +42,27 @@ text = "This is a splash screen"
 [node name="Timer" type="Timer" parent="." unique_id=897079043]
 wait_time = 3.0
 
-[node name="ItchBanner" type="Sprite2D" parent="." unique_id=683416840]
-position = Vector2(970, 482)
+[node name="Container" type="Control" parent="." unique_id=617796765]
+anchors_preset = 0
+offset_left = 282.0
+offset_top = 132.0
+offset_right = 1616.0
+offset_bottom = 931.0
+
+[node name="ItchBanner" type="Sprite2D" parent="Container" unique_id=683416840]
+position = Vector2(695, 387)
 texture = ExtResource("2_8hwfj")
+
+[node name="Label" type="Label" parent="Container" unique_id=1096324658]
+layout_mode = 0
+offset_left = 44.0
+offset_top = 67.0
+offset_right = 535.0
+offset_bottom = 168.0
+theme_override_colors/font_shadow_color = Color(0, 0.12835406, 0.60971165, 0.46500003)
+theme_override_constants/shadow_offset_x = 8
+theme_override_constants/shadow_offset_y = 8
+theme_override_constants/shadow_outline_size = 11
+theme_override_fonts/font = ExtResource("4_e12sn")
+theme_override_font_sizes/font_size = 100
+text = "A game by"

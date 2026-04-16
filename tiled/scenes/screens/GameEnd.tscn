@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dkvx63u5x4iq4"]
+[gd_scene format=3 uid="uid://dkvx63u5x4iq4"]
 
 [ext_resource type="Script" uid="uid://clqugmje4qe4l" path="res://scenes/screens/game_end.gd" id="1_hrp0r"]
 [ext_resource type="LabelSettings" uid="uid://cfchkayhh0bn" path="res://resources/title.tres" id="1_vpbbp"]
 [ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_hrp0r"]
+[ext_resource type="Texture2D" uid="uid://6vk4uudip76p" path="res://assets/images/backgrounds/bg_large_tiles.png" id="2_q7dn1"]
 
 [sub_resource type="Gradient" id="Gradient_xyh14"]
 colors = PackedColorArray(0.5647059, 0.73333335, 1, 0.7019608, 0.78431374, 0.78431374, 0.78431374, 0.7058824)
@@ -11,7 +12,7 @@ colors = PackedColorArray(0.5647059, 0.73333335, 1, 0.7019608, 0.78431374, 0.784
 gradient = SubResource("Gradient_xyh14")
 width = 65
 
-[node name="GameEnd" type="Control"]
+[node name="GameEnd" type="Control" unique_id=19355804]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,13 +22,25 @@ grow_vertical = 2
 script = ExtResource("1_hrp0r")
 metadata/_edit_vertical_guides_ = [959.0]
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=956974666]
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
 texture = SubResource("GradientTexture2D_q7dn1")
 
-[node name="Content" type="VBoxContainer" parent="."]
+[node name="Background2" type="TextureRect" parent="." unique_id=507391991]
+layout_mode = 0
+offset_left = -681.0
+offset_top = -27.999996
+offset_right = 3159.0
+offset_bottom = 2532.0
+rotation = -0.08736457
+scale = Vector2(0.6992977, 0.59871185)
+texture = ExtResource("2_q7dn1")
+flip_h = true
+flip_v = true
+
+[node name="Content" type="VBoxContainer" parent="." unique_id=1679416520]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -37,7 +50,7 @@ grow_vertical = 2
 theme_override_constants/separation = 40
 alignment = 1
 
-[node name="Title" type="Label" parent="Content"]
+[node name="Title" type="Label" parent="Content" unique_id=569177886]
 layout_mode = 2
 text = "Game Over!"
 label_settings = ExtResource("1_vpbbp")
@@ -45,7 +58,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="WinnerLabel" type="Label" parent="Content"]
+[node name="WinnerLabel" type="Label" parent="Content" unique_id=2083239491]
 layout_mode = 2
 text = "🎉 Winner: {name}!"
 label_settings = ExtResource("2_hrp0r")
@@ -53,17 +66,17 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Scores" type="VBoxContainer" parent="Content"]
+[node name="Scores" type="VBoxContainer" parent="Content" unique_id=268944129]
 layout_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="Content"]
+[node name="Buttons" type="HBoxContainer" parent="Content" unique_id=1433947236]
 layout_mode = 2
 alignment = 1
 
-[node name="PlayAgainBtn" type="Button" parent="Content/Buttons"]
+[node name="PlayAgainBtn" type="Button" parent="Content/Buttons" unique_id=398730185]
 layout_mode = 2
 text = "Play again?"
 
-[node name="HomeBtn" type="Button" parent="Content/Buttons"]
+[node name="HomeBtn" type="Button" parent="Content/Buttons" unique_id=387371464]
 layout_mode = 2
 text = "Back Home"
