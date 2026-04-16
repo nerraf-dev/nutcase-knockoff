@@ -31,7 +31,7 @@ func _ready() -> void:
 
 	# Display controller URL for players to join
 	var controller_url = ControllerServer.get_controller_url()
-	instructions_label.text = "Scan the QR code with your phone or head straight to: [b]%s[/b]" % controller_url
+	instructions_label.text = "Grab your phone and scan the QR code or point your browser to: [b]%s[/b]" % controller_url
 	qr_code_rect.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 
 

@@ -52,6 +52,9 @@ const ControllerSyncScript = preload("res://scripts/logic/GameBoardControllerSyn
 
 var round_instance = null
 var _stored_focus_modes: Dictionary = {} # node path -> focus mode, used by _recursive_set_focus
+var _exit_dialog_disabled_states: Dictionary = {} # node path -> previous disabled state
+var _exit_dialog_open: bool = false
+var _round_area_mouse_filter_before_exit: int = Control.MOUSE_FILTER_STOP
 var _overlay_accepting_remote: bool = false
 var question_transition: Control = null
 var _disconnect_policy: GameBoardDisconnectPolicy = null
@@ -73,6 +76,7 @@ func _ready() -> void:
 	exit_btn.pressed.connect(Callable(self , "_on_exit_btn_pressed"))
 	options_btn.pressed.connect(Callable(self , "_on_options_btn_pressed"))
 	exit_confirm.confirmed.connect(_on_exit_confirmed)
+	exit_confirm.popup_hide.connect(_on_exit_confirm_popup_hide)
 	
 	# Connect to turn changes to update current player indicator
 	PlayerManager.turn_changed.connect(_on_turn_changed)
@@ -441,8 +445,50 @@ func _on_options_btn_pressed() -> void:
 func _on_exit_btn_pressed() -> void:
 	print("Exit button pressed")
 	UISfx.play_ui_click()
+	_set_exit_dialog_background_enabled(false)
 	exit_confirm.dialog_text = "Are you sure you want to exit to main menu?"
 	exit_confirm.popup_centered()
+
+func _set_exit_dialog_background_enabled(enabled: bool) -> void:
+	if enabled:
+		for node in [options_btn, exit_btn]:
+			var button := node as BaseButton
+			if button == null:
+				continue
+			var key = button.get_path()
+			button.focus_mode = Control.FOCUS_ALL
+			if _exit_dialog_disabled_states.has(key):
+				button.disabled = _exit_dialog_disabled_states[key]
+				_exit_dialog_disabled_states.erase(key)
+
+		_set_round_focus(true)
+		if round_area is Control:
+			(round_area as Control).mouse_filter = _round_area_mouse_filter_before_exit
+		_exit_dialog_open = false
+		return
+
+	if _exit_dialog_open:
+		return
+
+	_exit_dialog_open = true
+	for node in [options_btn, exit_btn]:
+		var button := node as BaseButton
+		if button == null:
+			continue
+		var key = button.get_path()
+		if not _exit_dialog_disabled_states.has(key):
+			_exit_dialog_disabled_states[key] = button.disabled
+		button.disabled = true
+		button.focus_mode = Control.FOCUS_NONE
+
+	_set_round_focus(false)
+	if round_area is Control:
+		var round_control := round_area as Control
+		_round_area_mouse_filter_before_exit = round_control.mouse_filter
+		round_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+func _on_exit_confirm_popup_hide() -> void:
+	_set_exit_dialog_background_enabled(true)
 
 ## Confirmed exit: stops network server, resets game state, returns to home.
 func _on_exit_confirmed() -> void:

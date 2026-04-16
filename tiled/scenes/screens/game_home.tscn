@@ -94,10 +94,10 @@ texture_normal = ExtResource("9_45uvd")
 stretch_mode = 0
 
 [node name="Exit" type="TextureButton" parent="." unique_id=1014416984]
-offset_left = 1800.0
-offset_top = 16.0
-offset_right = 1900.0
-offset_bottom = 116.0
+offset_left = 1832.0
+offset_top = 8.0
+offset_right = 1932.0
+offset_bottom = 108.0
 scale = Vector2(0.75, 0.75)
 texture_normal = ExtResource("10_qknor")
 texture_hover = ExtResource("11_e1u3m")

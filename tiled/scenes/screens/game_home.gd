@@ -33,6 +33,8 @@ const UI_REVEAL_OVERRIDES: Dictionary = {
 const TITLE_IDLE_OVERRIDES: Dictionary = {}
 var _start_requested: bool = false
 var _title_idle_tween: Tween
+var _home_disabled_states: Dictionary = {} # node path -> previous disabled state
+var _exit_dialog_open: bool = false
 
 
 func _ready() -> void:
@@ -44,6 +46,11 @@ func _ready() -> void:
 	options_btn.pressed.connect(_on_options_btn_pressed)
 	exit_btn.pressed.connect(_on_exit_btn_pressed)
 	accept_dialog.confirmed.connect(_on_AcceptDialog_confirmed)
+	accept_dialog.visibility_changed.connect(_on_accept_dialog_visibility_changed)
+	if accept_dialog.has_signal("canceled"):
+		accept_dialog.canceled.connect(_on_accept_dialog_closed)
+	if accept_dialog.has_signal("close_requested"):
+		accept_dialog.close_requested.connect(_on_accept_dialog_closed)
 	credits_btn.pressed.connect(_on_credits_btn_pressed)
 
 	start_game_btn.focus_mode = Control.FOCUS_ALL
@@ -102,7 +109,11 @@ func _on_options_btn_pressed() -> void:
 	open_options.emit()
 
 func _on_exit_btn_pressed() -> void:
+	if _exit_dialog_open:
+		return
+	_exit_dialog_open = true
 	_play_click_sound()
+	_set_home_controls_enabled(false)
 	accept_dialog.popup_centered()
 	await get_tree().process_frame # Wait one frame
 	if is_instance_valid(accept_dialog):
@@ -110,7 +121,35 @@ func _on_exit_btn_pressed() -> void:
 		if is_instance_valid(ok_button):
 			ok_button.grab_focus() # Focus the OK button
 
+func _set_home_controls_enabled(enabled: bool) -> void:
+	for node in [start_game_btn, options_btn, credits_btn, exit_btn]:
+		var button := node as BaseButton
+		if button == null:
+			continue
+		var key = button.get_path()
+		button.focus_mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
+		if enabled:
+			if _home_disabled_states.has(key):
+				button.disabled = _home_disabled_states[key]
+				_home_disabled_states.erase(key)
+		else:
+			if not _home_disabled_states.has(key):
+				_home_disabled_states[key] = button.disabled
+			button.disabled = true
+
+func _on_accept_dialog_visibility_changed() -> void:
+	if _exit_dialog_open and not accept_dialog.visible:
+		_exit_dialog_open = false
+		_set_home_controls_enabled(true)
+
+func _on_accept_dialog_closed() -> void:
+	# Explicitly hide then let visibility_changed restore controls.
+	if accept_dialog.visible:
+		accept_dialog.hide()
+
 func _on_AcceptDialog_confirmed() -> void:
+	_exit_dialog_open = false
+	_set_home_controls_enabled(true)
 	_play_click_sound()
 	if not NetworkManager.is_local:
 		NetworkManager.stop_server()

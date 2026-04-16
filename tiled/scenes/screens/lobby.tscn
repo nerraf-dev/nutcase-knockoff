@@ -22,7 +22,7 @@ default_font_size = 54
 
 [node name="Lobby" type="Node2D" unique_id=392050463]
 script = ExtResource("1_rxbpr")
-metadata/_edit_vertical_guides_ = [960.0, 1920.0]
+metadata/_edit_vertical_guides_ = [960.0, 1922.0]
 metadata/_edit_horizontal_guides_ = [536.0, 1080.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=1968711665]
@@ -92,18 +92,18 @@ label_settings = ExtResource("7_56qed")
 horizontal_alignment = 1
 
 [node name="HomeBtn" type="TextureButton" parent="." unique_id=2094923599]
-offset_left = 1830.0
-offset_top = 17.0
-offset_right = 2386.0
-offset_bottom = 573.0
+offset_left = 1835.0
+offset_top = 14.0
+offset_right = 2391.0
+offset_bottom = 570.0
 scale = Vector2(0.13, 0.13)
 texture_normal = ExtResource("5_pdtbn")
 
 [node name="Title" type="Label" parent="." unique_id=581773540]
-offset_left = 552.0
-offset_top = 40.0
-offset_right = 1376.0
-offset_bottom = 172.0
+offset_left = 663.0
+offset_top = 27.0
+offset_right = 1256.0
+offset_bottom = 159.0
 theme_override_font_sizes/font_size = 96
 text = "Lobby"
 label_settings = ExtResource("7_56qed")
@@ -129,9 +129,9 @@ theme_override_constants/separation = 16
 
 [node name="RoomInfoContainer" type="VBoxContainer" parent="." unique_id=30440664]
 offset_left = 60.0
-offset_top = 184.0
+offset_top = 161.0
 offset_right = 790.0
-offset_bottom = 378.0
+offset_bottom = 355.0
 theme = SubResource("Theme_t11tv")
 
 [node name="Label" type="Label" parent="RoomInfoContainer" unique_id=754499889]
@@ -148,14 +148,20 @@ horizontal_alignment = 1
 
 [node name="JoinContainer" type="VBoxContainer" parent="." unique_id=1818037960]
 offset_left = 33.0
-offset_top = 417.0
+offset_top = 394.0
 offset_right = 886.0
-offset_bottom = 1028.0
+offset_bottom = 1005.0
 
 [node name="Label2" type="Label" parent="JoinContainer" unique_id=654853190]
 layout_mode = 2
 text = "How to Join"
 label_settings = ExtResource("8_u547o")
+
+[node name="QrCode" type="TextureRect" parent="JoinContainer" unique_id=2060616051]
+custom_minimum_size = Vector2(220, 220)
+layout_mode = 2
+size_flags_horizontal = 4
+stretch_mode = 2
 
 [node name="instructions" type="RichTextLabel" parent="JoinContainer" unique_id=176562224]
 layout_mode = 2
@@ -168,8 +174,3 @@ blah [b]blah[/b] blah
 
 "
 fit_content = true
-
-[node name="QrCode" type="TextureRect" parent="JoinContainer" unique_id=2060616051]
-custom_minimum_size = Vector2(220, 220)
-layout_mode = 2
-stretch_mode = 2

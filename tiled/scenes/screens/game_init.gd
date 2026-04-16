@@ -30,13 +30,14 @@ var settings = {
 	"round_count": 5,
 	"fuzzy_enabled": GameConfig.FUZZY_ENABLED_DEFAULT
 }
+var _stored_disabled_states: Dictionary = {} # node path -> previous disabled state
 
 func _ready() -> void:
 	confirm_modal.visible = false
 	# Setup all option button groups
 	_setup_buttons(game_type_buttons, "game_type")
 	_setup_buttons(length_buttons, "game_target")
-	_setup_buttons(mode_buttons, "game_mode")
+	# _setup_buttons(mode_buttons, "game_mode")
 	
 	# Connect action buttons
 	start_button.pressed.connect(_on_start_button_pressed)
@@ -46,7 +47,7 @@ func _ready() -> void:
 	# Setup modal button navigation
 	_setup_modal_focus()
 	# Highlight pre-selected defaults
-	_highlight_selected_button(mode_buttons.get_child(1), mode_buttons) # Multiplayer (index 1)
+	# _highlight_selected_button(mode_buttons.get_child(1), mode_buttons) # Multiplayer (index 1)
 	_highlight_selected_button(game_type_buttons.get_child(0), game_type_buttons) # Q'n'A (index 0)
 	_highlight_selected_button(length_buttons.get_child(0), length_buttons) # Short (index 0)
 	# Set initial focus for controller navigation
@@ -56,14 +57,14 @@ func _setup_buttons(container: Control, key: String) -> void:
 	for button in _get_buttons(container):
 		button.pressed.connect(_on_option_selected.bind(button, key, container))
 
-func _get_buttons(container: Control) -> Array[Button]:
-	var buttons: Array[Button] = []
+func _get_buttons(container: Control) -> Array[BaseButton]:
+	var buttons: Array[BaseButton] = []
 	for child in container.get_children():
-		if child is Button:
+		if child is BaseButton:
 			buttons.append(child)
 	return buttons
 
-func _on_option_selected(button: Button, key: String, container: Control) -> void:
+func _on_option_selected(button: BaseButton, key: String, container: Control) -> void:
 	UISfx.play_ui_click()
 	var value = button.get_meta("value") if button.has_meta("value") else button.text
 	if key == "game_target":
@@ -77,7 +78,7 @@ func _on_option_selected(button: Button, key: String, container: Control) -> voi
 	# Optional: Visual feedback for selected button
 	_highlight_selected_button(button, container)
 
-func _highlight_selected_button(selected: Button, container: Control) -> void:
+func _highlight_selected_button(selected: BaseButton, container: Control) -> void:
 	# Show circle indicator on selected button, hide on others
 	for button in _get_buttons(container):
 		if button.has_node("TextureRect"):
@@ -89,9 +90,8 @@ func _on_start_button_pressed() -> void:
 	UISfx.play_ui_click()
 	# Show confirmation modal with selected settings
 	confirm_modal.visible = true
-	confirm_values.text = "Game Type: %s\nGame Mode: %s player\nTarget Score: %d\n" % [
+	confirm_values.text = "Game Type: %s\nTarget Score: %d\n" % [
 		settings["game_type"],
-		settings["game_mode"],
 		settings["game_target"],
 	]
 	# Disable background controls and focus modal
@@ -110,16 +110,27 @@ func _setup_modal_focus() -> void:
 	confirm_button.focus_neighbor_bottom = confirm_button.get_path()
 	
 func _set_background_focus(enabled: bool) -> void:
-	# Prevent controller from navigating to background buttons
-	var mode = Control.FOCUS_NONE if not enabled else Control.FOCUS_ALL
+	# Prevent any interaction with background controls while modal is visible.
 	for button in _get_buttons(game_type_buttons):
-		button.focus_mode = mode
+		_set_control_interaction(button, enabled)
 	for button in _get_buttons(length_buttons):
-		button.focus_mode = mode
-	for button in _get_buttons(mode_buttons):
-		button.focus_mode = mode
-	start_button.focus_mode = mode
-	home_button.focus_mode = mode
+		_set_control_interaction(button, enabled)
+	start_button.focus_mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
+	home_button.focus_mode = Control.FOCUS_ALL if enabled else Control.FOCUS_NONE
+	_set_control_interaction(start_button, enabled)
+	_set_control_interaction(home_button, enabled)
+
+func _set_control_interaction(button: BaseButton, enabled: bool) -> void:
+	var key = button.get_path()
+	if enabled:
+		if _stored_disabled_states.has(key):
+			button.disabled = _stored_disabled_states[key]
+			_stored_disabled_states.erase(key)
+		return
+
+	if not _stored_disabled_states.has(key):
+		_stored_disabled_states[key] = button.disabled
+	button.disabled = true
 
 func _on_back_button_pressed() -> void:
 	UISfx.play_ui_click()
@@ -129,7 +140,6 @@ func _on_back_button_pressed() -> void:
 
 func _on_confirm_button_pressed() -> void:
 	UISfx.play_ui_click()
-	# TODO: if 1p - load game, if multi - load lobby and pass settings
 	# Emit signal to start game with selected settings
 	if not _validate_settings(settings):
 		push_error("Invalid game settings; cannot start")
@@ -161,4 +171,5 @@ func _validate_settings(settings_to_validate: Dictionary) -> bool:
 func _on_home_button_pressed() -> void:
 	UISfx.play_ui_click()
 	confirm_modal.visible = false
+	_set_background_focus(true)
 	back_to_home.emit()
