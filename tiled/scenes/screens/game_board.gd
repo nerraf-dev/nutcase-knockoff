@@ -38,6 +38,7 @@ const player_badge_sm = preload("res://scenes/components/player_badge_small.tscn
 @onready var exit_confirm = $AcceptDialog
 
 const QUESTION_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/question_transition_overlay.tscn")
+const OPTIONS_CONTENT_SCENE: PackedScene = preload("res://scenes/screens/options_content.tscn")
 const OVERLAY_AUTO_DISMISS_SECONDS: float = 3.0
 
 const ROUND_SCENES = {
@@ -55,11 +56,16 @@ var _stored_focus_modes: Dictionary = {} # node path -> focus mode, used by _rec
 var _exit_dialog_disabled_states: Dictionary = {} # node path -> previous disabled state
 var _exit_dialog_open: bool = false
 var _round_area_mouse_filter_before_exit: int = Control.MOUSE_FILTER_STOP
+var _round_area_mouse_filter_before_options: int = Control.MOUSE_FILTER_STOP
 var _overlay_accepting_remote: bool = false
 var question_transition: Control = null
 var _disconnect_policy: GameBoardDisconnectPolicy = null
 var _vote_session: GameBoardVoteSession = null
 var _controller_sync: GameBoardControllerSync = null
+var _options_open: bool = false
+var _options_overlay: ColorRect = null
+var _options_content_instance: Control = null
+var _options_disabled_states: Dictionary = {}
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -135,6 +141,11 @@ func _input(event):
 	# Allow A button / Enter to dismiss overlay
 	if question_transition != null and question_transition.is_showing() and event.is_action_pressed("ui_accept"):
 		question_transition.dismiss()
+		get_viewport().set_input_as_handled()
+
+	# Allow B / Esc to close in-game options overlay
+	if _options_open and event.is_action_pressed("ui_cancel"):
+		_hide_options_overlay()
 		get_viewport().set_input_as_handled()
 
 ## Sets up HUD: instantiates player badges (small) and displays them.
@@ -436,10 +447,86 @@ func _on_network_vote_cast(device_id: String, accept: bool) -> void:
 		_vote_session.handle_network_vote_cast(device_id, accept)
 
 ## Button handlers
-## Called when options button is pressed. (Placeholder for future implementation.)
 func _on_options_btn_pressed() -> void:
 	print("Options button pressed")
 	UISfx.play_ui_click()
+	if _options_open:
+		_hide_options_overlay()
+	else:
+		_show_options_overlay()
+
+
+func _show_options_overlay() -> void:
+	if _options_open or _exit_dialog_open:
+		return
+
+	if _options_overlay == null:
+		_options_overlay = ColorRect.new()
+		_options_overlay.name = "InGameOptionsOverlay"
+		_options_overlay.anchors_preset = Control.PRESET_FULL_RECT
+		_options_overlay.grow_horizontal = Control.GROW_DIRECTION_BOTH
+		_options_overlay.grow_vertical = Control.GROW_DIRECTION_BOTH
+		_options_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+		_options_overlay.color = Color(0, 0, 0, 0.45)
+		_options_overlay.z_index = 95
+		add_child(_options_overlay)
+
+	if _options_content_instance == null:
+		var options_node = OPTIONS_CONTENT_SCENE.instantiate()
+		if options_node is Control:
+			_options_content_instance = options_node as Control
+			_options_content_instance.name = "InGameOptionsContent"
+			if _options_content_instance.has_signal("close_requested"):
+				_options_content_instance.connect("close_requested", Callable(self , "_hide_options_overlay"))
+			_options_overlay.add_child(_options_content_instance)
+		else:
+			push_error("options_content.tscn root must be a Control")
+			return
+
+	_options_overlay.visible = true
+	_options_content_instance.visible = true
+	_options_open = true
+
+	_set_round_focus(false)
+	if round_area is Control:
+		var round_control := round_area as Control
+		_round_area_mouse_filter_before_options = round_control.mouse_filter
+		round_control.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	for node in [exit_btn]:
+		var button := node as BaseButton
+		if button == null:
+			continue
+		var key = button.get_path()
+		if not _options_disabled_states.has(key):
+			_options_disabled_states[key] = button.disabled
+		button.disabled = true
+		button.focus_mode = Control.FOCUS_NONE
+
+
+func _hide_options_overlay() -> void:
+	if not _options_open:
+		return
+
+	if _options_content_instance:
+		_options_content_instance.visible = false
+	if _options_overlay:
+		_options_overlay.visible = false
+	_options_open = false
+
+	_set_round_focus(true)
+	if round_area is Control:
+		(round_area as Control).mouse_filter = _round_area_mouse_filter_before_options as Control.MouseFilter
+
+	for node in [exit_btn]:
+		var button := node as BaseButton
+		if button == null:
+			continue
+		var key = button.get_path()
+		if _options_disabled_states.has(key):
+			button.disabled = _options_disabled_states[key]
+			_options_disabled_states.erase(key)
+		button.focus_mode = Control.FOCUS_ALL
 
 ## Called when exit button is pressed; shows confirmation dialog.
 func _on_exit_btn_pressed() -> void:

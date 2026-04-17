@@ -1,10 +1,12 @@
-extends Node2D
+extends Control
 
 signal back_to_home
+signal close_requested
 
 # Action buttons
-@onready var start_button = $StartBtn
-@onready var home_button = $HomeBtn
+@export var is_lobby_mode: bool = true
+
+# Required nodes (in both scenes)
 @onready var sfx_toggle = $Sound/Buttons/toggle
 @onready var sfx_volume = $Sound/Buttons/Volume
 @onready var sfx_volume_value = $Sound/Buttons/Value
@@ -13,7 +15,12 @@ signal back_to_home
 @onready var music_volume_value = $Music/Buttons/Value
 @onready var master_volume = $Master/Buttons/Volume
 @onready var master_volume_value = $Master/Buttons/Value
-@onready var internet_toggle = $Network/Buttons/toggle
+
+# Optional nodes (only in lobby mode)
+var start_button: Node = null
+var home_button: Node = null
+var internet_toggle: Node = null
+var close_button: Node = null
 
 const MIN_LINEAR_VOLUME := 0.001
 const DEFAULT_LINEAR_VOLUME := 0.8
@@ -21,14 +28,29 @@ const SILENT_DB := -80.0
 
 
 func _ready() -> void:
-	start_button.pressed.connect(_on_back_pressed)
-	home_button.pressed.connect(_on_back_pressed)
+	# Set up optional nodes if in lobby mode
+	if is_lobby_mode:
+		start_button = get_node_or_null("StartBtn")
+		home_button = get_node_or_null("HomeBtn")
+		internet_toggle = get_node_or_null("Network/Buttons/toggle")
+		
+		if start_button:
+			start_button.pressed.connect(_on_back_pressed)
+		if home_button:
+			home_button.pressed.connect(_on_back_pressed)
+		if internet_toggle:
+			internet_toggle.toggled.connect(_on_internet_toggled)
+	else:
+		close_button = get_node_or_null("CloseBtn")
+		if close_button:
+			close_button.pressed.connect(_on_close_pressed)
+	
+	# Required connections (always present)
 	sfx_toggle.toggled.connect(_on_sfx_toggled)
 	sfx_volume.value_changed.connect(_on_sfx_volume_changed)
 	music_toggle.toggled.connect(_on_music_toggled)
 	music_volume.value_changed.connect(_on_music_volume_changed)
 	master_volume.value_changed.connect(_on_master_volume_changed)
-	internet_toggle.toggled.connect(_on_internet_toggled)
 
 	_sync_from_settings()
 
@@ -36,7 +58,8 @@ func _ready() -> void:
 func _sync_from_settings() -> void:
 	_set_toggle_state(sfx_toggle, UserSettings.ui_sfx_enabled)
 	_set_toggle_state(music_toggle, UserSettings.music_enabled)
-	_set_toggle_state(internet_toggle, UserSettings.internet_enabled)
+	if is_lobby_mode and internet_toggle:
+		_set_toggle_state(internet_toggle, UserSettings.internet_enabled)
 
 	var sfx_linear = _slider_value_from_settings(UserSettings.ui_sfx_enabled, UserSettings.ui_sfx_volume_db)
 	sfx_volume.set_value_no_signal(sfx_linear)
@@ -62,6 +85,11 @@ func _on_back_pressed() -> void:
 	back_to_home.emit()
 
 
+func _on_close_pressed() -> void:
+	UISfx.play_ui_back()
+	close_requested.emit()
+
+
 func _on_sfx_toggled(enabled: bool) -> void:
 	if enabled and sfx_volume.value <= 0.0:
 		sfx_volume.set_value_no_signal(DEFAULT_LINEAR_VOLUME)
@@ -85,6 +113,8 @@ func _on_music_toggled(enabled: bool) -> void:
 
 func _on_internet_toggled(enabled: bool) -> void:
 	UISfx.play_ui_click()
+	if internet_toggle == null:
+		return
 	UserSettings.set_internet_enabled(enabled)
 	_set_toggle_state(internet_toggle, enabled)
 

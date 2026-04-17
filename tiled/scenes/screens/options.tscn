@@ -18,12 +18,15 @@ default_font_size = 54
 default_font = ExtResource("5_tdua0")
 default_font_size = 54
 
-[node name="Options" type="Node2D" unique_id=111432682]
+[node name="Options" type="Control" unique_id=729136270]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_y7uop")
 metadata/_edit_vertical_guides_ = [960.0, 1920.0]
 metadata/_edit_horizontal_guides_ = [536.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=330997447]
+layout_mode = 0
 offset_left = -91.0
 offset_top = -242.0
 offset_right = 2297.0
@@ -32,6 +35,7 @@ texture = ExtResource("2_dkq70")
 
 [node name="StartBtnold" type="TextureButton" parent="." unique_id=751907660]
 visible = false
+layout_mode = 0
 offset_left = 808.0
 offset_top = 776.0
 offset_right = 1108.0
@@ -40,6 +44,7 @@ texture_normal = ExtResource("2_t4xj1")
 texture_hover = ExtResource("3_sp4sj")
 
 [node name="StartBtn" type="TextureButton" parent="." unique_id=537009957]
+layout_mode = 0
 offset_left = 776.0
 offset_top = 816.0
 offset_right = 1076.0
@@ -65,6 +70,7 @@ label_settings = ExtResource("4_sp4sj")
 horizontal_alignment = 1
 
 [node name="HomeBtn" type="TextureButton" parent="." unique_id=561963222]
+layout_mode = 0
 offset_left = 1824.0
 offset_top = 16.0
 offset_right = 2380.0
@@ -73,6 +79,7 @@ scale = Vector2(0.13, 0.13)
 texture_normal = ExtResource("4_tdua0")
 
 [node name="Title" type="Label" parent="." unique_id=2040698587]
+layout_mode = 0
 offset_left = 552.0
 offset_top = 40.0
 offset_right = 1376.0
@@ -84,6 +91,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Sound" type="VBoxContainer" parent="." unique_id=1832525359]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 128.0
 offset_right = 448.0
@@ -121,6 +129,7 @@ theme_override_font_sizes/font_size = 24
 text = "100%"
 
 [node name="Music" type="VBoxContainer" parent="." unique_id=1452947385]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 320.0
 offset_right = 448.0
@@ -159,6 +168,7 @@ theme_override_font_sizes/font_size = 24
 text = "100%"
 
 [node name="Master" type="VBoxContainer" parent="." unique_id=1158993007]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 512.0
 offset_right = 448.0
@@ -189,6 +199,7 @@ theme_override_font_sizes/font_size = 24
 text = "100%"
 
 [node name="Network" type="VBoxContainer" parent="." unique_id=1148475699]
+layout_mode = 0
 offset_left = 64.0
 offset_top = 704.0
 offset_right = 448.0
@@ -216,7 +227,6 @@ metadata/value = false
 
 [node name="ConfirmModal" type="Control" parent="." unique_id=201032704]
 visible = false
-layout_mode = 3
 anchors_preset = 0
 offset_left = 312.0
 offset_top = 256.0

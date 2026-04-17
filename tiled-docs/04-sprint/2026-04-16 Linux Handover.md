@@ -12,7 +12,7 @@
 ### Overlay interaction locking (background controls)
 - ~~Setup confirm modal now disables background button interaction while visible.~~
 - ~~Home exit dialog now disables menu controls while visible and restores on close~~ 
-- Game board exit dialog now disables HUD/round interaction while visible and restores on close.
+- ~~Game board exit dialog now disables HUD/round interaction while visible and restores on close.~~
 
 ### Type-safety cleanup from those changes
 - `game_init.gd` now uses `BaseButton` where mixed button types are used (fixes TextureButton type mismatch).
@@ -34,7 +34,7 @@
 - Target flow: Connect -> default profile appears -> edit name/avatar -> Ready.
 
 3. Viewport framing decision
-- Current project stretch uses `expand`; if you want hard framing without extra visible area in windowed mode, switch to `keep`.
+- ~~Current project stretch uses `expand`; if you want hard framing without extra visible area in windowed mode, switch to `keep`.~~ switched. ok on the laptop, not tested on larger (live tv). Revisit later?
 
 4. Optional cleanup
 - Overlay-lock code works but could be reduced to a lighter helper style once stable.
@@ -78,7 +78,7 @@ godot --headless --path . -s res://scenes/tests/vote_multiplayer_headless_scaffo
 
 ## Resume Here Next
 
-1. Confirm overlay-lock behavior manually on Linux.
-2. Decide stretch framing (`expand` vs `keep`) and lock it for v1.
+1. ~~Confirm overlay-lock behaviour manually on Linux.~~
+2. ~~Decide stretch framing (`expand` vs `keep`) and lock it for v1.~~
 3. Do a short transition-copy pass (at least correct-answer + pre-question lines).
 4. Capture final external tester checklist and ship the next build.
