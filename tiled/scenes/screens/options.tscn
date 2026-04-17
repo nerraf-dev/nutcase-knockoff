@@ -18,7 +18,7 @@ default_font_size = 54
 default_font = ExtResource("5_tdua0")
 default_font_size = 54
 
-[node name="GameInit2" type="Node2D" unique_id=111432682]
+[node name="Options" type="Node2D" unique_id=111432682]
 script = ExtResource("1_y7uop")
 metadata/_edit_vertical_guides_ = [960.0, 1920.0]
 metadata/_edit_horizontal_guides_ = [536.0]

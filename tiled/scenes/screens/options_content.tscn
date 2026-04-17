@@ -1,0 +1,126 @@
+[gd_scene format=3 uid="uid://dh3bf7vx1u6it"]
+
+[ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="8_ys4fj"]
+[ext_resource type="LabelSettings" uid="uid://e6f41uqtekh1" path="res://resources/settings_label_settings.tres" id="9_4vd4r"]
+
+[sub_resource type="Theme" id="Theme_t11tv"]
+default_font = ExtResource("8_ys4fj")
+default_font_size = 54
+
+[sub_resource type="Theme" id="Theme_64jy4"]
+default_font = ExtResource("8_ys4fj")
+default_font_size = 54
+
+[node name="OptionsContent" type="Control" unique_id=22112556]
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_vertical_guides_ = [960.0, 1920.0]
+metadata/_edit_horizontal_guides_ = [536.0]
+
+[node name="Sound" type="VBoxContainer" parent="." unique_id=1832525359]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 128.0
+offset_right = 448.0
+offset_bottom = 256.0
+
+[node name="Label" type="Label" parent="Sound" unique_id=896853207]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_ys4fj")
+theme_override_font_sizes/font_size = 51
+text = "Sound Effects"
+label_settings = ExtResource("9_4vd4r")
+
+[node name="Buttons" type="HBoxContainer" parent="Sound" unique_id=904802376]
+layout_mode = 2
+
+[node name="toggle" type="Button" parent="Sound/Buttons" unique_id=1163498365]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_ys4fj")
+theme_override_font_sizes/font_size = 28
+toggle_mode = true
+text = "On/Off"
+metadata/value = false
+
+[node name="Volume" type="HSlider" parent="Sound/Buttons" unique_id=1462100110]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Value" type="Label" parent="Sound/Buttons" unique_id=1864820369]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_ys4fj")
+theme_override_font_sizes/font_size = 24
+text = "100%"
+
+[node name="Music" type="VBoxContainer" parent="." unique_id=1452947385]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 320.0
+offset_right = 448.0
+offset_bottom = 448.0
+theme = SubResource("Theme_t11tv")
+
+[node name="Label" type="Label" parent="Music" unique_id=2098367219]
+layout_mode = 2
+text = "Music"
+label_settings = ExtResource("9_4vd4r")
+
+[node name="Buttons" type="HBoxContainer" parent="Music" unique_id=1614017250]
+layout_mode = 2
+theme = SubResource("Theme_64jy4")
+theme_override_constants/separation = 16
+
+[node name="toggle" type="Button" parent="Music/Buttons" unique_id=448148660]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_ys4fj")
+theme_override_font_sizes/font_size = 28
+toggle_mode = true
+text = "On/Off"
+metadata/value = false
+
+[node name="Volume" type="HSlider" parent="Music/Buttons" unique_id=714183786]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Value" type="Label" parent="Music/Buttons" unique_id=931444701]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_ys4fj")
+theme_override_font_sizes/font_size = 24
+text = "100%"
+
+[node name="Master" type="VBoxContainer" parent="." unique_id=1158993007]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 512.0
+offset_right = 448.0
+offset_bottom = 640.0
+theme = SubResource("Theme_t11tv")
+
+[node name="Label" type="Label" parent="Master" unique_id=535691161]
+layout_mode = 2
+text = "Master"
+label_settings = ExtResource("9_4vd4r")
+
+[node name="Buttons" type="HBoxContainer" parent="Master" unique_id=2042614581]
+layout_mode = 2
+theme = SubResource("Theme_64jy4")
+theme_override_constants/separation = 16
+
+[node name="Volume" type="HSlider" parent="Master/Buttons" unique_id=749763039]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Value" type="Label" parent="Master/Buttons" unique_id=1002848257]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("8_ys4fj")
+theme_override_font_sizes/font_size = 24
+text = "100%"

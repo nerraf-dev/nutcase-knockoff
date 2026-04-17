@@ -23,7 +23,7 @@ const MESSAGE_TEMPLATE_SETS: Dictionary = {
 		"wrong_frozen": "%s is wrong!\nYou lose %d points and are frozen out of the round.",
 		"last_standing": "Last player standing!\n%s gets a free guess!",
 		"wrong_lps": "%s is wrong!\nThe answer was: %s",
-		"correct_exact": "%s nailed it!\nBank +%d points!",
+		"correct_exact": "%s nailed it!\nBank %d points!",
 		"correct_fuzzy": "%s is close enough, %s!\nYou get %d points!"
 	},
 	"funny": {

@@ -10,8 +10,8 @@
 ## What Was Changed Recently
 
 ### Overlay interaction locking (background controls)
-- Setup confirm modal now disables background button interaction while visible.
-- Home exit dialog now disables menu controls while visible and restores on close.
+- ~~Setup confirm modal now disables background button interaction while visible.~~
+- ~~Home exit dialog now disables menu controls while visible and restores on close~~ 
 - Game board exit dialog now disables HUD/round interaction while visible and restores on close.
 
 ### Type-safety cleanup from those changes

@@ -76,7 +76,7 @@ func _ready() -> void:
 	exit_btn.pressed.connect(Callable(self , "_on_exit_btn_pressed"))
 	options_btn.pressed.connect(Callable(self , "_on_options_btn_pressed"))
 	exit_confirm.confirmed.connect(_on_exit_confirmed)
-	exit_confirm.popup_hide.connect(_on_exit_confirm_popup_hide)
+	exit_confirm.visibility_changed.connect(_on_exit_confirm_popup_hide)
 	
 	# Connect to turn changes to update current player indicator
 	PlayerManager.turn_changed.connect(_on_turn_changed)
@@ -463,7 +463,7 @@ func _set_exit_dialog_background_enabled(enabled: bool) -> void:
 
 		_set_round_focus(true)
 		if round_area is Control:
-			(round_area as Control).mouse_filter = _round_area_mouse_filter_before_exit
+			(round_area as Control).mouse_filter = _round_area_mouse_filter_before_exit as Control.MouseFilter
 		_exit_dialog_open = false
 		return
 
