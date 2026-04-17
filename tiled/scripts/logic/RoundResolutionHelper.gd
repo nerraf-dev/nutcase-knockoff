@@ -1,7 +1,7 @@
 class_name RoundResolutionHelper
 extends RefCounted
 
-const SHOW_SCORING_BREAKDOWN_DETAILS := true
+const SHOW_SCORING_BREAKDOWN_DETAILS := false  # Set to true to enable detailed scoring breakdowns in messages (for debugging/demo purposes)
 const DEFAULT_STYLE := "default"
 
 # RoundResolutionHelper — scripts/logic/RoundResolutionHelper.gd
@@ -165,7 +165,8 @@ func _format_points_breakdown_suffix(prize: int, scoring_breakdown: Dictionary) 
 	var bonus_points = int(scoring_breakdown.get("bonus_points", 0))
 	if bonus_points <= 0:
 		return ""
-	return "\n(+ %d bonus for guessing early!)" % [bonus_points]
+	return "\n(+ %d + %d bonus for guessing early!)" % [base_points, bonus_points]
+	
 
 func check_for_winner(game_target: int) -> Array[Player]:
 	var winners: Array[Player] = []
