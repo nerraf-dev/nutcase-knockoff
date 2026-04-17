@@ -1,4 +1,45 @@
 {
+  "8b2155fe-f4ee-486b-a98d-8b0851acfd97": {
+    "label": "_NEXT-steps",
+    "items": [
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled-docs\\04-sprint\\V1 Ship Plan.md",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled-docs\\04-sprint\\Multi-Game Expansion Plan.md",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled-docs\\04-sprint\\Classroom Spin-Off Plan.md",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled-docs\\04-sprint\\2026-04-14 Product Direction.md"
+    ],
+    "children": {},
+    "creationTime": "2026-04-14T11:03:47.337Z",
+    "colorName": "terminal.ansiRed"
+  },
+  "9a01c41f-fb30-42d8-bffa-e32ecd134a8c": {
+    "label": "Controller",
+    "items": [
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\index.html",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\styles.css",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\js\\state.js",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\js\\app.js",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\js\\ui.js",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\js\\dom.js",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\js\\events.js",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\js\\actions.js",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\controller\\js\\network.js"
+    ],
+    "children": {},
+    "creationTime": "2026-04-10T13:48:42.816Z",
+    "colorName": "terminal.ansiGreen"
+  },
+  "78f382c8-25a7-4a3d-9a86-dd1290706d8f": {
+    "label": "Game",
+    "items": [
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\scripts\\resources\\GameConfig.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\scripts\\autoload\\GameManager.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\scenes\\screens\\game_board.gd",
+      "c:\\Users\\sifar\\repos\\nutcase-knockoff\\tiled\\scripts\\classes\\Game.gd"
+    ],
+    "children": {},
+    "creationTime": "2026-03-27T10:34:24.379Z",
+    "colorName": "terminal.ansiCyan"
+  },
   "b7b4de84-19fc-4d13-8b72-6973991d0f92": {
     "label": "Main",
     "items": [
