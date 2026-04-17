@@ -163,6 +163,8 @@ func _format_points_breakdown_suffix(prize: int, scoring_breakdown: Dictionary) 
 		return ""
 	var base_points = int(scoring_breakdown.get("base_points", prize))
 	var bonus_points = int(scoring_breakdown.get("bonus_points", 0))
+	if bonus_points <= 0:
+		return ""
 	return "\n(+ %d bonus for guessing early!)" % [bonus_points]
 
 func check_for_winner(game_target: int) -> Array[Player]:

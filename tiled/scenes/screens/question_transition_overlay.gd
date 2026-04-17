@@ -5,7 +5,7 @@ extends Control
 
 var _dismissed: bool = false
 
-func show_message(message: String, auto_dismiss_seconds: float = 3.0) -> void:
+func show_message(message: String, auto_dismiss_seconds: float = 5.0) -> void:
 	result_label.text = message
 	visible = true
 	_dismissed = false

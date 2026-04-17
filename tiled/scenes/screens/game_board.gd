@@ -39,7 +39,10 @@ const player_badge_sm = preload("res://scenes/components/player_badge_small.tscn
 
 const QUESTION_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/question_transition_overlay.tscn")
 const OPTIONS_CONTENT_SCENE: PackedScene = preload("res://scenes/screens/options_content.tscn")
+const RoundIntroCopyHelperScript = preload("res://scripts/logic/RoundIntroCopyHelper.gd")
 const OVERLAY_AUTO_DISMISS_SECONDS: float = 3.0
+const ROUND_INTRO_BASE_POINTS: int = 50
+const SHOW_ROUND_INTRO_BONUS_HINT: bool = true
 
 const ROUND_SCENES = {
 	"qna": preload("res://scenes/components/rounds/qna.tscn")
@@ -66,6 +69,7 @@ var _options_open: bool = false
 var _options_overlay: ColorRect = null
 var _options_content_instance: Control = null
 var _options_disabled_states: Dictionary = {}
+var _round_intro_copy: RefCounted = null
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -91,6 +95,7 @@ func _ready() -> void:
 	_disconnect_policy = DisconnectPolicyScript.new(self )
 	_vote_session = VoteSessionScript.new(self )
 	_controller_sync = ControllerSyncScript.new(self )
+	_round_intro_copy = RoundIntroCopyHelperScript.new()
 	await get_tree().process_frame
 	_broadcast_new_round_to_controllers()
 
@@ -282,6 +287,7 @@ func _start_next_round() -> void:
 	if next_question:
 		PlayerManager.unfreeze_all_players()
 		GameManager.game.current_round += 1
+		await _update_overlay(_build_round_intro_message(next_question))
 		round_instance.start_new_question(next_question)
 		_broadcast_new_round_to_controllers()
 		_broadcast_turn_to_controllers()
@@ -294,6 +300,23 @@ func _start_next_round() -> void:
 		_set_round_focus(true)
 	else:
 		print("No more questions available!")
+
+
+func _build_round_intro_message(question: Resource) -> String:
+	if _round_intro_copy == null:
+		_round_intro_copy = RoundIntroCopyHelperScript.new()
+
+	var base_points := _get_question_base_points_for_intro(question)
+	return _round_intro_copy.build_round_intro_message(base_points, SHOW_ROUND_INTRO_BONUS_HINT)
+
+
+func _get_question_base_points_for_intro(question: Resource) -> int:
+	var difficulty := "easy"
+	if question != null and question.get("difficulty") != null:
+		difficulty = str(question.difficulty).to_lower()
+
+	var mult = float(GameConfig.DIFFICULTY_MULTIPLIERS.get(difficulty, 1.0))
+	return int(round(float(ROUND_INTRO_BASE_POINTS) * mult))
 
 ## Recursively enable/disable focus on all controls in the round (for local keyboard fallback).
 func _set_round_focus(enabled: bool) -> void:
