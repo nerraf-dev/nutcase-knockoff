@@ -9,6 +9,7 @@ const LOOP_DELAY_SECONDS: float = 1.5
 
 var _player: AudioStreamPlayer
 var _active_track: String = ""
+var _loop_timer: SceneTreeTimer = null
 
 
 func _ready() -> void:
@@ -24,7 +25,6 @@ func _ready() -> void:
 	_player.finished.connect(_on_track_finished)
 
 	
-
 func play_menu_music() -> void:
 	_play_track("menu", MENU_MUSIC_STREAM)
 	print("Playing menu music")
@@ -43,7 +43,15 @@ func stop_music() -> void:
 func _on_track_finished() -> void:
 	if _active_track == "":
 		return
-	get_tree().create_timer(LOOP_DELAY_SECONDS).timeout.connect(_restart_active_track)
+	_loop_timer = get_tree().create_timer(LOOP_DELAY_SECONDS)
+	_loop_timer.timeout.connect(_restart_active_track)
+
+
+func _exit_tree() -> void:
+	if _loop_timer != null and _loop_timer.timeout.is_connected(_restart_active_track):
+		_loop_timer.timeout.disconnect(_restart_active_track)
+	_loop_timer = null
+	_active_track = ""
 
 
 func _restart_active_track() -> void:

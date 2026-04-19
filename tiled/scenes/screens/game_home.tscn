@@ -22,7 +22,7 @@ Label/styles/normal = null
 [node name="GameHome" type="Node2D" unique_id=1535613956]
 script = ExtResource("1_dobo1")
 metadata/_edit_vertical_guides_ = [960.0, -354.0, 1920.0]
-metadata/_edit_horizontal_guides_ = [536.0, 1080.0]
+metadata/_edit_horizontal_guides_ = [536.0, 1080.0, 9.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=1917874966]
 offset_left = -216.0
@@ -76,9 +76,9 @@ label_settings = ExtResource("14_qknor")
 
 [node name="Options" type="TextureButton" parent="." unique_id=17533870]
 offset_left = 16.0
-offset_top = 16.0
+offset_top = 8.0
 offset_right = 116.0
-offset_bottom = 116.0
+offset_bottom = 108.0
 scale = Vector2(0.75, 0.75)
 texture_normal = ExtResource("7_ltmyb")
 texture_hover = ExtResource("8_vmkxd")
