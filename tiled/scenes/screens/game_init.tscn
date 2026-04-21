@@ -19,6 +19,14 @@
 [ext_resource type="Texture2D" uid="uid://c5g3f74n4xkik" path="res://assets/images/buttons/setup_screen/med-circle.svg" id="15_quw76"]
 [ext_resource type="Texture2D" uid="uid://dsopqpa6wvboc" path="res://assets/images/buttons/setup_screen/short-circle-3.svg" id="16_7p4uc"]
 [ext_resource type="Texture2D" uid="uid://ej5ytb8rbqhl" path="res://assets/images/buttons/setup_screen/long-circle.svg" id="16_okqwt"]
+[ext_resource type="Texture2D" uid="uid://jx833qp5hbhc" path="res://assets/images/buttons/base/Button-base-green - 0.png" id="20_p6yhs"]
+[ext_resource type="Texture2D" uid="uid://q1no8frg7g8m" path="res://assets/images/buttons/base/Button-base-over-0.png" id="21_j5pn4"]
+[ext_resource type="Texture2D" uid="uid://dia6pfjrxwcgy" path="res://assets/images/buttons/base/Button-base - 0.png" id="22_cakjl"]
+[ext_resource type="Texture2D" uid="uid://badornwr71wvk" path="res://assets/images/buttons/base/Button-base-green - 2.png" id="23_uieoe"]
+[ext_resource type="Texture2D" uid="uid://cqhrmdgdwbi86" path="res://assets/images/buttons/base/Button-base-over-1.png" id="24_4afdp"]
+[ext_resource type="Texture2D" uid="uid://cp2mh2kyjefu0" path="res://assets/images/buttons/base/Button-base - 1.png" id="25_jv11u"]
+[ext_resource type="Texture2D" uid="uid://cym030o0a2rb0" path="res://assets/images/buttons/base/Button-base - 2.png" id="26_m44eh"]
+[ext_resource type="Texture2D" uid="uid://d0yf5bnikqhlx" path="res://assets/images/buttons/base/Button-base-over-2.png" id="27_odrsr"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_0ivg7"]
 
@@ -46,6 +54,30 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kg5kx"]
+texture = ExtResource("20_p6yhs")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qntd6"]
+texture = ExtResource("21_j5pn4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ndttx"]
+texture = ExtResource("22_cakjl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7fmjl"]
+texture = ExtResource("23_uieoe")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qufsq"]
+texture = ExtResource("24_4afdp")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vtwqa"]
+texture = ExtResource("25_jv11u")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hhe4h"]
+texture = ExtResource("26_m44eh")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_c0xkm"]
+texture = ExtResource("27_odrsr")
 
 [node name="GameInit" type="Node2D" unique_id=111432682]
 script = ExtResource("1_nhm8p")
@@ -308,7 +340,6 @@ scale = Vector2(0.5261088, 0.6506926)
 texture = ExtResource("16_okqwt")
 
 [node name="ConfirmModal" type="Control" parent="." unique_id=201032704]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_left = 312.0
@@ -321,11 +352,22 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 129.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.16394848, 0.21695486, 0.38877624, 1)
 
-[node name="ConfirmLabel" type="Label" parent="ConfirmModal" unique_id=261706393]
+[node name="Values" type="RichTextLabel" parent="ConfirmModal" unique_id=1487020995]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 90.0
+offset_right = 1054.0
+offset_bottom = 460.0
+theme_override_font_sizes/normal_font_size = 36
+bbcode_enabled = true
+text = "settings here"
+
+[node name="ConfirmLabel" type="Label" parent="ConfirmModal" unique_id=416346247]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -339,29 +381,43 @@ text = "Confirm?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ConfirmBtn" type="Button" parent="ConfirmModal" unique_id=674056397]
+[node name="ConfirmBtn" type="Button" parent="ConfirmModal" unique_id=984083563]
 layout_mode = 0
-offset_left = 1144.0
-offset_top = 408.0
-offset_right = 1379.0
-offset_bottom = 495.0
+offset_left = 1121.0
+offset_top = 473.0
+offset_right = 1376.0
+offset_bottom = 580.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0.021434585, 0.021434639, 0.021434741, 1)
+theme_override_colors/font_pressed_color = Color(0.11858138, 0.11858138, 0.11858138, 1)
+theme_override_colors/font_hover_color = Color(0.7428374, 0.72457296, 0.14496616, 1)
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_kg5kx")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_qntd6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ndttx")
+theme_override_styles/focus = SubResource("StyleBoxTexture_7fmjl")
 text = "Confirm"
 
-[node name="BackBtn" type="Button" parent="ConfirmModal" unique_id=1005975773]
+[node name="BackBtn" type="Button" parent="ConfirmModal" unique_id=686647599]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 416.0
-offset_right = 171.0
-offset_bottom = 493.0
+offset_left = 64.0
+offset_top = 476.0
+offset_right = 267.0
+offset_bottom = 576.0
+theme_override_colors/font_color = Color(0.2195015, 0.21950078, 0.21950099, 1)
+theme_override_colors/font_hover_color = Color(0.15082213, 0.1641806, 0.44866145, 1)
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_qufsq")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_vtwqa")
+theme_override_styles/hover = SubResource("StyleBoxTexture_hhe4h")
+theme_override_styles/focus = SubResource("StyleBoxTexture_c0xkm")
 text = "Back"
 
-[node name="Values" type="RichTextLabel" parent="ConfirmModal" unique_id=972641215]
-layout_mode = 0
-offset_left = 288.0
-offset_top = 90.0
-offset_right = 1054.0
-offset_bottom = 460.0
-bbcode_enabled = true
-text = "settings values"
+[node name="ConfirmModal2" type="Control" parent="." unique_id=1271622355]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 312.0
+offset_top = 256.0
+offset_right = 1728.0
+offset_bottom = 776.0

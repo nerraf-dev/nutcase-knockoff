@@ -40,6 +40,8 @@ const DIFFICULTY_MULTIPLIERS = {
 	"hard": 2.0
 }
 
+@export var auto_start_first_question: bool = true
+
 var current_prize = 0.0
 var _question_word_count: int = 0
 var _revealed_word_count: int = 0
@@ -67,14 +69,15 @@ func _ready() -> void:
 	else:
 		push_error("No current player available!")
 		return
-	
-	# Get first question from GameManager
-	var first_question = GameManager.get_next_question()
-	if first_question:
-		start_new_question(first_question)
-	else:
-		push_error("No questions available!")
-		return
+
+	if auto_start_first_question:
+		# Backward compatible fallback for contexts that still instantiate QnA directly.
+		var first_question = GameManager.get_next_question()
+		if first_question:
+			start_new_question(first_question)
+		else:
+			push_error("No questions available!")
+			return
 	if GameManager.game.game_mode == "multi":
 		guess_btn.visible = false # Guesses come from players' phones in multiplayer, so hide local guess button
 

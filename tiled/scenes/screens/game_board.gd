@@ -96,8 +96,6 @@ func _ready() -> void:
 	_vote_session = VoteSessionScript.new(self )
 	_controller_sync = ControllerSyncScript.new(self )
 	_round_intro_copy = RoundIntroCopyHelperScript.new()
-	await get_tree().process_frame
-	_broadcast_new_round_to_controllers()
 
 	if not NetworkManager.is_local:
 		NetworkManager.player_join_received.connect(_on_network_player_join_during_game)
@@ -107,12 +105,15 @@ func _ready() -> void:
 		NetworkManager.guess_received.connect(_on_network_guess)
 		NetworkManager.overlay_continue_received.connect(_on_network_overlay_continue)
 		NetworkManager.vote_cast_received.connect(_on_network_vote_cast)
-		_broadcast_scores_to_controllers()
-		_broadcast_turn_to_controllers()
-
 
 	# Enable input handling for overlay
 	set_process_input(true)
+
+	await _start_initial_round()
+
+	if not NetworkManager.is_local:
+		_broadcast_scores_to_controllers()
+		_broadcast_turn_to_controllers()
 
 func _setup_question_transition_overlay() -> void:
 	# Use dedicated transition scene instead of inline board nodes.
@@ -171,8 +172,32 @@ func _setup_round_area() -> void:
 		push_error("No round scene found for game type: %s" % game_type)
 		return
 	round_instance = round_scene.instantiate()
+	if round_instance.get("auto_start_first_question") != null:
+		round_instance.set("auto_start_first_question", false)
 	round_area.add_child(round_instance)
 	round_instance.connect("round_result", Callable(self , "_on_round_result"))
+
+func _start_initial_round() -> void:
+	if round_instance == null:
+		push_error("Cannot start initial round: round scene is missing")
+		return
+
+	var first_question = GameManager.get_next_question()
+	if first_question == null:
+		push_error("No questions available!")
+		return
+
+	await _update_overlay(_build_round_intro_message(first_question))
+	round_instance.start_new_question(first_question)
+	_broadcast_new_round_to_controllers()
+	_broadcast_turn_to_controllers()
+	# Extra turn sync on the next idle tick ensures controllers recover if a
+	# late/queued new_round packet temporarily reset their turn-known state.
+	call_deferred("_broadcast_turn_to_controllers")
+
+	# Ensure keyboard/controller focus is available once the round is visible.
+	await get_tree().process_frame
+	_set_round_focus(true)
 
 ## Round result handler — dispatches to specific submission type handlers.
 ## Coordinates flow: wrong answer → freeze cascade, fuzzy → voting, exact → winner check
@@ -307,7 +332,12 @@ func _build_round_intro_message(question: Resource) -> String:
 		_round_intro_copy = RoundIntroCopyHelperScript.new()
 
 	var base_points := _get_question_base_points_for_intro(question)
-	return _round_intro_copy.build_round_intro_message(base_points, SHOW_ROUND_INTRO_BONUS_HINT)
+	var question_number := 1
+	if GameManager.game != null:
+		question_number = max(1, int(GameManager.game.current_round))
+
+	var intro_body: String = _round_intro_copy.build_round_intro_message(base_points, SHOW_ROUND_INTRO_BONUS_HINT)
+	return "Question %d\n%s" % [question_number, intro_body]
 
 
 func _get_question_base_points_for_intro(question: Resource) -> int:

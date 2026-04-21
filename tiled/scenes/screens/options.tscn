@@ -259,6 +259,7 @@ text = "On/Off"
 metadata/value = false
 
 [node name="ConfirmModal" type="Control" parent="." unique_id=201032704]
+visible = false
 anchors_preset = 0
 offset_left = 312.0
 offset_top = 256.0
@@ -353,10 +354,10 @@ vertical_alignment = 1
 
 [node name="ConfirmBtn" type="Button" parent="ConfirmModal" unique_id=674056397]
 layout_mode = 0
-offset_left = 1141.0
+offset_left = 1121.0
 offset_top = 473.0
 offset_right = 1376.0
-offset_bottom = 560.0
+offset_bottom = 580.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_pressed_color = Color(0.11858138, 0.11858138, 0.11858138, 1)
 theme_override_font_sizes/font_size = 50
@@ -370,8 +371,8 @@ text = "Confirm"
 layout_mode = 0
 offset_left = 64.0
 offset_top = 476.0
-offset_right = 224.0
-offset_bottom = 553.0
+offset_right = 267.0
+offset_bottom = 576.0
 theme_override_colors/font_color = Color(0.2195015, 0.21950078, 0.21950099, 1)
 theme_override_font_sizes/font_size = 50
 theme_override_styles/normal = SubResource("StyleBoxTexture_x5rv4")
