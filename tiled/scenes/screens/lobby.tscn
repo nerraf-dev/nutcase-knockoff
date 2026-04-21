@@ -67,11 +67,11 @@ texture_normal = ExtResource("3_jdbly")
 texture_hover = ExtResource("4_5gglr")
 
 [node name="StartBtn" type="TextureButton" parent="." unique_id=807638832]
-offset_left = 776.0
-offset_top = 816.0
-offset_right = 1076.0
-offset_bottom = 966.0
-scale = Vector2(1.25, 1.25)
+offset_left = 826.0
+offset_top = 849.00006
+offset_right = 1126.0
+offset_bottom = 999.00006
+scale = Vector2(0.9005305, 0.8343208)
 stretch_mode = 0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="StartBtn" unique_id=2001928274]

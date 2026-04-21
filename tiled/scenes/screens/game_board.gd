@@ -25,7 +25,6 @@ signal game_ended(winner: Player)
 signal network_vote_resolved(result: Dictionary)
 
 # const player_badge = preload("res://scenes/components/player_badge.tscn")
-const player_badge_sm = preload("res://scenes/components/player_badge_small.tscn")
 
 @onready var controls = $HUD/Controls
 @onready var options_btn = $HUD/OptionsBtn
@@ -37,6 +36,7 @@ const player_badge_sm = preload("res://scenes/components/player_badge_small.tscn
 @onready var round_area = $RoundArea
 @onready var exit_confirm = $AcceptDialog
 
+const PLAYER_BADGE_SM = preload("res://scenes/components/player_badge_small.tscn")
 const QUESTION_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/question_transition_overlay.tscn")
 const OPTIONS_CONTENT_SCENE: PackedScene = preload("res://scenes/screens/options_content.tscn")
 const RoundIntroCopyHelperScript = preload("res://scripts/logic/RoundIntroCopyHelper.gd")
@@ -159,7 +159,7 @@ func _setup_players_hud() -> void:
 		for child in player_badges.get_children():
 			child.queue_free()
 	for player in PlayerManager.players:
-		var badge_instance = player_badge_sm.instantiate()
+		var badge_instance = PLAYER_BADGE_SM.instantiate()
 		player_badges.add_child(badge_instance)
 		badge_instance.setup(player)
 

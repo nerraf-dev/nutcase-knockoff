@@ -9,6 +9,14 @@
 [ext_resource type="Texture2D" uid="uid://vvvbgch27fvq" path="res://assets/images/buttons/home/home-normal.svg" id="4_tdua0"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_tdua0"]
 [ext_resource type="LabelSettings" uid="uid://e6f41uqtekh1" path="res://resources/settings_label_settings.tres" id="9_tdua0"]
+[ext_resource type="Texture2D" uid="uid://jx833qp5hbhc" path="res://assets/images/buttons/base/Button-base-green - 0.png" id="10_a5ex1"]
+[ext_resource type="Texture2D" uid="uid://q1no8frg7g8m" path="res://assets/images/buttons/base/Button-base-over-0.png" id="11_qgpnr"]
+[ext_resource type="Texture2D" uid="uid://dia6pfjrxwcgy" path="res://assets/images/buttons/base/Button-base - 0.png" id="12_vcbnf"]
+[ext_resource type="Texture2D" uid="uid://badornwr71wvk" path="res://assets/images/buttons/base/Button-base-green - 2.png" id="13_3irpn"]
+[ext_resource type="Texture2D" uid="uid://cqhrmdgdwbi86" path="res://assets/images/buttons/base/Button-base-over-1.png" id="14_pkf4v"]
+[ext_resource type="Texture2D" uid="uid://cp2mh2kyjefu0" path="res://assets/images/buttons/base/Button-base - 1.png" id="15_eha5w"]
+[ext_resource type="Texture2D" uid="uid://cym030o0a2rb0" path="res://assets/images/buttons/base/Button-base - 2.png" id="16_1sdvm"]
+[ext_resource type="Texture2D" uid="uid://d0yf5bnikqhlx" path="res://assets/images/buttons/base/Button-base-over-2.png" id="17_ai40r"]
 
 [sub_resource type="Theme" id="Theme_t11tv"]
 default_font = ExtResource("5_tdua0")
@@ -17,6 +25,30 @@ default_font_size = 54
 [sub_resource type="Theme" id="Theme_64jy4"]
 default_font = ExtResource("5_tdua0")
 default_font_size = 54
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pkf4v"]
+texture = ExtResource("10_a5ex1")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eha5w"]
+texture = ExtResource("11_qgpnr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1sdvm"]
+texture = ExtResource("12_vcbnf")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ai40r"]
+texture = ExtResource("13_3irpn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x5rv4"]
+texture = ExtResource("14_pkf4v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ukt44"]
+texture = ExtResource("15_eha5w")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pvedu"]
+texture = ExtResource("16_1sdvm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xaere"]
+texture = ExtResource("17_ai40r")
 
 [node name="Options" type="Control" unique_id=729136270]
 layout_mode = 3
@@ -199,6 +231,7 @@ theme_override_font_sizes/font_size = 24
 text = "100%"
 
 [node name="Network" type="VBoxContainer" parent="." unique_id=1148475699]
+visible = false
 layout_mode = 0
 offset_left = 64.0
 offset_top = 704.0
@@ -226,7 +259,6 @@ text = "On/Off"
 metadata/value = false
 
 [node name="ConfirmModal" type="Control" parent="." unique_id=201032704]
-visible = false
 anchors_preset = 0
 offset_left = 312.0
 offset_top = 256.0
@@ -238,6 +270,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 86.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.16394848, 0.21695486, 0.38877624, 1)
@@ -320,20 +353,31 @@ vertical_alignment = 1
 
 [node name="ConfirmBtn" type="Button" parent="ConfirmModal" unique_id=674056397]
 layout_mode = 0
-offset_left = 1144.0
-offset_top = 408.0
-offset_right = 1379.0
-offset_bottom = 495.0
+offset_left = 1141.0
+offset_top = 473.0
+offset_right = 1376.0
+offset_bottom = 560.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.11858138, 0.11858138, 0.11858138, 1)
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_pkf4v")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_eha5w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_1sdvm")
+theme_override_styles/focus = SubResource("StyleBoxTexture_ai40r")
 text = "Confirm"
 
 [node name="BackBtn" type="Button" parent="ConfirmModal" unique_id=1005975773]
 layout_mode = 0
-offset_left = 48.0
-offset_top = 416.0
-offset_right = 171.0
-offset_bottom = 493.0
+offset_left = 64.0
+offset_top = 476.0
+offset_right = 224.0
+offset_bottom = 553.0
+theme_override_colors/font_color = Color(0.2195015, 0.21950078, 0.21950099, 1)
 theme_override_font_sizes/font_size = 50
+theme_override_styles/normal = SubResource("StyleBoxTexture_x5rv4")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ukt44")
+theme_override_styles/hover = SubResource("StyleBoxTexture_pvedu")
+theme_override_styles/focus = SubResource("StyleBoxTexture_xaere")
 text = "Back"
 
 [node name="Values" type="RichTextLabel" parent="ConfirmModal" unique_id=972641215]
@@ -342,4 +386,6 @@ offset_left = 288.0
 offset_top = 90.0
 offset_right = 1054.0
 offset_bottom = 460.0
+theme_override_font_sizes/normal_font_size = 36
 bbcode_enabled = true
+text = "settings here"
