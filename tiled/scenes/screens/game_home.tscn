@@ -129,3 +129,22 @@ Music:
 Button clicks by Kenney.nl
 (www.kenney.nl)"
 dialog_autowrap = true
+
+[node name="Label" type="Label" parent="." unique_id=238586207]
+offset_left = 28.0
+offset_top = 1011.0
+offset_right = 424.0
+offset_bottom = 1066.0
+pivot_offset = Vector2(-286, 356)
+theme_override_font_sizes/font_size = 40
+text = "Version 0.1.0 (1.0.0a)"
+
+[node name="Label2" type="Label" parent="." unique_id=1685639880]
+offset_top = 892.0
+offset_right = 396.0
+offset_bottom = 1005.0
+pivot_offset = Vector2(-286, 356)
+theme_override_font_sizes/font_size = 40
+text = "-- Alpha Version--
+Testing only"
+horizontal_alignment = 1
