@@ -34,8 +34,8 @@
 - [ ] Homepage: Finalize layout and fonts.
 - [ ] Settings page: Finish layout, style buttons.
 - [ ] Confirmation modal: Decide on approach (see above) and implement.
-- [ ] Game screens: Standardize fonts, center numbers on sliders, improve positioning.
-- [ ] Accessibility: Review color contrast, add options for slider numbers, etc.
+- [ ] Game screens: Standardize fonts, centre numbers on sliders, improve positioning.
+- [ ] Accessibility: Review colour contrast, add options for slider numbers, etc.
 
 ### 2. Single Player Flow
 - [ ] Move guess button to bottom.
