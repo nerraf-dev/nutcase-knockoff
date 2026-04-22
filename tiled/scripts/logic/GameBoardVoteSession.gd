@@ -3,7 +3,7 @@ extends RefCounted
 class_name GameBoardVoteSession
 
 var board: Node = null
-const NETWORK_VOTE_TIMEOUT_SECONDS := 20.0
+const NETWORK_VOTE_TIMEOUT_SECONDS := 25.0
 var _vote_session_active: bool = false
 var _vote_session_guesser: Player = null
 var _vote_session_correct_answer: String = ""

@@ -18,7 +18,7 @@ GitHub link shorthand:
 - Polish | Improve setup confirm modal consistency with game buttons | local
 
 ## Next (up to 7)
-- Bug | Fix QR code functionality across target devices | GH-new
+- Test | Verify QR join flow on at least 2 non-desktop devices before opening an issue | local
 - Polish | Standardise fonts and centre slider numbers on game screens | local
 - Polish | Clarify player badge labels and resize for multi-player layouts | local
 - Feature | Improve winner and next-question overlay copy consistency | local

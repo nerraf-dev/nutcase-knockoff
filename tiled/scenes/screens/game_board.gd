@@ -49,7 +49,7 @@ const ROUND_SCENES = {
 	# Add other round types here as needed
 }
 
-const NETWORK_VOTE_TIMEOUT_SECONDS = 20.0
+# const NETWORK_VOTE_TIMEOUT_SECONDS = 25.0
 const DisconnectPolicyScript = preload("res://scripts/logic/GameBoardDisconnectPolicy.gd")
 const VoteSessionScript = preload("res://scripts/logic/GameBoardVoteSession.gd")
 const ControllerSyncScript = preload("res://scripts/logic/GameBoardControllerSync.gd")
