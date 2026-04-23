@@ -72,7 +72,6 @@ theme_override_font_sizes/font_size = 63
 text = "👑"
 
 [node name="CurrentPlayer" type="Label" parent="Icon" unique_id=146032093]
-visible = false
 layout_mode = 0
 offset_left = 144.0
 offset_top = 136.0
