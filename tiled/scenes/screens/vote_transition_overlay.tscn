@@ -34,25 +34,25 @@ offset_bottom = 1755.0
 scale = Vector2(1.3800521, 0.5143585)
 texture = ExtResource("1_8dvxw")
 
-[node name="Title" type="Label" parent="." unique_id=1768318298]
+[node name="Title" type="Label" parent="." unique_id=1075109477]
 layout_mode = 0
-offset_left = 43.0
-offset_top = 344.0
-offset_right = 1851.0
-offset_bottom = 726.0
-text = "Someone's answer was close, 
-do the others think it was close enough?"
+offset_left = 55.0
+offset_top = 120.0
+offset_right = 1863.0
+offset_bottom = 245.0
+text = "Oooohh it's vote time!"
 label_settings = SubResource("LabelSettings_35c20")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Body" type="Label" parent="." unique_id=1075109477]
+[node name="Body" type="Label" parent="." unique_id=1768318298]
 layout_mode = 0
-offset_left = 47.0
-offset_top = 164.0
-offset_right = 1855.0
-offset_bottom = 289.0
-text = "Oooohh it's vote time!"
+offset_left = 43.0
+offset_top = 357.0
+offset_right = 1851.0
+offset_bottom = 739.0
+text = "Someone's answer was close, 
+do the others think it was close enough?"
 label_settings = SubResource("LabelSettings_35c20")
 horizontal_alignment = 1
 autowrap_mode = 3

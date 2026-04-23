@@ -178,6 +178,9 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 
+# TODO: refactor to use a more flexible message-building system, 
+# e.g. a set of templates with placeholders and a helper to fill them in based 
+# on question properties (difficulty, category) and game state (current round, player scores).
 func show_vote_preparing_overlay(submitted_answer: String) -> void:
 	if vote_transition == null:
 		return
