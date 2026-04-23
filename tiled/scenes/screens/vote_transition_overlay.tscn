@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://c38cs11hal4a5"]
+
+[ext_resource type="Texture2D" uid="uid://378bpra2cqou" path="res://assets/images/backgrounds/Untitled_Artwork6.png" id="1_8dvxw"]
+[ext_resource type="Script" uid="uid://d20w832cdt7qe" path="res://scenes/screens/vote_transition_overlay.gd" id="1_honf1"]
+[ext_resource type="FontFile" uid="uid://dsjw1g8q8n42w" path="res://assets/fonts/Cute Dino.otf" id="2_honf1"]
+[ext_resource type="FontFile" uid="uid://c0aku4hxc3oms" path="res://assets/fonts/Coffee Fills.ttf" id="3_p51uc"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_35c20"]
+font = ExtResource("2_honf1")
+font_size = 100
+
+[node name="VoteTransition" type="Control" unique_id=1801187747]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_honf1")
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1237582090]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 1912.0
+offset_bottom = 1064.0
+color = Color(0.21, 0.21, 0.21, 0.5803922)
+
+[node name="ColorRect" type="TextureRect" parent="." unique_id=1658223498]
+layout_mode = 0
+offset_left = -774.0
+offset_top = 87.0
+offset_right = 1614.0
+offset_bottom = 1755.0
+scale = Vector2(1.3800521, 0.5143585)
+texture = ExtResource("1_8dvxw")
+
+[node name="Title" type="Label" parent="." unique_id=1768318298]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 344.0
+offset_right = 1851.0
+offset_bottom = 726.0
+text = "Someone's answer was close, 
+do the others think it was close enough?"
+label_settings = SubResource("LabelSettings_35c20")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Body" type="Label" parent="." unique_id=1075109477]
+layout_mode = 0
+offset_left = 47.0
+offset_top = 164.0
+offset_right = 1855.0
+offset_bottom = 289.0
+text = "Oooohh it's vote time!"
+label_settings = SubResource("LabelSettings_35c20")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Countdown" type="Label" parent="." unique_id=235372423]
+layout_mode = 0
+offset_left = 1430.0
+offset_top = 698.0
+offset_right = 1772.0
+offset_bottom = 909.0
+text = "30s"
+label_settings = SubResource("LabelSettings_35c20")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="NextBtn" type="Button" parent="." unique_id=656312247]
+layout_mode = 0
+offset_left = 851.5
+offset_top = 827.0
+offset_right = 1064.5
+offset_bottom = 913.0
+theme_override_fonts/font = ExtResource("3_p51uc")
+theme_override_font_sizes/font_size = 54
+text = "Next >>"

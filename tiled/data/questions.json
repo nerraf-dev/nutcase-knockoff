@@ -558,6 +558,9 @@
     "id": 41,
     "question": "How many strings does a standard guitar have?",
     "answer": "6",
+    "alt_answers": [
+      "six"
+    ],
     "fun_fact": "A standard guitar typically has six strings.",
     "joke": "6 strings and I still only know three chords!",
     "difficulty": "easy",

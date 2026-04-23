@@ -38,9 +38,12 @@ signal network_vote_resolved(result: Dictionary)
 
 const PLAYER_BADGE_SM = preload("res://scenes/components/player_badge_small.tscn")
 const QUESTION_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/question_transition_overlay.tscn")
+const VOTE_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/vote_transition_overlay.tscn")
 const OPTIONS_CONTENT_SCENE: PackedScene = preload("res://scenes/screens/options_content.tscn")
 const RoundIntroCopyHelperScript = preload("res://scripts/logic/RoundIntroCopyHelper.gd")
 const OVERLAY_AUTO_DISMISS_SECONDS: float = 3.0
+const VOTE_PREP_LEAD_IN_SECONDS: float = 2.0
+const VOTE_RESULT_AUTO_DISMISS_SECONDS: float = 1.4
 const ROUND_INTRO_BASE_POINTS: int = 50
 const SHOW_ROUND_INTRO_BONUS_HINT: bool = true
 
@@ -62,6 +65,7 @@ var _round_area_mouse_filter_before_exit: int = Control.MOUSE_FILTER_STOP
 var _round_area_mouse_filter_before_options: int = Control.MOUSE_FILTER_STOP
 var _overlay_accepting_remote: bool = false
 var question_transition: Control = null
+var vote_transition: Control = null
 var _disconnect_policy: GameBoardDisconnectPolicy = null
 var _vote_session: GameBoardVoteSession = null
 var _controller_sync: GameBoardControllerSync = null
@@ -83,6 +87,7 @@ func _ready() -> void:
 		return
 	print("Game Board scene ready")
 	_setup_question_transition_overlay()
+	_setup_vote_transition_overlay()
 	exit_btn.pressed.connect(Callable(self , "_on_exit_btn_pressed"))
 	options_btn.pressed.connect(Callable(self , "_on_options_btn_pressed"))
 	exit_confirm.confirmed.connect(_on_exit_confirmed)
@@ -130,6 +135,21 @@ func _setup_question_transition_overlay() -> void:
 	if not question_transition.has_method("show_message") or not question_transition.has_method("dismiss") or not question_transition.has_method("is_showing"):
 		push_error("QuestionTransition scene script must implement show_message, dismiss, and is_showing")
 
+
+func _setup_vote_transition_overlay() -> void:
+	vote_transition = VOTE_TRANSITION_SCENE.instantiate() as Control
+	if vote_transition == null:
+		push_error("Failed to instantiate vote_transition_overlay.tscn")
+		return
+
+	vote_transition.name = "VoteTransition"
+	vote_transition.visible = false
+	vote_transition.z_index = 101
+	add_child(vote_transition)
+
+	if not vote_transition.has_method("show_message") or not vote_transition.has_method("show_countdown") or not vote_transition.has_method("dismiss") or not vote_transition.has_method("is_showing"):
+		push_error("VoteTransition scene script must implement show_message, show_countdown, dismiss, and is_showing")
+
 func _update_overlay(msg: String) -> void:
 	if question_transition == null:
 		push_error("QuestionTransition overlay is not configured correctly")
@@ -148,11 +168,48 @@ func _input(event):
 	if question_transition != null and question_transition.is_showing() and event.is_action_pressed("ui_accept"):
 		question_transition.dismiss()
 		get_viewport().set_input_as_handled()
+	if vote_transition != null and vote_transition.is_showing() and event.is_action_pressed("ui_accept"):
+		vote_transition.dismiss()
+		get_viewport().set_input_as_handled()
 
 	# Allow B / Esc to close in-game options overlay
 	if _options_open and event.is_action_pressed("ui_cancel"):
 		_hide_options_overlay()
 		get_viewport().set_input_as_handled()
+
+
+func show_vote_preparing_overlay(submitted_answer: String) -> void:
+	if vote_transition == null:
+		return
+	var title := "Vote incoming"
+	var body := "\"%s\"\nGet ready to vote." % submitted_answer
+	await vote_transition.show_message(title, body, VOTE_PREP_LEAD_IN_SECONDS, false)
+
+
+func show_vote_active_overlay(timeout_seconds: float) -> void:
+	if vote_transition == null:
+		return
+	vote_transition.show_countdown("Cast your vote now", "Majority accepts. Tie = reject.", timeout_seconds)
+
+
+func hide_vote_overlay() -> void:
+	if vote_transition == null:
+		return
+	vote_transition.dismiss()
+
+
+func show_vote_result_overlay(accepted: bool, was_tie: bool = false) -> void:
+	if vote_transition == null:
+		return
+
+	var title := "Vote result"
+	var body := "Accepted"
+	if not accepted:
+		body = "Rejected"
+		if was_tie:
+			body = "Tie - Rejected"
+
+	await vote_transition.show_message(title, body, VOTE_RESULT_AUTO_DISMISS_SECONDS, false)
 
 ## Sets up HUD: instantiates player badges (small) and displays them.
 func _setup_players_hud() -> void:

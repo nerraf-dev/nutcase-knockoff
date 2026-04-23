@@ -103,8 +103,13 @@ func _start_network_vote_session(guesser: Player, submitted_answer: String, elig
 	for voter in eligible_voters:
 		_vote_session_eligible_by_device[voter.device_id] = voter
 
+	if board.has_method("show_vote_preparing_overlay"):
+		await board.show_vote_preparing_overlay(submitted_answer)
+
 	print("Broadcasting vote request to controllers for fuzzy answer: '%s'" % submitted_answer)
 	NetworkManager.broadcast_vote_request(guesser.id, submitted_answer)
+	if board.has_method("show_vote_active_overlay"):
+		board.show_vote_active_overlay(NETWORK_VOTE_TIMEOUT_SECONDS)
 
 	var timeout = board.get_tree().create_timer(NETWORK_VOTE_TIMEOUT_SECONDS)
 	timeout.timeout.connect(handle_network_vote_timeout)
@@ -133,19 +138,25 @@ func _finalize_network_vote_session() -> void:
 
 	if not NetworkManager.is_local:
 		NetworkManager.broadcast_vote_result(accepted, _vote_session_correct_answer)
+	if board.has_method("hide_vote_overlay"):
+		board.hide_vote_overlay()
 
 	reset_vote_session()
 	board.network_vote_resolved.emit(vote_result)
 
 
 func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: String, vote_result: Dictionary, scoring_breakdown: Dictionary = {}) -> void:
+	var accepted: bool = vote_result.get("accepted", false)
+	var no_voters: Array[Player] = vote_result.get("no_voters", [])
+	if board.has_method("show_vote_result_overlay"):
+		await board.show_vote_result_overlay(accepted, no_voters.is_empty())
+
 	if vote_result.get("accepted", false):
 		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY, submitted_answer, scoring_breakdown)
 		await board._handle_correct_result(result)
 		return
 
 	# Vote rejected: distribute prize to "no" voters and continue.
-	var no_voters: Array[Player] = vote_result.get("no_voters", [])
 	GameManager.handle_vote_rejection(prize, no_voters)
 	board._update_all_badges()
 
