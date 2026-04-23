@@ -104,7 +104,8 @@ func _start_network_vote_session(guesser: Player, submitted_answer: String, elig
 		_vote_session_eligible_by_device[voter.device_id] = voter
 
 	if board.has_method("show_vote_preparing_overlay"):
-		await board.show_vote_preparing_overlay(submitted_answer)
+		var guesser_name := guesser.name if guesser != null else ""
+		await board.show_vote_preparing_overlay(submitted_answer, guesser_name)
 
 	print("Broadcasting vote request to controllers for fuzzy answer: '%s'" % submitted_answer)
 	NetworkManager.broadcast_vote_request(guesser.id, submitted_answer)

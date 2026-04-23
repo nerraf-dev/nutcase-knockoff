@@ -178,15 +178,33 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 
-# TODO: refactor to use a more flexible message-building system, 
-# e.g. a set of templates with placeholders and a helper to fill them in based 
-# on question properties (difficulty, category) and game state (current round, player scores).
-func show_vote_preparing_overlay(submitted_answer: String) -> void:
+const VOTE_INCOMING_TEMPLATES: Array = [
+	"{player} answered: \"{answer}\"\nClose enough for the points?\nVOTE!",
+	"{player} said \"{answer}\".\nYou gonna take that?",
+	"\"{answer}\" from {player}.\nDoes it count?",
+	"{player} dropped an answer.\nClose enough?\nCast your vote.",
+	"Ooh, {player} said \"{answer}\"...\nIs that good enough?",
+	"{player} reckons \"{answer}\" is close.\nIs it though?",
+]
+
+var _last_vote_incoming_index: int = -1
+
+func show_vote_preparing_overlay(submitted_answer: String, guesser_name: String = "") -> void:
 	if vote_transition == null:
 		return
-	var title := "Vote incoming"
-	var body := "\"%s\"\nGet ready to vote." % submitted_answer
-	await vote_transition.show_message(title, body, VOTE_PREP_LEAD_IN_SECONDS, false)
+
+	var name_to_use := guesser_name if not guesser_name.is_empty() else "Someone"
+	var pool: Array = VOTE_INCOMING_TEMPLATES
+	var idx := _last_vote_incoming_index
+	while idx == _last_vote_incoming_index:
+		idx = randi() % pool.size()
+	_last_vote_incoming_index = idx
+
+	var body: String = (pool[idx] as String)\
+		.replace("{player}", name_to_use)\
+		.replace("{answer}", submitted_answer)
+
+	await vote_transition.show_message("Vote incoming", body, VOTE_PREP_LEAD_IN_SECONDS, false)
 
 
 func show_vote_active_overlay(timeout_seconds: float) -> void:
