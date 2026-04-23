@@ -4,6 +4,7 @@
 # Windows
 Thumbs.db
 
+_CLEAN_UP/
 _builds/
 android/
 ios/
