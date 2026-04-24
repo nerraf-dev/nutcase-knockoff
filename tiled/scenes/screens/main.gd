@@ -98,6 +98,7 @@ func _on_game_init_complete(settings: Dictionary) -> void:
 		NetworkManager.is_local = false
 		load_lobby(settings)
 
+	#  TODO: dump single player code if possible. Need to identify the rest.
 	elif settings["game_mode"] == GAME_MODE_SINGLE:
 		# Single player selected, start game directly
 		print("Single-player mode selected, starting game directly")

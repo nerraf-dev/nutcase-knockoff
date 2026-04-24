@@ -279,12 +279,12 @@ func _start_initial_round() -> void:
 
 ## Round result handler — dispatches to specific submission type handlers.
 ## Coordinates flow: wrong answer → freeze cascade, fuzzy → voting, exact → winner check
-func _on_round_result(player: Player, is_correct: int, prize: int, submitted_answer: String) -> void:
+func _on_round_result(player: Player, is_correct: int, prize: int, submitted_answer: String, meta: Dictionary) -> void:
 	match is_correct:
 		GameManager.SubmissionResult.INCORRECT:
 			await _handle_incorrect_answer(player, prize, submitted_answer)
 		GameManager.SubmissionResult.FUZZY:
-			await _handle_fuzzy_answer(player, prize, submitted_answer)
+			await _handle_fuzzy_answer(player, prize, submitted_answer, meta)
 		GameManager.SubmissionResult.EXACT, GameManager.SubmissionResult.AUTO_ACCEPT:
 			var result = GameManager.handle_correct_answer(player, prize, is_correct, submitted_answer, _get_round_score_breakdown(prize))
 			await _handle_correct_result(result)
@@ -318,9 +318,9 @@ func _handle_incorrect_answer(player: Player, prize: int, submitted_answer: Stri
 		_start_next_round()
 
 ## Handles fuzzy (close-enough) answer: vote on acceptance or move to next round.
-func _handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String) -> void:
+func _handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String, meta: Dictionary) -> void:
 	if _vote_session:
-		await _vote_session.handle_fuzzy_answer(player, prize, submitted_answer, _get_round_score_breakdown(prize))
+		await _vote_session.handle_fuzzy_answer(player, prize, submitted_answer, _get_round_score_breakdown(prize), meta.get("distance", 0.0))
 
 func _get_round_score_breakdown(prize: int) -> Dictionary:
 	if round_instance and round_instance.has_method("get_current_score_breakdown"):

@@ -14,7 +14,7 @@ extends Control
 #   The on-screen slider grid becomes display-only; the player's phone sends actions.
 #   See 04-sprint/2026-03-04-code-review.md § Step 3 for the refactor plan.
 
-signal round_result(player: Player, is_correct: int, points: int, submitted_answer: String)
+signal round_result(player: Player, is_correct: int, points: int, submitted_answer: String, meta: Dictionary) # Emitted when a guess is submitted and validated, with the result and points to award
 signal slider_reveal_requested(index: int)
 signal guess_submitted(answer: String)
 
@@ -295,16 +295,16 @@ func _on_answer_submitted(answer_text: String) -> void:
 	var validation = InputValidator.validate_answer(answer_text, current_question, GameManager.game.fuzzy_enabled)
 	if validation["result"] == InputValidator.ValidationResult.INCORRECT:
 		print("Incorrect answer submitted: '%s'" % answer_text)
-		round_result.emit(current_player, GameManager.SubmissionResult.INCORRECT, int(current_prize), answer_text)
+		round_result.emit(current_player, GameManager.SubmissionResult.INCORRECT, int(current_prize), answer_text, {})
 	elif validation["result"] == InputValidator.ValidationResult.FUZZY:
 		print("Fuzzy answer submitted: '%s'" % answer_text)
-		round_result.emit(current_player, GameManager.SubmissionResult.FUZZY, int(current_prize), answer_text)
+		round_result.emit(current_player, GameManager.SubmissionResult.FUZZY, int(current_prize), answer_text, {"distance": validation["distance"]})
 	elif validation["result"] == InputValidator.ValidationResult.AUTO_ACCEPT:
 		print("Auto-accept candidate: '%s' (distance %s)" % [answer_text, validation["distance"]])
-		round_result.emit(current_player, GameManager.SubmissionResult.AUTO_ACCEPT, int(current_prize), answer_text)
+		round_result.emit(current_player, GameManager.SubmissionResult.AUTO_ACCEPT, int(current_prize), answer_text, {"distance": validation["distance"]})
 	elif validation["result"] == InputValidator.ValidationResult.EXACT:
 		print("Exact answer submitted: '%s'" % answer_text)
-		round_result.emit(current_player, GameManager.SubmissionResult.EXACT, int(current_prize), answer_text)
+		round_result.emit(current_player, GameManager.SubmissionResult.EXACT, int(current_prize), answer_text, {})
 	else:
 		print("Unexpected validation result for answer '%s': %s" % [answer_text, validation["result"]])
-		round_result.emit(current_player, GameManager.SubmissionResult.INVALID, int(current_prize), answer_text)
+		round_result.emit(current_player, GameManager.SubmissionResult.INVALID, int(current_prize), answer_text, {})

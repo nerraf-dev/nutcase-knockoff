@@ -4,18 +4,47 @@ class_name GameBoardVoteSession
 
 var board: Node = null
 const NETWORK_VOTE_TIMEOUT_SECONDS := 25.0
+const VOTE_ACCEPTED_TEMPLATES: Array = [
+	"Vote passed. {player} gets +{points} points for \"{answer}\".",
+	"Lucky break, {player}. Accepted for +{points} points.",
+	"The vote says yes. {player} scores +{points} for \"{answer}\"."
+]
+const VOTE_REJECTED_TIE_TEMPLATES: Array = [
+	"It's a tie. Nobody wins the prize.",
+	"Deadlocked vote. No points awarded.",
+	"Tie vote. The pot stays put."
+]
+const VOTE_REJECTED_SHARED_TEMPLATES: Array = [
+	"Rejected. The prize was shared among NO votes.",
+	"Vote failed. NO voters split the points.",
+	"Not accepted. NO voters share the pot."
+]
+const UNVOTABLE_ACCEPTED_TEMPLATES: Array = [
+	"No one can vote right now. Lucky one, {player} gets +{points} points.",
+	"No {scope} voters available. \"{answer}\" sneaks through for +{points} points.",
+	"No {scope} voters to challenge it. {player} takes +{points} points."
+]
+const UNVOTABLE_REJECTED_TEMPLATES: Array = [
+	"No one can vote right now, and it wasn't close enough. No points this time.",
+	"No {scope} voters available, and \"{answer}\" was too far off. No points.",
+	"No {scope} voters to decide it, and it misses the mark. No points this round."
+]
+
 var _vote_session_active: bool = false
 var _vote_session_guesser: Player = null
 var _vote_session_correct_answer: String = ""
 var _vote_session_eligible_by_device: Dictionary = {} # device_id -> Player
 var _vote_session_votes_by_device: Dictionary = {} # device_id -> bool
+var _rng := RandomNumberGenerator.new()
+var _last_template_index_by_key: Dictionary = {}
 
 
 func _init(p_board: Node = null) -> void:
 	board = p_board
+	_rng.randomize()
 
 
-func handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String, scoring_breakdown: Dictionary = {}) -> void:
+func handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String, scoring_breakdown: Dictionary = {}, distance: float = 0.0) -> void:
 	if board == null:
 		return
 
@@ -27,21 +56,19 @@ func handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String, s
 
 	# No voters: auto-accept the answer.
 	if eligible_voters.is_empty():
-		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY, submitted_answer, scoring_breakdown)
-		await board._handle_correct_result(result)
+		await _resolve_unvotable_fuzzy(player, prize, submitted_answer, scoring_breakdown, distance, "eligible")
 		return
 
 	# If multiplayer call to broadcast vote request and wait for result.
 	# Else local: keep current path.
-	if not NetworkManager.is_local:
+	if not NetworkManager.is_local: # false
 		var network_voters: Array[Player] = []
 		for voter in eligible_voters:
 			if voter.device_id != "":
 				network_voters.append(voter)
 		if network_voters.is_empty():
 			# Safety fallback in case no eligible voter has a mapped device.
-			var no_device_result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY, submitted_answer, scoring_breakdown)
-			await board._handle_correct_result(no_device_result)
+			await _resolve_unvotable_fuzzy(player, prize, submitted_answer, scoring_breakdown, distance, "connected")
 			return
 
 		_start_network_vote_session(player, submitted_answer, network_voters)
@@ -153,7 +180,13 @@ func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: Stri
 		await board.show_vote_result_overlay(accepted, no_voters.is_empty())
 
 	if vote_result.get("accepted", false):
-		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.FUZZY, submitted_answer, scoring_breakdown)
+		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.AUTO_ACCEPT, submitted_answer, scoring_breakdown)
+		result["message"] = _fill_template(_pick_template_message("vote_accepted", VOTE_ACCEPTED_TEMPLATES), {
+			"player": player.name,
+			"points": str(prize),
+			"answer": submitted_answer
+		})
+		
 		await board._handle_correct_result(result)
 		return
 
@@ -162,7 +195,56 @@ func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: Stri
 	board._update_all_badges()
 
 	if no_voters.is_empty():
-		await board._update_overlay("It's a tie!\nNobody wins the prize.")
+		await board._update_overlay(_pick_template_message("vote_rejected_tie", VOTE_REJECTED_TIE_TEMPLATES))
 	else:
-		await board._update_overlay("Rejected!\nThe prize was shared among those who voted no.")
+		await board._update_overlay(_pick_template_message("vote_rejected_shared", VOTE_REJECTED_SHARED_TEMPLATES))
 	board._start_next_round()
+
+
+func _resolve_unvotable_fuzzy(player: Player, prize: int, submitted_answer: String, scoring_breakdown: Dictionary, distance: float, voter_scope: String) -> void:
+	var scope_text := "eligible"
+	if voter_scope == "connected":
+		scope_text = "connected"
+
+	if distance <= 2.0:
+		print("Auto-accepting fuzzy answer '%s' with distance %.1f since there are no %s voters" % [submitted_answer, distance, scope_text])
+		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.AUTO_ACCEPT, submitted_answer, scoring_breakdown)
+		result["message"] = _fill_template(_pick_template_message("unvotable_accepted", UNVOTABLE_ACCEPTED_TEMPLATES), {
+			"player": player.name,
+			"points": str(prize),
+			"scope": scope_text,
+			"answer": submitted_answer
+		})
+		await board._handle_correct_result(result)
+		return
+
+	# LPS-style fallback: no vote-capable opponents means no penalty path, just no points.
+	print("Rejecting fuzzy answer '%s' with distance %.1f since there are no %s voters" % [submitted_answer, distance, scope_text])
+	board._update_all_badges()
+	await board._update_overlay(_fill_template(_pick_template_message("unvotable_rejected", UNVOTABLE_REJECTED_TEMPLATES), {
+		"scope": scope_text,
+		"answer": submitted_answer
+	}))
+	board._start_next_round()
+
+
+func _pick_template_message(key: String, templates: Array) -> String:
+	if templates.is_empty():
+		return ""
+
+	var chosen_index := 0
+	if templates.size() > 1:
+		chosen_index = _rng.randi_range(0, templates.size() - 1)
+		var last_index := int(_last_template_index_by_key.get(key, -1))
+		if chosen_index == last_index:
+			chosen_index = (chosen_index + 1) % templates.size()
+
+	_last_template_index_by_key[key] = chosen_index
+	return str(templates[chosen_index])
+
+
+func _fill_template(template: String, values: Dictionary) -> String:
+	var result := template
+	for key in values.keys():
+		result = result.replace("{%s}" % str(key), str(values[key]))
+	return result
