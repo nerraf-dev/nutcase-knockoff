@@ -1,8 +1,8 @@
 class_name RoundResolutionHelper
 extends RefCounted
 
-const SHOW_SCORING_BREAKDOWN_DETAILS := false  # Set to true to enable detailed scoring breakdowns in messages (for debugging/demo purposes)
-const DEFAULT_STYLE := "default"
+const SHOW_SCORING_BREAKDOWN_DETAILS := false # Set to true to enable detailed scoring breakdowns in messages (for debugging/demo purposes)
+const DEFAULT_STYLE := "casual"
 
 # RoundResolutionHelper — scripts/logic/RoundResolutionHelper.gd
 # Role: Stateless rules helper for round resolution and scoring outcomes.
@@ -20,85 +20,41 @@ const DEFAULT_STYLE := "default"
 # - Mutates player score/freeze state only through PlayerManager/player fields.
 
 const MESSAGE_TEMPLATE_SETS: Dictionary = {
-	"default": {
+	"casual": {
 		"wrong_frozen": [
 			"%s is wrong!\nYou lose %d points and are frozen out of the round.",
 			"Not this time, %s.\n-%d points and you're frozen for this round.",
-			"%s misses the mark!\nYou lose %d points and sit this round out."
+			"%s misses the mark!\nYou lose %d points and sit this round out.",
+			"Nope, %s!\nYou drop %d points and are benched for this round.",
+			"Swing and a miss, %s.\n-%d points and you're iced."
 		],
 		"last_standing": [
 			"Last player standing!\n%s gets a free guess!",
 			"Everyone else is frozen.\n%s gets the free guess.",
-			"%s stands alone!\nTake the free guess."
-		],
-		"wrong_lps": [
-			"%s is wrong!\nThe answer was: %s",
-			"%s was close, but no.\nThe correct answer was: %s.",
-			"Nope, %s.\nCorrect answer: %s"
-		],
-		"correct_exact": [
-			"%s nailed it!\nHere's %d points!",
-			"Exact match!\n%s earns %d points.",
-			"Bullseye, %s!\n+%d points."
-		],
-		"correct_fuzzy": [
-			"%s is close enough, %s!\nYou get %d points!",
-			"Judges allow it for %s!\n%s gets %d points.",
-			"We'll take that, %s.\n%s gets +%d points."
-		]
-	},
-	"funny": {
-		"wrong_frozen": [
-			"Nope, %s!\nYou drop %d points and are benched for this round.",
-			"Swing and a miss, %s.\n-%d points and you're iced.",
-			"%s guessed boldly and paid for it.\nLose %d and take a timeout."
-		],
-		"last_standing": [
-			"%s is the last fool standing!\nFree guess time.",
+			"%s stands alone!\nTake the free guess.",
 			"All eyes on %s.\nYou've got a free guess.",
 			"%s survives the chaos!\nGrab your free guess."
 		],
 		"wrong_lps": [
+			"%s is wrong!\nThe answer was: %s",
+			"%s was close, but no.\nThe correct answer was: %s.",
+			"Nope, %s.\nCorrect answer: %s",
 			"%s misses!\nCorrect answer: %s",
-			"Oof, %s.\nThe right answer was %s.",
-			"Comedy of errors from %s!\nCorrect answer: %s"
+			"Oof, %s.\nThe right answer was %s."
 		],
 		"correct_exact": [
+			"%s nailed it!\nHere's %d points!",
+			"Exact match!\n%s earns %d points.",
+			"Bullseye, %s!\n+%d points.",
 			"%s is bang on!\nPocket +%d points.",
-			"Chef's kiss, %s.\nTake +%d points.",
-			"That answer had swagger, %s!\n+%d points."
+			"Chef's kiss, %s.\nTake +%d points."
 		],
 		"correct_fuzzy": [
-			"%s is close enough, %s!\nTake +%d points.",
+			"%s is close enough, %s!\nYou get %d points!",
+			"Judges allow it for %s!\n%s gets %d points.",
+			"We'll take that, %s.\n%s gets +%d points.",
 			"It's janky but it works, %s.\n%s gets %d points.",
 			"The crowd shrugs and allows it.\n%s gets +%d points for %s."
-		]
-	},
-	"serious": {
-		"wrong_frozen": [
-			"%s is incorrect.\n-%d points; player is frozen for this round.",
-			"Incorrect response by %s.\nPenalty: %d points and frozen status applied.",
-			"%s did not match.\n-%d points; participation paused for the round."
-		],
-		"last_standing": [
-			"%s remains active.\nA free guess is granted.",
-			"Only %s remains eligible.\nFree guess authorized.",
-			"%s is the sole active player.\nProceed with free guess."
-		],
-		"wrong_lps": [
-			"%s is incorrect.\nCorrect answer: %s",
-			"Final active guess by %s was incorrect.\nExpected answer: %s",
-			"Incorrect last-standing response from %s.\nCorrect answer: %s"
-		],
-		"correct_exact": [
-			"%s is correct.\n+%d points awarded.",
-			"Exact answer confirmed for %s.\nAward: %d points.",
-			"Validated correct response: %s.\n+%d points."
-		],
-		"correct_fuzzy": [
-			"%s accepted as close enough for %s.\n+%d points awarded.",
-			"Fuzzy acceptance approved for %s (%s).\n+%d points.",
-			"Close-enough ruling applied to %s for %s.\nAward: %d points."
 		]
 	}
 }

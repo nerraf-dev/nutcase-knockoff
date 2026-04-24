@@ -41,6 +41,7 @@ const QUESTION_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/que
 const VOTE_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/vote_transition_overlay.tscn")
 const OPTIONS_CONTENT_SCENE: PackedScene = preload("res://scenes/screens/options_content.tscn")
 const RoundIntroCopyHelperScript = preload("res://scripts/logic/RoundIntroCopyHelper.gd")
+const VoteCopyHelperScript = preload("res://scripts/logic/VoteCopyHelper.gd")
 const OVERLAY_AUTO_DISMISS_SECONDS: float = 3.0
 const VOTE_PREP_LEAD_IN_SECONDS: float = 2.0
 const VOTE_RESULT_AUTO_DISMISS_SECONDS: float = 1.4
@@ -74,6 +75,7 @@ var _options_overlay: ColorRect = null
 var _options_content_instance: Control = null
 var _options_disabled_states: Dictionary = {}
 var _round_intro_copy: RefCounted = null
+var _vote_copy: RefCounted = null
 
 func _ready() -> void:
 	if Engine.is_editor_hint():
@@ -101,6 +103,7 @@ func _ready() -> void:
 	_vote_session = VoteSessionScript.new(self )
 	_controller_sync = ControllerSyncScript.new(self )
 	_round_intro_copy = RoundIntroCopyHelperScript.new()
+	_vote_copy = VoteCopyHelperScript.new()
 
 	if not NetworkManager.is_local:
 		NetworkManager.player_join_received.connect(_on_network_player_join_during_game)
@@ -178,31 +181,17 @@ func _input(event):
 		get_viewport().set_input_as_handled()
 
 
-const VOTE_INCOMING_TEMPLATES: Array = [
-	"{player} answered: \"{answer}\"\nClose enough for the points?\nVOTE!",
-	"{player} said \"{answer}\".\nYou gonna take that?",
-	"\"{answer}\" from {player}.\nDoes it count?",
-	"{player} dropped an answer.\nClose enough?\nCast your vote.",
-	"Ooh, {player} said \"{answer}\"...\nIs that good enough?",
-	"{player} reckons \"{answer}\" is close.\nIs it though?",
-]
-
-var _last_vote_incoming_index: int = -1
-
 func show_vote_preparing_overlay(submitted_answer: String, guesser_name: String = "") -> void:
 	if vote_transition == null:
 		return
+	if _vote_copy == null:
+		_vote_copy = VoteCopyHelperScript.new()
 
 	var name_to_use := guesser_name if not guesser_name.is_empty() else "Someone"
-	var pool: Array = VOTE_INCOMING_TEMPLATES
-	var idx := _last_vote_incoming_index
-	while idx == _last_vote_incoming_index:
-		idx = randi() % pool.size()
-	_last_vote_incoming_index = idx
-
-	var body: String = (pool[idx] as String)\
-		.replace("{player}", name_to_use)\
-		.replace("{answer}", submitted_answer)
+	var body: String = _vote_copy.build("vote_incoming", {
+		"player": name_to_use,
+		"answer": submitted_answer
+	})
 
 	await vote_transition.show_message("Vote incoming", body, VOTE_PREP_LEAD_IN_SECONDS, false)
 
@@ -210,7 +199,9 @@ func show_vote_preparing_overlay(submitted_answer: String, guesser_name: String 
 func show_vote_active_overlay(timeout_seconds: float) -> void:
 	if vote_transition == null:
 		return
-	vote_transition.show_countdown("Cast your vote now", "Majority accepts. Tie = reject.", timeout_seconds)
+	if _vote_copy == null:
+		_vote_copy = VoteCopyHelperScript.new()
+	vote_transition.show_countdown(_vote_copy.build("vote_active_title"), _vote_copy.build("vote_active_body"), timeout_seconds)
 
 
 func hide_vote_overlay() -> void:
@@ -222,13 +213,15 @@ func hide_vote_overlay() -> void:
 func show_vote_result_overlay(accepted: bool, was_tie: bool = false) -> void:
 	if vote_transition == null:
 		return
+	if _vote_copy == null:
+		_vote_copy = VoteCopyHelperScript.new()
 
-	var title := "Vote result"
-	var body := "Accepted"
+	var title: String = _vote_copy.build("vote_result_title")
+	var body: String = _vote_copy.build("vote_result_accepted")
 	if not accepted:
-		body = "Rejected"
+		body = _vote_copy.build("vote_result_rejected")
 		if was_tie:
-			body = "Tie - Rejected"
+			body = _vote_copy.build("vote_result_tie_rejected")
 
 	await vote_transition.show_message(title, body, VOTE_RESULT_AUTO_DISMISS_SECONDS, false)
 

@@ -4,44 +4,19 @@ class_name GameBoardVoteSession
 
 var board: Node = null
 const NETWORK_VOTE_TIMEOUT_SECONDS := 25.0
-const VOTE_ACCEPTED_TEMPLATES: Array = [
-	"Vote passed. {player} gets +{points} points for \"{answer}\".",
-	"Lucky break, {player}. Accepted for +{points} points.",
-	"The vote says yes. {player} scores +{points} for \"{answer}\"."
-]
-const VOTE_REJECTED_TIE_TEMPLATES: Array = [
-	"It's a tie. Nobody wins the prize.",
-	"Deadlocked vote. No points awarded.",
-	"Tie vote. The pot stays put."
-]
-const VOTE_REJECTED_SHARED_TEMPLATES: Array = [
-	"Rejected. The prize was shared among NO votes.",
-	"Vote failed. NO voters split the points.",
-	"Not accepted. NO voters share the pot."
-]
-const UNVOTABLE_ACCEPTED_TEMPLATES: Array = [
-	"No one can vote right now. Lucky one, {player} gets +{points} points.",
-	"No {scope} voters available. \"{answer}\" sneaks through for +{points} points.",
-	"No {scope} voters to challenge it. {player} takes +{points} points."
-]
-const UNVOTABLE_REJECTED_TEMPLATES: Array = [
-	"No one can vote right now, and it wasn't close enough. No points this time.",
-	"No {scope} voters available, and \"{answer}\" was too far off. No points.",
-	"No {scope} voters to decide it, and it misses the mark. No points this round."
-]
+const VoteCopyHelperScript = preload("res://scripts/logic/VoteCopyHelper.gd")
 
 var _vote_session_active: bool = false
 var _vote_session_guesser: Player = null
 var _vote_session_correct_answer: String = ""
 var _vote_session_eligible_by_device: Dictionary = {} # device_id -> Player
 var _vote_session_votes_by_device: Dictionary = {} # device_id -> bool
-var _rng := RandomNumberGenerator.new()
-var _last_template_index_by_key: Dictionary = {}
+var _vote_copy: RefCounted = null
 
 
 func _init(p_board: Node = null) -> void:
 	board = p_board
-	_rng.randomize()
+	_vote_copy = VoteCopyHelperScript.new()
 
 
 func handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String, scoring_breakdown: Dictionary = {}, distance: float = 0.0) -> void:
@@ -181,7 +156,7 @@ func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: Stri
 
 	if vote_result.get("accepted", false):
 		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.AUTO_ACCEPT, submitted_answer, scoring_breakdown)
-		result["message"] = _fill_template(_pick_template_message("vote_accepted", VOTE_ACCEPTED_TEMPLATES), {
+		result["message"] = _vote_copy.build("vote_accepted_outcome", {
 			"player": player.name,
 			"points": str(prize),
 			"answer": submitted_answer
@@ -195,9 +170,9 @@ func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: Stri
 	board._update_all_badges()
 
 	if no_voters.is_empty():
-		await board._update_overlay(_pick_template_message("vote_rejected_tie", VOTE_REJECTED_TIE_TEMPLATES))
+		await board._update_overlay(_vote_copy.build("vote_rejected_tie_outcome"))
 	else:
-		await board._update_overlay(_pick_template_message("vote_rejected_shared", VOTE_REJECTED_SHARED_TEMPLATES))
+		await board._update_overlay(_vote_copy.build("vote_rejected_shared_outcome"))
 	board._start_next_round()
 
 
@@ -209,7 +184,7 @@ func _resolve_unvotable_fuzzy(player: Player, prize: int, submitted_answer: Stri
 	if distance <= 2.0:
 		print("Auto-accepting fuzzy answer '%s' with distance %.1f since there are no %s voters" % [submitted_answer, distance, scope_text])
 		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.AUTO_ACCEPT, submitted_answer, scoring_breakdown)
-		result["message"] = _fill_template(_pick_template_message("unvotable_accepted", UNVOTABLE_ACCEPTED_TEMPLATES), {
+		result["message"] = _vote_copy.build("unvotable_accepted_outcome", {
 			"player": player.name,
 			"points": str(prize),
 			"scope": scope_text,
@@ -221,30 +196,8 @@ func _resolve_unvotable_fuzzy(player: Player, prize: int, submitted_answer: Stri
 	# LPS-style fallback: no vote-capable opponents means no penalty path, just no points.
 	print("Rejecting fuzzy answer '%s' with distance %.1f since there are no %s voters" % [submitted_answer, distance, scope_text])
 	board._update_all_badges()
-	await board._update_overlay(_fill_template(_pick_template_message("unvotable_rejected", UNVOTABLE_REJECTED_TEMPLATES), {
+	await board._update_overlay(_vote_copy.build("unvotable_rejected_outcome", {
 		"scope": scope_text,
 		"answer": submitted_answer
 	}))
 	board._start_next_round()
-
-
-func _pick_template_message(key: String, templates: Array) -> String:
-	if templates.is_empty():
-		return ""
-
-	var chosen_index := 0
-	if templates.size() > 1:
-		chosen_index = _rng.randi_range(0, templates.size() - 1)
-		var last_index := int(_last_template_index_by_key.get(key, -1))
-		if chosen_index == last_index:
-			chosen_index = (chosen_index + 1) % templates.size()
-
-	_last_template_index_by_key[key] = chosen_index
-	return str(templates[chosen_index])
-
-
-func _fill_template(template: String, values: Dictionary) -> String:
-	var result := template
-	for key in values.keys():
-		result = result.replace("{%s}" % str(key), str(values[key]))
-	return result

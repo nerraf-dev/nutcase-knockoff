@@ -26,7 +26,7 @@ const GAME_TARGETS: Array[int] = [200, 350, 500]
 # Game Options
 const FUZZY_ENABLED_DEFAULT: bool = true
 const FUZZY_MIN_LENGTH: int = 5 # Only apply fuzzy matching to answers of this length or more
-const MESSAGE_STYLE_DEFAULT: String = "default" # Supported: default, funny, serious
+const MESSAGE_STYLE_DEFAULT: String = "casual" # Legacy tone toggle; round/vote helpers now use a single casual style.
 
 # Timing
 const SPLASH_DURATION: float = 2.0
