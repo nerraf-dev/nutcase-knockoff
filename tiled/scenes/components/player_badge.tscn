@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cn3r5wugsumvx"]
 
 [ext_resource type="Script" uid="uid://coj4gfarod36g" path="res://scenes/components/player_badge.gd" id="1_5j3gc"]
-[ext_resource type="Texture2D" uid="uid://dyha3sfpp5lcw" path="res://assets/images/player_badges/animals/monkey.svg" id="2_r081y"]
+[ext_resource type="Texture2D" uid="uid://b1ocbu6x6n0hr" path="res://assets/images/player_badges/mine/purps.png" id="2_r081y"]
 
 [node name="PlayerBadge" type="Control" unique_id=1435356418]
 custom_minimum_size = Vector2(400, 50)
@@ -17,11 +17,11 @@ offset_bottom = 50.0
 
 [node name="Avatar" type="TextureRect" parent="." unique_id=818342619]
 layout_mode = 0
-offset_left = 328.0
-offset_top = 4.0
-offset_right = 509.0
-offset_bottom = 140.0
-scale = Vector2(0.22203125, 0.2738916)
+offset_left = 336.0
+offset_top = -1.0
+offset_right = 736.0
+offset_bottom = 399.0
+scale = Vector2(0.13918377, 0.14253542)
 texture = ExtResource("2_r081y")
 
 [node name="Name" type="Label" parent="." unique_id=1943825885]

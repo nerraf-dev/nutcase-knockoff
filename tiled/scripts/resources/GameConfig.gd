@@ -17,7 +17,7 @@ const DIFFICULTY_MULTIPLIERS: Dictionary = {
 
 # Player limits
 const MIN_PLAYERS: int = 2
-const MAX_PLAYERS: int = 8
+const MAX_PLAYERS: int = 6
 
 # Game modes
 const GAME_MODES: Array[String] = ["qna"]
@@ -37,32 +37,5 @@ const PLR_BADGE_ICONS: Array[String] = [
     "res://assets/images/player_badges/mine/mr_box.png",
     "res://assets/images/player_badges/mine/purps.png",
     "res://assets/images/player_badges/mine/square-head-zombie.png",
-    # "res://assets/images/player_badges/mine/flower.png",
     "res://assets/images/player_badges/mine/flower_c.png"
-    # "res://assets/images/player_badges/person_1.svg",
-    # "res://assets/images/player_badges/person_2.svg",
-    # "res://assets/images/player_badges/person_3.svg",
-    # "res://assets/images/player_badges/person_4.svg",
-    # "res://assets/images/player_badges/robot.svg",
-    # "res://assets/images/player_badges/zombie.svg",
-    # "res://assets/images/player_badges/animals/bear.svg",
-    # "res://assets/images/player_badges/animals/buffalo.svg",
-    # "res://assets/images/player_badges/animals/chick.svg",
-    # "res://assets/images/player_badges/animals/chicken.svg",
-    # "res://assets/images/player_badges/animals/elephant.svg",
-    # "res://assets/images/player_badges/animals/frog.svg",
-    # "res://assets/images/player_badges/animals/giraffe.svg",
-    # "res://assets/images/player_badges/animals/hippo.svg",
-    # "res://assets/images/player_badges/animals/horse.svg",
-    # "res://assets/images/player_badges/animals/monkey.svg",
-    # "res://assets/images/player_badges/animals/moose.svg",
-    # "res://assets/images/player_badges/animals/nawhal.svg",
-    # "res://assets/images/player_badges/animals/panda.svg",
-    # "res://assets/images/player_badges/animals/parrot.svg",
-    # "res://assets/images/player_badges/animals/penguin.svg",
-    # "res://assets/images/player_badges/animals/pig.svg",
-    # "res://assets/images/player_badges/animals/rabbit.svg",
-    # "res://assets/images/player_badges/animals/snake.svg",
-    # "res://assets/images/player_badges/animals/walrus.svg",
-    # "res://assets/images/player_badges/animals/whale.svg"
 ]

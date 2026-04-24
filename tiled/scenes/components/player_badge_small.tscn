@@ -2,19 +2,31 @@
 
 [ext_resource type="Script" uid="uid://b8pf528yu651o" path="res://scenes/components/player_badge_small.gd" id="1_hc5qc"]
 [ext_resource type="Texture2D" uid="uid://cdhxeblb67m0s" path="res://assets/images/player_badges/mine/duck.png" id="2_hc5qc"]
+[ext_resource type="Texture2D" uid="uid://c30em63gckhgf" path="res://assets/images/player_badges/components/slice1.png" id="2_k6wsw"]
 [ext_resource type="FontFile" uid="uid://bex25m5snoet2" path="res://assets/fonts/Pencil Child.ttf" id="3_n7c6u"]
-
-[sub_resource type="Gradient" id="Gradient_hc5qc"]
-offsets = PackedFloat32Array(0, 0.54814816, 1)
-colors = PackedColorArray(0.3198314, 0.31983137, 0.31983137, 1, 1, 1, 1, 1, 0.682588, 0.682588, 0.682588, 1)
-metadata/_snap_enabled = true
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_n7c6u"]
-gradient = SubResource("Gradient_hc5qc")
+[ext_resource type="Texture2D" uid="uid://ckgj0jrgpkmyk" path="res://assets/images/player_badges/components/slice2.png" id="5_ctlkv"]
+[ext_resource type="Texture2D" uid="uid://bcc3b6bka1hs0" path="res://assets/images/player_badges/components/slice3.png" id="6_0qeuj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_1252w"]
 font = ExtResource("3_n7c6u")
 font_size = 48
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p77x5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k6wsw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ctlkv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_0qeuj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="PlayerBadge" type="Control" unique_id=492291402]
 layout_mode = 3
@@ -28,7 +40,7 @@ visible = false
 layout_mode = 0
 offset_right = 400.0
 offset_bottom = 400.0
-texture = SubResource("GradientTexture1D_n7c6u")
+texture = ExtResource("2_k6wsw")
 
 [node name="Image" type="TextureRect" parent="." unique_id=921027845]
 layout_mode = 0
@@ -71,27 +83,11 @@ theme_override_colors/font_color = Color(0.043137256, 0.5921569, 0.039215688, 1)
 theme_override_font_sizes/font_size = 63
 text = "👑"
 
-[node name="CurrentPlayer" type="Label" parent="Icon" unique_id=146032093]
-layout_mode = 0
-offset_left = 144.0
-offset_top = 136.0
-offset_right = 234.0
-offset_bottom = 280.0
-theme_override_colors/font_color = Color(0.902205, 0.6912264, 0.22396871, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.78039217)
-theme_override_font_sizes/font_size = 104
-text = "▶"
-
-[node name="CurrentPlayer2" type="Label" parent="Icon/CurrentPlayer" unique_id=200131376]
-layout_mode = 0
-offset_left = 5.000001
-offset_top = 15.000002
-offset_right = 88.0
-offset_bottom = 131.0
-theme_override_colors/font_color = Color(0.043137256, 0.5921569, 0.039215688, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.78039217)
-theme_override_font_sizes/font_size = 84
-text = "▶"
+[node name="CurrentPlayer" type="AnimatedSprite2D" parent="Icon" unique_id=1531421934]
+position = Vector2(193, 198)
+sprite_frames = SubResource("SpriteFrames_p77x5")
+autoplay = "default"
+frame_progress = 0.2325426
 
 [node name="Score" type="Label" parent="." unique_id=1769908326]
 layout_mode = 0
