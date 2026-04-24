@@ -33,8 +33,31 @@ Animal Pack Redux
 
 ### Audio
 
+#### Music
+
 8bit Bossa.mp3 - from https://opengameart.org/content/bossa-nova
 by: https://opengameart.org/users/joth
+
+
+**Royalty Free Music Pack Volume 2 by Tim Beek**
+https://timbeek.itch.io/royalty-free-music-pack-volume-2/
+"Music by timbeek.com"
+
+/home/simon/Downloads/Music/OGG Royalty Free Music Pack Volume 2 by Tim Beek/8Bit Adventure Loop.ogg
+
+
+
+https://chajamakesmusic.itch.io/cute-and-silly-rpg-music-pack
+- blossom (3:07)
+- boss battle (3:02)
+- journey (1:40)
+- regrowth wip (3:27)
+- shop (1:45)
+- start (3:08) (this one is my fav)
+- town (2:00)
+- yeahhhhh yuh (1:39)
+
+
 
 
 --- 
@@ -84,4 +107,5 @@ https://opengameart.org/content/512-sound-effects-8-bit-style
 UI_SFX_Set.zip
 https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks
 Credit "Kenney.nl" or "www.kenney.nl"
+
 
