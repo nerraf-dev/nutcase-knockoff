@@ -154,6 +154,9 @@ func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: Stri
 	if board.has_method("show_vote_result_overlay"):
 		await board.show_vote_result_overlay(accepted, no_voters.is_empty())
 
+	# The vote music needs to stop.
+	#  Have 1 sound for accepted,1 for rejected
+	#  Game music need to start once the vote result is done
 	if vote_result.get("accepted", false):
 		var result = GameManager.handle_correct_answer(player, prize, GameManager.SubmissionResult.AUTO_ACCEPT, submitted_answer, scoring_breakdown)
 		result["message"] = _vote_copy.build("vote_accepted_outcome", {
@@ -173,6 +176,7 @@ func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: Stri
 		await board._update_overlay(_vote_copy.build("vote_rejected_tie_outcome"))
 	else:
 		await board._update_overlay(_vote_copy.build("vote_rejected_shared_outcome"))
+	#  Restart game music
 	board._start_next_round()
 
 

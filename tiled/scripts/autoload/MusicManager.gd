@@ -63,6 +63,7 @@ func _restart_active_track() -> void:
 	match _active_track:
 		"menu": play_menu_music()
 		"game": play_game_music()
+		"vote": play_vote_music()
 
 
 func _play_track(track_key: String, stream: AudioStream) -> void:
@@ -80,6 +81,18 @@ func _play_track(track_key: String, stream: AudioStream) -> void:
 	_player.play()
 	_active_track = track_key
 	_apply_settings()
+
+
+func _fade_in_track(track_key: String, stream: AudioStream, fade_time: float = 2.0) -> void:
+	# Optional enhancement: implement fade in/out when switching tracks
+	# This would require a more complex state machine to handle fading and track switching smoothly
+	
+	pass
+
+func _fade_out_track(track_key: String, stream: AudioStream, fade_time: float = 2.0) -> void:
+	# Optional enhancement: implement fade in/out when switching tracks
+	# This would require a more complex state machine to handle fading and track switching smoothly
+	pass
 
 
 func _on_settings_changed() -> void:

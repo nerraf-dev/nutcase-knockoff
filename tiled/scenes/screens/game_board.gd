@@ -194,6 +194,7 @@ func show_vote_preparing_overlay(submitted_answer: String, guesser_name: String 
 	})
 
 	await vote_transition.show_message("Vote incoming", body, VOTE_PREP_LEAD_IN_SECONDS, false)
+	# Music start with beginning of vote, stop when vote ends (either by resolution or timeout)
 
 
 func show_vote_active_overlay(timeout_seconds: float) -> void:
@@ -203,7 +204,6 @@ func show_vote_active_overlay(timeout_seconds: float) -> void:
 		_vote_copy = VoteCopyHelperScript.new()
 	vote_transition.show_countdown(_vote_copy.build("vote_active_title"), _vote_copy.build("vote_active_body"), timeout_seconds)
 
-
 func hide_vote_overlay() -> void:
 	if vote_transition == null:
 		return
@@ -211,6 +211,7 @@ func hide_vote_overlay() -> void:
 
 
 func show_vote_result_overlay(accepted: bool, was_tie: bool = false) -> void:
+
 	if vote_transition == null:
 		return
 	if _vote_copy == null:

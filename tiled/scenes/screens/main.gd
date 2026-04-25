@@ -176,7 +176,7 @@ func load_game_end(winner: Player) -> void:
 		return
 	
 	print("Loading game end screen, winner: %s" % winner.name)
-	MusicManager.play_menu_music()
+	MusicManager.play_menu_music()    # TODO: Need to change to 'game end' music at some point
 
 	var game_data = {
 		"game_type": GameManager.game.game_type,
