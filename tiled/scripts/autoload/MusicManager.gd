@@ -2,6 +2,7 @@ extends Node
 
 const MENU_MUSIC_STREAM := preload("res://assets/sound/music/8bit Bossa.mp3")
 const GAME_MUSIC_STREAM := preload("res://assets/sound/music/8bit Bossa.mp3")
+const VOTE_MUSIC_STREAM := preload("res://assets/sound/music/8Bit Adventure Loop.ogg")
 const MASTER_BUS_NAME := "Master"
 const MUSIC_BUS_NAME := "Music"
 const SILENT_DB := -80.0
@@ -32,7 +33,11 @@ func play_menu_music() -> void:
 
 func play_game_music() -> void:
 	_play_track("game", GAME_MUSIC_STREAM)
+	print("Playing game music")
 
+func play_vote_music() -> void:
+	_play_track("vote", VOTE_MUSIC_STREAM)
+	print("Playing vote music")
 
 func stop_music() -> void:
 	_active_track = ""
