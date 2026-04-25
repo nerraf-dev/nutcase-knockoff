@@ -50,6 +50,7 @@ func handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String, s
 		var network_vote_result: Dictionary = await board.network_vote_resolved
 		await _apply_fuzzy_vote_result(player, prize, submitted_answer, network_vote_result, scoring_breakdown)
 	else:
+		MusicManager.play_vote_music()
 		var vote_modal = VoteModal.new()
 		vote_modal.setup(player, submitted_answer, board.round_instance.current_question.answer, eligible_voters)
 		board.add_child(vote_modal)
@@ -98,6 +99,7 @@ func _start_network_vote_session(guesser: Player, submitted_answer: String, elig
 	reset_vote_session()
 	_vote_session_active = true
 	_vote_session_guesser = guesser
+	MusicManager.play_vote_music()
 	_vote_session_correct_answer = ""
 	if board.round_instance and board.round_instance.get("current_question") != null:
 		_vote_session_correct_answer = str(board.round_instance.current_question.answer)
@@ -153,6 +155,7 @@ func _apply_fuzzy_vote_result(player: Player, prize: int, submitted_answer: Stri
 	var no_voters: Array[Player] = vote_result.get("no_voters", [])
 	if board.has_method("show_vote_result_overlay"):
 		await board.show_vote_result_overlay(accepted, no_voters.is_empty())
+	MusicManager.play_game_music()
 
 	# The vote music needs to stop.
 	#  Have 1 sound for accepted,1 for rejected
