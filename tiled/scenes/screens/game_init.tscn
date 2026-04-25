@@ -19,6 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://c5g3f74n4xkik" path="res://assets/images/buttons/setup_screen/med-circle.svg" id="15_quw76"]
 [ext_resource type="Texture2D" uid="uid://dsopqpa6wvboc" path="res://assets/images/buttons/setup_screen/short-circle-3.svg" id="16_7p4uc"]
 [ext_resource type="Texture2D" uid="uid://ej5ytb8rbqhl" path="res://assets/images/buttons/setup_screen/long-circle.svg" id="16_okqwt"]
+[ext_resource type="Texture2D" uid="uid://citd1m3qnvv80" path="res://assets/images/backgrounds/confirm_modal_bg.svg" id="20_cakjl"]
+[ext_resource type="FontFile" uid="uid://c1ml2lu47hwwa" path="res://assets/fonts/Pencil Child.otf" id="20_j5pn4"]
 [ext_resource type="Texture2D" uid="uid://jx833qp5hbhc" path="res://assets/images/buttons/base/Button-base-green - 0.png" id="20_p6yhs"]
 [ext_resource type="Texture2D" uid="uid://q1no8frg7g8m" path="res://assets/images/buttons/base/Button-base-over-0.png" id="21_j5pn4"]
 [ext_resource type="Texture2D" uid="uid://dia6pfjrxwcgy" path="res://assets/images/buttons/base/Button-base - 0.png" id="22_cakjl"]
@@ -55,6 +57,8 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="SystemFont" id="SystemFont_cakjl"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kg5kx"]
 texture = ExtResource("20_p6yhs")
 
@@ -82,7 +86,7 @@ texture = ExtResource("27_odrsr")
 [node name="GameInit" type="Node2D" unique_id=111432682]
 script = ExtResource("1_nhm8p")
 metadata/_edit_vertical_guides_ = [960.0, 1919.0, 73.0, 1128.0]
-metadata/_edit_horizontal_guides_ = [536.0, 221.0]
+metadata/_edit_horizontal_guides_ = [536.0, 221.0, 1266.0]
 
 [node name="Background" type="TextureRect" parent="." unique_id=330997447]
 offset_left = -91.0
@@ -344,49 +348,75 @@ layout_mode = 3
 anchors_preset = 0
 offset_left = 312.0
 offset_top = 256.0
-offset_right = 1728.0
+offset_right = 1732.0
 offset_bottom = 776.0
 
-[node name="ColorRect" type="ColorRect" parent="ConfirmModal" unique_id=1032024178]
+[node name="ColorRect" type="TextureRect" parent="ConfirmModal" unique_id=2035419104]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 129.0
+offset_left = 257.0
+offset_top = 9.0
+offset_right = -319.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_cakjl")
+
+[node name="ColorRect2" type="ColorRect" parent="ConfirmModal" unique_id=2017578674]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 257.0
+offset_top = 9.0
+offset_right = -319.0
+offset_bottom = 269.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.16394848, 0.21695486, 0.38877624, 1)
 
 [node name="Values" type="RichTextLabel" parent="ConfirmModal" unique_id=1487020995]
 layout_mode = 0
-offset_left = 288.0
-offset_top = 90.0
-offset_right = 1054.0
-offset_bottom = 460.0
-theme_override_font_sizes/normal_font_size = 36
+offset_left = 398.0
+offset_top = 150.0
+offset_right = 977.0
+offset_bottom = 636.0
+theme_override_fonts/normal_font = ExtResource("20_j5pn4")
+theme_override_fonts/bold_font = SubResource("SystemFont_cakjl")
+theme_override_font_sizes/normal_font_size = 48
 bbcode_enabled = true
 text = "settings here"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ConfirmLabel" type="Label" parent="ConfirmModal" unique_id=416346247]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -168.0
-offset_right = 168.0
-offset_bottom = 88.0
+offset_left = -199.0
+offset_top = 74.0
+offset_right = 137.0
+offset_bottom = 162.0
 grow_horizontal = 2
-theme_override_font_sizes/font_size = 64
+theme_override_colors/font_color = Color(0.8777339, 0.9325365, 0.9968365, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/font = ExtResource("2_h1k66")
+theme_override_font_sizes/font_size = 72
 text = "Confirm?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ConfirmBtn" type="Button" parent="ConfirmModal" unique_id=984083563]
 layout_mode = 0
-offset_left = 1121.0
-offset_top = 473.0
-offset_right = 1376.0
-offset_bottom = 580.0
+offset_left = 774.0
+offset_top = 613.0
+offset_right = 1029.0
+offset_bottom = 720.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_focus_color = Color(0.021434585, 0.021434639, 0.021434741, 1)
 theme_override_colors/font_pressed_color = Color(0.11858138, 0.11858138, 0.11858138, 1)
@@ -400,10 +430,10 @@ text = "Confirm"
 
 [node name="BackBtn" type="Button" parent="ConfirmModal" unique_id=686647599]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 476.0
-offset_right = 267.0
-offset_bottom = 576.0
+offset_left = 326.0
+offset_top = 621.0
+offset_right = 529.0
+offset_bottom = 721.0
 theme_override_colors/font_color = Color(0.2195015, 0.21950078, 0.21950099, 1)
 theme_override_colors/font_hover_color = Color(0.15082213, 0.1641806, 0.44866145, 1)
 theme_override_font_sizes/font_size = 50

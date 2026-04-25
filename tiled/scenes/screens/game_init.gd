@@ -90,6 +90,7 @@ func _on_start_button_pressed() -> void:
 	UISfx.play_ui_click()
 	# Show confirmation modal with selected settings
 	confirm_modal.visible = true
+	start_button.visible = false
 	confirm_values.text = "Game Type: %s\nTarget Score: %d\n" % [
 		settings["game_type"],
 		settings["game_target"],
@@ -135,6 +136,7 @@ func _set_control_interaction(button: BaseButton, enabled: bool) -> void:
 func _on_back_button_pressed() -> void:
 	UISfx.play_ui_click()
 	confirm_modal.visible = false
+	start_button.visible = true
 	_set_background_focus(true)
 	game_type_buttons.get_child(0).grab_focus()
 

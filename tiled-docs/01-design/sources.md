@@ -58,6 +58,10 @@ https://chajamakesmusic.itch.io/cute-and-silly-rpg-music-pack
 - yeahhhhh yuh (1:39)
 
 
+file:///home/simon/Downloads/Music/JDSherbert - Minigame Music Pack %5BFREE%5D/Stereo/ogg/JDSherbert - Minigame Music Pack - Blackjack.ogg
+
+file:///home/simon/Downloads/Music/JDSherbert - Minigame Music Pack %5BFREE%5D/Stereo/ogg/JDSherbert - Minigame Music Pack - Streetlights.ogg
+
 
 
 --- 

@@ -116,7 +116,7 @@ oversampling_override = 1.0
 mode = 3
 title = "Credits:"
 initial_position = 2
-size = Vector2i(740, 600)
+size = Vector2i(1000, 640)
 theme = SubResource("Theme_4s0rd")
 theme_override_constants/buttons_separation = 2
 dialog_text = "Fonts by Khurasan™
@@ -125,6 +125,9 @@ dialog_text = "Fonts by Khurasan™
 Music:
 8bit Bossa by Joth 
 (https://opengameart.org/users/joth)
+
+8Bit Adventure Loop (vote music):
+Music by timbeek.com
 
 Button clicks by Kenney.nl
 (www.kenney.nl)"

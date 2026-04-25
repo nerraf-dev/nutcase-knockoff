@@ -2187,6 +2187,17 @@
   <property name="set.test_image">0</property>
   <property name="kdenlive:id">4</property>
   <property name="warp_pitch">0</property>
+  <property name="meta.media.frame_rate_num">60</property>
+  <property name="meta.media.frame_rate_den">1</property>
+  <property name="meta.media.colorspace">709</property>
+  <property name="meta.media.color_trc">1</property>
+  <property name="meta.media.has_b_frames">2</property>
+  <property name="meta.media.width">1920</property>
+  <property name="meta.media.height">1080</property>
+  <property name="meta.media.aspect_ratio">1</property>
+  <property name="meta.media.color_range">mpeg</property>
+  <property name="meta.media.top_field_first">0</property>
+  <property name="meta.media.progressive">1</property>
  </producer>
  <producer id="producer29" in="00:00:00.000" out="00:02:16.717">
   <property name="length">8205</property>
@@ -2258,6 +2269,17 @@
   <property name="set.test_image">0</property>
   <property name="kdenlive:id">4</property>
   <property name="warp_pitch">0</property>
+  <property name="meta.media.frame_rate_num">60</property>
+  <property name="meta.media.frame_rate_den">1</property>
+  <property name="meta.media.colorspace">709</property>
+  <property name="meta.media.color_trc">1</property>
+  <property name="meta.media.has_b_frames">2</property>
+  <property name="meta.media.width">1920</property>
+  <property name="meta.media.height">1080</property>
+  <property name="meta.media.aspect_ratio">1</property>
+  <property name="meta.media.color_range">mpeg</property>
+  <property name="meta.media.top_field_first">0</property>
+  <property name="meta.media.progressive">1</property>
  </producer>
  <producer id="producer30" in="00:00:00.000" out="00:02:16.717">
   <property name="length">8205</property>
@@ -2908,8 +2930,8 @@
   <property name="kdenlive:folderid">2</property>
   <property name="kdenlive:sequenceproperties.audioTarget">1</property>
   <property name="kdenlive:sequenceproperties.disablepreview">0</property>
-  <property name="kdenlive:sequenceproperties.position">4623</property>
-  <property name="kdenlive:sequenceproperties.scrollPos">1588</property>
+  <property name="kdenlive:sequenceproperties.position">6408</property>
+  <property name="kdenlive:sequenceproperties.scrollPos">2696</property>
   <property name="kdenlive:sequenceproperties.tracks">4</property>
   <property name="kdenlive:sequenceproperties.verticalzoom">1</property>
   <property name="kdenlive:sequenceproperties.videoTarget">2</property>
@@ -4124,7 +4146,6 @@
         }
     ],
     "closedDockWidgets": [
-        "project_bin",
         "library",
         "subtitles",
         "textedit",
@@ -4136,6 +4157,7 @@
         "notes_widget",
         "media_browser",
         "onlineresources",
+        "effect_list",
         "transition_list",
         "undo_history",
         "mixer",
@@ -4164,7 +4186,7 @@
                         ],
                         "geometry": {
                             "height": 393,
-                            "width": 1517,
+                            "width": 1515,
                             "x": 0,
                             "y": 515
                         },
@@ -4202,8 +4224,8 @@
                         ],
                         "geometry": {
                             "height": 393,
-                            "width": 401,
-                            "x": 1517,
+                            "width": 403,
+                            "x": 1515,
                             "y": 515
                         },
                         "id": "4718",
@@ -4213,7 +4235,7 @@
                         "options": 0
                     },
                     "4854": {
-                        "currentTabIndex": 2,
+                        "currentTabIndex": 0,
                         "dockWidgets": [
                             "project_bin",
                             "transition_list",
@@ -4230,7 +4252,7 @@
                         "id": "4854",
                         "isNull": false,
                         "mainWindowUniqueName": "KdenliveKDDock",
-                        "objectName": "effect_list",
+                        "objectName": "project_bin",
                         "options": 0
                     },
                     "5033": {
@@ -4512,7 +4534,7 @@
                                             "height": 344,
                                             "width": 958
                                         },
-                                        "percentageWithinParent": 0.5671806167400881
+                                        "percentageWithinParent": 0.5676567656765676
                                     }
                                 },
                                 {
@@ -4524,7 +4546,7 @@
                                             "sizingInfo": {
                                                 "geometry": {
                                                     "height": 393,
-                                                    "width": 1517,
+                                                    "width": 1515,
                                                     "x": 0,
                                                     "y": 0
                                                 },
@@ -4536,7 +4558,7 @@
                                                     "height": 117,
                                                     "width": 80
                                                 },
-                                                "percentageWithinParent": 0.7909280500521376
+                                                "percentageWithinParent": 0.7902973395931142
                                             }
                                         },
                                         {
@@ -4546,8 +4568,8 @@
                                             "sizingInfo": {
                                                 "geometry": {
                                                     "height": 393,
-                                                    "width": 401,
-                                                    "x": 1517,
+                                                    "width": 403,
+                                                    "x": 1515,
                                                     "y": 0
                                                 },
                                                 "maxSizeHint": {
@@ -4558,7 +4580,7 @@
                                                     "height": 159,
                                                     "width": 141
                                                 },
-                                                "percentageWithinParent": 0.20907194994786235
+                                                "percentageWithinParent": 0.20970266040688576
                                             }
                                         }
                                     ],
@@ -4577,10 +4599,10 @@
                                             "width": 1048631
                                         },
                                         "minSize": {
-                                            "height": 141,
+                                            "height": 159,
                                             "width": 221
                                         },
-                                        "percentageWithinParent": 0.43281938325991187
+                                        "percentageWithinParent": 0.43234323432343236
                                     }
                                 }
                             ],
@@ -4599,7 +4621,7 @@
                                     "width": 1048631
                                 },
                                 "minSize": {
-                                    "height": 485,
+                                    "height": 503,
                                     "width": 958
                                 },
                                 "percentageWithinParent": 1.0
@@ -4666,21 +4688,29 @@
             },
             "index": 1,
             "name": "HDMI-A-1"
-        },
-        {
-            "devicePixelRatio": 1.0,
-            "geometry": {
-                "height": 1080,
-                "width": 1920,
-                "x": 1920,
-                "y": 1080
-            },
-            "index": 2,
-            "name": "Virtual-virtual-xdp-kde-/home/simon/Downloads/deskreen-ce-3.2.14-x86_64.AppImage"
         }
     ],
     "serializationVersion": 3
 }</property>
+  <property name="kdenlive:docproperties.rendercategory">4k</property>
+  <property name="kdenlive:docproperties.rendercustomquality">-1</property>
+  <property name="kdenlive:docproperties.renderendguide">-1</property>
+  <property name="kdenlive:docproperties.renderexportaudio">0</property>
+  <property name="kdenlive:docproperties.renderfullcolorrange">0</property>
+  <property name="kdenlive:docproperties.rendermode">0</property>
+  <property name="kdenlive:docproperties.renderplay">0</property>
+  <property name="kdenlive:docproperties.renderpreview">0</property>
+  <property name="kdenlive:docproperties.renderprofile">MP4-H265 (HEVC)</property>
+  <property name="kdenlive:docproperties.renderrescale">0</property>
+  <property name="kdenlive:docproperties.renderrescaleheight">540</property>
+  <property name="kdenlive:docproperties.renderrescalewidth">960</property>
+  <property name="kdenlive:docproperties.renderspeed">6</property>
+  <property name="kdenlive:docproperties.renderstartguide">-1</property>
+  <property name="kdenlive:docproperties.renderstemaudio">0</property>
+  <property name="kdenlive:docproperties.rendertcoverlay">0</property>
+  <property name="kdenlive:docproperties.rendertctype">-1</property>
+  <property name="kdenlive:docproperties.rendertwopass">0</property>
+  <property name="kdenlive:docproperties.renderurl">basic_gameplay.mp4</property>
   <property name="xml_retain">1</property>
   <entry in="00:00:00.000" out="00:00:00.000" producer="{329f1f0f-d94c-4e68-82ee-ab127a478497}"/>
   <entry in="00:00:00.000" out="00:04:33.467" producer="chain0"/>
