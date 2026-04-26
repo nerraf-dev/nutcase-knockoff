@@ -1,7 +1,7 @@
 extends Node
 
 const MENU_MUSIC_STREAM := preload("res://assets/sound/music/8bit Bossa.mp3")
-const GAME_MUSIC_STREAM := [
+const GAME_MUSIC_TRACKS := [
 	preload("res://assets/sound/music/game/regrowth wip.wav"),
 	preload("res://assets/sound/music/game/shop.wav"),
 	preload("res://assets/sound/music/game/boss battle.wav"),
@@ -35,22 +35,22 @@ func _ready() -> void:
 
 	
 func play_menu_music() -> void:
-	# _play_track("menu", MENU_MUSIC_STREAM)
 	_switch_track_with_fade("menu", MENU_MUSIC_STREAM)
 	print("Playing menu music")
 
 
 func play_game_music() -> void:
-	# _play_track("game", GAME_MUSIC_STREAM)
-	var random_index = randi() % GAME_MUSIC_STREAM.size()
+	if GAME_MUSIC_TRACKS.size() == 0:
+		push_error("No game music tracks available to play.")
+		return
+	var random_index = randi() % GAME_MUSIC_TRACKS.size()
 	if random_index == _current_song:
-		random_index = (random_index + 1) % GAME_MUSIC_STREAM.size()
+		random_index = (random_index + 1) % GAME_MUSIC_TRACKS.size()
 	_current_song = random_index
-	_switch_track_with_fade("game", GAME_MUSIC_STREAM[random_index])
+	_switch_track_with_fade("game", GAME_MUSIC_TRACKS[random_index])
 	print("Playing game music")
 
 func play_vote_music() -> void:
-	# _play_track("vote", VOTE_MUSIC_STREAM)
 	_switch_track_with_fade("vote", VOTE_MUSIC_STREAM)
 	print("Playing vote music")
 
