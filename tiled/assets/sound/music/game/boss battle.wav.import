@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c1qeg1m1mrlb0"
-path="res://.godot/imported/boss battle.wav-ca2d2caaa3c59e023c3f253f077dbc7f.sample"
+path="res://.godot/imported/boss battle.wav-ba821210ca4d5ade3fa3d1b35c4c33a9.sample"
 
 [deps]
 
-source_file="res://assets/sound/music/boss battle.wav"
-dest_files=["res://.godot/imported/boss battle.wav-ca2d2caaa3c59e023c3f253f077dbc7f.sample"]
+source_file="res://assets/sound/music/game/boss battle.wav"
+dest_files=["res://.godot/imported/boss battle.wav-ba821210ca4d5ade3fa3d1b35c4c33a9.sample"]
 
 [params]
 

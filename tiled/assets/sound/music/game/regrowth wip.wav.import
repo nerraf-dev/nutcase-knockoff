@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://nepo5tvmfxjd"
-path="res://.godot/imported/regrowth wip.wav-9bb84a9de2d947cecea6ed0bef4ea2dc.sample"
+path="res://.godot/imported/regrowth wip.wav-8f3ec1b43d1f9c65393796302704c48b.sample"
 
 [deps]
 
-source_file="res://assets/sound/music/regrowth wip.wav"
-dest_files=["res://.godot/imported/regrowth wip.wav-9bb84a9de2d947cecea6ed0bef4ea2dc.sample"]
+source_file="res://assets/sound/music/game/regrowth wip.wav"
+dest_files=["res://.godot/imported/regrowth wip.wav-8f3ec1b43d1f9c65393796302704c48b.sample"]
 
 [params]
 
