@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dck2jl2wolbhr" path="res://assets/images/buttons/exit/exit-over.svg" id="11_e1u3m"]
 [ext_resource type="FontFile" uid="uid://bex25m5snoet2" path="res://assets/fonts/Pencil Child.ttf" id="12_45uvd"]
 [ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="13_45uvd"]
+[ext_resource type="Texture2D" uid="uid://citd1m3qnvv80" path="res://assets/images/backgrounds/confirm_modal_bg.svg" id="13_vmkxd"]
 [ext_resource type="LabelSettings" uid="uid://ciqemufqkbmrl" path="res://resources/game_init-settings-label.tres" id="14_qknor"]
 
 [sub_resource type="Theme" id="Theme_4s0rd"]
@@ -18,6 +19,19 @@ default_font = ExtResource("12_45uvd")
 default_font_size = 36
 Label/colors/font_color = Color(1, 1, 1, 1)
 Label/styles/normal = null
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_45uvd"]
+content_margin_left = 71.0
+content_margin_top = 71.0
+content_margin_right = 88.0
+content_margin_bottom = 35.0
+texture = ExtResource("13_vmkxd")
+expand_margin_left = 30.0
+expand_margin_top = 24.0
+expand_margin_right = 30.0
+expand_margin_bottom = 8.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
 
 [node name="GameHome" type="Node2D" unique_id=1535613956]
 script = ExtResource("1_dobo1")
@@ -104,10 +118,12 @@ texture_hover = ExtResource("11_e1u3m")
 
 [node name="AcceptDialog" type="AcceptDialog" parent="." unique_id=1822986078]
 oversampling_override = 1.0
+mode = 3
 title = "Quit?"
 initial_position = 2
-size = Vector2i(640, 400)
+size = Vector2i(720, 400)
 theme = SubResource("Theme_4s0rd")
+theme_override_styles/panel = SubResource("StyleBoxTexture_45uvd")
 dialog_text = "Are you sure you want to quit? (ESC to close)"
 dialog_autowrap = true
 

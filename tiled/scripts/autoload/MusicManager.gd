@@ -7,7 +7,7 @@ const MASTER_BUS_NAME := "Master"
 const MUSIC_BUS_NAME := "Music"
 const SILENT_DB := -80.0
 const LOOP_DELAY_SECONDS: float = 1.5
-const DEFAULT_FADE_SECONDS: float = 0.35
+const DEFAULT_FADE_SECONDS: float = 0.5
 
 var _player: AudioStreamPlayer
 var _active_track: String = ""
@@ -29,16 +29,19 @@ func _ready() -> void:
 
 	
 func play_menu_music() -> void:
-	_play_track("menu", MENU_MUSIC_STREAM)
+	# _play_track("menu", MENU_MUSIC_STREAM)
+	_switch_track_with_fade("menu", MENU_MUSIC_STREAM)
 	print("Playing menu music")
 
 
 func play_game_music() -> void:
-	_play_track("game", GAME_MUSIC_STREAM)
+	# _play_track("game", GAME_MUSIC_STREAM)
+	_switch_track_with_fade("game", GAME_MUSIC_STREAM)
 	print("Playing game music")
 
 func play_vote_music() -> void:
-	_play_track("vote", VOTE_MUSIC_STREAM)
+	# _play_track("vote", VOTE_MUSIC_STREAM)
+	_switch_track_with_fade("vote", VOTE_MUSIC_STREAM)
 	print("Playing vote music")
 
 func stop_music() -> void:
