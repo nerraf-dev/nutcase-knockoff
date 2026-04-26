@@ -5,6 +5,8 @@
 [ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_hrp0r"]
 [ext_resource type="Texture2D" uid="uid://6vk4uudip76p" path="res://assets/images/backgrounds/bg_large_tiles.png" id="2_q7dn1"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_o3vw7"]
+[ext_resource type="SpriteFrames" uid="uid://bdg25x2d1v0ke" path="res://assets/images/buttons/base/base_btn.tres" id="6_krflu"]
+[ext_resource type="LabelSettings" uid="uid://da71nsttodg80" path="res://gen_btn.tres" id="7_qwicm"]
 
 [sub_resource type="Gradient" id="Gradient_xyh14"]
 colors = PackedColorArray(0.5647059, 0.73333335, 1, 0.7019608, 0.78431374, 0.78431374, 0.78431374, 0.7058824)
@@ -16,6 +18,8 @@ width = 65
 [sub_resource type="Theme" id="Theme_vkwuj"]
 default_font = ExtResource("5_o3vw7")
 default_font_size = 42
+
+[sub_resource type="Theme" id="Theme_ri7xo"]
 
 [node name="GameEnd" type="Control" unique_id=19355804]
 layout_mode = 3
@@ -81,8 +85,33 @@ alignment = 1
 
 [node name="PlayAgainBtn" type="Button" parent="Content/Buttons" unique_id=398730185]
 layout_mode = 2
+theme = SubResource("Theme_ri7xo")
 text = "Play again?"
 
 [node name="HomeBtn" type="Button" parent="Content/Buttons" unique_id=387371464]
 layout_mode = 2
 text = "Back Home"
+
+[node name="StartBtn" type="TextureButton" parent="Content/Buttons" unique_id=1167245541]
+visible = false
+layout_mode = 2
+stretch_mode = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Content/Buttons/StartBtn" unique_id=978548370]
+position = Vector2(171.00005, 150.00006)
+scale = Vector2(0.5781252, 0.4187496)
+sprite_frames = ExtResource("6_krflu")
+autoplay = "default"
+
+[node name="Label" type="Label" parent="Content/Buttons/StartBtn" unique_id=1961796884]
+layout_mode = 0
+offset_left = 26.999992
+offset_top = 100.999985
+offset_right = 348.0
+offset_bottom = 278.33325
+scale = Vector2(0.75, 0.75)
+theme_override_font_sizes/font_size = 16
+text = "Play again"
+label_settings = ExtResource("7_qwicm")
+horizontal_alignment = 1
+autowrap_mode = 2
