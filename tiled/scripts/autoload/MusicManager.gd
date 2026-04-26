@@ -16,6 +16,7 @@ const DEFAULT_FADE_SECONDS: float = 0.5
 
 var _player: AudioStreamPlayer
 var _active_track: String = ""
+var _current_song: int = -1
 var _loop_timer: SceneTreeTimer = null
 var _fade_tween: Tween = null
 
@@ -42,6 +43,9 @@ func play_menu_music() -> void:
 func play_game_music() -> void:
 	# _play_track("game", GAME_MUSIC_STREAM)
 	var random_index = randi() % GAME_MUSIC_STREAM.size()
+	if random_index == _current_song:
+		random_index = (random_index + 1) % GAME_MUSIC_STREAM.size()
+	_current_song = random_index
 	_switch_track_with_fade("game", GAME_MUSIC_STREAM[random_index])
 	print("Playing game music")
 
@@ -143,7 +147,8 @@ func _switch_track_with_fade(track_key: String, stream: AudioStream, fade_out_ti
 		return
 
 	var same_track := _active_track == track_key
-	if same_track and _player.playing:
+	var same_stream := _player.stream == stream
+	if same_track and same_stream and _player.playing:
 		_apply_settings()
 		return
 
