@@ -15,7 +15,7 @@ extends Node
 # Dependencies:
 # - Game, Player, Question
 # - PlayerManager, GameIdGenerator, GameConfig
-# - RoundResolutionHelper, QuestionLoader
+# - RoundScoringRules, QuestionLoader
 #
 # State notes:
 # - Multiplayer path enters IN_PROGRESS from LOBBY.
@@ -47,8 +47,8 @@ var current_state: GameState = GameState.NONE
 var game: Game = null
 var available_questions: Array[Question] = []
 var used_question_ids: Array[int] = []
-const RoundResolutionHelperResource = preload("res://scripts/logic/RoundResolutionHelper.gd")
-var _round_resolution = RoundResolutionHelperResource.new()
+const RoundScoringRulesResource = preload("res://scripts/logic/round_scoring_rules.gd")
+var _round_resolution = RoundScoringRulesResource.new()
 
 func _ready() -> void:
 	print("GameManager initialized")

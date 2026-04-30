@@ -1,4 +1,4 @@
-class_name VoteCopyHelper
+class_name VoteMessageBuilder
 extends RefCounted
 
 const DEFAULT_STYLE := "casual"

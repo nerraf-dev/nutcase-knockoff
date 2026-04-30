@@ -1,10 +1,10 @@
-class_name RoundResolutionHelper
+class_name RoundScoringRules
 extends RefCounted
 
 const SHOW_SCORING_BREAKDOWN_DETAILS := false # Set to true to enable detailed scoring breakdowns in messages (for debugging/demo purposes)
 const DEFAULT_STYLE := "casual"
 
-# RoundResolutionHelper — scripts/logic/RoundResolutionHelper.gd
+# RoundScoringRules — scripts/logic/round_scoring_rules.gd
 # Role: Stateless rules helper for round resolution and scoring outcomes.
 # Owns: Winner detection, wrong/correct answer outcome shaping, vote-rejection payout logic.
 # Does not own: Game state transitions (GameManager), player storage/turn index (PlayerManager).

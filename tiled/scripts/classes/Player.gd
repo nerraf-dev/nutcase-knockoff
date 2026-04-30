@@ -4,7 +4,7 @@ extends Resource
 # Player — scripts/classes/Player.gd
 # Role: Resource model for a single player.
 # Owns: Identity, score, freeze status, avatar/visual metadata, connection metadata.
-# Does not own: Score rules (GameManager/RoundResolutionHelper), roster/turn order (PlayerManager).
+# Does not own: Score rules (GameManager/RoundScoringRules), roster/turn order (PlayerManager).
 #
 # Public API:
 # - add_score(points)

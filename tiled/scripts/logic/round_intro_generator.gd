@@ -1,4 +1,4 @@
-class_name RoundIntroCopyHelper
+class_name RoundIntroGenerator
 extends RefCounted
 
 const DEFAULT_STYLE := "casual"

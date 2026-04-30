@@ -38,10 +38,10 @@ texture = SubResource("GradientTexture2D_q7dn1")
 
 [node name="Background2" type="TextureRect" parent="." unique_id=507391991]
 layout_mode = 0
-offset_left = -681.0
-offset_top = -27.999996
-offset_right = 3159.0
-offset_bottom = 2532.0
+offset_left = -557.0
+offset_top = -197.0
+offset_right = 3283.0
+offset_bottom = 2363.0
 rotation = -0.08736457
 scale = Vector2(0.6992977, 0.59871185)
 texture = ExtResource("2_q7dn1")

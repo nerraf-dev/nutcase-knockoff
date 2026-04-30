@@ -4,7 +4,7 @@ class_name GameBoardVoteSession
 
 var board: Node = null
 const NETWORK_VOTE_TIMEOUT_SECONDS := 25.0
-const VoteCopyHelperScript = preload("res://scripts/logic/VoteCopyHelper.gd")
+const VoteMessageBuilderScript = preload("res://scripts/logic/vote_message_builder.gd")
 
 var _vote_session_active: bool = false
 var _vote_session_guesser: Player = null
@@ -16,7 +16,7 @@ var _vote_copy: RefCounted = null
 
 func _init(p_board: Node = null) -> void:
 	board = p_board
-	_vote_copy = VoteCopyHelperScript.new()
+	_vote_copy = VoteMessageBuilderScript.new()
 
 
 func handle_fuzzy_answer(player: Player, prize: int, submitted_answer: String, scoring_breakdown: Dictionary = {}, distance: float = 0.0) -> void:

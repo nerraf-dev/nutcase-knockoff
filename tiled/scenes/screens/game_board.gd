@@ -40,8 +40,8 @@ const PLAYER_BADGE_SM = preload("res://scenes/components/player_badge_small.tscn
 const QUESTION_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/question_transition_overlay.tscn")
 const VOTE_TRANSITION_SCENE: PackedScene = preload("res://scenes/screens/vote_transition_overlay.tscn")
 const OPTIONS_CONTENT_SCENE: PackedScene = preload("res://scenes/screens/options_content.tscn")
-const RoundIntroCopyHelperScript = preload("res://scripts/logic/RoundIntroCopyHelper.gd")
-const VoteCopyHelperScript = preload("res://scripts/logic/VoteCopyHelper.gd")
+const RoundIntroGeneratorScript = preload("res://scripts/logic/round_intro_generator.gd")
+const VoteMessageBuilderScript = preload("res://scripts/logic/vote_message_builder.gd")
 const OVERLAY_AUTO_DISMISS_SECONDS: float = 3.0
 const VOTE_PREP_LEAD_IN_SECONDS: float = 2.0
 const VOTE_RESULT_AUTO_DISMISS_SECONDS: float = 1.4
@@ -102,8 +102,8 @@ func _ready() -> void:
 	_disconnect_policy = DisconnectPolicyScript.new(self )
 	_vote_session = VoteSessionScript.new(self )
 	_controller_sync = ControllerSyncScript.new(self )
-	_round_intro_copy = RoundIntroCopyHelperScript.new()
-	_vote_copy = VoteCopyHelperScript.new()
+	_round_intro_copy = RoundIntroGeneratorScript.new()
+	_vote_copy = VoteMessageBuilderScript.new()
 
 	if not NetworkManager.is_local:
 		NetworkManager.player_join_received.connect(_on_network_player_join_during_game)
@@ -185,7 +185,7 @@ func show_vote_preparing_overlay(submitted_answer: String, guesser_name: String 
 	if vote_transition == null:
 		return
 	if _vote_copy == null:
-		_vote_copy = VoteCopyHelperScript.new()
+		_vote_copy = VoteMessageBuilderScript.new()
 
 	var name_to_use := guesser_name if not guesser_name.is_empty() else "Someone"
 	var body: String = _vote_copy.build("vote_incoming", {
@@ -201,7 +201,7 @@ func show_vote_active_overlay(timeout_seconds: float) -> void:
 	if vote_transition == null:
 		return
 	if _vote_copy == null:
-		_vote_copy = VoteCopyHelperScript.new()
+		_vote_copy = VoteMessageBuilderScript.new()
 	vote_transition.show_countdown(_vote_copy.build("vote_active_title"), _vote_copy.build("vote_active_body"), timeout_seconds)
 
 func hide_vote_overlay() -> void:
@@ -215,7 +215,7 @@ func show_vote_result_overlay(accepted: bool, was_tie: bool = false) -> void:
 	if vote_transition == null:
 		return
 	if _vote_copy == null:
-		_vote_copy = VoteCopyHelperScript.new()
+		_vote_copy = VoteMessageBuilderScript.new()
 
 	var title: String = _vote_copy.build("vote_result_title")
 	var body: String = _vote_copy.build("vote_result_accepted")
@@ -401,7 +401,7 @@ func _start_next_round() -> void:
 
 func _build_round_intro_message(question: Resource) -> String:
 	if _round_intro_copy == null:
-		_round_intro_copy = RoundIntroCopyHelperScript.new()
+		_round_intro_copy = RoundIntroGeneratorScript.new()
 
 	var base_points := _get_question_base_points_for_intro(question)
 	var question_number := 1

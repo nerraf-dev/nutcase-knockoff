@@ -4,7 +4,7 @@ extends Resource
 # Game — scripts/classes/Game.gd
 # Role: Resource model for one game session.
 # Owns: Session metadata, active question pointer, and round result history.
-# Does not own: Scoring/round rules (RoundResolutionHelper), orchestration/state machine (GameManager).
+# Does not own: Scoring/round rules (RoundScoringRules), orchestration/state machine (GameManager).
 #
 # Key fields:
 # - id, game_mode, game_type, game_target
