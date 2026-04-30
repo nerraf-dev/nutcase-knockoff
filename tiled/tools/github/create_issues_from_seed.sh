@@ -2,9 +2,9 @@
 set -euo pipefail
 
 # Usage:
-#   ./scripts/tools/create_issues_from_seed.sh [repo] [seed_file]
+#   ./tools/github/create_issues_from_seed.sh [repo] [seed_file]
 # Example:
-#   ./scripts/tools/create_issues_from_seed.sh LittleCogWorks/tiled ../tiled-docs/github-issues/issues-seed.tsv
+#   ./tools/github/create_issues_from_seed.sh LittleCogWorks/tiled ../tiled-docs/github-issues/issues-seed.tsv
 
 REPO="${1:-LittleCogWorks/tiled}"
 SEED_FILE="${2:-../tiled-docs/github-issues/issues-seed.tsv}"

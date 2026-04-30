@@ -4,7 +4,7 @@ This setup lets you create a batch of GitHub issues from a seed file.
 
 ## Files
 - Seed data: tiled-docs/github-issues/issues-seed.tsv
-- Script: tiled/scripts/tools/create_issues_from_seed.sh
+- Script: tiled/tools/github/create_issues_from_seed.sh
 
 ## Requirements
 - Git Bash
@@ -16,14 +16,14 @@ From repository root:
 
 ```bash
 cd /c/Users/sifar/repos/nutcase-knockoff/tiled
-DRY_RUN=1 ./scripts/tools/create_issues_from_seed.sh LittleCogWorks/tiled ../tiled-docs/github-issues/issues-seed.tsv
+DRY_RUN=1 ./tools/github/create_issues_from_seed.sh LittleCogWorks/tiled ../tiled-docs/github-issues/issues-seed.tsv
 ```
 
 If the dry run looks right, create issues for real:
 
 ```bash
 cd /c/Users/sifar/repos/nutcase-knockoff/tiled
-DRY_RUN=0 ./scripts/tools/create_issues_from_seed.sh LittleCogWorks/tiled ../tiled-docs/github-issues/issues-seed.tsv
+DRY_RUN=0 ./tools/github/create_issues_from_seed.sh LittleCogWorks/tiled ../tiled-docs/github-issues/issues-seed.tsv
 ```
 
 ## Notes
