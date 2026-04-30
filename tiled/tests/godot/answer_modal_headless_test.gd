@@ -19,8 +19,8 @@ func _task_run() -> void:
 	# Test 1: submit a non-empty answer
 	var modal = modal_scene.instantiate()
 	root.add_child(modal)
-	modal.connect("answer_submitted", Callable(self, "_on_answer_submitted"))
-	modal.connect("cancelled", Callable(self, "_on_cancelled"))
+	modal.connect("answer_submitted", Callable(self , "_on_answer_submitted"))
+	modal.connect("cancelled", Callable(self , "_on_cancelled"))
 	# Let the engine process one frame so nodes initialize
 	await create_timer(0.05).timeout
 	var answer_input = modal.get_node_or_null("AnswerInput")
@@ -38,8 +38,8 @@ func _task_run() -> void:
 	await create_timer(0.05).timeout
 	var modal2 = modal_scene.instantiate()
 	root.add_child(modal2)
-	modal2.connect("answer_submitted", Callable(self, "_on_answer_submitted"))
-	modal2.connect("cancelled", Callable(self, "_on_cancelled"))
+	modal2.connect("answer_submitted", Callable(self , "_on_answer_submitted"))
+	modal2.connect("cancelled", Callable(self , "_on_cancelled"))
 	await create_timer(0.05).timeout
 	if modal2.has_method("_on_cancel_pressed"):
 		modal2.call("_on_cancel_pressed")
