@@ -1,5 +1,16 @@
 extends Node
 
+# Global persisted user settings store.
+#
+# Owns:
+# - loading/saving settings from user://settings.cfg
+# - exposing current audio and internet preference values
+# - notifying listeners whenever settings change
+#
+# Usage pattern:
+# - read values directly from this autoload
+# - update values through setter methods so changes are saved and broadcast
+
 signal settings_changed
 
 const SAVE_PATH := "user://settings.cfg"
@@ -21,10 +32,12 @@ var internet_enabled: bool = true
 
 
 func _ready() -> void:
+	# Load persisted settings as soon as the autoload is ready.
 	load_settings()
 
 
 func load_settings() -> void:
+	# Read saved settings, creating a default file on first launch.
 	var cfg = ConfigFile.new()
 	var err = cfg.load(SAVE_PATH)
 	if err != OK:
@@ -42,6 +55,7 @@ func load_settings() -> void:
 
 
 func save_settings() -> void:
+	# Persist the current in-memory settings snapshot.
 	var cfg = ConfigFile.new()
 	cfg.set_value("audio", KEY_UI_SFX_ENABLED, ui_sfx_enabled)
 	cfg.set_value("audio", KEY_UI_SFX_VOLUME_DB, ui_sfx_volume_db)
@@ -55,6 +69,7 @@ func save_settings() -> void:
 
 
 func set_ui_sfx_enabled(enabled: bool) -> void:
+	# Setter helpers guard against redundant writes and always broadcast real changes.
 	if ui_sfx_enabled == enabled:
 		return
 	ui_sfx_enabled = enabled
@@ -103,10 +118,12 @@ func set_master_volume_db(volume_db: float) -> void:
 
 
 func emit_settings_changed() -> void:
+	# Central helper so load and setters use the same signal path.
 	settings_changed.emit()
 
 
 func _load_internet_enabled(cfg: ConfigFile) -> bool:
+	# Preserve compatibility with the older network_enabled storage key.
 	if cfg.has_section_key("internet", KEY_INTERNET_ENABLED):
 		return bool(cfg.get_value("internet", KEY_INTERNET_ENABLED, internet_enabled))
 	if cfg.has_section_key("network", LEGACY_KEY_NETWORK_ENABLED):

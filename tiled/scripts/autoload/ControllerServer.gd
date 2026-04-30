@@ -14,6 +14,7 @@ var _pending_clients: Array[Dictionary] = []
 
 const HOST_IP_ENV_KEY = "NUTCASE_HOST_IP"
 const HOST_IP_SETTING_KEY = "nutcase/network/preferred_host_ip"
+const CONTROLLER_DIR_PATH = "res://web-controller" # Configurable: can rename folder and update this path
 
 func _ready() -> void:
 	_host_ip = _get_local_ip()
@@ -125,7 +126,7 @@ func _process_request(client: StreamPeerTCP) -> void:
 		return
 	
 	# Load file from controller directory
-	var file_path = "res://controller" + path
+	var file_path = CONTROLLER_DIR_PATH + path
 	var file = FileAccess.open(file_path, FileAccess.READ)
 	
 	if file == null:
@@ -237,9 +238,9 @@ func _try_load_font_resource(file_path: String, request_path: String) -> Diction
 	if font_resource == null:
 		var file_name = file_path.get_file()
 		if file_path.contains("/webfonts/"):
-			font_resource = load("res://controller/fonts/" + file_name)
+			font_resource = load(CONTROLLER_DIR_PATH + "/fonts/" + file_name)
 		elif file_path.contains("/fonts/"):
-			font_resource = load("res://controller/webfonts/" + file_name)
+			font_resource = load(CONTROLLER_DIR_PATH + "/webfonts/" + file_name)
 	if font_resource == null:
 		return {}
 

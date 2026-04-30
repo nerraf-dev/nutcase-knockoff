@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://0dpsk4jrxy1y"
-path="res://.godot/imported/mr_box.png-b6d6c62f9147e82e9fa95a0243670ea7.ctex"
+path="res://.godot/imported/mr_box.png-b7e102089c49b648db95e39d52fe8737.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://controller/assets/avatars/mr_box.png"
-dest_files=["res://.godot/imported/mr_box.png-b6d6c62f9147e82e9fa95a0243670ea7.ctex"]
+source_file="res://web-controller/assets/avatars/mr_box.png"
+dest_files=["res://.godot/imported/mr_box.png-b7e102089c49b648db95e39d52fe8737.ctex"]
 
 [params]
 

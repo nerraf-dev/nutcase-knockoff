@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c5shlwgnopqkp"
-path="res://.godot/imported/flower_c.png-3a745a1313579be7e375d0355b4998c5.ctex"
+uid="uid://df2xbxcsygkca"
+path="res://.godot/imported/duck.png-36629bbb12acc2441b3b258ad67af1fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://controller/assets/avatars/flower_c.png"
-dest_files=["res://.godot/imported/flower_c.png-3a745a1313579be7e375d0355b4998c5.ctex"]
+source_file="res://web-controller/assets/avatars/duck.png"
+dest_files=["res://.godot/imported/duck.png-36629bbb12acc2441b3b258ad67af1fa.ctex"]
 
 [params]
 

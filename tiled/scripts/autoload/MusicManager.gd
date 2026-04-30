@@ -1,5 +1,18 @@
 extends Node
 
+# Global background music controller.
+#
+# Owns:
+# - menu, gameplay, and vote music playback
+# - fade-based transitions between music states
+# - delayed restart when a track finishes
+# - applying user audio settings to the music bus
+#
+# Current gameplay behavior:
+# - gameplay music is chosen from a small preloaded playlist
+# - the same gameplay track is not chosen twice in a row
+# - when a gameplay track finishes, the next gameplay track is re-rolled
+
 const MENU_MUSIC_STREAM := preload("res://assets/sound/music/8bit Bossa.mp3")
 const GAME_MUSIC_TRACKS := [
 	preload("res://assets/sound/music/game/regrowth wip.wav"),
@@ -22,6 +35,7 @@ var _fade_tween: Tween = null
 
 
 func _ready() -> void:
+	# Create the single shared music player and sync it with saved audio settings.
 	_player = AudioStreamPlayer.new()
 	_player.name = "MusicPlayer"
 	_player.bus = MUSIC_BUS_NAME
@@ -35,11 +49,13 @@ func _ready() -> void:
 
 	
 func play_menu_music() -> void:
+	# Start or switch to the fixed menu music track.
 	_switch_track_with_fade("menu", MENU_MUSIC_STREAM)
 	print("Playing menu music")
 
 
 func play_game_music() -> void:
+	# Pick a gameplay track with a simple no-immediate-repeat rule.
 	if GAME_MUSIC_TRACKS.size() == 0:
 		push_error("No game music tracks available to play.")
 		return
@@ -51,10 +67,12 @@ func play_game_music() -> void:
 	print("Playing game music")
 
 func play_vote_music() -> void:
+	# Start or switch to the dedicated voting loop.
 	_switch_track_with_fade("vote", VOTE_MUSIC_STREAM)
 	print("Playing vote music")
 
 func stop_music() -> void:
+	# Hard stop used for teardown or explicit silence.
 	_stop_loop_timer()
 	_kill_fade_tween()
 	_active_track = ""
@@ -64,6 +82,7 @@ func stop_music() -> void:
 
 
 func _on_track_finished() -> void:
+	# Tracks restart after a short delay to avoid hard looping edges.
 	if _active_track == "":
 		return
 	_stop_loop_timer()
@@ -79,6 +98,7 @@ func _exit_tree() -> void:
 
 
 func _restart_active_track() -> void:
+	# Resume the current music state after the loop delay.
 	match _active_track:
 		"menu": play_menu_music()
 		"game": play_game_music()
@@ -106,6 +126,7 @@ func _play_track(track_key: String, stream: AudioStream) -> void:
 
 
 func _fade_in_track(track_key: String, stream: AudioStream, fade_time: float = DEFAULT_FADE_SECONDS) -> void:
+	# Fade in a target track from silence.
 	if not is_instance_valid(_player):
 		return
 	if stream == null:
@@ -126,6 +147,7 @@ func _fade_in_track(track_key: String, stream: AudioStream, fade_time: float = D
 
 
 func _fade_out_track(fade_time: float = DEFAULT_FADE_SECONDS) -> void:
+	# Fade out the currently playing track to silence, then stop it.
 	if not is_instance_valid(_player):
 		return
 	if not _player.playing:
@@ -141,6 +163,8 @@ func _fade_out_track(fade_time: float = DEFAULT_FADE_SECONDS) -> void:
 
 
 func _switch_track_with_fade(track_key: String, stream: AudioStream, fade_out_time: float = DEFAULT_FADE_SECONDS, fade_in_time: float = DEFAULT_FADE_SECONDS) -> void:
+	# Core transition path used by public play methods.
+	# If the exact same stream is already playing, only settings are refreshed.
 	if not is_instance_valid(_player):
 		return
 	if stream == null:
@@ -167,6 +191,7 @@ func _switch_track_with_fade(track_key: String, stream: AudioStream, fade_out_ti
 
 
 func _play_track_after_fade_out(track_key: String, stream: AudioStream, fade_in_time: float) -> void:
+	# Complete a switch by stopping the old stream and fading in the new one.
 	if not is_instance_valid(_player):
 		return
 	_player.stop()
@@ -190,6 +215,7 @@ func _stop_loop_timer() -> void:
 
 
 func _kill_fade_tween() -> void:
+	# Ensure only one transition tween is ever active at a time.
 	if _fade_tween != null and is_instance_valid(_fade_tween):
 		_fade_tween.kill()
 	_fade_tween = null
@@ -200,6 +226,7 @@ func _on_settings_changed() -> void:
 
 
 func _apply_settings() -> void:
+	# Apply both bus-level settings and per-player pause state from UserSettings.
 	if not is_instance_valid(_player):
 		return
 	_apply_master_bus(UserSettings.master_volume_db)

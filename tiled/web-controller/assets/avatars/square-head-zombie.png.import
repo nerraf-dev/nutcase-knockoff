@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxncas6nsqnvv"
-path="res://.godot/imported/purps.png-46f18b62ac3c574ebd977e72ef6bd97a.ctex"
+uid="uid://b5k4cw4lubi8i"
+path="res://.godot/imported/square-head-zombie.png-4dc1f47ba6c49916cfbc6848181bd6ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://controller/assets/avatars/purps.png"
-dest_files=["res://.godot/imported/purps.png-46f18b62ac3c574ebd977e72ef6bd97a.ctex"]
+source_file="res://web-controller/assets/avatars/square-head-zombie.png"
+dest_files=["res://.godot/imported/square-head-zombie.png-4dc1f47ba6c49916cfbc6848181bd6ff.ctex"]
 
 [params]
 

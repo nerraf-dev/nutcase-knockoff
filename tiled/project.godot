@@ -22,13 +22,17 @@ run/main_scene="uid://cos2mdk3ikq0t"
 config/features=PackedStringArray("4.6")
 config/icon="uid://b0aded5ux1m2n"
 
+[audio]
+
+buses/default_bus_layout="res://resources/default_bus_layout.tres"
+
 [autoload]
 
 GameManager="*res://scripts/autoload/GameManager.gd"
 GameIdGenerator="*res://scripts/autoload/GameIdGenerator.gd"
 PlayerManager="*res://scripts/autoload/PlayerManager.gd"
 NetworkManager="*res://scripts/autoload/NetworkManager.gd"
-GameConfig="*res://scripts/resources/GameConfig.gd"
+GameConfig="*res://scripts/models/GameConfig.gd"
 ControllerServer="*res://scripts/autoload/ControllerServer.gd"
 UserSettings="*res://scripts/autoload/UserSettings.gd"
 UISfx="*res://scripts/autoload/UISfx.gd"

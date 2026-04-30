@@ -5,9 +5,9 @@
 [ext_resource type="LabelSettings" uid="uid://dunedlrr27488" path="res://resources/results-label.tres" id="2_hrp0r"]
 [ext_resource type="Texture2D" uid="uid://6vk4uudip76p" path="res://assets/images/backgrounds/bg_large_tiles.png" id="2_q7dn1"]
 [ext_resource type="FontFile" uid="uid://ojm4aillukff" path="res://assets/fonts/Slow Play.otf" id="5_o3vw7"]
-[ext_resource type="SpriteFrames" uid="uid://7qoistgssswn" path="res://green_.tres" id="6_qwicm"]
-[ext_resource type="LabelSettings" uid="uid://da71nsttodg80" path="res://gen_btn.tres" id="7_qwicm"]
-[ext_resource type="SpriteFrames" uid="uid://dde5v41ybxokr" path="res://orange.tres" id="8_ri7xo"]
+[ext_resource type="SpriteFrames" uid="uid://7qoistgssswn" path="res://resources/green_.tres" id="6_qwicm"]
+[ext_resource type="LabelSettings" uid="uid://da71nsttodg80" path="res://resources/gen_btn.tres" id="7_qwicm"]
+[ext_resource type="SpriteFrames" uid="uid://dde5v41ybxokr" path="res://resources/orange.tres" id="8_ri7xo"]
 
 [sub_resource type="Gradient" id="Gradient_xyh14"]
 colors = PackedColorArray(0.5647059, 0.73333335, 1, 0.7019608, 0.78431374, 0.78431374, 0.78431374, 0.7058824)
