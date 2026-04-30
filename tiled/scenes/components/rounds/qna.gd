@@ -19,7 +19,7 @@ signal slider_reveal_requested(index: int)
 signal guess_submitted(answer: String)
 
 const SliderScene = preload("res://scenes/components/Slider.tscn")
-const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
+const QuestionLoaderResource = preload("res://scripts/logic/question_loader.gd")
 
 @onready var grid = $GridContainer
 @onready var guess_btn = $GuessBtn

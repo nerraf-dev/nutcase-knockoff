@@ -1,7 +1,7 @@
 class_name Player
 extends Resource
 
-# Player — scripts/classes/Player.gd
+# Player — scripts/classes/player.gd
 # Role: Resource model for a single player.
 # Owns: Identity, score, freeze status, avatar/visual metadata, connection metadata.
 # Does not own: Score rules (GameManager/RoundScoringRules), roster/turn order (PlayerManager).

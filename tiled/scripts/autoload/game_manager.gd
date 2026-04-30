@@ -1,6 +1,6 @@
 extends Node
 
-# GameManager — scripts/autoload/GameManager.gd
+# GameManager — scripts/autoload/game_manager.gd
 # Role: Autoload singleton that orchestrates game lifecycle and state transitions.
 # Owns: Current Game instance, state machine, question pool usage tracking.
 # Does not own: Player collection/turn logic (PlayerManager), network transport (NetworkManager).
@@ -90,7 +90,7 @@ func start_game(settings: Dictionary) -> bool:
 			return false
 		
 	# Load questions
-	const QuestionLoaderResource = preload("res://scripts/logic/QuestionLoader.gd")
+	const QuestionLoaderResource = preload("res://scripts/logic/question_loader.gd")
 	available_questions = QuestionLoaderResource.load_questions_from_file("res://data/questions.json")
 	used_question_ids.clear()
 

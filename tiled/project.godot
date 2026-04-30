@@ -28,15 +28,15 @@ buses/default_bus_layout="res://resources/default_bus_layout.tres"
 
 [autoload]
 
-GameManager="*res://scripts/autoload/GameManager.gd"
-GameIdGenerator="*res://scripts/autoload/GameIdGenerator.gd"
-PlayerManager="*res://scripts/autoload/PlayerManager.gd"
-NetworkManager="*res://scripts/autoload/NetworkManager.gd"
-GameConfig="*res://scripts/models/GameConfig.gd"
-ControllerServer="*res://scripts/autoload/ControllerServer.gd"
-UserSettings="*res://scripts/autoload/UserSettings.gd"
-UISfx="*res://scripts/autoload/UISfx.gd"
-MusicManager="*res://scripts/autoload/MusicManager.gd"
+GameManager="*res://scripts/autoload/game_manager.gd"
+GameIdGenerator="*res://scripts/autoload/game_id_generator.gd"
+PlayerManager="*res://scripts/autoload/player_manager.gd"
+NetworkManager="*res://scripts/autoload/network_manager.gd"
+GameConfig="*res://scripts/models/game_config.gd"
+ControllerServer="*res://scripts/autoload/controller_server.gd"
+UserSettings="*res://scripts/autoload/user_settings.gd"
+UISfx="*res://scripts/autoload/ui_sfx.gd"
+MusicManager="*res://scripts/autoload/music_manager.gd"
 
 [display]
 

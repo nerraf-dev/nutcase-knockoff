@@ -1,6 +1,6 @@
 extends Node
 
-# PlayerManager — scripts/autoload/PlayerManager.gd
+# PlayerManager — scripts/autoload/player_manager.gd
 # Role: Autoload singleton that owns canonical player state and turn order.
 # Owns: Player list, turn cursor, freeze/unfreeze state, scoring updates.
 # Does not own: Game lifecycle/state machine (GameManager), network sockets (NetworkManager).

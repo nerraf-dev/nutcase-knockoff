@@ -1,4 +1,4 @@
-# NetworkManager — scripts/autoload/NetworkManager.gd
+# NetworkManager — scripts/autoload/network_manager.gd
 # Role: Autoload singleton for host-side WebSocket transport.
 # Owns: Server lifecycle, peer tracking, outbound messaging, disconnect detection.
 # Does not own: Packet message semantics (NetworkProtocolHandler), game rules/state.
@@ -40,7 +40,7 @@ var room_code: String = ""
 var _server: WebSocketMultiplayerPeer = null
 # Map: peer_id (int) → device_id (String)  — device_id is the string form of peer_id
 var _peer_ids: Dictionary = {}
-const NetworkProtocolHandlerResource = preload("res://scripts/logic/NetworkProtocolHandler.gd")
+const NetworkProtocolHandlerResource = preload("res://scripts/logic/network_protocol_handler.gd")
 var _protocol_handler = NetworkProtocolHandlerResource.new()
 
 # ---------------------------------------------------------------------------

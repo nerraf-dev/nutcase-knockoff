@@ -54,9 +54,9 @@ const ROUND_SCENES = {
 }
 
 # const NETWORK_VOTE_TIMEOUT_SECONDS = 25.0
-const DisconnectPolicyScript = preload("res://scripts/logic/GameBoardDisconnectPolicy.gd")
-const VoteSessionScript = preload("res://scripts/logic/GameBoardVoteSession.gd")
-const ControllerSyncScript = preload("res://scripts/logic/GameBoardControllerSync.gd")
+const DisconnectPolicyScript = preload("res://scripts/logic/game_board_disconnect_policy.gd")
+const VoteSessionScript = preload("res://scripts/logic/game_board_vote_session.gd")
+const ControllerSyncScript = preload("res://scripts/logic/game_board_controller_sync.gd")
 
 var round_instance = null
 var _stored_focus_modes: Dictionary = {} # node path -> focus mode, used by _recursive_set_focus
@@ -211,7 +211,6 @@ func hide_vote_overlay() -> void:
 
 
 func show_vote_result_overlay(accepted: bool, was_tie: bool = false) -> void:
-
 	if vote_transition == null:
 		return
 	if _vote_copy == null:

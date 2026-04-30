@@ -1,4 +1,4 @@
-# ControllerServer — scripts/autoload/ControllerServer.gd
+# ControllerServer — scripts/autoload/controller_server.gd
 # Role: Serves controller HTML/CSS/JS via HTTP, detects local IP
 # Owns: TCP server lifecycle for controller file serving
 # Listens on: 0.0.0.0 on port 8000

@@ -1,6 +1,6 @@
 extends Node
 
-# GameIdGenerator — scripts/autoload/GameIdGenerator.gd
+# GameIdGenerator — scripts/autoload/game_id_generator.gd
 # Role: Autoload singleton that generates readable room/game IDs.
 # Owns: Word-list loading and random ID construction from adjective/noun pools.
 # Does not own: Persistence, room registry, or network session lifecycle.

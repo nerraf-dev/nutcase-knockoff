@@ -1,7 +1,7 @@
 class_name Game
 extends Resource
 
-# Game — scripts/classes/Game.gd
+# Game — scripts/classes/game.gd
 # Role: Resource model for one game session.
 # Owns: Session metadata, active question pointer, and round result history.
 # Does not own: Scoring/round rules (RoundScoringRules), orchestration/state machine (GameManager).

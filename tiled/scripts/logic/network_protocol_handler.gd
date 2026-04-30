@@ -1,7 +1,7 @@
 class_name NetworkProtocolHandler
 extends RefCounted
 
-# NetworkProtocolHandler — scripts/logic/NetworkProtocolHandler.gd
+# NetworkProtocolHandler — scripts/logic/network_protocol_handler.gd
 # Role: Stateless protocol parser/dispatcher for client->server packet semantics.
 # Owns: Packet JSON validation and translation into effect dictionaries.
 # Does not own: Socket I/O, peer lifecycle, or signal emission (NetworkManager).
