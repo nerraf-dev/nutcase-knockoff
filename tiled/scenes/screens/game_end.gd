@@ -12,8 +12,8 @@ const MEDAL_BRONZE := preload("res://assets/images/components/medal-bronze.png")
 @onready var title = $Content/Title
 @onready var winner_label = $Content/WinnerLabel
 @onready var scores_container = $Content/Scores
-@onready var play_again_btn = $Content/Buttons/PlayAgainBtn
-@onready var home_btn = $Content/Buttons/HomeBtn
+@onready var play_again_btn: BaseButton = $PlayAgainBtn
+@onready var home_btn: BaseButton = $HomeBtn
 
 var game_settings: Dictionary = {}
 

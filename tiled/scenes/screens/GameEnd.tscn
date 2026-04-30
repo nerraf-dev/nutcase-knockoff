@@ -54,6 +54,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 40.0
+offset_bottom = -220.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 40
@@ -76,28 +77,29 @@ autowrap_mode = 2
 
 [node name="Scores" type="VBoxContainer" parent="Content" unique_id=268944129]
 layout_mode = 2
+size_flags_vertical = 3
 theme = SubResource("Theme_vkwuj")
 
-[node name="Buttons" type="HBoxContainer" parent="Content" unique_id=1433947236]
-layout_mode = 2
-alignment = 1
-
-[node name="PlayAgainBtn" type="TextureButton" parent="Content/Buttons" unique_id=1167245541]
-layout_mode = 2
+[node name="PlayAgainBtn" type="TextureButton" parent="." unique_id=1167245541]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 910.0
+offset_right = 920.0
+offset_bottom = 1050.0
 stretch_mode = 0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Content/Buttons/PlayAgainBtn" unique_id=978548370]
-position = Vector2(-198.49997, 256)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="PlayAgainBtn" unique_id=978548370]
+position = Vector2(190.5, 82)
 scale = Vector2(0.41406256, 0.31249994)
 sprite_frames = ExtResource("6_qwicm")
 autoplay = "default"
 
-[node name="Label" type="Label" parent="Content/Buttons/PlayAgainBtn" unique_id=1961796884]
+[node name="Label" type="Label" parent="PlayAgainBtn" unique_id=1961796884]
 layout_mode = 0
-offset_left = -303.0
-offset_top = 237.99998
-offset_right = -37.666626
-offset_bottom = 299.3335
+offset_left = 86.0
+offset_top = 63.999985
+offset_right = 351.33337
+offset_bottom = 125.333496
 scale = Vector2(0.75, 0.75)
 theme_override_font_sizes/font_size = 16
 text = "Play again"
@@ -105,22 +107,26 @@ label_settings = ExtResource("7_qwicm")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="HomeBtn" type="TextureButton" parent="Content/Buttons" unique_id=1442897331]
-layout_mode = 2
+[node name="HomeBtn" type="TextureButton" parent="." unique_id=1442897331]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 910.0
+offset_right = 1360.0
+offset_bottom = 1050.0
 stretch_mode = 0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Content/Buttons/HomeBtn" unique_id=1176908454]
-position = Vector2(154.5, 253)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="HomeBtn" unique_id=1176908454]
+position = Vector2(144.5, 76)
 scale = Vector2(0.41406256, 0.31249994)
 sprite_frames = ExtResource("8_ri7xo")
 autoplay = "default"
 
-[node name="Label" type="Label" parent="Content/Buttons/HomeBtn" unique_id=1024599804]
+[node name="Label" type="Label" parent="HomeBtn" unique_id=1024599804]
 layout_mode = 0
-offset_left = 55.50006
-offset_top = 234.99998
-offset_right = 320.83344
-offset_bottom = 296.3335
+offset_left = 45.50006
+offset_top = 57.999985
+offset_right = 310.83344
+offset_bottom = 119.333496
 scale = Vector2(0.75, 0.75)
 theme_override_font_sizes/font_size = 16
 text = "Back Home"
