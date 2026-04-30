@@ -70,3 +70,4 @@ Thumbs.db
 nutcase-knockoff.code-workspace
 *.code-workspace
 
+tiled/tests/results/

@@ -4,6 +4,8 @@
 	"version": "0.1.0",
 	"description": "Playwright smoke tests for Tiled controller pages",
 	"scripts": {
+		"test:godot": "bash tools/run-godot-tests.sh",
+		"test:all": "bash tools/run-all-tests.sh",
 		"test:e2e": "playwright test",
 		"test:e2e:headed": "playwright test --headed",
 		"test:e2e:ui": "playwright test --ui"
