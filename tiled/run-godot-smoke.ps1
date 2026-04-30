@@ -4,9 +4,9 @@ param(
 )
 
 $tests = @(
-	"res://scenes/tests/input_validator_test.gd",
-	"res://scenes/tests/answer_modal_headless_test.gd",
-	"res://scenes/tests/vote_multiplayer_headless_scaffold.gd"
+	"res://tests/godot/input_validator_test.gd",
+	"res://tests/godot/answer_modal_headless_test.gd",
+	"res://tests/godot/vote_multiplayer_headless_scaffold.gd"
 )
 
 $failed = 0

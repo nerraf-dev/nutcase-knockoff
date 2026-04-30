@@ -1,7 +1,7 @@
 extends SceneTree
 
 # Headless test runner for InputValidator.
-# Run with: godot --headless -s res://scenes/tests/input_validator_test.gd
+# Run with: godot --headless -s res://tests/godot/input_validator_test.gd
 #
 # Covers:
 #   validate_player_name  — empty, whitespace, too long, invalid chars, edge chars

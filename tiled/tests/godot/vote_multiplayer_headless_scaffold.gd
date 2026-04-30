@@ -2,7 +2,7 @@ extends SceneTree
 
 # Headless scaffold for multiplayer vote-flow coverage.
 # Run with:
-#   godot --headless -s res://scenes/tests/vote_multiplayer_headless_scaffold.gd
+#   godot --headless -s res://tests/godot/vote_multiplayer_headless_scaffold.gd
 #
 # This is intentionally lightweight: it provides a stable harness and case list
 # while vote tests are implemented incrementally.

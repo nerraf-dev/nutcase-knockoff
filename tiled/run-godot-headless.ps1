@@ -1,6 +1,6 @@
 param(
 	[string]$GodotExe = $env:GODOT_EXE,
-	[string]$TestScript = "res://scenes/tests/vote_multiplayer_headless_scaffold.gd",
+	[string]$TestScript = "res://tests/godot/vote_multiplayer_headless_scaffold.gd",
 	[string]$ProjectPath = "."
 )
 

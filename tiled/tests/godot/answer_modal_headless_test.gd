@@ -1,7 +1,7 @@
 extends SceneTree
 
 # Headless test runner for AnswerModal
-# Run with: `godot --headless -s res://scenes/tests/answer_modal_headless_test.gd`
+# Run with: `godot --headless -s res://tests/godot/answer_modal_headless_test.gd`
 # It will instantiate the modal scene, simulate submit + cancel, print outputs, and quit.
 
 var modal_scene = preload("res://scenes/components/answer_modal.tscn")
